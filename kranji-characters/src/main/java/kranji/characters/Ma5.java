@@ -1,0 +1,26 @@
+package kranji.characters;
+
+import kranji.entry.ChineseCharacterEntry;
+
+import java.util.List;
+
+import static kranji.characters.Comp.*;
+import static kranji.characters.EntryBuilder.entry;
+import static kranji.component.Parts.*;
+import static kranji.pinyin.Initial.*;
+import static kranji.pinyin.Head.*;
+import kranji.pinyin.Body;
+import kranji.pinyin.Tail;
+
+/** Characters pronounced ma (tone 5). */
+public final class Ma5 {
+    private Ma5() {}
+
+    /** 吗 (ma5) — question particle. */
+    public static final ChineseCharacterEntry 吗_QUESTION_PARTICLE = entry("吗")
+            .py(M, OPEN, Body.A, Tail.NONE, T5).strokes(6).radical(30)
+            .leftRight(zi("口"), zi("马"))
+            .phonoSemantic(zi("口"), zi("马"));
+
+    public static final List<ChineseCharacterEntry> ALL = List.of(吗_QUESTION_PARTICLE);
+}
