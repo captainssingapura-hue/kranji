@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -25,8 +25,8 @@ public final class Ti1 {
     /** 梯 (ti1) — ladder; stairs. */
     public static final ChineseCharacterEntry 梯_LADDER_STAIRS = entry("梯")
             .py(T, OPEN, Body.I, Tail.NONE, T1).strokes(11).radical(75)
-            .leftRight(zi("木"), zi("弟"))
-            .phonoSemantic(zi("木"), zi("弟"));
+            .leftRight(MU, zi("弟"))
+            .phonoSemantic(MU, zi("弟"));
 
     public static final List<ChineseCharacterEntry> ALL = List.of(踢_KICK, 梯_LADDER_STAIRS);
 }

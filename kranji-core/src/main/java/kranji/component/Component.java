@@ -2,12 +2,8 @@ package kranji.component;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import kranji.classification.StructuralNode;
-import kranji.layout.BlockRole;
+import kranji.classification.BlockRole;
 import kranji.layout.HintedComponent;
-import kranji.layout.LayoutHint;
-
-import java.util.Map;
 
 /**
  * 部件 — A component that appears inside a Chinese character.
@@ -27,22 +23,21 @@ import java.util.Map;
         @JsonSubTypes.Type(value = Component.Part.class, name = "part"),
         @JsonSubTypes.Type(value = Component.Zi.class, name = "zi")
 })
-public sealed interface Component extends StructuralNode {
+public sealed interface Component extends LeafNode {
 
-    String glyph();
+    @Override String glyph();
 
     /**
-     * Wrap this component with a position-specific layout hint.
+     * Bind this component to a specific structural role.
      *
      * <p>Returns a {@link HintedComponent} that can be used anywhere
-     * a {@code StructuralNode} is accepted. Chain multiple calls to
-     * add hints for different positions:</p>
+     * a {@code StructuralNode} is accepted:</p>
      * <pre>
-     *   zi("水").as(LEFT, glyphAndScale("氵", 0.45, 1.0))
+     *   zi("日").as(LeftRight.LEFT)
      * </pre>
      */
-    default HintedComponent as(BlockRole role, LayoutHint hint) {
-        return new HintedComponent(this, Map.of(role, hint));
+    default HintedComponent as(BlockRole role) {
+        return new HintedComponent(this, role);
     }
 
     /**

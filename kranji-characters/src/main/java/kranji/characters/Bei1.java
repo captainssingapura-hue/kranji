@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -19,8 +19,8 @@ public final class Bei1 {
     /** 杯 (bei1) — cup. */
     public static final ChineseCharacterEntry 杯_CUP = entry("杯")
             .py(B, OPEN, Body.E, Tail.VOWEL_I, T1).strokes(8).radical(75)
-            .leftRight(zi("木"), zi("不"))
-            .phonoSemantic(zi("木"), zi("不"));
+            .leftRight(MU, zi("不"))
+            .phonoSemantic(MU, zi("不"));
 
     /** 碑 (bei1) — stele; tablet. */
     public static final ChineseCharacterEntry 碑_STELE_TABLET = entry("碑")

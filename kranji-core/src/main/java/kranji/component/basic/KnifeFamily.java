@@ -1,0 +1,29 @@
+package kranji.component.basic;
+
+import kranji.classification.BlockRole;
+import kranji.classification.CharacterComposition.LeftRight;
+import kranji.component.BasicComponent;
+import kranji.layout.Politeness;
+
+/** 刀部 — Knife-related components. */
+public final class KnifeFamily {
+    private KnifeFamily() {}
+
+    /** 刂 — 立刀旁 (knife). Derives from 刀 dāo. */
+    public record LiDaoPang() implements BasicComponent {
+        @Override public String glyph()      { return "刂"; }
+        @Override public String name()       { return "立刀旁"; }
+        @Override public String standalone() { return "刀"; }
+        @Override public String meaning()    { return "knife"; }
+        @Override public String pinyin()     { return "dāo"; }
+        @Override public int strokes()       { return 2; }
+
+        @Override
+        public Politeness politeness(BlockRole role) {
+            if (role instanceof LeftRight.Right) return Politeness.DEFERENTIAL;
+            return Politeness.NEUTRAL;
+        }
+    }
+
+    public static final LiDaoPang LI_DAO_PANG = new LiDaoPang();
+}

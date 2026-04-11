@@ -2,7 +2,7 @@ package kranji.characters;
 
 import kranji.classification.CharacterComposition;
 import kranji.classification.EtymologicalCategory.*;
-import kranji.component.Component;
+import kranji.component.LeafNode;
 import kranji.entry.ChineseCharacterEntry;
 import kranji.pinyin.PinyinSyllable;
 
@@ -52,7 +52,7 @@ public final class CompositionSet {
     }
 
     /** 形声 — Phono-semantic (semantic part + phonetic part). */
-    public ChineseCharacterEntry phonoSemantic(Component semanticPart, Component phoneticPart) {
+    public ChineseCharacterEntry phonoSemantic(LeafNode semanticPart, LeafNode phoneticPart) {
         return build(new PhonoSemantic(semanticPart, phoneticPart));
     }
 

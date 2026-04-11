@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -25,8 +25,8 @@ public final class Jie1 {
     /** 阶 (jie1) — step; rank. */
     public static final ChineseCharacterEntry 阶_STEP_RANK = entry("阶")
             .py(J, I, Body.E_CARON, Tail.NONE, T1).strokes(6).radical(170)
-            .leftRight(zi("阝"), zi("介"))
-            .phonoSemantic(zi("阝"), zi("介"));
+            .leftRight(ZUO_ER_PANG, zi("介"))
+            .phonoSemantic(ZUO_ER_PANG, zi("介"));
 
     public static final List<ChineseCharacterEntry> ALL = List.of(接_RECEIVE_CONNECT, 阶_STEP_RANK);
 }

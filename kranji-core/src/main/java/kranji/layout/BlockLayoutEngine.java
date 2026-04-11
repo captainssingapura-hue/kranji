@@ -1,9 +1,11 @@
 package kranji.layout;
 
+import kranji.classification.BlockRole;
 import kranji.classification.CharacterComposition;
 import kranji.classification.CharacterComposition.*;
 import kranji.classification.StructuralNode;
-import kranji.component.Component;
+import kranji.component.BasicComponent;
+import kranji.component.LeafNode;
 import kranji.entry.ChineseCharacterEntry;
 
 import java.util.ArrayList;
@@ -12,60 +14,37 @@ import java.util.List;
 /**
  * Recursively partitions a character's unit square [0,1]² into blocks
  * for each leaf component, based on the composition structure and
- * component metrics.
+ * component politeness levels.
  *
- * <p>The algorithm is purely top-down: starting from the full [0,1]²
- * bounding box, each composition type subdivides its region among its
- * children according to their {@link ComponentMetrics} weights. Leaf
- * components (Part / Zi) produce a single {@link Block}.</p>
+ * <p><b>Stage 1 of the two-stage pipeline.</b> This engine only cares
+ * about block layout — it reads {@link Politeness} from components to
+ * determine split ratios. Inner positioning (scale, offset) is deferred
+ * entirely to Stage 2 ({@link BlockSvgRenderer}).</p>
  *
- * <h3>Partition rules by composition type:</h3>
- * <ul>
- *   <li><b>LeftRight</b> — horizontal split by width weights</li>
- *   <li><b>TopBottom</b> — vertical split by height weights</li>
- *   <li><b>LeftMiddleRight</b> — three-way horizontal split</li>
- *   <li><b>TopMiddleBottom</b> — three-way vertical split</li>
- *   <li><b>FullEnclosure</b> — outer frame + centered inner (with margin)</li>
- *   <li><b>Semi-enclosures</b> — wrapper + content with type-specific insets</li>
- *   <li><b>Mosaic</b> — triangular arrangement (top-center, bottom-left, bottom-right)</li>
- * </ul>
+ * <h3>Politeness gap formula:</h3>
+ * <p>For two siblings A (left/top) and B (right/bottom):</p>
+ * <pre>
+ *   gap = B.politeness.ordinal() - A.politeness.ordinal()
+ *   A_share = 0.5 + gap * STEP
+ *   B_share = 0.5 - gap * STEP
+ * </pre>
+ * <p>Each politeness level difference shifts the split by ~10%.</p>
  */
 public final class BlockLayoutEngine {
 
     /** Margin fraction for full enclosure inner content. */
-    private static final double ENCL_MARGIN = 0.13;
+    private static final double ENCL_MARGIN = 0.18;
 
     /**
-     * Compression factor for single-leaf components with default (SQUARE)
-     * metrics when placed beside a multi-block composition.
-     *
-     * <p>In Chinese calligraphy, simpler components yield space to more
-     * complex siblings (避让原则 — the "yielding" principle). A lone 日
-     * beside a stacked 音 (= 立 + 日) should be narrower and give way.</p>
-     *
-     * <p>Only applied to leaves whose registered weight is SQUARE (1.0);
-     * components that already have explicit narrow/short metrics (亻, 氵,
-     * 宀, etc.) are left unchanged.</p>
+     * Split shift per politeness ordinal difference.
+     * Each level of politeness gap shifts the split by this fraction.
      */
-    private static final double LEAF_COMPRESSION = 0.65;
+    private static final double STEP = 0.10;
 
-    /**
-     * Height-weight boost for top components in a top-bottom split.
-     *
-     * <p>In Chinese calligraphy the top component typically occupies more
-     * vertical space than the bottom (e.g. 立 over 日 in 音). When both
-     * components have equal default height weights, the top's weight is
-     * multiplied by this factor to give it a larger share.</p>
-     */
-    private static final double TOP_BIAS = 1.20;
+    /** Maximum politeness ordinal (DEFERENTIAL = 3). */
+    private static final int MAX_ORDINAL = Politeness.DEFERENTIAL.ordinal();
 
     private BlockLayoutEngine() {}
-
-    /**
-     * Compute the block layout for a character entry, with gravity centering.
-     *
-     * @return an ordered list of {@link Block}s, one per leaf component
-     */
 
     // ════════════════════════════════════════════════════════════
     //  Block count estimation
@@ -73,14 +52,13 @@ public final class BlockLayoutEngine {
 
     /**
      * Recursively count the total number of leaf blocks a structural node
-     * would produce. Used as weight for proportional splits — subtrees
-     * with more blocks get more space.
+     * would produce.
      */
     static int countBlocks(StructuralNode node) {
         if (node instanceof HintedComponent) {
             return 1;
         }
-        if (node instanceof Component) {
+        if (node instanceof LeafNode) {
             return 1;
         }
         if (node instanceof CharacterComposition comp) {
@@ -92,7 +70,7 @@ public final class BlockLayoutEngine {
                         countBlocks(l) + countBlocks(m) + countBlocks(r);
                 case TopMiddleBottom(var t, var m, var b) ->
                         countBlocks(t) + countBlocks(m) + countBlocks(b);
-                case FullEnclosure(var o, var i) -> 1 + countBlocks(i); // outer = 1 frame block
+                case FullEnclosure(var o, var i) -> 1 + countBlocks(i);
                 case SemiEnclosureUpperLeft(var w, var c) -> 1 + countBlocks(c);
                 case SemiEnclosureUpperRight(var w, var c) -> 1 + countBlocks(c);
                 case SemiEnclosureBottomLeft(var w, var c) -> 1 + countBlocks(c);
@@ -106,7 +84,7 @@ public final class BlockLayoutEngine {
     }
 
     public static List<Block> layout(ChineseCharacterEntry entry) {
-        List<Block> raw = layoutNode(entry.composition(), 0, 0, 1, 1, 0, BlockRole.SINGULAR, entry.character());
+        List<Block> raw = layoutNode(entry.composition(), 0, 0, 1, 1, 0, Singular.SELF, entry.character());
         return applyGravity(raw);
     }
 
@@ -114,24 +92,13 @@ public final class BlockLayoutEngine {
     //  Gravity centering
     // ════════════════════════════════════════════════════════════
 
-    /**
-     * Shift all blocks so the combined center of gravity sits at the
-     * center of the [0,1]² canvas.
-     *
-     * <p>Mass = block area (w × h). CG = area-weighted average of block
-     * centers. Wrapper/frame blocks are excluded from the mass calculation
-     * (they overlap content) but are shifted along with everything else.</p>
-     *
-     * <p>The shift is clamped so no block moves outside [0,1]².</p>
-     */
     static List<Block> applyGravity(List<Block> blocks) {
         if (blocks.isEmpty()) return blocks;
 
-        // Compute CG from content blocks only (exclude wrappers to avoid double-counting)
         double totalMass = 0;
         double cgX = 0, cgY = 0;
         for (Block b : blocks) {
-            if (b.role() == BlockRole.WRAPPER || b.role() == BlockRole.OUTER_FRAME) continue;
+            if (b.role().isOverlay()) continue;
             double mass = b.area();
             cgX += b.cx() * mass;
             cgY += b.cy() * mass;
@@ -141,11 +108,9 @@ public final class BlockLayoutEngine {
         cgX /= totalMass;
         cgY /= totalMass;
 
-        // Desired shift to center CG at (0.5, 0.5)
         double dx = 0.5 - cgX;
         double dy = 0.5 - cgY;
 
-        // Clamp shift so no block goes out of bounds
         double minX = Double.MAX_VALUE, maxXW = Double.MIN_VALUE;
         double minY = Double.MAX_VALUE, maxYH = Double.MIN_VALUE;
         for (Block b : blocks) {
@@ -154,23 +119,18 @@ public final class BlockLayoutEngine {
             maxXW = Math.max(maxXW, b.x() + b.w());
             maxYH = Math.max(maxYH, b.y() + b.h());
         }
-        dx = Math.max(dx, -minX);           // don't push left edge below 0
-        dx = Math.min(dx, 1.0 - maxXW);     // don't push right edge above 1
-        dy = Math.max(dy, -minY);            // don't push top edge below 0
-        dy = Math.min(dy, 1.0 - maxYH);     // don't push bottom edge above 1
+        dx = Math.max(dx, -minX);
+        dx = Math.min(dx, 1.0 - maxXW);
+        dy = Math.max(dy, -minY);
+        dy = Math.min(dy, 1.0 - maxYH);
 
-        // Skip if shift is negligible
         if (Math.abs(dx) < 0.001 && Math.abs(dy) < 0.001) return blocks;
 
         double fdx = dx, fdy = dy;
         return blocks.stream()
-                .map(b -> new Block(b.glyph(), b.x() + fdx, b.y() + fdy, b.w(), b.h(), b.depth(), b.role()))
+                .map(b -> new Block(b.glyph(), b.x() + fdx, b.y() + fdy, b.w(), b.h(), b.depth(), b.role(), b.hint()))
                 .toList();
     }
-
-    // ════════════════════════════════════════════════════════════
-    //  Glyph attraction
-    // ════════════════════════════════════════════════════════════
 
     // ════════════════════════════════════════════════════════════
     //  Recursive dispatch
@@ -181,13 +141,23 @@ public final class BlockLayoutEngine {
             double x, double y, double w, double h,
             int depth, BlockRole role, String fallbackGlyph
     ) {
+        // Stage 1 only resolves glyph identity and passes hint through to Block.
+        // Offset and inner scale are NOT read here — they are Stage 2 concerns.
         if (node instanceof HintedComponent hc) {
-            var hint = hc.hints().get(role);
-            String glyph = (hint != null && hint.glyph() != null) ? hint.glyph() : hc.glyph();
-            return List.of(new Block(glyph, x, y, w, h, depth, role));
+            String glyph = hc.glyph();  // resolves hint glyph substitution
+            LayoutHint hint = hc.hint();
+            return List.of(new Block(glyph, x, y, w, h, depth, role, hint));
         }
-        if (node instanceof Component comp) {
-            return List.of(new Block(comp.glyph(), x, y, w, h, depth, role));
+        if (node instanceof BasicComponent bc) {
+            LayoutHint hint = bc.hintFor(role);
+            String glyph = bc.glyph();
+            if (hint != null && hint.glyph() != null) {
+                glyph = hint.glyph().value();
+            }
+            return List.of(new Block(glyph, x, y, w, h, depth, role, hint));
+        }
+        if (node instanceof LeafNode leaf) {
+            return List.of(new Block(leaf.glyph(), x, y, w, h, depth, role));
         }
         if (node instanceof CharacterComposition comp) {
             return layoutComposition(comp, x, y, w, h, depth, fallbackGlyph);
@@ -204,152 +174,126 @@ public final class BlockLayoutEngine {
 
         switch (comp) {
             case Singular() ->
-                    result.add(new Block(fallbackGlyph != null ? fallbackGlyph : "?", x, y, w, h, depth, BlockRole.SINGULAR));
+                    result.add(new Block(fallbackGlyph != null ? fallbackGlyph : "?", x, y, w, h, depth, Singular.SELF));
 
             case LeftRight(var left, var right) -> {
-                double lw = weightW(left, BlockRole.LEFT);
-                double rw = weightW(right, BlockRole.RIGHT);
-                int lBlocks = countBlocks(left), rBlocks = countBlocks(right);
-                // Yielding: single-leaf with default weight compresses beside complex sibling
-                // Skip if the component has explicit role-specific metrics or instance hints
-                if (!hasHintOrRoleMetrics(left, BlockRole.LEFT) && lBlocks == 1 && rBlocks > 1 && lw >= 0.9)
-                    lw *= LEAF_COMPRESSION;
-                if (!hasHintOrRoleMetrics(right, BlockRole.RIGHT) && rBlocks == 1 && lBlocks > 1 && rw >= 0.9)
-                    rw *= LEAF_COMPRESSION;
-                double total = lw + rw;
-                double splitX = w * lw / total;
-                result.addAll(layoutNode(left, x, y, splitX, h, depth + 1, BlockRole.LEFT, null));
-                result.addAll(layoutNode(right, x + splitX, y, w - splitX, h, depth + 1, BlockRole.RIGHT, null));
+                Politeness lp = politenessOf(left, LeftRight.LEFT);
+                Politeness rp = politenessOf(right, LeftRight.RIGHT);
+                double[] shares = twoWaySplit(lp, rp);
+                double splitX = w * shares[0];
+                result.addAll(layoutNode(left, x, y, splitX, h, depth + 1, LeftRight.LEFT, null));
+                result.addAll(layoutNode(right, x + splitX, y, w - splitX, h, depth + 1, LeftRight.RIGHT, null));
             }
 
             case TopBottom(var top, var bottom) -> {
-                double th = weightH(top, BlockRole.TOP);
-                double bh = weightH(bottom, BlockRole.BOTTOM);
-                int tBlocks = countBlocks(top), bBlocks = countBlocks(bottom);
-                boolean tExplicit = hasHintOrRoleMetrics(top, BlockRole.TOP);
-                boolean bExplicit = hasHintOrRoleMetrics(bottom, BlockRole.BOTTOM);
-                // Yielding: single-leaf with default weight compresses beside complex sibling
-                if (!tExplicit && tBlocks == 1 && bBlocks > 1 && th >= 0.9) th *= LEAF_COMPRESSION;
-                if (!bExplicit && bBlocks == 1 && tBlocks > 1 && bh >= 0.9) bh *= LEAF_COMPRESSION;
-                // Top bias: top component gets more vertical space (only when no explicit metrics)
-                if (!tExplicit && !bExplicit && th >= 0.9 && bh >= 0.9) th *= TOP_BIAS;
-                double total = th + bh;
-                double splitY = h * th / total;
-                result.addAll(layoutNode(top, x, y, w, splitY, depth + 1, BlockRole.TOP, null));
-                result.addAll(layoutNode(bottom, x, y + splitY, w, h - splitY, depth + 1, BlockRole.BOTTOM, null));
+                Politeness tp = politenessOf(top, TopBottom.TOP);
+                Politeness bp = politenessOf(bottom, TopBottom.BOTTOM);
+                double[] shares = twoWaySplit(tp, bp);
+                double splitY = h * shares[0];
+                result.addAll(layoutNode(top, x, y, w, splitY, depth + 1, TopBottom.TOP, null));
+                result.addAll(layoutNode(bottom, x, y + splitY, w, h - splitY, depth + 1, TopBottom.BOTTOM, null));
             }
 
             case LeftMiddleRight(var l, var m, var r) -> {
-                // Width proportional to stroke count
-                double sl = countBlocks(l), sm = countBlocks(m), sr = countBlocks(r);
-                double total = sl + sm + sr;
-                double w1 = w * sl / total;
-                double w2 = w * sm / total;
-                double w3 = w * sr / total;
-                result.addAll(layoutNode(l, x, y, w1, h, depth + 1, BlockRole.LEFT_OF_THREE, null));
-                result.addAll(layoutNode(m, x + w1, y, w2, h, depth + 1, BlockRole.MIDDLE_H, null));
-                result.addAll(layoutNode(r, x + w1 + w2, y, w3, h, depth + 1, BlockRole.RIGHT_OF_THREE, null));
+                Politeness lp = politenessOf(l, LeftMiddleRight.LEFT);
+                Politeness mp = politenessOf(m, LeftMiddleRight.MIDDLE);
+                Politeness rp = politenessOf(r, LeftMiddleRight.RIGHT);
+                double[] shares = threeWaySplit(lp, mp, rp);
+                double w1 = w * shares[0];
+                double w2 = w * shares[1];
+                double w3 = w * shares[2];
+                result.addAll(layoutNode(l, x, y, w1, h, depth + 1, LeftMiddleRight.LEFT, null));
+                result.addAll(layoutNode(m, x + w1, y, w2, h, depth + 1, LeftMiddleRight.MIDDLE, null));
+                result.addAll(layoutNode(r, x + w1 + w2, y, w3, h, depth + 1, LeftMiddleRight.RIGHT, null));
             }
 
             case TopMiddleBottom(var t, var m, var b) -> {
-                double th = weightH(t, BlockRole.TOP_OF_THREE);
-                double mh = weightH(m, BlockRole.MIDDLE_V);
-                double bh = weightH(b, BlockRole.BOTTOM_OF_THREE);
-                double total = th + mh + bh;
-                double h1 = h * th / total;
-                double h2 = h * mh / total;
-                double h3 = h * bh / total;
-                result.addAll(layoutNode(t, x, y, w, h1, depth + 1, BlockRole.TOP_OF_THREE, null));
-                result.addAll(layoutNode(m, x, y + h1, w, h2, depth + 1, BlockRole.MIDDLE_V, null));
-                result.addAll(layoutNode(b, x, y + h1 + h2, w, h3, depth + 1, BlockRole.BOTTOM_OF_THREE, null));
+                Politeness tp = politenessOf(t, TopMiddleBottom.TOP);
+                Politeness mp = politenessOf(m, TopMiddleBottom.MIDDLE);
+                Politeness bp = politenessOf(b, TopMiddleBottom.BOTTOM);
+                double[] shares = threeWaySplit(tp, mp, bp);
+                double h1 = h * shares[0];
+                double h2 = h * shares[1];
+                double h3 = h * shares[2];
+                result.addAll(layoutNode(t, x, y, w, h1, depth + 1, TopMiddleBottom.TOP, null));
+                result.addAll(layoutNode(m, x, y + h1, w, h2, depth + 1, TopMiddleBottom.MIDDLE, null));
+                result.addAll(layoutNode(b, x, y + h1 + h2, w, h3, depth + 1, TopMiddleBottom.BOTTOM, null));
             }
 
             case FullEnclosure(var outer, var inner) -> {
-                // Outer frame fills the full box
                 String outerGlyph = glyphOf(outer);
-                result.add(new Block(outerGlyph, x, y, w, h, depth + 1, BlockRole.OUTER_FRAME));
-                // Inner content with margin
+                result.add(new Block(outerGlyph, x, y, w, h, depth + 1, FullEnclosure.OUTER));
                 double mx = w * ENCL_MARGIN, my = h * ENCL_MARGIN;
                 result.addAll(layoutNode(inner, x + mx, y + my, w - 2 * mx, h - 2 * my,
-                        depth + 1, BlockRole.INNER, null));
+                        depth + 1, FullEnclosure.INNER, null));
             }
 
             case SemiEnclosureBottomLeft(var wrapper, var content) -> {
-                // Wrapper (e.g. 辶): L-shape — complement of a top-right square.
-                // Content anchored at top-right. Width ≈ 71%, height ≈ 82% (15% taller).
-                // Leaves an L-shaped region for 辶 along left and bottom.
                 String wGlyph = glyphOf(wrapper);
-                result.add(new Block(wGlyph, x, y, w, h, depth + 1, BlockRole.WRAPPER));
-                double contentW = Math.sqrt(0.50);      // ≈ 0.707
-                double contentH = contentW * 1.15;       // ≈ 0.813
+                result.add(new Block(wGlyph, x, y, w, h, depth + 1, SemiEnclosureBottomLeft.WRAPPER));
+                double contentW = Math.sqrt(0.50);
+                double contentH = contentW * 1.15;
                 double insetL = w * (1 - contentW);
                 double insetB = h * (1 - contentH);
                 result.addAll(layoutNode(content, x + insetL, y, w - insetL, h - insetB,
-                        depth + 1, BlockRole.CONTENT, null));
+                        depth + 1, SemiEnclosureBottomLeft.CONTENT, null));
             }
 
             case SemiEnclosureUpperLeft(var wrapper, var content) -> {
-                // Wrapper (e.g. 疒): ⌐ shape along top and left
                 String wGlyph = glyphOf(wrapper);
-                result.add(new Block(wGlyph, x, y, w, h, depth + 1, BlockRole.WRAPPER));
+                result.add(new Block(wGlyph, x, y, w, h, depth + 1, SemiEnclosureUpperLeft.WRAPPER));
                 double insetL = w * 0.25;
                 double insetT = h * 0.30;
                 result.addAll(layoutNode(content, x + insetL, y + insetT, w - insetL, h - insetT,
-                        depth + 1, BlockRole.CONTENT, null));
+                        depth + 1, SemiEnclosureUpperLeft.CONTENT, null));
             }
 
             case SemiEnclosureUpperRight(var wrapper, var content) -> {
-                // Wrapper (e.g. 勹): ⌐ mirrored, top and right
                 String wGlyph = glyphOf(wrapper);
-                result.add(new Block(wGlyph, x, y, w, h, depth + 1, BlockRole.WRAPPER));
+                result.add(new Block(wGlyph, x, y, w, h, depth + 1, SemiEnclosureUpperRight.WRAPPER));
                 double insetR = w * 0.25;
                 double insetT = h * 0.30;
                 result.addAll(layoutNode(content, x, y + insetT, w - insetR, h - insetT,
-                        depth + 1, BlockRole.CONTENT, null));
+                        depth + 1, SemiEnclosureUpperRight.CONTENT, null));
             }
 
             case SemiEnclosureTopThree(var wrapper, var content) -> {
-                // Wrapper (e.g. 门/冂): ∏ shape — top + left + right
                 String wGlyph = glyphOf(wrapper);
-                result.add(new Block(wGlyph, x, y, w, h, depth + 1, BlockRole.WRAPPER));
+                result.add(new Block(wGlyph, x, y, w, h, depth + 1, SemiEnclosureTopThree.WRAPPER));
                 double insetX = w * 0.12;
                 double insetT = h * 0.18;
                 result.addAll(layoutNode(content, x + insetX, y + insetT, w - 2 * insetX, h - insetT,
-                        depth + 1, BlockRole.CONTENT, null));
+                        depth + 1, SemiEnclosureTopThree.CONTENT, null));
             }
 
             case SemiEnclosureBottomThree(var wrapper, var content) -> {
-                // Wrapper (e.g. 凵): ∪ shape — bottom + left + right
                 String wGlyph = glyphOf(wrapper);
-                result.add(new Block(wGlyph, x, y, w, h, depth + 1, BlockRole.WRAPPER));
+                result.add(new Block(wGlyph, x, y, w, h, depth + 1, SemiEnclosureBottomThree.WRAPPER));
                 double insetX = w * 0.12;
                 double insetB = h * 0.25;
                 result.addAll(layoutNode(content, x + insetX, y, w - 2 * insetX, h - insetB,
-                        depth + 1, BlockRole.CONTENT, null));
+                        depth + 1, SemiEnclosureBottomThree.CONTENT, null));
             }
 
             case SemiEnclosureLeftThree(var wrapper, var content) -> {
-                // Wrapper (e.g. 匚): ⊏ shape — top + left + bottom
                 String wGlyph = glyphOf(wrapper);
-                result.add(new Block(wGlyph, x, y, w, h, depth + 1, BlockRole.WRAPPER));
+                result.add(new Block(wGlyph, x, y, w, h, depth + 1, SemiEnclosureLeftThree.WRAPPER));
                 double insetL = w * 0.18;
                 double insetY = h * 0.12;
                 result.addAll(layoutNode(content, x + insetL, y + insetY, w - insetL, h - 2 * insetY,
-                        depth + 1, BlockRole.CONTENT, null));
+                        depth + 1, SemiEnclosureLeftThree.CONTENT, null));
             }
 
             case Mosaic(var element) -> {
-                // Top-bottom: top full width, bottom is equal left-right split
-                // Height: top 1/3, bottom 2/3
                 double topH = h / 3;
                 double botH = h - topH;
                 double halfW = w / 2;
                 result.addAll(layoutNode(element, x, y, w, topH,
-                        depth + 1, BlockRole.TOP, null));
+                        depth + 1, Mosaic.TOP, null));
                 result.addAll(layoutNode(element, x, y + topH, halfW, botH,
-                        depth + 1, BlockRole.LEFT, null));
+                        depth + 1, Mosaic.BOTTOM_LEFT, null));
                 result.addAll(layoutNode(element, x + halfW, y + topH, halfW, botH,
-                        depth + 1, BlockRole.RIGHT, null));
+                        depth + 1, Mosaic.BOTTOM_RIGHT, null));
             }
         }
 
@@ -357,72 +301,72 @@ public final class BlockLayoutEngine {
     }
 
     // ════════════════════════════════════════════════════════════
-    //  Metrics extraction
+    //  Politeness-based split calculations
     // ════════════════════════════════════════════════════════════
 
     /**
-     * Get the effective width weight for a node at a given position.
+     * Compute two-way split shares from politeness levels.
      *
-     * <p>Priority chain:
-     * HintedComponent instance hint → ComponentMetrics(glyph, role) →
-     * ComponentMetrics(glyph) → SQUARE.</p>
+     * @return double[2] — shares for A and B, summing to 1.0
      */
-    private static double weightW(StructuralNode node, BlockRole role) {
-        if (node instanceof HintedComponent hc) {
-            var hint = hc.hints().get(role);
-            if (hint != null && !Double.isNaN(hint.widthWeight()))
-                return hint.widthWeight();
-            return ComponentMetrics.forGlyph(hc.glyph(), role).widthWeight();
-        }
-        if (node instanceof Component comp) {
-            return ComponentMetrics.forGlyph(comp.glyph(), role).widthWeight();
-        }
-        return ComponentMetrics.SQUARE.widthWeight();
+    private static double[] twoWaySplit(Politeness a, Politeness b) {
+        int gap = b.ordinal() - a.ordinal();
+        double aShare = Math.max(0.15, Math.min(0.85, 0.5 + gap * STEP));
+        return new double[]{aShare, 1.0 - aShare};
     }
 
     /**
-     * Get the effective height weight for a node at a given position.
+     * Compute three-way split shares using inverse-weight from politeness ordinal.
+     *
+     * <p>Each component's weight = (MAX_ORDINAL + 1) - ordinal.
+     * Shares are proportional to weights.</p>
+     *
+     * @return double[3] — shares for A, B, C, summing to 1.0
      */
-    private static double weightH(StructuralNode node, BlockRole role) {
-        if (node instanceof HintedComponent hc) {
-            var hint = hc.hints().get(role);
-            if (hint != null && !Double.isNaN(hint.heightWeight()))
-                return hint.heightWeight();
-            return ComponentMetrics.forGlyph(hc.glyph(), role).heightWeight();
-        }
-        if (node instanceof Component comp) {
-            return ComponentMetrics.forGlyph(comp.glyph(), role).heightWeight();
-        }
-        return ComponentMetrics.SQUARE.heightWeight();
+    private static double[] threeWaySplit(Politeness a, Politeness b, Politeness c) {
+        double wa = (MAX_ORDINAL + 1) - a.ordinal();
+        double wb = (MAX_ORDINAL + 1) - b.ordinal();
+        double wc = (MAX_ORDINAL + 1) - c.ordinal();
+        double total = wa + wb + wc;
+        return new double[]{wa / total, wb / total, wc / total};
     }
+
+    // ════════════════════════════════════════════════════════════
+    //  Politeness extraction
+    // ════════════════════════════════════════════════════════════
 
     /**
-     * True if the node has an instance hint or role-specific metrics for this role.
-     * Used to skip global heuristics (LEAF_COMPRESSION, TOP_BIAS) when explicit
-     * scaling is available.
+     * Get the effective politeness for a node at a given role.
+     *
+     * <p>Priority: hint's BlockHint.politeness → component.politeness(role) → NEUTRAL.</p>
      */
-    private static boolean hasHintOrRoleMetrics(StructuralNode node, BlockRole role) {
+    private static Politeness politenessOf(StructuralNode node, BlockRole role) {
         if (node instanceof HintedComponent hc) {
-            if (hc.hints().containsKey(role)) return true;
-            return hasRoleMetrics(hc.glyph(), role);
+            var hint = hc.hint();
+            if (hint != null && hint.bh() != null && hint.bh().politeness() != null) {
+                return hint.bh().politeness();
+            }
+            if (hc.leaf() instanceof BasicComponent bc) {
+                return bc.politeness(hc.role());
+            }
+            return Politeness.NEUTRAL;
         }
-        if (node instanceof Component comp) {
-            return hasRoleMetrics(comp.glyph(), role);
+        if (node instanceof BasicComponent bc) {
+            var hint = bc.hintFor(role);
+            if (hint != null && hint.bh() != null && hint.bh().politeness() != null) {
+                return hint.bh().politeness();
+            }
+            return bc.politeness(role);
         }
-        return false;
-    }
-
-    private static boolean hasRoleMetrics(String glyph, BlockRole role) {
-        // Role-specific metrics exist if forGlyph(glyph, role) differs from forGlyph(glyph)
-        return ComponentMetrics.forGlyph(glyph, role) != ComponentMetrics.forGlyph(glyph);
+        return Politeness.NEUTRAL;
     }
 
     private static String glyphOf(StructuralNode node) {
         if (node instanceof HintedComponent hc) {
             return hc.glyph();
         }
-        if (node instanceof Component comp) {
-            return comp.glyph();
+        if (node instanceof LeafNode leaf) {
+            return leaf.glyph();
         }
         return null;
     }

@@ -42,4 +42,24 @@ public final class GlyphBounds {
             return gv.getVisualBounds();
         });
     }
+
+    /**
+     * Returns the visual bounding box for a glyph, using the custom SVG
+     * shape's viewBox if present, otherwise falling back to font metrics.
+     *
+     * <p>For SVG shapes, the bounds use the same Y-negative convention as
+     * font glyphs so that the centering math in {@link BlockSvgRenderer}
+     * works identically for both cases.</p>
+     *
+     * @param glyph the glyph string (used as fallback key)
+     * @param svg   custom SVG shape, or {@code null} for font-based measurement
+     */
+    public static Rectangle2D visualBounds(String glyph, LayoutHint.SvgShape svg) {
+        if (svg != null) {
+            // SVG paths use Y-down from (0,0) at top-left — return bounds
+            // in the same coordinate space so the centering formula works.
+            return new Rectangle2D.Double(0, 0, svg.viewBoxW(), svg.viewBoxH());
+        }
+        return visualBounds(glyph);
+    }
 }

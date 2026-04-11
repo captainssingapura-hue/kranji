@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -19,8 +19,8 @@ public final class Gen1 {
     /** 根 (gen1) — root; basis. */
     public static final ChineseCharacterEntry 根_ROOT_BASIS = entry("根")
             .py(G, OPEN, Body.E, Tail.N, T1).strokes(10).radical(75)
-            .leftRight(zi("木"), zi("艮"))
-            .phonoSemantic(zi("木"), zi("艮"));
+            .leftRight(MU, zi("艮"))
+            .phonoSemantic(MU, zi("艮"));
 
     /** 跟 (gen1) — follow; with. */
     public static final ChineseCharacterEntry 跟_FOLLOW_WITH = entry("跟")

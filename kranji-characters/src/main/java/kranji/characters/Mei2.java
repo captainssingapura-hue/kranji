@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -25,8 +25,8 @@ public final class Mei2 {
     /** 梅 (mei2) — plum. */
     public static final ChineseCharacterEntry 梅_PLUM = entry("梅")
             .py(M, OPEN, Body.E, Tail.VOWEL_I, T2).strokes(11).radical(75)
-            .leftRight(zi("木"), zi("每"))
-            .phonoSemantic(zi("木"), zi("每"));
+            .leftRight(MU, zi("每"))
+            .phonoSemantic(MU, zi("每"));
 
     public static final List<ChineseCharacterEntry> ALL = List.of(没_NOT_HAVE, 梅_PLUM);
 }

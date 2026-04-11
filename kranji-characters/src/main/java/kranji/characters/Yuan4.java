@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -19,8 +19,8 @@ public final class Yuan4 {
     /** 院 (yuan4) — courtyard. */
     public static final ChineseCharacterEntry 院_COURTYARD = entry("院")
             .py(ZERO, V, Body.A, Tail.N, T4).strokes(9).radical(170)
-            .leftRight(zi("阝"), zi("完"))
-            .phonoSemantic(zi("阝"), zi("完"));
+            .leftRight(ZUO_ER_PANG, zi("完"))
+            .phonoSemantic(ZUO_ER_PANG, zi("完"));
 
     /** 愿 (yuan4) — willing; wish. */
     public static final ChineseCharacterEntry 愿_WILLING_WISH = entry("愿")

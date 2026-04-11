@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -31,8 +31,8 @@ public final class Fu4 {
     /** 附 (fu4) — attach; near. */
     public static final ChineseCharacterEntry 附_ATTACH_NEAR = entry("附")
             .py(F, U, Body.U, Tail.NONE, T4).strokes(7).radical(170)
-            .leftRight(zi("阝"), zi("付"))
-            .phonoSemantic(zi("阝"), zi("付"));
+            .leftRight(ZUO_ER_PANG, zi("付"))
+            .phonoSemantic(ZUO_ER_PANG, zi("付"));
 
     /** 富 (fu4) — rich; wealthy. */
     public static final ChineseCharacterEntry 富_RICH_WEALTHY = entry("富")

@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -31,8 +31,8 @@ public final class Yin1 {
     /** 阴 (yin1) — cloudy; dark. */
     public static final ChineseCharacterEntry 阴_CLOUDY_DARK = entry("阴")
             .py(ZERO, OPEN, Body.I, Tail.N, T1).strokes(6).radical(170)
-            .leftRight(zi("阝"), zi("月"))
-            .phonoSemantic(zi("阝"), zi("月"));
+            .leftRight(ZUO_ER_PANG, zi("月"))
+            .phonoSemantic(ZUO_ER_PANG, zi("月"));
 
     public static final List<ChineseCharacterEntry> ALL = List.of(因_BECAUSE, 音_SOUND_MUSIC, 阴_CLOUDY_DARK);
 }

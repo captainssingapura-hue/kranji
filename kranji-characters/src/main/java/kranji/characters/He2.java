@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -43,8 +43,8 @@ public final class He2 {
     /** 核 (he2) — core; nuclear. */
     public static final ChineseCharacterEntry 核_CORE_NUCLEAR = entry("核")
             .py(H, OPEN, Body.E, Tail.NONE, T2).strokes(10).radical(75)
-            .leftRight(zi("木"), zi("亥"))
-            .phonoSemantic(zi("木"), zi("亥"));
+            .leftRight(MU, zi("亥"))
+            .phonoSemantic(MU, zi("亥"));
 
     /** 荷 (he2) — lotus. */
     public static final ChineseCharacterEntry 荷_LOTUS = entry("荷")

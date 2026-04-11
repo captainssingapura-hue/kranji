@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -25,7 +25,7 @@ public final class Cai3 {
     /** 采 (cai3) — pick; gather. */
     public static final ChineseCharacterEntry 采_PICK_GATHER = entry("采")
             .py(C, OPEN, Body.A, Tail.VOWEL_I, T3).strokes(8).radical(165)
-            .topBottom(zi("爫"), zi("木"))
+            .topBottom(zi("爫"), MU)
             .compoundIndicative("pick; gather");
 
     /** 踩 (cai3) — step on; trample. */

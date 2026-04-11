@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -25,8 +25,8 @@ public final class Zhi2 {
     /** 植 (zhi2) — plant; grow. */
     public static final ChineseCharacterEntry 植_PLANT_GROW = entry("植")
             .py(ZH, OPEN, Body.NULL, Tail.NONE, T2).strokes(12).radical(75)
-            .leftRight(zi("木"), zi("直"))
-            .phonoSemantic(zi("木"), zi("直"));
+            .leftRight(MU, zi("直"))
+            .phonoSemantic(MU, zi("直"));
 
     /** 职 (zhi2) — post; duty. */
     public static final ChineseCharacterEntry 职_POST_DUTY = entry("职")
