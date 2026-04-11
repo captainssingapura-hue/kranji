@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -25,8 +25,8 @@ public final class Bu4 {
     /** 部 (bu4) — part; section. */
     public static final ChineseCharacterEntry 部_PART_SECTION = entry("部")
             .py(B, U, Body.U, Tail.NONE, T4).strokes(10).radical(163)
-            .leftRight(zi("咅"), zi("阝"))
-            .phonoSemantic(zi("阝"), zi("咅"));
+            .leftRight(zi("咅"), YOU_ER_PANG)
+            .phonoSemantic(YOU_ER_PANG, zi("咅"));
 
     /** 步 (bu4) — step; walk. */
     public static final ChineseCharacterEntry 步_STEP_WALK = entry("步")

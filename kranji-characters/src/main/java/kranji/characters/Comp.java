@@ -2,9 +2,7 @@ package kranji.characters;
 
 import kranji.classification.CharacterComposition.*;
 import kranji.classification.StructuralNode;
-import kranji.component.Component.Zi;
-import kranji.layout.BlockRole;
-import kranji.layout.LayoutHint;
+import kranji.component.SingularZi;
 import kranji.pinyin.Tone;
 
 /**
@@ -34,8 +32,8 @@ public final class Comp {
     // ── Leaf node ──────────────────────────────────────────────────────
 
     /** Creates a standalone-character leaf node. */
-    public static Zi zi(String glyph) {
-        return new Zi(glyph);
+    public static SingularZi zi(String glyph) {
+        return SingularZi.of(glyph);
     }
 
     // ── 2-slot compositions ────────────────────────────────────────────
@@ -105,28 +103,4 @@ public final class Comp {
     public static Mosaic mosaic(StructuralNode element) {
         return new Mosaic(element);
     }
-
-    // ── Layout hint factories ─────────────────────────────────────────
-
-    /** Scale override (no glyph swap). */
-    public static LayoutHint scale(double widthWeight, double heightWeight) {
-        return LayoutHint.scale(widthWeight, heightWeight);
-    }
-
-    /** Glyph swap (no scale override). */
-    public static LayoutHint glyph(String glyph) {
-        return LayoutHint.glyph(glyph);
-    }
-
-    /** Glyph swap + scale override. */
-    public static LayoutHint glyphAndScale(String glyph, double widthWeight, double heightWeight) {
-        return LayoutHint.glyphAndScale(glyph, widthWeight, heightWeight);
-    }
-
-    // ── BlockRole aliases for common positions ────────────────────────
-
-    public static final BlockRole LEFT   = BlockRole.LEFT;
-    public static final BlockRole RIGHT  = BlockRole.RIGHT;
-    public static final BlockRole TOP    = BlockRole.TOP;
-    public static final BlockRole BOTTOM = BlockRole.BOTTOM;
 }

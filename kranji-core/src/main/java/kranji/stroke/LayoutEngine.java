@@ -3,7 +3,7 @@ package kranji.stroke;
 import kranji.classification.CharacterComposition;
 import kranji.classification.CharacterComposition.*;
 import kranji.classification.StructuralNode;
-import kranji.component.Component;
+import kranji.component.LeafNode;
 
 import java.util.*;
 
@@ -30,7 +30,7 @@ public final class LayoutEngine {
 
     /** Compute the bounding box for a node and all its descendants. */
     public static LayoutBox measure(StructuralNode node) {
-        if (node instanceof Component) {
+        if (node instanceof LeafNode) {
             return LayoutBox.LEAF;
         }
         if (node instanceof CharacterComposition comp) {
@@ -136,8 +136,8 @@ public final class LayoutEngine {
      * @return list of placed glyphs with their transforms
      */
     public static List<PlacedGlyph> place(StructuralNode node, double x, double y, String glyph) {
-        if (node instanceof Component comp) {
-            String g = extractGlyph(comp);
+        if (node instanceof LeafNode leaf) {
+            String g = leaf.glyph();
             LayoutBox box = LayoutBox.LEAF;
             AffineTransform2D transform = AffineTransform2D.rect(x, y, box.width(), box.height());
             return List.of(new PlacedGlyph(g, transform));
@@ -194,7 +194,7 @@ public final class LayoutEngine {
                 double totalH = ib.height() + 2 * margin;
                 // Outer wrapper fills the full box
                 AffineTransform2D outerTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String outerGlyph = (outer instanceof Component c) ? extractGlyph(c) : null;
+                String outerGlyph = (outer instanceof LeafNode ln) ? ln.glyph() : null;
                 result.add(new PlacedGlyph(outerGlyph, outerTransform));
                 // Inner content centered
                 result.addAll(place(inner, x + margin, y + margin, null));
@@ -208,7 +208,7 @@ public final class LayoutEngine {
                 double totalH = cb.height() + bottomM;
                 // Wrapper (e.g. 辶) fills the full box
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String wrapperGlyph = (wrapper instanceof Component c) ? extractGlyph(c) : null;
+                String wrapperGlyph = (wrapper instanceof LeafNode ln) ? ln.glyph() : null;
                 result.add(new PlacedGlyph(wrapperGlyph, wrapperTransform));
                 // Content positioned at top-right
                 result.addAll(place(content, x + leftM, y, null));
@@ -221,7 +221,7 @@ public final class LayoutEngine {
                 double totalW = cb.width() + leftM;
                 double totalH = cb.height() + topM;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String wrapperGlyph = (wrapper instanceof Component c) ? extractGlyph(c) : null;
+                String wrapperGlyph = (wrapper instanceof LeafNode ln) ? ln.glyph() : null;
                 result.add(new PlacedGlyph(wrapperGlyph, wrapperTransform));
                 result.addAll(place(content, x + leftM, y + topM, null));
             }
@@ -233,7 +233,7 @@ public final class LayoutEngine {
                 double totalW = cb.width() + rightM;
                 double totalH = cb.height() + topM;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String wrapperGlyph = (wrapper instanceof Component c) ? extractGlyph(c) : null;
+                String wrapperGlyph = (wrapper instanceof LeafNode ln) ? ln.glyph() : null;
                 result.add(new PlacedGlyph(wrapperGlyph, wrapperTransform));
                 result.addAll(place(content, x, y + topM, null));
             }
@@ -244,7 +244,7 @@ public final class LayoutEngine {
                 double totalW = cb.width() + 2 * margin;
                 double totalH = cb.height() + margin;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String wrapperGlyph = (wrapper instanceof Component c) ? extractGlyph(c) : null;
+                String wrapperGlyph = (wrapper instanceof LeafNode ln) ? ln.glyph() : null;
                 result.add(new PlacedGlyph(wrapperGlyph, wrapperTransform));
                 result.addAll(place(content, x + margin, y + margin, null));
             }
@@ -255,7 +255,7 @@ public final class LayoutEngine {
                 double totalW = cb.width() + 2 * margin;
                 double totalH = cb.height() + margin;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String wrapperGlyph = (wrapper instanceof Component c) ? extractGlyph(c) : null;
+                String wrapperGlyph = (wrapper instanceof LeafNode ln) ? ln.glyph() : null;
                 result.add(new PlacedGlyph(wrapperGlyph, wrapperTransform));
                 result.addAll(place(content, x + margin, y, null));
             }
@@ -266,7 +266,7 @@ public final class LayoutEngine {
                 double totalW = cb.width() + margin;
                 double totalH = cb.height() + 2 * margin;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String wrapperGlyph = (wrapper instanceof Component c) ? extractGlyph(c) : null;
+                String wrapperGlyph = (wrapper instanceof LeafNode ln) ? ln.glyph() : null;
                 result.add(new PlacedGlyph(wrapperGlyph, wrapperTransform));
                 result.addAll(place(content, x + margin, y + margin, null));
             }
@@ -283,12 +283,5 @@ public final class LayoutEngine {
         }
 
         return result;
-    }
-
-    private static String extractGlyph(Component comp) {
-        return switch (comp) {
-            case Component.Zi zi -> zi.glyph();
-            case Component.Part part -> part.glyph();
-        };
     }
 }

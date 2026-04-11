@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -19,8 +19,8 @@ public final class Na4 {
     /** 那 (na4) — that. */
     public static final ChineseCharacterEntry 那_THAT = entry("那")
             .py(N, OPEN, Body.A, Tail.NONE, T4).strokes(6).radical(163)
-            .leftRight(zi("冄"), zi("阝"))
-            .phonoSemantic(zi("阝"), zi("冄"));
+            .leftRight(zi("冄"), YOU_ER_PANG)
+            .phonoSemantic(YOU_ER_PANG, zi("冄"));
 
     /** 纳 (na4) — accept; pay. */
     public static final ChineseCharacterEntry 纳_ACCEPT_PAY = entry("纳")

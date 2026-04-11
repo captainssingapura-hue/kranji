@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -31,14 +31,14 @@ public final class Xian4 {
     /** 限 (xian4) — limit; restrict. */
     public static final ChineseCharacterEntry 限_LIMIT_RESTRICT = entry("限")
             .py(X, I, Body.A, Tail.N, T4).strokes(8).radical(170)
-            .leftRight(zi("阝"), zi("艮"))
-            .phonoSemantic(zi("阝"), zi("艮"));
+            .leftRight(ZUO_ER_PANG, zi("艮"))
+            .phonoSemantic(ZUO_ER_PANG, zi("艮"));
 
     /** 陷 (xian4) — trap; fall into. */
     public static final ChineseCharacterEntry 陷_TRAP_FALL_INTO = entry("陷")
             .py(X, I, Body.A, Tail.N, T4).strokes(10).radical(170)
-            .leftRight(zi("阝"), zi("臽"))
-            .phonoSemantic(zi("阝"), zi("臽"));
+            .leftRight(ZUO_ER_PANG, zi("臽"))
+            .phonoSemantic(ZUO_ER_PANG, zi("臽"));
 
     /** 献 (xian4) — offer; dedicate. */
     public static final ChineseCharacterEntry 献_OFFER_DEDICATE = entry("献")

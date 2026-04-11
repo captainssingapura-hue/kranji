@@ -1,5 +1,6 @@
 package kranji.layout;
 
+import kranji.classification.BlockRole;
 import kranji.entry.ChineseCharacterEntry;
 
 import java.awt.geom.Rectangle2D;
@@ -96,13 +97,13 @@ public final class BlockSvgRenderer {
 
         // Render blocks — wrappers first (they go underneath)
         for (Block b : blocks) {
-            if (b.role() == BlockRole.WRAPPER || b.role() == BlockRole.OUTER_FRAME) {
+            if (b.role().isOverlay()) {
                 renderBlock(sb, b, ox, oy, true);
             }
         }
         // Then regular blocks on top
         for (Block b : blocks) {
-            if (b.role() != BlockRole.WRAPPER && b.role() != BlockRole.OUTER_FRAME) {
+            if (!b.role().isOverlay()) {
                 renderBlock(sb, b, ox, oy, false);
             }
         }
@@ -156,15 +157,29 @@ public final class BlockSvgRenderer {
 
         // Glyph rendering — scaled to fit visual bounds within block
         if (b.glyph() != null) {
-            Rectangle2D vb = GlyphBounds.visualBounds(b.glyph());
+            // Detect custom SVG shape from hint
+            LayoutHint.SvgShape svg = null;
+            if (b.hint() != null && b.hint().glyph() != null && b.hint().glyph().hasSvg()) {
+                svg = b.hint().glyph().svg();
+            }
+
+            Rectangle2D vb = GlyphBounds.visualBounds(b.glyph(), svg);
             double vw = vb.getWidth();
             double vh = vb.getHeight();
 
             if (vw < 1 || vh < 1) return; // degenerate glyph
 
-            // Scale so visual bounds fill the block (with fill factor)
-            double rawSx = (FILL_FACTOR * pw) / vw;
-            double rawSy = (FILL_FACTOR * ph) / vh;
+            // Apply InnerScale from hint (Stage 2 concern) — constrains
+            // how much of the block the glyph fills.
+            double innerScaleW = 1.0, innerScaleH = 1.0;
+            if (b.hint() != null && b.hint().iph() != null && b.hint().iph().scale() != null) {
+                innerScaleW = b.hint().iph().scale().width();
+                innerScaleH = b.hint().iph().scale().height();
+            }
+
+            // Scale so visual bounds fill the (inner-scaled) block area
+            double rawSx = (FILL_FACTOR * pw * innerScaleW) / vw;
+            double rawSy = (FILL_FACTOR * ph * innerScaleH) / vh;
             double sUniform = Math.sqrt(rawSx * rawSy);
             double sx = rawSx * (1 - STRETCH_RESISTANCE) + sUniform * STRETCH_RESISTANCE;
             double sy = rawSy * (1 - STRETCH_RESISTANCE) + sUniform * STRETCH_RESISTANCE;
@@ -179,38 +194,34 @@ public final class BlockSvgRenderer {
             // After transform translate(cx,cy) scale(sx,sy), that point maps to:
             //   (cx + (vb.x + vw/2)*sx,  cy + (vb.y + vh/2)*sy)
             // We want that to equal the block center (px+pw/2, py+ph/2).
-            double blockCx = px + pw / 2.0;
-            double blockCy = py + ph / 2.0;
+            // Offset is read from the block's hint (Stage 2 concern).
+            double offDx = 0, offDy = 0;
+            if (b.hint() != null && b.hint().iph() != null && b.hint().iph().offset() != null) {
+                offDx = b.hint().iph().offset().dx();
+                offDy = b.hint().iph().offset().dy();
+            }
+            double blockCx = px + pw / 2.0 + offDx * pw;
+            double blockCy = py + ph / 2.0 + offDy * ph;
             double cx = blockCx - (vb.getX() + vw / 2.0) * sx;
             double cy = blockCy - (vb.getY() + vh / 2.0) * sy;
 
-            sb.append(String.format(
-                    "<g transform=\"translate(%.2f,%.2f) scale(%.4f,%.4f)\" class=\"glyph\">" +
-                            "<text x=\"0\" y=\"0\" font-size=\"%.0f\">%s</text></g>\n",
-                    cx, cy, sx, sy, BASE_FONT, b.glyph()));
+            if (svg != null) {
+                // Custom SVG path — render <path> instead of <text>
+                sb.append(String.format(
+                        "<g transform=\"translate(%.2f,%.2f) scale(%.4f,%.4f)\" class=\"glyph\">" +
+                                "<path d=\"%s\"/></g>\n",
+                        cx, cy, sx, sy, svg.pathData()));
+            } else {
+                // Standard font glyph — render <text>
+                sb.append(String.format(
+                        "<g transform=\"translate(%.2f,%.2f) scale(%.4f,%.4f)\" class=\"glyph\">" +
+                                "<text x=\"0\" y=\"0\" font-size=\"%.0f\">%s</text></g>\n",
+                        cx, cy, sx, sy, BASE_FONT, b.glyph()));
+            }
         }
     }
 
     private static String roleName(BlockRole role) {
-        return switch (role) {
-            case SINGULAR -> "singular";
-            case LEFT -> "left";
-            case RIGHT -> "right";
-            case TOP -> "top";
-            case BOTTOM -> "bottom";
-            case LEFT_OF_THREE -> "left";
-            case MIDDLE_H -> "mid";
-            case RIGHT_OF_THREE -> "right";
-            case TOP_OF_THREE -> "top";
-            case MIDDLE_V -> "mid";
-            case BOTTOM_OF_THREE -> "bottom";
-            case OUTER_FRAME -> "frame";
-            case INNER -> "inner";
-            case WRAPPER -> "wrapper";
-            case CONTENT -> "content";
-            case MOSAIC_TOP -> "top";
-            case MOSAIC_BOTTOM_LEFT -> "bot-L";
-            case MOSAIC_BOTTOM_RIGHT -> "bot-R";
-        };
+        return role.label();
     }
 }

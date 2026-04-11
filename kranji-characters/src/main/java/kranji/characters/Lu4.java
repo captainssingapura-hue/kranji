@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -25,8 +25,8 @@ public final class Lu4 {
     /** 陆 (lu4) — land; six. */
     public static final ChineseCharacterEntry 陆_LAND_SIX = entry("陆")
             .py(L, U, Body.U, Tail.NONE, T4).strokes(7).radical(170)
-            .leftRight(zi("阝"), zi("击"))
-            .phonoSemantic(zi("阝"), zi("击"));
+            .leftRight(ZUO_ER_PANG, zi("击"))
+            .phonoSemantic(ZUO_ER_PANG, zi("击"));
 
     public static final List<ChineseCharacterEntry> ALL = List.of(路_ROAD_PATH, 陆_LAND_SIX);
 }

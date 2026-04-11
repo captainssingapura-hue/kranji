@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -25,8 +25,8 @@ public final class Pei2 {
     /** 陪 (pei2) — accompany. */
     public static final ChineseCharacterEntry 陪_ACCOMPANY = entry("陪")
             .py(P, OPEN, Body.E, Tail.VOWEL_I, T2).strokes(10).radical(170)
-            .leftRight(zi("阝"), zi("咅"))
-            .phonoSemantic(zi("阝"), zi("咅"));
+            .leftRight(ZUO_ER_PANG, zi("咅"))
+            .phonoSemantic(ZUO_ER_PANG, zi("咅"));
 
     /** 培 (pei2) — cultivate; train. */
     public static final ChineseCharacterEntry 培_CULTIVATE_TRAIN = entry("培")

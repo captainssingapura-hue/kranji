@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -25,8 +25,8 @@ public final class You2 {
     /** 邮 (you2) — mail; post. */
     public static final ChineseCharacterEntry 邮_MAIL_POST = entry("邮")
             .py(ZERO, I, Body.O, Tail.VOWEL_U, T2).strokes(7).radical(163)
-            .leftRight(zi("由"), zi("阝"))
-            .phonoSemantic(zi("阝"), zi("由"));
+            .leftRight(zi("由"), YOU_ER_PANG)
+            .phonoSemantic(YOU_ER_PANG, zi("由"));
 
     /** 游 (you2) — swim; travel. */
     public static final ChineseCharacterEntry 游_SWIM_TRAVEL = entry("游")

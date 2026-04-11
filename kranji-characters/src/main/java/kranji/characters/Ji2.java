@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -31,14 +31,14 @@ public final class Ji2 {
     /** 集 (ji2) — gather; collect. */
     public static final ChineseCharacterEntry 集_GATHER_COLLECT = entry("集")
             .py(J, OPEN, Body.I, Tail.NONE, T2).strokes(12).radical(172)
-            .topBottom(zi("隹"), zi("木"))
+            .topBottom(zi("隹"), MU)
             .compoundIndicative("gather; collect");
 
     /** 极 (ji2) — extreme; pole. */
     public static final ChineseCharacterEntry 极_EXTREME_POLE = entry("极")
             .py(J, OPEN, Body.I, Tail.NONE, T2).strokes(7).radical(75)
-            .leftRight(zi("木"), zi("及"))
-            .phonoSemantic(zi("木"), zi("及"));
+            .leftRight(MU, zi("及"))
+            .phonoSemantic(MU, zi("及"));
 
     /** 级 (ji2) — grade; level. */
     public static final ChineseCharacterEntry 级_GRADE_LEVEL = entry("级")

@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -19,8 +19,8 @@ public final class Chen2 {
     /** 陈 (chen2) — display; stale. */
     public static final ChineseCharacterEntry 陈_DISPLAY_STALE = entry("陈")
             .py(CH, OPEN, Body.E, Tail.N, T2).strokes(7).radical(170)
-            .leftRight(zi("阝"), zi("东"))
-            .phonoSemantic(zi("阝"), zi("东"));
+            .leftRight(ZUO_ER_PANG, zi("东"))
+            .phonoSemantic(ZUO_ER_PANG, zi("东"));
 
     /** 晨 (chen2) — morning; dawn. */
     public static final ChineseCharacterEntry 晨_MORNING_DAWN = entry("晨")

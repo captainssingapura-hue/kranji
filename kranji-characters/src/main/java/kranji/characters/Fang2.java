@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -19,8 +19,8 @@ public final class Fang2 {
     /** 防 (fang2) — prevent; guard. */
     public static final ChineseCharacterEntry 防_PREVENT_GUARD = entry("防")
             .py(F, OPEN, Body.A, Tail.NG, T2).strokes(6).radical(170)
-            .leftRight(zi("阝"), zi("方"))
-            .phonoSemantic(zi("阝"), zi("方"));
+            .leftRight(ZUO_ER_PANG, zi("方"))
+            .phonoSemantic(ZUO_ER_PANG, zi("方"));
 
     /** 房 (fang2) — room; house. */
     public static final ChineseCharacterEntry 房_ROOM_HOUSE = entry("房")

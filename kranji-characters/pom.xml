@@ -23,6 +23,11 @@
             <artifactId>kranji-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-singulars</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

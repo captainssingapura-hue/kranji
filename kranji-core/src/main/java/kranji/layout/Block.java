@@ -1,5 +1,7 @@
 package kranji.layout;
 
+import kranji.classification.BlockRole;
+
 /**
  * A positioned rectangular region in the character layout.
  *
@@ -12,15 +14,14 @@ package kranji.layout;
  * rendered. Non-leaf compositions produce no Block themselves — they
  * only determine how their children's Blocks are positioned.</p>
  *
- * @param glyph   the component's visual glyph (e.g. "氵", "青", "日")
- * @param x       left edge, normalized [0,1]
- * @param y       top edge, normalized [0,1]
- * @param w       width, normalized [0,1]
- * @param h       height, normalized [0,1]
- * @param depth   nesting depth (0 = root composition's direct child)
- * @param role    the structural role this block plays in its parent
- * @param glyphDx glyph center x-offset from block center, as fraction of block width [-0.5, 0.5]
- * @param glyphDy glyph center y-offset from block center, as fraction of block height [-0.5, 0.5]
+ * @param glyph the component's visual glyph (e.g. "氵", "青", "日")
+ * @param x     left edge, normalized [0,1]
+ * @param y     top edge, normalized [0,1]
+ * @param w     width, normalized [0,1]
+ * @param h     height, normalized [0,1]
+ * @param depth nesting depth (0 = root composition's direct child)
+ * @param role  the structural role this block plays in its parent
+ * @param hint  layout hint for inner positioning (nullable — renderer reads scale/offset from here)
  */
 public record Block(
         String glyph,
@@ -28,12 +29,12 @@ public record Block(
         double w, double h,
         int depth,
         BlockRole role,
-        double glyphDx, double glyphDy
+        LayoutHint hint
 ) {
 
-    /** Convenience constructor with no glyph offset. */
+    /** Convenience constructor with no hint. */
     public Block(String glyph, double x, double y, double w, double h, int depth, BlockRole role) {
-        this(glyph, x, y, w, h, depth, role, 0.0, 0.0);
+        this(glyph, x, y, w, h, depth, role, null);
     }
 
     /** Bounding-box area (useful for sorting/debugging). */

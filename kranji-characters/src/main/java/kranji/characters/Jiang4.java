@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -25,7 +25,7 @@ public final class Jiang4 {
     /** 降 (jiang4) — descend; drop. */
     public static final ChineseCharacterEntry 降_DESCEND_DROP = entry("降")
             .py(J, I, Body.A, Tail.NG, T4).strokes(8).radical(170)
-            .leftRight(zi("阝"), zi("夅"))
+            .leftRight(ZUO_ER_PANG, zi("夅"))
             .compoundIndicative("descend; drop");
 
     public static final List<ChineseCharacterEntry> ALL = List.of(酱_SAUCE_PASTE, 降_DESCEND_DROP);

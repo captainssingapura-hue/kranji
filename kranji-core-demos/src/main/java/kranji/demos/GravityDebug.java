@@ -10,8 +10,8 @@ public class GravityDebug {
                 var blocks = BlockLayoutEngine.layout(e);
                 System.out.println("=== " + ch + " ===");
                 for (var b : blocks) {
-                    System.out.printf("  %-16s glyph=%-3s area=%.4f cx=%.3f cy=%.3f glyphDx=%+.4f glyphDy=%+.4f%n",
-                            b.role(), b.glyph(), b.area(), b.cx(), b.cy(), b.glyphDx(), b.glyphDy());
+                    System.out.printf("  %-16s glyph=%-3s area=%.4f cx=%.3f cy=%.3f hint=%s%n",
+                            b.role(), b.glyph(), b.area(), b.cx(), b.cy(), b.hint());
                 }
             }
         }

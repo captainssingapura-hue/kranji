@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -43,8 +43,8 @@ public final class Ji4 {
     /** 际 (ji4) — occasion; border. */
     public static final ChineseCharacterEntry 际_OCCASION_BORDER = entry("际")
             .py(J, OPEN, Body.I, Tail.NONE, T4).strokes(7).radical(170)
-            .leftRight(zi("阝"), zi("示"))
-            .phonoSemantic(zi("阝"), zi("示"));
+            .leftRight(ZUO_ER_PANG, zi("示"))
+            .phonoSemantic(ZUO_ER_PANG, zi("示"));
 
     /** 迹 (ji4) — trace; mark. */
     public static final ChineseCharacterEntry 迹_TRACE_MARK = entry("迹")

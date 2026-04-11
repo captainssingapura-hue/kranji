@@ -3,14 +3,14 @@ package kranji.demos;
 import kranji.classification.CharacterComposition.*;
 import kranji.classification.EtymologicalCategory.*;
 import kranji.component.Component;
-import kranji.component.Component.Zi;
-import kranji.component.Parts;
+import kranji.component.SingularZi;
+import kranji.component.basic.BasicComponents;
 import kranji.entry.ChineseCharacterEntry;
 import kranji.pinyin.*;
 
 import java.util.List;
 
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.entry.ChineseCharacterEntry.toCodepoint;
 
 /**
@@ -149,7 +149,7 @@ public final class ExampleCharacters {
             "明", toCodepoint("明"),
             List.of(py(Initial.M, Head.OPEN, Body.I, Tail.NG, Tone.SECOND)),
             8, 72,
-            new LeftRight(new Zi("日"), new Zi("月")),
+            new LeftRight(SingularZi.of("日"), SingularZi.of("月")),
             new CompoundIndicative("日(sun) + 月(moon) → bright")
     );
 
@@ -158,7 +158,7 @@ public final class ExampleCharacters {
             "休", toCodepoint("休"),
             List.of(py(Initial.X, Head.I, Body.O, Tail.VOWEL_U, Tone.FIRST)),
             6, 9,
-            new LeftRight(DAN_REN_PANG, new Zi("木")),
+            new LeftRight(DAN_REN_PANG, SingularZi.of("木")),
             new CompoundIndicative("亻(person) + 木(tree) → person leaning on tree → rest")
     );
 
@@ -167,7 +167,7 @@ public final class ExampleCharacters {
             "孔", toCodepoint("孔"),
             List.of(py(Initial.K, Head.OPEN, Body.O, Tail.NG, Tone.THIRD)),
             4, 39,
-            new LeftRight(new Zi("子"), new Zi("乚")),
+            new LeftRight(SingularZi.of("子"), SingularZi.of("乚")),
             new CompoundIndicative("子(child) + 乚(opening) → hole")
     );
 
@@ -176,7 +176,7 @@ public final class ExampleCharacters {
             "林", toCodepoint("林"),
             List.of(py(Initial.L, Head.OPEN, Body.I, Tail.N, Tone.SECOND)),
             8, 75,
-            new LeftRight(new Zi("木"), new Zi("木")),
+            new LeftRight(SingularZi.of("木"), SingularZi.of("木")),
             new CompoundIndicative("木(tree) + 木(tree) → forest")
     );
 
@@ -187,8 +187,8 @@ public final class ExampleCharacters {
             "清", toCodepoint("清"),
             List.of(py(Initial.Q, Head.OPEN, Body.I, Tail.NG, Tone.FIRST)),
             11, 85,
-            new LeftRight(SAN_DIAN_SHUI, new Zi("青")),
-            new PhonoSemantic(SAN_DIAN_SHUI, new Zi("青"))
+            new LeftRight(SAN_DIAN_SHUI, SingularZi.of("青")),
+            new PhonoSemantic(SAN_DIAN_SHUI, SingularZi.of("青"))
     );
 
     /** 请 (qǐng) — invite/please. LeftRight: 讠(left, semantic) + 青(right, phonetic). Kangxi radical 149. */
@@ -196,8 +196,8 @@ public final class ExampleCharacters {
             "请", toCodepoint("请"),
             List.of(py(Initial.Q, Head.OPEN, Body.I, Tail.NG, Tone.THIRD)),
             10, 149,
-            new LeftRight(YAN_ZI_PANG, new Zi("青")),
-            new PhonoSemantic(YAN_ZI_PANG, new Zi("青"))
+            new LeftRight(YAN_ZI_PANG, SingularZi.of("青")),
+            new PhonoSemantic(YAN_ZI_PANG, SingularZi.of("青"))
     );
 
     /** 情 (qíng) — emotion/feeling. LeftRight: 忄(left, semantic) + 青(right, phonetic). Kangxi radical 61. */
@@ -205,8 +205,8 @@ public final class ExampleCharacters {
             "情", toCodepoint("情"),
             List.of(py(Initial.Q, Head.OPEN, Body.I, Tail.NG, Tone.SECOND)),
             11, 61,
-            new LeftRight(SHU_XIN_PANG, new Zi("青")),
-            new PhonoSemantic(SHU_XIN_PANG, new Zi("青"))
+            new LeftRight(SHU_XIN_PANG, SingularZi.of("青")),
+            new PhonoSemantic(SHU_XIN_PANG, SingularZi.of("青"))
     );
 
     /** 晴 (qíng) — sunny/clear weather. LeftRight: 日(left, semantic) + 青(right, phonetic). Kangxi radical 72. */
@@ -214,8 +214,8 @@ public final class ExampleCharacters {
             "晴", toCodepoint("晴"),
             List.of(py(Initial.Q, Head.OPEN, Body.I, Tail.NG, Tone.SECOND)),
             12, 72,
-            new LeftRight(new Zi("日"), new Zi("青")),
-            new PhonoSemantic(new Zi("日"), new Zi("青"))
+            new LeftRight(SingularZi.of("日"), SingularZi.of("青")),
+            new PhonoSemantic(SingularZi.of("日"), SingularZi.of("青"))
     );
 
     // ── TopBottom / Phono-Semantic ──────────────────────────────────────
@@ -225,8 +225,8 @@ public final class ExampleCharacters {
             "字", toCodepoint("字"),
             List.of(py(Initial.Z, Head.OPEN, Body.NULL, Tail.NONE, Tone.FOURTH)),
             6, 39,
-            new TopBottom(BAO_GAI_TOU, new Zi("子")),
-            new PhonoSemantic(BAO_GAI_TOU, new Zi("子"))
+            new TopBottom(BAO_GAI_TOU, SingularZi.of("子")),
+            new PhonoSemantic(BAO_GAI_TOU, SingularZi.of("子"))
     );
 
     /** 花 (huā) — flower. TopBottom: 艹(top, semantic) + 化(bottom, phonetic). Kangxi radical 140. */
@@ -234,8 +234,8 @@ public final class ExampleCharacters {
             "花", toCodepoint("花"),
             List.of(py(Initial.H, Head.U, Body.A, Tail.NONE, Tone.FIRST)),
             7, 140,
-            new TopBottom(CAO_ZI_TOU, new Zi("化")),
-            new PhonoSemantic(CAO_ZI_TOU, new Zi("化"))
+            new TopBottom(CAO_ZI_TOU, SingularZi.of("化")),
+            new PhonoSemantic(CAO_ZI_TOU, SingularZi.of("化"))
     );
 
     // ── FullEnclosure / Phono-Semantic ──────────────────────────────────
@@ -245,8 +245,8 @@ public final class ExampleCharacters {
             "国", toCodepoint("国"),
             List.of(py(Initial.G, Head.U, Body.O, Tail.NONE, Tone.SECOND)),
             8, 31,
-            new FullEnclosure(GUO_ZI_KUANG, new Zi("玉")),
-            new PhonoSemantic(GUO_ZI_KUANG, new Zi("玉"))
+            new FullEnclosure(GUO_ZI_KUANG, SingularZi.of("玉")),
+            new PhonoSemantic(GUO_ZI_KUANG, SingularZi.of("玉"))
     );
 
     // ── Mosaic / Compound Indicative ────────────────────────────────────
@@ -256,7 +256,7 @@ public final class ExampleCharacters {
             "品", toCodepoint("品"),
             List.of(py(Initial.P, Head.OPEN, Body.I, Tail.N, Tone.THIRD)),
             9, 30,
-            new Mosaic(new Zi("口")),
+            new Mosaic(SingularZi.of("口")),
             new CompoundIndicative("口(mouth) × 3 → many mouths → tasting, judging quality")
     );
 
@@ -265,7 +265,7 @@ public final class ExampleCharacters {
             "森", toCodepoint("森"),
             List.of(py(Initial.S, Head.OPEN, Body.E, Tail.N, Tone.FIRST)),
             12, 75,
-            new Mosaic(new Zi("木")),
+            new Mosaic(SingularZi.of("木")),
             new CompoundIndicative("木(tree) × 3 → dense forest")
     );
 
@@ -276,8 +276,8 @@ public final class ExampleCharacters {
             "遨", toCodepoint("遨"),
             List.of(py(Initial.ZERO, Head.OPEN, Body.A, Tail.VOWEL_U, Tone.SECOND)),
             13, 162,
-            new SemiEnclosureBottomLeft(ZOU_ZHI_DI, new Zi("敖")),
-            new PhonoSemantic(ZOU_ZHI_DI, new Zi("敖"))
+            new SemiEnclosureBottomLeft(ZOU_ZHI_DI, SingularZi.of("敖")),
+            new PhonoSemantic(ZOU_ZHI_DI, SingularZi.of("敖"))
     );
 
     // ── SemiEnclosureBottomLeft / Compound Indicative (recursive) ─────
@@ -308,16 +308,16 @@ public final class ExampleCharacters {
             new SemiEnclosureBottomLeft(
                     ZOU_ZHI_DI,                                 // 辶 — walk radical
                     new TopMiddleBottom(                         // ── Level 1 ──
-                            new Zi("穴"),                        // cave / roof
+                            SingularZi.of("穴"),                        // cave / roof
                             new LeftMiddleRight(
-                                new Zi("月"),// ── Level 2 ──
+                                SingularZi.of("月"),// ── Level 2 ──
                                 new TopBottom(               // left column
-                                        new LeftMiddleRight(new Zi("幺"), new Zi("言"), new Zi("幺")),        // moon / flesh
-                                        new LeftMiddleRight(new Zi("长"), new Zi("马"), new Zi("长"))         // long
+                                        new LeftMiddleRight(SingularZi.of("幺"), SingularZi.of("言"), SingularZi.of("幺")),        // moon / flesh
+                                        new LeftMiddleRight(SingularZi.of("长"), SingularZi.of("马"), SingularZi.of("长"))         // long
                                 ),
                                 LI_DAO_PANG
                             ),
-                            new Zi("心")                         // heart
+                            SingularZi.of("心")                         // heart
                     )
             ),
             new CompoundIndicative(

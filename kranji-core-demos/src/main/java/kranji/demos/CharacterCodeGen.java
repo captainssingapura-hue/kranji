@@ -212,7 +212,7 @@ public final class CharacterCodeGen {
         sb.append("import java.util.List;\n\n");
         sb.append("import static kranji.characters.Comp.*;\n");
         sb.append("import static kranji.characters.EntryBuilder.entry;\n");
-        sb.append("import static kranji.component.Parts.*;\n");
+        sb.append("import static kranji.component.basic.BasicComponents.*;\n");
         sb.append("import static kranji.pinyin.Initial.*;\n");
         sb.append("import static kranji.pinyin.Head.*;\n");
         sb.append("import kranji.pinyin.Body;\n");

@@ -6,7 +6,7 @@ import java.util.List;
 
 import static kranji.characters.Comp.*;
 import static kranji.characters.EntryBuilder.entry;
-import static kranji.component.Parts.*;
+import static kranji.component.basic.BasicComponents.*;
 import static kranji.pinyin.Initial.*;
 import static kranji.pinyin.Head.*;
 import kranji.pinyin.Body;
@@ -25,8 +25,8 @@ public final class Cai2 {
     /** 材 (cai2) — material. */
     public static final ChineseCharacterEntry 材_MATERIAL = entry("材")
             .py(C, OPEN, Body.A, Tail.VOWEL_I, T2).strokes(7).radical(75)
-            .leftRight(zi("木"), zi("才"))
-            .phonoSemantic(zi("木"), zi("才"));
+            .leftRight(MU, zi("才"))
+            .phonoSemantic(MU, zi("才"));
 
     public static final List<ChineseCharacterEntry> ALL = List.of(才_TALENT_JUST, 材_MATERIAL);
 }

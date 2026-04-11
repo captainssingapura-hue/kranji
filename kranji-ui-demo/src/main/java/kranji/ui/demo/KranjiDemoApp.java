@@ -2,6 +2,8 @@ package kranji.ui.demo;
 
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -19,22 +21,44 @@ import kranji.classification.CharacterComposition.*;
 import kranji.classification.EtymologicalCategory;
 import kranji.classification.StructuralNode;
 import kranji.classification.EtymologicalCategory.*;
+import kranji.component.BasicComponent;
 import kranji.component.Component;
 import kranji.component.Component.Part;
 import kranji.component.Component.Zi;
 import kranji.characters.Characters;
 import kranji.demos.ExampleCharacters;
 import kranji.entry.ChineseCharacterEntry;
+import kranji.pinyin.Initial;
 import kranji.pinyin.PinyinSyllable;
+import kranji.pinyin.Tone;
 import kranji.layout.BlockSvgRenderer;
 
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class KranjiDemoApp extends Application {
 
+    private FilteredList<ChineseCharacterEntry> filteredList;
+
+    private ComboBox<String> initialFilter;
+    private ComboBox<String> toneFilter;
+    private ComboBox<String> compositionFilter;
+    private ComboBox<String> etymologyFilter;
+
     @Override
     public void start(Stage stage) {
-        var table = createTable();
+        // Wrap data in a FilteredList for dynamic filtering
+        filteredList = new FilteredList<>(
+                FXCollections.observableArrayList(Characters.ALL), e -> true);
+
+        var table = createTable(filteredList);
+
+        // ── Filter bar ──────────────────────────────────────────────────
+        var filterBar = createFilterBar();
+
+        // Table + filter bar on the left
+        var leftPane = new VBox(filterBar, table);
+        VBox.setVgrow(table, Priority.ALWAYS);
 
         // Detail panel (text-based)
         var detailScroll = new ScrollPane();
@@ -79,7 +103,7 @@ public class KranjiDemoApp extends Application {
             }
         });
 
-        var split = new SplitPane(table, rightSplit);
+        var split = new SplitPane(leftPane, rightSplit);
         split.setDividerPositions(0.32);
 
         var scene = new Scene(split, 1150, 780);
@@ -90,6 +114,114 @@ public class KranjiDemoApp extends Application {
         stage.show();
 
         table.getSelectionModel().selectFirst();
+    }
+
+    // ── Filter bar ─────────────────────────────────────────────────────
+
+    private HBox createFilterBar() {
+        initialFilter = new ComboBox<>();
+        initialFilter.getItems().add("All Initials");
+        for (Initial i : Initial.values()) {
+            var label = i == Initial.ZERO ? "\u2205 (zero)" : i.pinyin();
+            initialFilter.getItems().add(label);
+        }
+        initialFilter.setValue("All Initials");
+        initialFilter.setOnAction(e -> applyFilters());
+
+        toneFilter = new ComboBox<>();
+        toneFilter.getItems().add("All Tones");
+        for (Tone t : Tone.values()) {
+            toneFilter.getItems().add(t.diacritic() + " " + t.chinese());
+        }
+        toneFilter.setValue("All Tones");
+        toneFilter.setOnAction(e -> applyFilters());
+
+        compositionFilter = new ComboBox<>();
+        compositionFilter.getItems().addAll(
+                "All Structures", "Singular", "Left-Right", "Top-Bottom",
+                "L-M-R", "T-M-B", "Full Encl.", "Semi-Enclosure", "Mosaic");
+        compositionFilter.setValue("All Structures");
+        compositionFilter.setOnAction(e -> applyFilters());
+
+        etymologyFilter = new ComboBox<>();
+        etymologyFilter.getItems().addAll(
+                "All Etymology", "Pictograph", "Indicative", "Compound",
+                "Phono-Sem.", "Cognate", "Loan");
+        etymologyFilter.setValue("All Etymology");
+        etymologyFilter.setOnAction(e -> applyFilters());
+
+        var style = "-fx-font-size: 11;";
+        initialFilter.setStyle(style);
+        toneFilter.setStyle(style);
+        compositionFilter.setStyle(style);
+        etymologyFilter.setStyle(style);
+
+        var countLabel = new Label(filteredList.size() + " chars");
+        countLabel.setStyle("-fx-font-size: 11; -fx-text-fill: #888;");
+        filteredList.predicateProperty().addListener((obs, oldP, newP) ->
+                countLabel.setText(filteredList.size() + " chars"));
+
+        var bar = new HBox(6,
+                initialFilter, toneFilter, compositionFilter, etymologyFilter, countLabel);
+        bar.setPadding(new Insets(6, 6, 4, 6));
+        bar.setAlignment(Pos.CENTER_LEFT);
+        bar.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #ddd; -fx-border-width: 0 0 1 0;");
+        return bar;
+    }
+
+    private void applyFilters() {
+        Predicate<ChineseCharacterEntry> predicate = e -> true;
+
+        // Initial filter
+        var selInitial = initialFilter.getValue();
+        if (selInitial != null && !selInitial.equals("All Initials")) {
+            predicate = predicate.and(e -> e.pinyin().stream().anyMatch(py -> {
+                if (selInitial.startsWith("\u2205")) return py.initial() == Initial.ZERO;
+                return py.initial().pinyin().equals(selInitial);
+            }));
+        }
+
+        // Tone filter
+        var selTone = toneFilter.getValue();
+        if (selTone != null && !selTone.equals("All Tones")) {
+            predicate = predicate.and(e -> e.pinyin().stream().anyMatch(py -> {
+                var label = py.tone().diacritic() + " " + py.tone().chinese();
+                return label.equals(selTone);
+            }));
+        }
+
+        // Composition filter
+        var selComp = compositionFilter.getValue();
+        if (selComp != null && !selComp.equals("All Structures")) {
+            predicate = predicate.and(e -> matchesCompositionFilter(e.composition(), selComp));
+        }
+
+        // Etymology filter
+        var selEtym = etymologyFilter.getValue();
+        if (selEtym != null && !selEtym.equals("All Etymology")) {
+            predicate = predicate.and(e -> etymologyLabel(e.etymology()).equals(selEtym));
+        }
+
+        filteredList.setPredicate(predicate);
+    }
+
+    private static boolean matchesCompositionFilter(CharacterComposition comp, String filter) {
+        return switch (filter) {
+            case "Singular" -> comp instanceof Singular;
+            case "Left-Right" -> comp instanceof LeftRight;
+            case "Top-Bottom" -> comp instanceof TopBottom;
+            case "L-M-R" -> comp instanceof LeftMiddleRight;
+            case "T-M-B" -> comp instanceof TopMiddleBottom;
+            case "Full Encl." -> comp instanceof FullEnclosure;
+            case "Semi-Enclosure" -> comp instanceof SemiEnclosureUpperLeft
+                    || comp instanceof SemiEnclosureUpperRight
+                    || comp instanceof SemiEnclosureBottomLeft
+                    || comp instanceof SemiEnclosureTopThree
+                    || comp instanceof SemiEnclosureBottomThree
+                    || comp instanceof SemiEnclosureLeftThree;
+            case "Mosaic" -> comp instanceof Mosaic;
+            default -> true;
+        };
     }
 
     /**
@@ -120,7 +252,7 @@ public class KranjiDemoApp extends Application {
 
     // ── Table ───────────────────────────────────────────────────────────
 
-    private TableView<ChineseCharacterEntry> createTable() {
+    private TableView<ChineseCharacterEntry> createTable(FilteredList<ChineseCharacterEntry> items) {
         var table = new TableView<ChineseCharacterEntry>();
         table.setMinWidth(360);
 
@@ -147,7 +279,7 @@ public class KranjiDemoApp extends Application {
         colEtym.setPrefWidth(115);
 
         table.getColumns().addAll(colGlyph, colPinyin, colStrokes, colComp, colEtym);
-        table.getItems().addAll(Characters.ALL);
+        table.setItems(items);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         return table;
     }
@@ -288,6 +420,8 @@ public class KranjiDemoApp extends Application {
 
     private static String renderNode(StructuralNode node) {
         return switch (node) {
+            case BasicComponent bc -> bc.glyph() + "  " + bc.name() + " \u2014 " + bc.meaning()
+                    + " (\u2190 " + bc.standalone() + " " + bc.pinyin() + ")";
             case Part p -> p.glyph() + "  " + p.name() + " \u2014 " + p.meaning()
                     + " (\u2190 " + p.standalone() + " " + p.pinyin() + ")";
             case Zi z -> z.glyph();

@@ -5,6 +5,7 @@ import kranji.classification.CharacterComposition.*;
 import kranji.classification.StructuralNode;
 import kranji.component.Component;
 import kranji.component.Component.Part;
+import kranji.component.BasicComponent;
 import kranji.component.Component.Zi;
 import kranji.entry.ChineseCharacterEntry;
 
@@ -87,6 +88,7 @@ public final class StructuralSvgRenderer {
     private static void renderNode(StringBuilder sb, StructuralNode node,
                                    Rect bounds, int depth, String parentGlyph) {
         switch (node) {
+            case BasicComponent bc -> renderLeaf(sb, bc.glyph(), bc.name(), bounds, depth);
             case Part p -> renderLeaf(sb, p.glyph(), p.name(), bounds, depth);
             case Zi z -> renderLeaf(sb, z.glyph(), null, bounds, depth);
             case CharacterComposition comp -> {
@@ -312,6 +314,7 @@ public final class StructuralSvgRenderer {
 
     private static String glyphOf(StructuralNode node) {
         return switch (node) {
+            case BasicComponent bc -> bc.glyph();
             case Part p -> p.glyph();
             case Zi z -> z.glyph();
             case CharacterComposition c -> "⊞";

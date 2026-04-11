@@ -9,7 +9,12 @@ import kranji.component.Component.Part;
  * characters, never as standalone glyphs. Each constant captures the part's
  * visual form, conventional name, the standalone character it derives from,
  * its semantic meaning, and the pronunciation of the standalone form.</p>
+ *
+ * @deprecated Use {@link kranji.component.basic.BasicComponents} instead.
+ *             Each part is now a stateless record implementing
+ *             {@link BasicComponent}, grouped by radical family.
  */
+@Deprecated
 public final class Parts {
 
     private Parts() {}
