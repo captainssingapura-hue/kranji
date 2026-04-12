@@ -1,6 +1,6 @@
 package kranji.layout;
 
-import kranji.component.BasicComponent;
+import kranji.zi.SingularZi;
 
 /**
  * A per-position layout hint intrinsic to a component via its
@@ -97,11 +97,11 @@ public record LayoutHint(BlockHint bh, InnerPositionHint iph, Glyph glyph) {
      * @param source the component this glyph derives from ({@code null} for raw glyphs)
      * @param svg    custom SVG path to render instead of font text ({@code null} = use font)
      */
-    public record Glyph(String value, BasicComponent source, SvgShape svg) {
+    public record Glyph(String value, SingularZi source, SvgShape svg) {
         /** Convenience: raw glyph, no component, no SVG. */
         public Glyph(String value) { this(value, null, null); }
         /** Convenience: glyph with component, no SVG. */
-        public Glyph(String value, BasicComponent source) { this(value, source, null); }
+        public Glyph(String value, SingularZi source) { this(value, source, null); }
         /** Whether this glyph has a custom SVG shape. */
         public boolean hasSvg() { return svg != null; }
     }
@@ -137,7 +137,7 @@ public record LayoutHint(BlockHint bh, InnerPositionHint iph, Glyph glyph) {
     }
 
     /** Glyph substitution with source component. */
-    public static LayoutHint glyph(String value, BasicComponent source) {
+    public static LayoutHint glyph(String value, SingularZi source) {
         return new LayoutHint(null, null, new Glyph(value, source));
     }
 

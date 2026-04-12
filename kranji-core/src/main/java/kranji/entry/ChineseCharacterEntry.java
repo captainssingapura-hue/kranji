@@ -1,8 +1,8 @@
 package kranji.entry;
 
-import kranji.classification.CharacterComposition;
 import kranji.classification.EtymologicalCategory;
 import kranji.pinyin.PinyinSyllable;
+import kranji.zi.Zi;
 
 import java.util.List;
 
@@ -10,13 +10,13 @@ import java.util.List;
  * A fully classified Chinese character entry, combining both orthogonal axes
  * of classification with metadata.
  *
- * @param character   the glyph (e.g. "清")
- * @param codepoint   the Unicode code point (e.g. "U+6E05")
- * @param pinyin      Mandarin reading(s)
- * @param strokes     total stroke count
- * @param radicalNo   Kangxi radical number (1–214)
- * @param composition Axis 1: structural composition (字形结构) — encodes both structure and components
- * @param etymology   Axis 2: etymological category (六书)
+ * @param character  the glyph (e.g. "清")
+ * @param codepoint  the Unicode code point (e.g. "U+6E05")
+ * @param pinyin     Mandarin reading(s)
+ * @param strokes    total stroke count
+ * @param radicalNo  Kangxi radical number (1–214)
+ * @param structure  Axis 1: structural composition — a SingularZi leaf or ComposedZi tree
+ * @param etymology  Axis 2: etymological category (六书)
  */
 public record ChineseCharacterEntry(
         String character,
@@ -24,7 +24,7 @@ public record ChineseCharacterEntry(
         List<PinyinSyllable> pinyin,
         int strokes,
         int radicalNo,
-        CharacterComposition composition,
+        Zi structure,
         EtymologicalCategory etymology
 ) {
 

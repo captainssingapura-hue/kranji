@@ -1,9 +1,9 @@
 package kranji.characters;
 
-import kranji.classification.CharacterComposition.*;
-import kranji.classification.StructuralNode;
-import kranji.component.SingularZi;
 import kranji.pinyin.Tone;
+import kranji.zi.ComposedZi.*;
+import kranji.zi.SingularZi;
+import kranji.zi.Zi;
 
 /**
  * Static factory methods for building composition trees concisely.
@@ -31,76 +31,80 @@ public final class Comp {
 
     // ── Leaf node ──────────────────────────────────────────────────────
 
-    /** Creates a standalone-character leaf node. */
+    /**
+     * Creates a plain standalone-character leaf node.
+     * Prefer direct static references (e.g. {@code HintedZi.RI}) for
+     * characters that have dedicated records with layout hints.
+     */
     public static SingularZi zi(String glyph) {
-        return SingularZi.of(glyph);
+        return SingularZi.plain(glyph);
     }
 
     // ── 2-slot compositions ────────────────────────────────────────────
 
     /** 左右结构 — Left-Right. */
-    public static LeftRight lr(StructuralNode left, StructuralNode right) {
+    public static LeftRight lr(Zi left, Zi right) {
         return new LeftRight(left, right);
     }
 
     /** 上下结构 — Top-Bottom. */
-    public static TopBottom tb(StructuralNode top, StructuralNode bottom) {
+    public static TopBottom tb(Zi top, Zi bottom) {
         return new TopBottom(top, bottom);
     }
 
     /** 全包围 — Full Enclosure. */
-    public static FullEnclosure encl(StructuralNode outer, StructuralNode inner) {
+    public static FullEnclosure encl(Zi outer, Zi inner) {
         return new FullEnclosure(outer, inner);
     }
 
     // ── 3-slot compositions ────────────────────────────────────────────
 
     /** 左中右结构 — Left-Middle-Right. */
-    public static LeftMiddleRight lmr(StructuralNode left, StructuralNode middle, StructuralNode right) {
+    public static LeftMiddleRight lmr(Zi left, Zi middle, Zi right) {
         return new LeftMiddleRight(left, middle, right);
     }
 
     /** 上中下结构 — Top-Middle-Bottom. */
-    public static TopMiddleBottom tmb(StructuralNode top, StructuralNode middle, StructuralNode bottom) {
+    public static TopMiddleBottom tmb(Zi top, Zi middle, Zi bottom) {
         return new TopMiddleBottom(top, middle, bottom);
     }
 
     // ── Semi-enclosures (wrapper + content) ────────────────────────────
 
     /** 左上包围 — Semi-enclosure upper-left. */
-    public static SemiEnclosureUpperLeft semiUL(StructuralNode wrapper, StructuralNode content) {
+    public static SemiEnclosureUpperLeft semiUL(Zi wrapper, Zi content) {
         return new SemiEnclosureUpperLeft(wrapper, content);
     }
 
     /** 右上包围 — Semi-enclosure upper-right. */
-    public static SemiEnclosureUpperRight semiUR(StructuralNode wrapper, StructuralNode content) {
+    public static SemiEnclosureUpperRight semiUR(Zi wrapper, Zi content) {
         return new SemiEnclosureUpperRight(wrapper, content);
     }
 
     /** 左下包围 — Semi-enclosure bottom-left. */
-    public static SemiEnclosureBottomLeft semiBL(StructuralNode wrapper, StructuralNode content) {
+    public static SemiEnclosureBottomLeft semiBL(Zi wrapper, Zi content) {
         return new SemiEnclosureBottomLeft(wrapper, content);
     }
 
     /** 上三包围 — Semi-enclosure top-three. */
-    public static SemiEnclosureTopThree semiT3(StructuralNode wrapper, StructuralNode content) {
+    public static SemiEnclosureTopThree semiT3(Zi wrapper, Zi content) {
         return new SemiEnclosureTopThree(wrapper, content);
     }
 
     /** 下三包围 — Semi-enclosure bottom-three. */
-    public static SemiEnclosureBottomThree semiB3(StructuralNode wrapper, StructuralNode content) {
+    public static SemiEnclosureBottomThree semiB3(Zi wrapper, Zi content) {
         return new SemiEnclosureBottomThree(wrapper, content);
     }
 
     /** 左三包围 — Semi-enclosure left-three. */
-    public static SemiEnclosureLeftThree semiL3(StructuralNode wrapper, StructuralNode content) {
+    public static SemiEnclosureLeftThree semiL3(Zi wrapper, Zi content) {
         return new SemiEnclosureLeftThree(wrapper, content);
     }
 
     // ── Mosaic ─────────────────────────────────────────────────────────
 
     /** 品字结构 — Mosaic (three identical elements). */
-    public static Mosaic mosaic(StructuralNode element) {
+    public static Mosaic mosaic(Zi element) {
         return new Mosaic(element);
     }
 }

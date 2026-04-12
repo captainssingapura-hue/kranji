@@ -2,7 +2,7 @@ package kranji.classification;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import kranji.component.LeafNode;
+import kranji.zi.SingularZi;
 
 /**
  * 六书 — The Six Writings, modeled as a proper sum type where each variant
@@ -54,7 +54,7 @@ public sealed interface EtymologicalCategory {
      * @param semanticPart the 形旁 — component that hints at meaning
      * @param phoneticPart the 声��� — component that hints at sound
      */
-    record PhonoSemantic(LeafNode semanticPart, LeafNode phoneticPart) implements EtymologicalCategory {}
+    record PhonoSemantic(SingularZi semanticPart, SingularZi phoneticPart) implements EtymologicalCategory {}
 
     /**
      * 转注 — Characters sharing an etymological root and mutually explanatory

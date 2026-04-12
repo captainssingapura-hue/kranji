@@ -1,19 +1,19 @@
 package kranji.component.basic;
 
 import kranji.classification.BlockRole;
-import kranji.classification.CharacterComposition.LeftRight;
-import kranji.component.BasicComponent;
-import kranji.component.SingularZi;
+import kranji.zi.ComposedZi.LeftRight;
+import kranji.library.LibraryMember;
+import kranji.library.BasicSet;
 import kranji.layout.Politeness;
+
+import java.util.List;
 
 /** 木部 — Wood/tree-related components. */
 public final class WoodFamily {
     private WoodFamily() {}
 
-    /** 木 — wood/tree. Used as a standalone radical and as a left component.
-     *  Implements SingularZi so that {@code SingularZi.of("木")} and
-     *  {@code WoodFamily.MU} resolve to the same instance. */
-    public record Mu() implements SingularZi {
+    /** 木 — wood/tree. Used as a standalone radical and as a left component. */
+    public record Mu() implements LibraryMember<BasicSet> {
         @Override public String glyph()   { return "木"; }
         @Override public String meaning() { return "tree, wood"; }
         @Override public String pinyin()  { return "mù"; }
@@ -24,9 +24,11 @@ public final class WoodFamily {
             if (role instanceof LeftRight.Left) return Politeness.YIELDING;
             return Politeness.NEUTRAL;
         }
+
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     public static final Mu MU = new Mu();
 
-    static { SingularZi.register(MU); }
+    public static final List<LibraryMember<BasicSet>> ALL = List.of(MU);
 }

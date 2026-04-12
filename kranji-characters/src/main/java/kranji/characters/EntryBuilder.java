@@ -1,10 +1,11 @@
 package kranji.characters;
 
-import kranji.classification.CharacterComposition;
-import kranji.classification.CharacterComposition.*;
-import kranji.classification.StructuralNode;
 import kranji.entry.ChineseCharacterEntry;
 import kranji.pinyin.*;
+import kranji.zi.ComposedZi;
+import kranji.zi.ComposedZi.*;
+import kranji.zi.SingularZi;
+import kranji.zi.Zi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,71 +72,76 @@ public final class EntryBuilder {
 
     /** 独体字 — Singular (no sub-components). */
     public CompositionSet singular() {
-        return withComposition(new Singular());
+        return withStructure(SingularZi.plain(character));
+    }
+
+    /** 独体字 — Singular with a specific SingularZi. */
+    public CompositionSet singular(SingularZi zi) {
+        return withStructure(zi);
     }
 
     /** 左右结构 — Left-Right. */
-    public CompositionSet leftRight(StructuralNode left, StructuralNode right) {
-        return withComposition(new LeftRight(left, right));
+    public CompositionSet leftRight(Zi left, Zi right) {
+        return withStructure(new LeftRight(left, right));
     }
 
     /** 上下结构 — Top-Bottom. */
-    public CompositionSet topBottom(StructuralNode top, StructuralNode bottom) {
-        return withComposition(new TopBottom(top, bottom));
+    public CompositionSet topBottom(Zi top, Zi bottom) {
+        return withStructure(new TopBottom(top, bottom));
     }
 
     /** 左中右结构 — Left-Middle-Right. */
-    public CompositionSet leftMiddleRight(StructuralNode left, StructuralNode middle, StructuralNode right) {
-        return withComposition(new LeftMiddleRight(left, middle, right));
+    public CompositionSet leftMiddleRight(Zi left, Zi middle, Zi right) {
+        return withStructure(new LeftMiddleRight(left, middle, right));
     }
 
     /** 上中下结构 — Top-Middle-Bottom. */
-    public CompositionSet topMiddleBottom(StructuralNode top, StructuralNode middle, StructuralNode bottom) {
-        return withComposition(new TopMiddleBottom(top, middle, bottom));
+    public CompositionSet topMiddleBottom(Zi top, Zi middle, Zi bottom) {
+        return withStructure(new TopMiddleBottom(top, middle, bottom));
     }
 
     /** 全包围 — Full Enclosure. */
-    public CompositionSet fullEnclosure(StructuralNode outer, StructuralNode inner) {
-        return withComposition(new FullEnclosure(outer, inner));
+    public CompositionSet fullEnclosure(Zi outer, Zi inner) {
+        return withStructure(new FullEnclosure(outer, inner));
     }
 
     /** 左上包围 — Semi-enclosure upper-left. */
-    public CompositionSet semiEnclosureUL(StructuralNode wrapper, StructuralNode content) {
-        return withComposition(new SemiEnclosureUpperLeft(wrapper, content));
+    public CompositionSet semiEnclosureUL(Zi wrapper, Zi content) {
+        return withStructure(new SemiEnclosureUpperLeft(wrapper, content));
     }
 
     /** 右上包围 — Semi-enclosure upper-right. */
-    public CompositionSet semiEnclosureUR(StructuralNode wrapper, StructuralNode content) {
-        return withComposition(new SemiEnclosureUpperRight(wrapper, content));
+    public CompositionSet semiEnclosureUR(Zi wrapper, Zi content) {
+        return withStructure(new SemiEnclosureUpperRight(wrapper, content));
     }
 
     /** 左下包围 — Semi-enclosure bottom-left. */
-    public CompositionSet semiEnclosureBL(StructuralNode wrapper, StructuralNode content) {
-        return withComposition(new SemiEnclosureBottomLeft(wrapper, content));
+    public CompositionSet semiEnclosureBL(Zi wrapper, Zi content) {
+        return withStructure(new SemiEnclosureBottomLeft(wrapper, content));
     }
 
     /** 上三包围 — Semi-enclosure top-three. */
-    public CompositionSet semiEnclosureT3(StructuralNode wrapper, StructuralNode content) {
-        return withComposition(new SemiEnclosureTopThree(wrapper, content));
+    public CompositionSet semiEnclosureT3(Zi wrapper, Zi content) {
+        return withStructure(new SemiEnclosureTopThree(wrapper, content));
     }
 
     /** 下三包围 — Semi-enclosure bottom-three. */
-    public CompositionSet semiEnclosureB3(StructuralNode wrapper, StructuralNode content) {
-        return withComposition(new SemiEnclosureBottomThree(wrapper, content));
+    public CompositionSet semiEnclosureB3(Zi wrapper, Zi content) {
+        return withStructure(new SemiEnclosureBottomThree(wrapper, content));
     }
 
     /** 左三包围 — Semi-enclosure left-three. */
-    public CompositionSet semiEnclosureL3(StructuralNode wrapper, StructuralNode content) {
-        return withComposition(new SemiEnclosureLeftThree(wrapper, content));
+    public CompositionSet semiEnclosureL3(Zi wrapper, Zi content) {
+        return withStructure(new SemiEnclosureLeftThree(wrapper, content));
     }
 
     /** 品字结构 — Mosaic (three identical elements). */
-    public CompositionSet mosaic(StructuralNode element) {
-        return withComposition(new Mosaic(element));
+    public CompositionSet mosaic(Zi element) {
+        return withStructure(new Mosaic(element));
     }
 
-    private CompositionSet withComposition(CharacterComposition composition) {
+    private CompositionSet withStructure(Zi structure) {
         return new CompositionSet(character, codepoint, List.copyOf(pinyin),
-                strokes, radicalNo, composition);
+                strokes, radicalNo, structure);
     }
 }

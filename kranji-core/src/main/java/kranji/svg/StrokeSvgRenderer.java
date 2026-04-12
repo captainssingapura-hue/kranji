@@ -30,11 +30,11 @@ public final class StrokeSvgRenderer {
      */
     public static String render(ChineseCharacterEntry entry) {
         // Pass 1: measure
-        LayoutBox box = LayoutEngine.measure(entry.composition());
+        LayoutBox box = LayoutEngine.measure(entry.structure());
 
         // Pass 2: place
         List<LayoutEngine.PlacedGlyph> placed = LayoutEngine.place(
-                entry.composition(), PADDING, HEADER_HEIGHT + PADDING, entry.character());
+                entry.structure(), PADDING, HEADER_HEIGHT + PADDING, entry.character());
 
         double svgWidth = box.width() + 2 * PADDING;
         double svgHeight = box.height() + HEADER_HEIGHT + 2 * PADDING;

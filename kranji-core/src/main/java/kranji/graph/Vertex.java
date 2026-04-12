@@ -2,7 +2,7 @@ package kranji.graph;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import kranji.classification.CharacterComposition;
+import kranji.zi.Zi;
 import kranji.classification.EtymologicalCategory;
 import kranji.pinyin.Final;
 import kranji.pinyin.Initial;
@@ -52,7 +52,7 @@ public sealed interface Vertex {
             List<PinyinSyllable> pinyin,
             int strokes,
             int radicalNo,
-            CharacterComposition composition,
+            Zi structure,
             EtymologicalCategory etymology
     ) implements Vertex {}
 

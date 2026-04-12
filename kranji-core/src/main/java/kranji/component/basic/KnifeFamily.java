@@ -1,16 +1,19 @@
 package kranji.component.basic;
 
 import kranji.classification.BlockRole;
-import kranji.classification.CharacterComposition.LeftRight;
-import kranji.component.BasicComponent;
+import kranji.zi.ComposedZi.LeftRight;
+import kranji.library.LibraryMember;
+import kranji.library.BasicSet;
 import kranji.layout.Politeness;
+
+import java.util.List;
 
 /** 刀部 — Knife-related components. */
 public final class KnifeFamily {
     private KnifeFamily() {}
 
     /** 刂 — 立刀旁 (knife). Derives from 刀 dāo. */
-    public record LiDaoPang() implements BasicComponent {
+    public record LiDaoPang() implements LibraryMember<BasicSet> {
         @Override public String glyph()      { return "刂"; }
         @Override public String name()       { return "立刀旁"; }
         @Override public String standalone() { return "刀"; }
@@ -23,7 +26,11 @@ public final class KnifeFamily {
             if (role instanceof LeftRight.Right) return Politeness.DEFERENTIAL;
             return Politeness.NEUTRAL;
         }
+
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     public static final LiDaoPang LI_DAO_PANG = new LiDaoPang();
+
+    public static final List<LibraryMember<BasicSet>> ALL = List.of(LI_DAO_PANG);
 }

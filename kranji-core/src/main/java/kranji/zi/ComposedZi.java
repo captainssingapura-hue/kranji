@@ -1,40 +1,37 @@
-package kranji.classification;
+package kranji.zi;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import kranji.classification.BlockRole;
+import kranji.classification.CompositionStyle;
 
 /**
- * 字形结构 — The structural composition of a Chinese character, modeled as a
- * proper sum type where each variant names its component slots explicitly.
+ * 合体字 — A composed character built from spatial arrangement of sub-components.
  *
- * <p>Given a composition, you know exactly how many components there are and
- * what positional role each one plays — no loose lists, no separate position enum.</p>
+ * <p>Sealed sum type with 12 composition variants. Each variant names its
+ * component slots explicitly and defines {@link BlockRole} records for the
+ * structural positions available in that layout.</p>
  *
- * <p>Every positional slot is typed as {@link StructuralNode} — either a leaf
- * {@link Component} or a nested {@code CharacterComposition} — enabling recursive
- * decomposition to arbitrary depth. This captures the fractal nature of Chinese
- * characters: 𰻝 decomposes 4 levels deep, each level a spatial layout of sub-trees.</p>
- *
- * <p>Each variant defines its own {@link BlockRole} records describing the
- * structural positions available in that composition style.</p>
+ * <p>Every slot is typed as {@link Zi} — either a {@link SingularZi} leaf
+ * or a nested {@code ComposedZi} — enabling recursive decomposition to
+ * arbitrary depth.</p>
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "structure")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = CharacterComposition.Singular.class, name = "singular"),
-        @JsonSubTypes.Type(value = CharacterComposition.LeftRight.class, name = "left_right"),
-        @JsonSubTypes.Type(value = CharacterComposition.TopBottom.class, name = "top_bottom"),
-        @JsonSubTypes.Type(value = CharacterComposition.LeftMiddleRight.class, name = "left_middle_right"),
-        @JsonSubTypes.Type(value = CharacterComposition.TopMiddleBottom.class, name = "top_middle_bottom"),
-        @JsonSubTypes.Type(value = CharacterComposition.FullEnclosure.class, name = "full_enclosure"),
-        @JsonSubTypes.Type(value = CharacterComposition.SemiEnclosureUpperLeft.class, name = "semi_enclosure_upper_left"),
-        @JsonSubTypes.Type(value = CharacterComposition.SemiEnclosureUpperRight.class, name = "semi_enclosure_upper_right"),
-        @JsonSubTypes.Type(value = CharacterComposition.SemiEnclosureBottomLeft.class, name = "semi_enclosure_bottom_left"),
-        @JsonSubTypes.Type(value = CharacterComposition.SemiEnclosureTopThree.class, name = "semi_enclosure_top_three"),
-        @JsonSubTypes.Type(value = CharacterComposition.SemiEnclosureBottomThree.class, name = "semi_enclosure_bottom_three"),
-        @JsonSubTypes.Type(value = CharacterComposition.SemiEnclosureLeftThree.class, name = "semi_enclosure_left_three"),
-        @JsonSubTypes.Type(value = CharacterComposition.Mosaic.class, name = "mosaic")
+        @JsonSubTypes.Type(value = ComposedZi.LeftRight.class, name = "left_right"),
+        @JsonSubTypes.Type(value = ComposedZi.TopBottom.class, name = "top_bottom"),
+        @JsonSubTypes.Type(value = ComposedZi.LeftMiddleRight.class, name = "left_middle_right"),
+        @JsonSubTypes.Type(value = ComposedZi.TopMiddleBottom.class, name = "top_middle_bottom"),
+        @JsonSubTypes.Type(value = ComposedZi.FullEnclosure.class, name = "full_enclosure"),
+        @JsonSubTypes.Type(value = ComposedZi.SemiEnclosureUpperLeft.class, name = "semi_enclosure_upper_left"),
+        @JsonSubTypes.Type(value = ComposedZi.SemiEnclosureUpperRight.class, name = "semi_enclosure_upper_right"),
+        @JsonSubTypes.Type(value = ComposedZi.SemiEnclosureBottomLeft.class, name = "semi_enclosure_bottom_left"),
+        @JsonSubTypes.Type(value = ComposedZi.SemiEnclosureTopThree.class, name = "semi_enclosure_top_three"),
+        @JsonSubTypes.Type(value = ComposedZi.SemiEnclosureBottomThree.class, name = "semi_enclosure_bottom_three"),
+        @JsonSubTypes.Type(value = ComposedZi.SemiEnclosureLeftThree.class, name = "semi_enclosure_left_three"),
+        @JsonSubTypes.Type(value = ComposedZi.Mosaic.class, name = "mosaic")
 })
-public sealed interface CharacterComposition extends StructuralNode {
+public sealed interface ComposedZi extends Zi {
 
     // ── Shared role types for semi-enclosures ─────────────────────────
 
@@ -54,7 +51,6 @@ public sealed interface CharacterComposition extends StructuralNode {
     /** Extract the pure composition style tag (no structural data). */
     default CompositionStyle style() {
         return switch (this) {
-            case Singular s            -> new CompositionStyle.Singular();
             case LeftRight lr          -> new CompositionStyle.LeftRight();
             case TopBottom tb          -> new CompositionStyle.TopBottom();
             case LeftMiddleRight lmr   -> new CompositionStyle.LeftMiddleRight();
@@ -72,16 +68,8 @@ public sealed interface CharacterComposition extends StructuralNode {
 
     // ── Variants ──────────────────────────────────────────────────────
 
-    /** 独体字 — Single unit, no meaningful sub-parts (e.g. 人, 山, 日, 月). */
-    record Singular() implements CharacterComposition {
-        public record Self() implements BlockRole {
-            @Override public String label() { return "singular"; }
-        }
-        public static final Self SELF = new Self();
-    }
-
     /** 左右结构 — Two nodes side-by-side (e.g. 明 = 日 + 月, 清 = 氵 + 青). */
-    record LeftRight(StructuralNode left, StructuralNode right) implements CharacterComposition {
+    record LeftRight(Zi left, Zi right) implements ComposedZi {
         public record Left() implements BlockRole {
             @Override public String label() { return "left"; }
         }
@@ -90,10 +78,12 @@ public sealed interface CharacterComposition extends StructuralNode {
         }
         public static final Left LEFT = new Left();
         public static final Right RIGHT = new Right();
+
+        @Override public String glyph() { return left.glyph() + right.glyph(); }
     }
 
     /** 上下结构 — Two nodes stacked vertically (e.g. 字 = 宀 + 子, 花 = 艹 + 化). */
-    record TopBottom(StructuralNode top, StructuralNode bottom) implements CharacterComposition {
+    record TopBottom(Zi top, Zi bottom) implements ComposedZi {
         public record Top() implements BlockRole {
             @Override public String label() { return "top"; }
         }
@@ -102,10 +92,12 @@ public sealed interface CharacterComposition extends StructuralNode {
         }
         public static final Top TOP = new Top();
         public static final Bottom BOTTOM = new Bottom();
+
+        @Override public String glyph() { return top.glyph() + bottom.glyph(); }
     }
 
-    /** 左中右结构 — Three nodes horizontally (e.g. 做 = 亻 + 古 + 攵, 谢 = 讠 + 身 + 寸). */
-    record LeftMiddleRight(StructuralNode left, StructuralNode middle, StructuralNode right) implements CharacterComposition {
+    /** 左中右结构 — Three nodes horizontally (e.g. 做 = 亻 + 古 + 攵). */
+    record LeftMiddleRight(Zi left, Zi middle, Zi right) implements ComposedZi {
         public record Left() implements BlockRole {
             @Override public String label() { return "left"; }
         }
@@ -118,10 +110,12 @@ public sealed interface CharacterComposition extends StructuralNode {
         public static final Left LEFT = new Left();
         public static final Middle MIDDLE = new Middle();
         public static final Right RIGHT = new Right();
+
+        @Override public String glyph() { return left.glyph() + middle.glyph() + right.glyph(); }
     }
 
     /** 上中下结构 — Three nodes vertically (e.g. 意 = 立 + 日 + 心). */
-    record TopMiddleBottom(StructuralNode top, StructuralNode middle, StructuralNode bottom) implements CharacterComposition {
+    record TopMiddleBottom(Zi top, Zi middle, Zi bottom) implements ComposedZi {
         public record Top() implements BlockRole {
             @Override public String label() { return "top"; }
         }
@@ -134,10 +128,12 @@ public sealed interface CharacterComposition extends StructuralNode {
         public static final Top TOP = new Top();
         public static final Middle MIDDLE = new Middle();
         public static final Bottom BOTTOM = new Bottom();
+
+        @Override public String glyph() { return top.glyph() + middle.glyph() + bottom.glyph(); }
     }
 
-    /** 全包围 — Outer node fully surrounds inner (e.g. 国 = 囗 + 玉, 回 = 囗 + 口). */
-    record FullEnclosure(StructuralNode outer, StructuralNode inner) implements CharacterComposition {
+    /** 全包围 — Outer node fully surrounds inner (e.g. 国 = 囗 + 玉). */
+    record FullEnclosure(Zi outer, Zi inner) implements ComposedZi {
         public record OuterFrame() implements BlockRole {
             @Override public String label() { return "frame"; }
             @Override public boolean isOverlay() { return true; }
@@ -147,46 +143,60 @@ public sealed interface CharacterComposition extends StructuralNode {
         }
         public static final OuterFrame OUTER = new OuterFrame();
         public static final Inner INNER = new Inner();
+
+        @Override public String glyph() { return outer.glyph() + inner.glyph(); }
     }
 
     /** 左上包围 — Wrapper on upper left (e.g. 厅 = 厂 + 丁, 病 = 疒 + 丙). */
-    record SemiEnclosureUpperLeft(StructuralNode wrapper, StructuralNode content) implements CharacterComposition {
+    record SemiEnclosureUpperLeft(Zi wrapper, Zi content) implements ComposedZi {
         public static final Wrapper WRAPPER = new Wrapper();
         public static final Content CONTENT = new Content();
+
+        @Override public String glyph() { return wrapper.glyph() + content.glyph(); }
     }
 
-    /** 右上包围 — Wrapper on upper right (e.g. 句 = 勹 + 口, 戒 = 廾 + 戈). */
-    record SemiEnclosureUpperRight(StructuralNode wrapper, StructuralNode content) implements CharacterComposition {
+    /** 右上包围 — Wrapper on upper right (e.g. 句 = 勹 + 口). */
+    record SemiEnclosureUpperRight(Zi wrapper, Zi content) implements ComposedZi {
         public static final Wrapper WRAPPER = new Wrapper();
         public static final Content CONTENT = new Content();
+
+        @Override public String glyph() { return wrapper.glyph() + content.glyph(); }
     }
 
     /** 左下包围 — Wrapper on lower left (e.g. 建 = 廴 + 聿, 远 = 辶 + 元). */
-    record SemiEnclosureBottomLeft(StructuralNode wrapper, StructuralNode content) implements CharacterComposition {
+    record SemiEnclosureBottomLeft(Zi wrapper, Zi content) implements ComposedZi {
         public static final Wrapper WRAPPER = new Wrapper();
         public static final Content CONTENT = new Content();
+
+        @Override public String glyph() { return wrapper.glyph() + content.glyph(); }
     }
 
     /** 上三包围 — Three-side top enclosure (e.g. 同 = 冂 + 口, 问 = 门 + 口). */
-    record SemiEnclosureTopThree(StructuralNode wrapper, StructuralNode content) implements CharacterComposition {
+    record SemiEnclosureTopThree(Zi wrapper, Zi content) implements ComposedZi {
         public static final Wrapper WRAPPER = new Wrapper();
         public static final Content CONTENT = new Content();
+
+        @Override public String glyph() { return wrapper.glyph() + content.glyph(); }
     }
 
     /** 下三包围 — Three-side bottom enclosure (e.g. 凶 = 凵 + 㐅). */
-    record SemiEnclosureBottomThree(StructuralNode wrapper, StructuralNode content) implements CharacterComposition {
+    record SemiEnclosureBottomThree(Zi wrapper, Zi content) implements ComposedZi {
         public static final Wrapper WRAPPER = new Wrapper();
         public static final Content CONTENT = new Content();
+
+        @Override public String glyph() { return wrapper.glyph() + content.glyph(); }
     }
 
     /** 左三包围 — Three-side left enclosure (e.g. 匹 = 匚 + 儿, 区 = 匚 + 㐅). */
-    record SemiEnclosureLeftThree(StructuralNode wrapper, StructuralNode content) implements CharacterComposition {
+    record SemiEnclosureLeftThree(Zi wrapper, Zi content) implements ComposedZi {
         public static final Wrapper WRAPPER = new Wrapper();
         public static final Content CONTENT = new Content();
+
+        @Override public String glyph() { return wrapper.glyph() + content.glyph(); }
     }
 
     /** 品字结构 — Three identical nodes in triangular arrangement (e.g. 品 = 口×3, 森 = 木×3). */
-    record Mosaic(StructuralNode element) implements CharacterComposition {
+    record Mosaic(Zi element) implements ComposedZi {
         public record Top() implements BlockRole {
             @Override public String label() { return "top"; }
         }
@@ -199,5 +209,7 @@ public sealed interface CharacterComposition extends StructuralNode {
         public static final Top TOP = new Top();
         public static final BottomLeft BOTTOM_LEFT = new BottomLeft();
         public static final BottomRight BOTTOM_RIGHT = new BottomRight();
+
+        @Override public String glyph() { return element.glyph() + element.glyph() + element.glyph(); }
     }
 }

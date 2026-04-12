@@ -1,10 +1,10 @@
 package kranji.characters;
 
-import kranji.classification.CharacterComposition;
 import kranji.classification.EtymologicalCategory.*;
-import kranji.component.LeafNode;
 import kranji.entry.ChineseCharacterEntry;
 import kranji.pinyin.PinyinSyllable;
+import kranji.zi.SingularZi;
+import kranji.zi.Zi;
 
 import java.util.List;
 
@@ -22,16 +22,16 @@ public final class CompositionSet {
     private final List<PinyinSyllable> pinyin;
     private final int strokes;
     private final int radicalNo;
-    private final CharacterComposition composition;
+    private final Zi structure;
 
     CompositionSet(String character, String codepoint, List<PinyinSyllable> pinyin,
-                   int strokes, int radicalNo, CharacterComposition composition) {
+                   int strokes, int radicalNo, Zi structure) {
         this.character = character;
         this.codepoint = codepoint;
         this.pinyin = pinyin;
         this.strokes = strokes;
         this.radicalNo = radicalNo;
-        this.composition = composition;
+        this.structure = structure;
     }
 
     // ── Etymology terminals ────────────────────────────────────────────
@@ -52,7 +52,7 @@ public final class CompositionSet {
     }
 
     /** 形声 — Phono-semantic (semantic part + phonetic part). */
-    public ChineseCharacterEntry phonoSemantic(LeafNode semanticPart, LeafNode phoneticPart) {
+    public ChineseCharacterEntry phonoSemantic(SingularZi semanticPart, SingularZi phoneticPart) {
         return build(new PhonoSemantic(semanticPart, phoneticPart));
     }
 
@@ -68,6 +68,6 @@ public final class CompositionSet {
 
     private ChineseCharacterEntry build(kranji.classification.EtymologicalCategory etymology) {
         return new ChineseCharacterEntry(character, codepoint, pinyin, strokes, radicalNo,
-                composition, etymology);
+                structure, etymology);
     }
 }

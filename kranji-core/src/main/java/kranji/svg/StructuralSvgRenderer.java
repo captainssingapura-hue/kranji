@@ -1,21 +1,18 @@
 package kranji.svg;
 
-import kranji.classification.CharacterComposition;
-import kranji.classification.CharacterComposition.*;
-import kranji.classification.StructuralNode;
-import kranji.component.Component;
-import kranji.component.Component.Part;
-import kranji.component.BasicComponent;
-import kranji.component.Component.Zi;
 import kranji.entry.ChineseCharacterEntry;
+import kranji.zi.ComposedZi;
+import kranji.zi.ComposedZi.*;
+import kranji.zi.SingularZi;
+import kranji.zi.Zi;
 
 /**
  * Renders a {@link ChineseCharacterEntry} as an SVG diagram showing
  * recursive structural decomposition.
  *
  * <p>Each composition variant maps to a spatial subdivision of the bounding
- * rectangle. Leaf {@link Component} nodes render their glyph as text.
- * Nested {@link CharacterComposition} nodes recurse, with font size and
+ * rectangle. Leaf {@link SingularZi} nodes render their glyph as text.
+ * Nested {@link ComposedZi} nodes recurse, with font size and
  * stroke width scaling down by {@value #SCALE_FACTOR} per level.</p>
  */
 public final class StructuralSvgRenderer {
@@ -76,7 +73,7 @@ public final class StructuralSvgRenderer {
         // decomposition area
         sb.append("<g transform=\"translate(0,").append(fmt(HEADER_HEIGHT)).append(")\">\n");
         var bounds = new Rect(0, 0, size, size);
-        renderNode(sb, entry.composition(), bounds, 0, entry.character());
+        renderNode(sb, entry.structure(), bounds, 0, entry.character());
         sb.append("</g>\n");
 
         sb.append("</svg>\n");
@@ -85,31 +82,33 @@ public final class StructuralSvgRenderer {
 
     // ── Core recursion ─────────────────────────────────────────────────
 
-    private static void renderNode(StringBuilder sb, StructuralNode node,
+    private static void renderNode(StringBuilder sb, Zi node,
                                    Rect bounds, int depth, String parentGlyph) {
         switch (node) {
-            case BasicComponent bc -> renderLeaf(sb, bc.glyph(), bc.name(), bounds, depth);
-            case Part p -> renderLeaf(sb, p.glyph(), p.name(), bounds, depth);
-            case Zi z -> renderLeaf(sb, z.glyph(), null, bounds, depth);
-            case CharacterComposition comp -> {
+            case ComposedZi comp -> {
                 emitRect(sb, bounds, depth, compositionLabel(comp), false);
                 renderComposition(sb, comp, bounds, depth, parentGlyph);
             }
-            default -> renderLeaf(sb, "?", null, bounds, depth);
+            default -> {
+                String glyph = node.glyph();
+                String label = glyph;
+                if (node instanceof SingularZi sz) {
+                    String name = sz.name();
+                    if (name != null && !name.equals(glyph)) label = glyph + " " + name;
+                }
+                renderLeaf(sb, glyph, label, bounds, depth);
+            }
         }
     }
 
     // ── Composition dispatch ───────────────────────────────────────────
 
     private static void renderComposition(StringBuilder sb,
-                                          CharacterComposition comp,
+                                          ComposedZi comp,
                                           Rect bounds, int depth,
                                           String parentGlyph) {
         int next = depth + 1;
         switch (comp) {
-            case Singular s ->
-                    emitText(sb, parentGlyph != null ? parentGlyph : "·", bounds, depth);
-
             case LeftRight lr -> {
                 double mid = bounds.w / 2;
                 renderNode(sb, lr.left(),
@@ -200,13 +199,12 @@ public final class StructuralSvgRenderer {
     // ── Enclosure helper ───────────────────────────────────────────────
 
     private static void renderEnclosure(StringBuilder sb,
-                                        StructuralNode wrapper,
-                                        StructuralNode content,
+                                        Zi wrapper, Zi content,
                                         Rect bounds, int depth,
                                         double inX, double inY,
                                         double inW, double inH) {
         // wrapper: rendered as a dashed background with its glyph semi-transparent
-        String wrapperGlyph = glyphOf(wrapper);
+        String wrapperGlyph = wrapper.glyph();
         emitRect(sb, bounds, depth, wrapperGlyph, true);
         emitText(sb, wrapperGlyph, bounds, depth, 0.15);
 
@@ -224,7 +222,7 @@ public final class StructuralSvgRenderer {
 
     private static void renderLeaf(StringBuilder sb, String glyph,
                                    String label, Rect bounds, int depth) {
-        emitRect(sb, bounds, depth, label != null ? glyph + " " + label : glyph, false);
+        emitRect(sb, bounds, depth, label != null ? label : glyph, false);
         emitText(sb, glyph, bounds, depth);
     }
 
@@ -312,19 +310,8 @@ public final class StructuralSvgRenderer {
         return LEVEL_COLORS[depth % LEVEL_COLORS.length];
     }
 
-    private static String glyphOf(StructuralNode node) {
-        return switch (node) {
-            case BasicComponent bc -> bc.glyph();
-            case Part p -> p.glyph();
-            case Zi z -> z.glyph();
-            case CharacterComposition c -> "⊞";
-            default -> "?";
-        };
-    }
-
-    private static String compositionLabel(CharacterComposition comp) {
+    private static String compositionLabel(ComposedZi comp) {
         return switch (comp) {
-            case Singular s -> "Singular";
             case LeftRight lr -> "Left-Right";
             case TopBottom tb -> "Top-Bottom";
             case LeftMiddleRight lmr -> "Left-Middle-Right";
