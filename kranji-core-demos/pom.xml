@@ -18,9 +18,10 @@
         </dependency>
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-characters</artifactId>
+            <artifactId>kranji-singulars</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+
     </dependencies>
 
 </project>

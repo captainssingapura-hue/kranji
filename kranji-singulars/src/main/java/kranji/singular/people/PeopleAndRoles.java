@@ -187,15 +187,6 @@ public final class PeopleAndRoles {
     }
     public static final Shao SHAO = new Shao();
 
-    public record Lao() implements kranji.library.LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "老"; }
-        @Override public String meaning() { return "old"; }
-        @Override public String pinyin()  { return "lǎo"; }
-        @Override public int strokes()    { return 6; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Lao LAO = new Lao();
-
     public record Wen() implements kranji.library.LibraryMember<BasicSet> {
         @Override public String glyph()   { return "文"; }
         @Override public String meaning() { return "writing, culture"; }
@@ -205,35 +196,155 @@ public final class PeopleAndRoles {
     }
     public static final Wen WEN = new Wen();
 
-    public record Wu() implements kranji.library.LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "武"; }
-        @Override public String meaning() { return "martial"; }
-        @Override public String pinyin()  { return "wǔ"; }
-        @Override public int strokes()    { return 8; }
+    public record Gai() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "丐"; }
+        @Override public String meaning() { return "beggar"; }
+        @Override public String pinyin()  { return "gài"; }
+        @Override public int strokes()    { return 4; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
-    public static final Wu WU = new Wu();
+    public static final Gai GAI = new Gai();
 
-    public record Shi_Scholar() implements kranji.library.LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "师"; }
-        @Override public String meaning() { return "teacher"; }
-        @Override public String pinyin()  { return "shī"; }
+    public record Ren_Ninth() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "壬"; }
+        @Override public String meaning() { return "ninth Heavenly Stem"; }
+        @Override public String pinyin()  { return "rén"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ren_Ninth REN_NINTH = new Ren_Ninth();
+
+    public record Yi_Barbarian() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "夷"; }
+        @Override public String meaning() { return "foreigner/barbarian"; }
+        @Override public String pinyin()  { return "yí"; }
         @Override public int strokes()    { return 6; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
-    public static final Shi_Scholar SHI_SCHOLAR = new Shi_Scholar();
+    public static final Yi_Barbarian YI_BARBARIAN = new Yi_Barbarian();
 
-    public record Nv_Slave() implements kranji.library.LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "奴"; }
-        @Override public String meaning() { return "slave"; }
-        @Override public String pinyin()  { return "nú"; }
+    public record Jie_Alone() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "孑"; }
+        @Override public String meaning() { return "alone/solitary"; }
+        @Override public String pinyin()  { return "jié"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Jie_Alone JIE_ALONE = new Jie_Alone();
+
+    public record Jue_Larva() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "孓"; }
+        @Override public String meaning() { return "mosquito larva"; }
+        @Override public String pinyin()  { return "jué"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Jue_Larva JUE_LARVA = new Jue_Larva();
+
+    public record Yin_Governor() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "尹"; }
+        @Override public String meaning() { return "governor/administer"; }
+        @Override public String pinyin()  { return "yǐn"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Yin_Governor YIN_GOVERNOR = new Yin_Governor();
+
+    public record Li_Official() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "吏"; }
+        @Override public String meaning() { return "official/clerk"; }
+        @Override public String pinyin()  { return "lì"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Li_Official LI_OFFICIAL = new Li_Official();
+
+    public record Shi_History() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "史"; }
+        @Override public String meaning() { return "history/historian"; }
+        @Override public String pinyin()  { return "shǐ"; }
         @Override public int strokes()    { return 5; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
-    public static final Nv_Slave NV_SLAVE = new Nv_Slave();
+    public static final Shi_History SHI_HISTORY = new Shi_History();
+
+    public record Yu_Yu() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "禹"; }
+        @Override public String meaning() { return "Yu (legendary ruler)"; }
+        @Override public String pinyin()  { return "yǔ"; }
+        @Override public int strokes()    { return 9; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Yu_Yu YU_YU = new Yu_Yu();
+
+    public record Yu_Monkey() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "禺"; }
+        @Override public String meaning() { return "area (archaic)"; }
+        @Override public String pinyin()  { return "yú"; }
+        @Override public int strokes()    { return 9; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Yu_Monkey YU_MONKEY = new Yu_Monkey();
+
+    public record You_Especially() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "尤"; }
+        @Override public String meaning() { return "especially/fault"; }
+        @Override public String pinyin()  { return "yóu"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final You_Especially YOU_ESPECIALLY = new You_Especially();
+
+    public record Su() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "肃"; }
+        @Override public String meaning() { return "solemn/respectful"; }
+        @Override public String pinyin()  { return "sù"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Su SU = new Su();
+
+    public record Er_And() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "而"; }
+        @Override public String meaning() { return "and/but"; }
+        @Override public String pinyin()  { return "ér"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Er_And ER_AND = new Er_And();
+
+    public record Mian_Hide() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "丏"; }
+        @Override public String meaning() { return "hide/screen"; }
+        @Override public String pinyin()  { return "miǎn"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Mian_Hide MIAN_HIDE = new Mian_Hide();
+
+    public record Tai_Great() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "太"; }
+        @Override public String meaning() { return "great/supreme"; }
+        @Override public String pinyin()  { return "tài"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Tai_Great TAI_GREAT = new Tai_Great();
+
+    public record Yao() implements kranji.library.LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "夭"; }
+        @Override public String meaning() { return "young/premature death"; }
+        @Override public String pinyin()  { return "yāo"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Yao YAO = new Yao();
 
     public static final List<kranji.library.LibraryMember<BasicSet>> ALL = List.of(
             REN, NV, ZI, DA, FU_HUSBAND, FU_FATHER, MU_MOTHER, XIONG, DI,
             WANG, CHEN, SHI, MIN, ER_CHILD, YOU, JUN, GUAN, SHI_CLAN,
-            XIAO, SHAO, LAO, WEN, WU, SHI_SCHOLAR, NV_SLAVE);
+            XIAO, SHAO, WEN, GAI, REN_NINTH, YI_BARBARIAN,
+            JIE_ALONE, JUE_LARVA, YIN_GOVERNOR, LI_OFFICIAL, SHI_HISTORY,
+            YU_YU, YU_MONKEY, YOU_ESPECIALLY, SU, ER_AND, MIAN_HIDE,
+            TAI_GREAT, YAO);
 }

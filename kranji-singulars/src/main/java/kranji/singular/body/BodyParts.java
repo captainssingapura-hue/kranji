@@ -1,5 +1,12 @@
 package kranji.singular.body;
 
+import kranji.classification.BlockRole;
+import kranji.layout.LayoutHint;
+import kranji.layout.Politeness;
+import kranji.zi.ComposedBlock.FullEnclosure;
+import kranji.zi.ComposedBlock.LeftRight;
+import kranji.zi.ComposedBlock.TopBottom;
+import kranji.zi.ComposedBlock.TopMiddleBottom;
 import kranji.library.LibraryMember;
 import kranji.library.BasicSet;
 import java.util.List;
@@ -7,7 +14,53 @@ import java.util.List;
 public final class BodyParts {
     private BodyParts() {}
 
-    // 口 (Kou) and 目 (Mu) are defined in HintedZi (kranji-core) — the single source of truth.
+    /** 口 — mouth. Yielding in side/bottom/middle positions, inner-scaled as bottom/enclosure. */
+    public record Kou() implements LibraryMember<BasicSet> {
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+        @Override public String glyph()   { return "口"; }
+        @Override public String meaning() { return "mouth"; }
+        @Override public String pinyin()  { return "kǒu"; }
+        @Override public int strokes()    { return 3; }
+
+        @Override
+        public Politeness politeness(BlockRole role) {
+            if (role instanceof LeftRight.Left)          return Politeness.YIELDING;
+            if (role instanceof LeftRight.Right)         return Politeness.YIELDING;
+            if (role instanceof TopBottom.Bottom)        return Politeness.YIELDING;
+            if (role instanceof TopMiddleBottom.Top)     return Politeness.YIELDING;
+            if (role instanceof TopMiddleBottom.Middle)  return Politeness.YIELDING;
+            return Politeness.NEUTRAL;
+        }
+
+        @Override
+        public LayoutHint hintFor(BlockRole role) {
+            if (role instanceof TopBottom.Bottom)      return LayoutHint.innerScale(0.80, 0.80);
+            if (role instanceof FullEnclosure.Inner)   return LayoutHint.innerScale(0.55, 0.55);
+            return null;
+        }
+    }
+
+    /** 目 — eye. Yielding as left/bottom, inner-scaled as bottom. */
+    public record Mu() implements LibraryMember<BasicSet> {
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+        @Override public String glyph()   { return "目"; }
+        @Override public String meaning() { return "eye"; }
+        @Override public String pinyin()  { return "mù"; }
+        @Override public int strokes()    { return 5; }
+
+        @Override
+        public Politeness politeness(BlockRole role) {
+            if (role instanceof LeftRight.Left)   return Politeness.YIELDING;
+            if (role instanceof TopBottom.Bottom) return Politeness.YIELDING;
+            return Politeness.NEUTRAL;
+        }
+
+        @Override
+        public LayoutHint hintFor(BlockRole role) {
+            if (role instanceof TopBottom.Bottom) return LayoutHint.innerScale(0.85, 0.80);
+            return null;
+        }
+    }
 
     public record Er() implements LibraryMember<BasicSet> {
         @Override public String glyph()   { return "\u8033"; }
@@ -16,7 +69,9 @@ public final class BodyParts {
         @Override public int strokes()    { return 6; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
-    public static final Er ER = new Er();
+    public static final Kou KOU = new Kou();
+    public static final Mu  MU  = new Mu();
+    public static final Er  ER  = new Er();
 
     public record Shou() implements LibraryMember<BasicSet> {
         @Override public String glyph()   { return "\u624B"; }
@@ -117,15 +172,6 @@ public final class BodyParts {
     }
     public static final Mao MAO = new Mao();
 
-    public record Gu() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "\u9AA8"; }
-        @Override public String meaning() { return "bone"; }
-        @Override public String pinyin()  { return "g\u01D4"; }
-        @Override public int strokes()    { return 9; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Gu GU = new Gu();
-
     public record Rou() implements LibraryMember<BasicSet> {
         @Override public String glyph()   { return "\u8089"; }
         @Override public String meaning() { return "meat, flesh"; }
@@ -144,15 +190,6 @@ public final class BodyParts {
     }
     public static final Xue XUE = new Xue();
 
-    public record Bi() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "\u9F3B"; }
-        @Override public String meaning() { return "nose"; }
-        @Override public String pinyin()  { return "b\u00ED"; }
-        @Override public int strokes()    { return 14; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Bi BI = new Bi();
-
     public record Wei() implements LibraryMember<BasicSet> {
         @Override public String glyph()   { return "\u80C3"; }
         @Override public String meaning() { return "stomach"; }
@@ -162,7 +199,62 @@ public final class BodyParts {
     }
     public static final Wei WEI = new Wei();
 
+    public record Zi_Self() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "自"; }
+        @Override public String meaning() { return "self/from"; }
+        @Override public String pinyin()  { return "zì"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Zi_Self ZI_SELF = new Zi_Self();
+
+    public record Jiu_Mortar() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "臼"; }
+        @Override public String meaning() { return "mortar/joint socket"; }
+        @Override public String pinyin()  { return "jiù"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Jiu_Mortar JIU_MORTAR = new Jiu_Mortar();
+
+    public record Yu_Moment() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "臾"; }
+        @Override public String meaning() { return "hands pulling body"; }
+        @Override public String pinyin()  { return "yú"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Yu_Moment YU_MOMENT = new Yu_Moment();
+
+    public record Zhua() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "爪"; }
+        @Override public String meaning() { return "claw/talon"; }
+        @Override public String pinyin()  { return "zhǎo"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Zhua ZHUA = new Zhua();
+
+    public record Xin_Fontanel() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "囟"; }
+        @Override public String meaning() { return "fontanel/skull"; }
+        @Override public String pinyin()  { return "xìn"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Xin_Fontanel XIN_FONTANEL = new Xin_Fontanel();
+
+    public record Gen_Tough() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "艮"; }
+        @Override public String meaning() { return "tough/blunt (trigram)"; }
+        @Override public String pinyin()  { return "gèn"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Gen_Tough GEN_TOUGH = new Gen_Tough();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
-            ER, SHOU, ZU, XIN, TOU, MIAN, SHEN, SHOU_HEAD, YA,
-            SHE, PI, MAO, GU, ROU, XUE, BI, WEI);
+            KOU, MU, ER, SHOU, ZU, XIN, TOU, MIAN, SHEN, SHOU_HEAD, YA,
+            SHE, PI, MAO, ROU, XUE, WEI,
+            ZI_SELF, JIU_MORTAR, YU_MOMENT, ZHUA, XIN_FONTANEL, GEN_TOUGH);
 }

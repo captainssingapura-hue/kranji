@@ -88,24 +88,6 @@ public final class SpaceAndDirection {
     }
     public static final Bei_North BEI_NORTH = new Bei_North();
 
-    public record Zuo() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "左"; }
-        @Override public String meaning() { return "left"; }
-        @Override public String pinyin()  { return "zuǒ"; }
-        @Override public int strokes()    { return 5; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Zuo ZUO = new Zuo();
-
-    public record You_Right() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "右"; }
-        @Override public String meaning() { return "right"; }
-        @Override public String pinyin()  { return "yòu"; }
-        @Override public int strokes()    { return 5; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final You_Right YOU_RIGHT = new You_Right();
-
     public record Qian_Front() implements LibraryMember<BasicSet> {
         @Override public String glyph()   { return "前"; }
         @Override public String meaning() { return "front, before"; }
@@ -114,15 +96,6 @@ public final class SpaceAndDirection {
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
     public static final Qian_Front QIAN_FRONT = new Qian_Front();
-
-    public record Hou() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "后"; }
-        @Override public String meaning() { return "back, after"; }
-        @Override public String pinyin()  { return "hòu"; }
-        @Override public int strokes()    { return 6; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Hou HOU = new Hou();
 
     public record Nei() implements LibraryMember<BasicSet> {
         @Override public String glyph()   { return "内"; }
@@ -133,51 +106,6 @@ public final class SpaceAndDirection {
     }
     public static final Nei NEI = new Nei();
 
-    public record Wai() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "外"; }
-        @Override public String meaning() { return "outside"; }
-        @Override public String pinyin()  { return "wài"; }
-        @Override public int strokes()    { return 5; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Wai WAI = new Wai();
-
-    public record Yuan() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "远"; }
-        @Override public String meaning() { return "far"; }
-        @Override public String pinyin()  { return "yuǎn"; }
-        @Override public int strokes()    { return 7; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Yuan YUAN = new Yuan();
-
-    public record Jin_Near() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "近"; }
-        @Override public String meaning() { return "near"; }
-        @Override public String pinyin()  { return "jìn"; }
-        @Override public int strokes()    { return 7; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Jin_Near JIN_NEAR = new Jin_Near();
-
-    public record Gao() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "高"; }
-        @Override public String meaning() { return "tall, high"; }
-        @Override public String pinyin()  { return "gāo"; }
-        @Override public int strokes()    { return 10; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Gao GAO = new Gao();
-
-    public record Di_Low() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "低"; }
-        @Override public String meaning() { return "low"; }
-        @Override public String pinyin()  { return "dī"; }
-        @Override public int strokes()    { return 7; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Di_Low DI_LOW = new Di_Low();
-
     public record Chang() implements LibraryMember<BasicSet> {
         @Override public String glyph()   { return "长"; }
         @Override public String meaning() { return "long"; }
@@ -187,17 +115,126 @@ public final class SpaceAndDirection {
     }
     public static final Chang CHANG = new Chang();
 
-    public record Duan() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "短"; }
-        @Override public String meaning() { return "short"; }
-        @Override public String pinyin()  { return "duǎn"; }
-        @Override public int strokes()    { return 12; }
+    public record Yu_At() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "于"; }
+        @Override public String meaning() { return "at/in"; }
+        @Override public String pinyin()  { return "yú"; }
+        @Override public int strokes()    { return 3; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
-    public static final Duan DUAN = new Duan();
+    public static final Yu_At YU_AT = new Yu_At();
+
+    public record Yang_Center() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "央"; }
+        @Override public String meaning() { return "center/middle"; }
+        @Override public String pinyin()  { return "yāng"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Yang_Center YANG_CENTER = new Yang_Center();
+
+    public record Xiang_Village() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "乡"; }
+        @Override public String meaning() { return "village/countryside"; }
+        @Override public String pinyin()  { return "xiāng"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Xiang_Village XIANG_VILLAGE = new Xiang_Village();
+
+    public record Jia_First() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "甲"; }
+        @Override public String meaning() { return "first/armor"; }
+        @Override public String pinyin()  { return "jiǎ"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Jia_First JIA_FIRST = new Jia_First();
+
+    public record Shen_Extend() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "申"; }
+        @Override public String meaning() { return "extend/state"; }
+        @Override public String pinyin()  { return "shēn"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Shen_Extend SHEN_EXTEND = new Shen_Extend();
+
+    public record You_From() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "由"; }
+        @Override public String meaning() { return "from/cause"; }
+        @Override public String pinyin()  { return "yóu"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final You_From YOU_FROM = new You_From();
+
+    public record Fu_Begin() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "甫"; }
+        @Override public String meaning() { return "just/begin"; }
+        @Override public String pinyin()  { return "fǔ"; }
+        @Override public int strokes()    { return 7; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Fu_Begin FU_BEGIN = new Fu_Begin();
+
+    public record Pan() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "爿"; }
+        @Override public String meaning() { return "split wood radical"; }
+        @Override public String pinyin()  { return "pán"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Pan PAN = new Pan();
+
+    public record Ye_Page() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "页"; }
+        @Override public String meaning() { return "page/head"; }
+        @Override public String pinyin()  { return "yè"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ye_Page YE_PAGE = new Ye_Page();
+
+    public record Jiu_Long() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "久"; }
+        @Override public String meaning() { return "long time"; }
+        @Override public String pinyin()  { return "jiǔ"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Jiu_Long JIU_LONG = new Jiu_Long();
+
+    public record Wu_Noon() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "午"; }
+        @Override public String meaning() { return "noon/7th Earthly Branch"; }
+        @Override public String pinyin()  { return "wǔ"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Wu_Noon WU_NOON = new Wu_Noon();
+
+    public record Nian_Year() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "年"; }
+        @Override public String meaning() { return "year"; }
+        @Override public String pinyin()  { return "nián"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Nian_Year NIAN_YEAR = new Nian_Year();
+
+    public record Gan_Dry() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "干"; }
+        @Override public String meaning() { return "dry/trunk/stem"; }
+        @Override public String pinyin()  { return "gān"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Gan_Dry GAN_DRY = new Gan_Dry();
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             SHANG, XIA, ZHONG, LI_INSIDE, FANG, DONG, XI, NAN, BEI_NORTH,
-            ZUO, YOU_RIGHT, QIAN_FRONT, HOU, NEI, WAI, YUAN, JIN_NEAR,
-            GAO, DI_LOW, CHANG, DUAN);
+            QIAN_FRONT, NEI, CHANG, YU_AT, YANG_CENTER, XIANG_VILLAGE,
+            JIA_FIRST, SHEN_EXTEND, YOU_FROM, FU_BEGIN, PAN, YE_PAGE,
+            JIU_LONG, WU_NOON, NIAN_YEAR, GAN_DRY);
 }

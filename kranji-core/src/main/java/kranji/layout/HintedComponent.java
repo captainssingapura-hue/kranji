@@ -1,24 +1,23 @@
 package kranji.layout;
 
 import kranji.classification.BlockRole;
-import kranji.zi.SingularZi;
+import kranji.zi.SingularBlock;
 
 /**
- * A SingularZi bound to a specific structural role for rendering.
+ * A SingularBlock bound to a specific structural role for rendering.
  *
- * <p>Created via {@link SingularZi#as(BlockRole)}. The layout engine
+ * <p>Created via {@link SingularBlock#as(BlockRole)}. The layout engine
  * resolves the effective hint by querying the leaf's intrinsic
- * {@link SingularZi#hintFor(BlockRole)} method.</p>
+ * {@link SingularBlock#hintFor(BlockRole)} method.</p>
  *
  * <p>This is a layout/rendering wrapper — it does NOT implement
- * {@link kranji.zi.Zi}. The Zi hierarchy is purely about character
- * identity and structure.</p>
+ * {@link kranji.zi.Zi}.</p>
  *
- * @param leaf the wrapped SingularZi
+ * @param leaf the wrapped SingularBlock
  * @param role the structural position this component is bound to
  */
 public record HintedComponent(
-        SingularZi leaf,
+        SingularBlock leaf,
         BlockRole role
 ) {
 

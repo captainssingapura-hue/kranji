@@ -14,18 +14,13 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import kranji.classification.EtymologicalCategory;
 import kranji.classification.EtymologicalCategory.*;
-import kranji.zi.ComposedZi;
-import kranji.zi.ComposedZi.*;
-import kranji.zi.SingularZi;
-import kranji.zi.Zi;
-import kranji.characters.Characters;
+import kranji.zi.*;
+import kranji.zi.ComposedBlock.*;
 import kranji.demos.ExampleCharacters;
-import kranji.entry.ChineseCharacterEntry;
 import kranji.pinyin.Initial;
 import kranji.pinyin.PinyinSyllable;
 import kranji.pinyin.Tone;
@@ -40,8 +35,8 @@ import java.util.stream.Collectors;
 
 public class KranjiDemoApp extends Application {
 
-    private ObservableList<ChineseCharacterEntry> backingList;
-    private FilteredList<ChineseCharacterEntry> filteredList;
+    private ObservableList<Zi> backingList;
+    private FilteredList<Zi> filteredList;
 
     private TextField searchField;
     private ComboBox<String> sourceFilter;
@@ -56,8 +51,8 @@ public class KranjiDemoApp extends Application {
         SingularFamilies.registerInto(BasicSet.INSTANCE);
         ZiLibrary.load(BasicSet.INSTANCE);
 
-        // Wrap data in a FilteredList for dynamic filtering
-        backingList = FXCollections.observableArrayList(Characters.ALL);
+        // Wrap data in a FilteredList for dynamic filtering — start with curated set
+        backingList = FXCollections.observableArrayList(ExampleCharacters.ALL);
         filteredList = new FilteredList<>(backingList, e -> true);
 
         var table = createTable(filteredList);
@@ -69,13 +64,22 @@ public class KranjiDemoApp extends Application {
         var leftPane = new VBox(filterBar, table);
         VBox.setVgrow(table, Priority.ALWAYS);
 
-        // Detail panel (text-based)
+        // Detail panel — left side (text info)
         var detailScroll = new ScrollPane();
         detailScroll.setFitToWidth(true);
         var detailBox = new VBox();
         detailBox.setPadding(new Insets(20));
         detailBox.setSpacing(16);
         detailScroll.setContent(detailBox);
+
+        // Detail panel — right side (composition tree)
+        var treeBox = new VBox();
+        treeBox.setPadding(new Insets(20));
+        treeBox.setSpacing(8);
+
+        // Detail split: text info left, composition tree right
+        var detailSplit = new SplitPane(detailScroll, treeBox);
+        detailSplit.setDividerPositions(0.55);
 
         // SVG WebView panel
         var svgWebView = new WebView();
@@ -97,14 +101,14 @@ public class KranjiDemoApp extends Application {
         svgPane.setPadding(new Insets(6, 6, 0, 6));
         VBox.setVgrow(svgWebView, Priority.ALWAYS);
 
-        // Vertical split: detail text on top, SVG WebView on bottom
-        var rightSplit = new SplitPane(detailScroll, svgPane);
+        // Vertical split: detail split on top, SVG WebView on bottom
+        var rightSplit = new SplitPane(detailSplit, svgPane);
         rightSplit.setOrientation(Orientation.VERTICAL);
         rightSplit.setDividerPositions(0.42);
 
         table.getSelectionModel().selectedItemProperty().addListener((obs, old, entry) -> {
             if (entry != null) {
-                renderDetail(detailBox, entry);
+                renderDetail(detailBox, treeBox, entry);
                 var svgContent = BlockSvgRenderer.render(entry);
                 var showBlocks = blockToggle.isSelected();
                 svgWebView.getEngine().loadContent(
@@ -116,6 +120,7 @@ public class KranjiDemoApp extends Application {
         split.setDividerPositions(0.32);
 
         var scene = new Scene(split, 1150, 780);
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         scene.getRoot().setStyle("-fx-font-family: 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', sans-serif;");
 
         stage.setTitle("Kranji \u2014 Chinese Character Explorer");
@@ -136,15 +141,8 @@ public class KranjiDemoApp extends Application {
         HBox.setHgrow(searchField, Priority.ALWAYS);
 
         sourceFilter = new ComboBox<>();
-        sourceFilter.getItems().addAll("All Characters", "Curated Examples");
-        sourceFilter.setValue("All Characters");
-        sourceFilter.setOnAction(e -> {
-            var source = sourceFilter.getValue();
-            List<ChineseCharacterEntry> data = "Curated Examples".equals(source)
-                    ? ExampleCharacters.ALL : Characters.ALL;
-            backingList.setAll(data);
-            applyFilters();
-        });
+        sourceFilter.getItems().addAll("Curated Examples");
+        sourceFilter.setValue("Curated Examples");
 
         var countLabel = new Label(filteredList.size() + " chars");
         countLabel.setStyle("-fx-font-size: 11; -fx-text-fill: #888;");
@@ -179,7 +177,7 @@ public class KranjiDemoApp extends Application {
         compositionFilter = new ComboBox<>();
         compositionFilter.getItems().addAll(
                 "All Structures", "Singular", "Left-Right", "Top-Bottom",
-                "L-M-R", "T-M-B", "Full Encl.", "Semi-Enclosure", "Mosaic");
+                "L-M-R", "T-M-B", "Full Encl.", "Semi-Enclosure");
         compositionFilter.setValue("All Structures");
         compositionFilter.setOnAction(e -> applyFilters());
 
@@ -207,7 +205,7 @@ public class KranjiDemoApp extends Application {
     }
 
     private void applyFilters() {
-        Predicate<ChineseCharacterEntry> predicate = e -> true;
+        Predicate<Zi> predicate = e -> true;
 
         // Search filter
         var query = searchField.getText();
@@ -253,22 +251,20 @@ public class KranjiDemoApp extends Application {
         filteredList.setPredicate(predicate);
     }
 
-    private static boolean matchesCompositionFilter(kranji.zi.Zi structure, String filter) {
+    private static boolean matchesCompositionFilter(BlockStructure structure, String filter) {
         return switch (filter) {
-            case "Singular" -> structure instanceof SingularZi;
-            case "Left-Right" -> structure instanceof ComposedZi comp && comp instanceof LeftRight;
-            case "Top-Bottom" -> structure instanceof ComposedZi comp && comp instanceof TopBottom;
-            case "L-M-R" -> structure instanceof ComposedZi comp && comp instanceof LeftMiddleRight;
-            case "T-M-B" -> structure instanceof ComposedZi comp && comp instanceof TopMiddleBottom;
-            case "Full Encl." -> structure instanceof ComposedZi comp && comp instanceof FullEnclosure;
-            case "Semi-Enclosure" -> structure instanceof ComposedZi comp
-                    && (comp instanceof SemiEnclosureUpperLeft
-                    || comp instanceof SemiEnclosureUpperRight
-                    || comp instanceof SemiEnclosureBottomLeft
-                    || comp instanceof SemiEnclosureTopThree
-                    || comp instanceof SemiEnclosureBottomThree
-                    || comp instanceof SemiEnclosureLeftThree);
-            case "Mosaic" -> structure instanceof ComposedZi comp && comp instanceof Mosaic;
+            case "Singular" -> structure instanceof SingularBlock;
+            case "Left-Right" -> structure instanceof LeftRight;
+            case "Top-Bottom" -> structure instanceof TopBottom;
+            case "L-M-R" -> structure instanceof LeftMiddleRight;
+            case "T-M-B" -> structure instanceof TopMiddleBottom;
+            case "Full Encl." -> structure instanceof FullEnclosure;
+            case "Semi-Enclosure" -> structure instanceof SemiEnclosureUpperLeft
+                    || structure instanceof SemiEnclosureUpperRight
+                    || structure instanceof SemiEnclosureBottomLeft
+                    || structure instanceof SemiEnclosureTopThree
+                    || structure instanceof SemiEnclosureBottomThree
+                    || structure instanceof SemiEnclosureLeftThree;
             default -> true;
         };
     }
@@ -301,29 +297,29 @@ public class KranjiDemoApp extends Application {
 
     // ── Table ───────────────────────────────────────────────────────────
 
-    private TableView<ChineseCharacterEntry> createTable(FilteredList<ChineseCharacterEntry> items) {
-        var table = new TableView<ChineseCharacterEntry>();
+    private TableView<Zi> createTable(FilteredList<Zi> items) {
+        var table = new TableView<Zi>();
         table.setMinWidth(360);
 
-        var colGlyph = new TableColumn<ChineseCharacterEntry, String>("字");
+        var colGlyph = new TableColumn<Zi, String>("字");
         colGlyph.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().character()));
         colGlyph.setPrefWidth(50);
         colGlyph.setStyle("-fx-alignment: CENTER; -fx-font-size: 18;");
 
-        var colPinyin = new TableColumn<ChineseCharacterEntry, String>("Pinyin");
+        var colPinyin = new TableColumn<Zi, String>("Pinyin");
         colPinyin.setCellValueFactory(c -> new ReadOnlyStringWrapper(formatPinyin(c.getValue())));
         colPinyin.setPrefWidth(80);
 
-        var colStrokes = new TableColumn<ChineseCharacterEntry, String>("笔画");
+        var colStrokes = new TableColumn<Zi, String>("笔画");
         colStrokes.setCellValueFactory(c -> new ReadOnlyStringWrapper(String.valueOf(c.getValue().strokes())));
         colStrokes.setPrefWidth(45);
         colStrokes.setStyle("-fx-alignment: CENTER;");
 
-        var colComp = new TableColumn<ChineseCharacterEntry, String>("Structure");
+        var colComp = new TableColumn<Zi, String>("Structure");
         colComp.setCellValueFactory(c -> new ReadOnlyStringWrapper(compositionLabel(c.getValue().structure())));
         colComp.setPrefWidth(110);
 
-        var colEtym = new TableColumn<ChineseCharacterEntry, String>("Etymology");
+        var colEtym = new TableColumn<Zi, String>("Etymology");
         colEtym.setCellValueFactory(c -> new ReadOnlyStringWrapper(etymologyLabel(c.getValue().etymology())));
         colEtym.setPrefWidth(115);
 
@@ -335,8 +331,9 @@ public class KranjiDemoApp extends Application {
 
     // ── Detail panel ────────────────────────────────────────────────────
 
-    private void renderDetail(VBox box, ChineseCharacterEntry e) {
+    private void renderDetail(VBox box, VBox treeBox, Zi e) {
         box.getChildren().clear();
+        treeBox.getChildren().clear();
 
         // ── Header: large glyph + basic info ────────────────────────────
         var glyphText = new Text(e.character());
@@ -360,10 +357,6 @@ public class KranjiDemoApp extends Application {
         );
         metaLabel.setStyle(metaLabel.getStyle() + " -fx-text-fill: #666;");
 
-        // ── Composition section ─────────────────────────────────────────
-        var compSection = section("COMPOSITION \u2014 " + compositionLabelChinese(e.structure()),
-                renderComposition(e.structure()));
-
         // ── Etymology section ───────────────────────────────────────────
         var etymSection = section("ETYMOLOGY \u2014 " + etymologyLabelChinese(e.etymology()),
                 renderEtymology(e.etymology()));
@@ -371,57 +364,91 @@ public class KranjiDemoApp extends Application {
         // ── Pinyin decomposition ────────────────────────────────────────
         var pySection = section("PINYIN DECOMPOSITION", renderPinyinDetail(e));
 
-        box.getChildren().addAll(header, metaLabel, separator(), compSection, etymSection, pySection);
+        box.getChildren().addAll(header, metaLabel, separator(), etymSection, pySection);
+
+        // ── Right side: composition tree ────────────────────────────────
+        var compTitle = new Label("COMPOSITION \u2014 " + compositionLabelChinese(e.structure()));
+        compTitle.setFont(Font.font("System", FontWeight.BOLD, 13));
+        compTitle.setStyle("-fx-text-fill: #444;");
+        var tree = renderCompositionTree(e.structure());
+        VBox.setVgrow(tree, Priority.ALWAYS);
+        treeBox.getChildren().addAll(compTitle, tree);
     }
 
-    // ── Composition rendering ───────────────────────────────────────────
+    // ── Composition rendering (TreeView) ──────────────────────────────────
 
-    private VBox renderComposition(kranji.zi.Zi structure) {
-        var box = new VBox(4);
-        switch (structure) {
-            case ComposedZi comp -> {
+    private TreeView<String> renderCompositionTree(BlockStructure structure) {
+        var root = buildTreeItem(structure);
+        root.setExpanded(true);
+        var tree = new TreeView<>(root);
+        tree.setShowRoot(true);
+        return tree;
+    }
+
+    private static TreeItem<String> buildTreeItem(BlockStructure node) {
+        return switch (node) {
+            case ComposedBlock comp -> {
+                var item = new TreeItem<>(compositionLabel(comp));
+                item.setExpanded(true);
                 switch (comp) {
                     case LeftRight lr -> {
-                        box.getChildren().add(fieldLabel("Left:   " + renderNode(lr.left())));
-                        box.getChildren().add(fieldLabel("Right:  " + renderNode(lr.right())));
+                        item.getChildren().add(slotItem("Left", lr.left()));
+                        item.getChildren().add(slotItem("Right", lr.right()));
                     }
                     case TopBottom tb -> {
-                        box.getChildren().add(fieldLabel("Top:    " + renderNode(tb.top())));
-                        box.getChildren().add(fieldLabel("Bottom: " + renderNode(tb.bottom())));
+                        item.getChildren().add(slotItem("Top", tb.top()));
+                        item.getChildren().add(slotItem("Bottom", tb.bottom()));
                     }
                     case LeftMiddleRight lmr -> {
-                        box.getChildren().add(fieldLabel("Left:   " + renderNode(lmr.left())));
-                        box.getChildren().add(fieldLabel("Middle: " + renderNode(lmr.middle())));
-                        box.getChildren().add(fieldLabel("Right:  " + renderNode(lmr.right())));
+                        item.getChildren().add(slotItem("Left", lmr.left()));
+                        item.getChildren().add(slotItem("Middle", lmr.middle()));
+                        item.getChildren().add(slotItem("Right", lmr.right()));
                     }
                     case TopMiddleBottom tmb -> {
-                        box.getChildren().add(fieldLabel("Top:    " + renderNode(tmb.top())));
-                        box.getChildren().add(fieldLabel("Middle: " + renderNode(tmb.middle())));
-                        box.getChildren().add(fieldLabel("Bottom: " + renderNode(tmb.bottom())));
+                        item.getChildren().add(slotItem("Top", tmb.top()));
+                        item.getChildren().add(slotItem("Middle", tmb.middle()));
+                        item.getChildren().add(slotItem("Bottom", tmb.bottom()));
                     }
                     case FullEnclosure fe -> {
-                        box.getChildren().add(fieldLabel("Outer:  " + renderNode(fe.outer())));
-                        box.getChildren().add(fieldLabel("Inner:  " + renderNode(fe.inner())));
+                        item.getChildren().add(slotItem("Outer", fe.outer()));
+                        item.getChildren().add(slotItem("Inner", fe.inner()));
                     }
-                    case SemiEnclosureUpperLeft se -> renderWrapperContent(box, se.wrapper(), se.content());
-                    case SemiEnclosureUpperRight se -> renderWrapperContent(box, se.wrapper(), se.content());
-                    case SemiEnclosureBottomLeft se -> renderWrapperContent(box, se.wrapper(), se.content());
-                    case SemiEnclosureTopThree se -> renderWrapperContent(box, se.wrapper(), se.content());
-                    case SemiEnclosureBottomThree se -> renderWrapperContent(box, se.wrapper(), se.content());
-                    case SemiEnclosureLeftThree se -> renderWrapperContent(box, se.wrapper(), se.content());
-                    case Mosaic m ->
-                            box.getChildren().add(fieldLabel("Element: " + renderNode(m.element()) + "  \u00d7 3"));
+                    case SemiEnclosureUpperLeft se -> addWrapperContentItems(item, se.wrapper(), se.content());
+                    case SemiEnclosureUpperRight se -> addWrapperContentItems(item, se.wrapper(), se.content());
+                    case SemiEnclosureBottomLeft se -> addWrapperContentItems(item, se.wrapper(), se.content());
+                    case SemiEnclosureTopThree se -> addWrapperContentItems(item, se.wrapper(), se.content());
+                    case SemiEnclosureBottomThree se -> addWrapperContentItems(item, se.wrapper(), se.content());
+                    case SemiEnclosureLeftThree se -> addWrapperContentItems(item, se.wrapper(), se.content());
                 }
+                yield item;
             }
-            default ->
-                    box.getChildren().add(fieldLabel("No sub-components \u2014 single indivisible unit"));
-        }
-        return box;
+            default -> new TreeItem<>(singularLabel(node));
+        };
     }
 
-    private void renderWrapperContent(VBox box, Zi wrapper, Zi content) {
-        box.getChildren().add(fieldLabel("Wrapper: " + renderNode(wrapper)));
-        box.getChildren().add(fieldLabel("Content: " + renderNode(content)));
+    private static TreeItem<String> slotItem(String role, Composable c) {
+        var resolved = resolve(c);
+        if (resolved instanceof ComposedBlock) {
+            // Nested composed structure — recurse
+            var sub = buildTreeItem(resolved);
+            sub.setValue(role + ":  " + sub.getValue());
+            return sub;
+        }
+        // Leaf node
+        return new TreeItem<>(role + ":  " + singularLabel(resolved));
+    }
+
+    private static void addWrapperContentItems(TreeItem<String> parent, Composable wrapper, Composable content) {
+        parent.getChildren().add(slotItem("Wrapper", wrapper));
+        parent.getChildren().add(slotItem("Content", content));
+    }
+
+    private static String singularLabel(BlockStructure node) {
+        if (node instanceof SingularBlock sb
+                && (!sb.name().equals(sb.glyph()) || !sb.meaning().isEmpty())) {
+            return sb.glyph() + "  " + sb.name() + " \u2014 " + sb.meaning();
+        }
+        return node.glyph();
     }
 
     // ── Etymology rendering ─────────────────────────────────────────────
@@ -436,9 +463,9 @@ public class KranjiDemoApp extends Application {
             case CompoundIndicative ci ->
                     box.getChildren().add(fieldLabel(ci.meaningHint()));
             case PhonoSemantic ps -> {
-                box.getChildren().add(fieldLabel("Semantic (\u5f62\u65c1): " + renderNode(ps.semanticPart())
+                box.getChildren().add(fieldLabel("Semantic (\u5f62\u65c1): " + renderComposable(ps.semanticPart())
                         + "  \u2192  hints at meaning"));
-                box.getChildren().add(fieldLabel("Phonetic (\u58f0\u65c1): " + renderNode(ps.phoneticPart())
+                box.getChildren().add(fieldLabel("Phonetic (\u58f0\u65c1): " + renderComposable(ps.phoneticPart())
                         + "  \u2192  hints at sound"));
             }
             case DerivativeCognate dc ->
@@ -451,7 +478,7 @@ public class KranjiDemoApp extends Application {
 
     // ── Pinyin detail ───────────────────────────────────────────────────
 
-    private VBox renderPinyinDetail(ChineseCharacterEntry e) {
+    private VBox renderPinyinDetail(Zi e) {
         var box = new VBox(4);
         for (var py : e.pinyin()) {
             var initial = py.initial().pinyin().isEmpty() ? "\u2205 (zero)" : py.initial().pinyin();
@@ -469,27 +496,38 @@ public class KranjiDemoApp extends Application {
         return box;
     }
 
-    // ── Zi → display string ─────────────────────────────────────────────
+    // ── BlockStructure/Composable → display string ──────────────────────
 
-    private static String renderNode(kranji.zi.Zi node) {
+    private static String renderComposable(Composable c) {
+        return renderBlock(resolve(c));
+    }
+
+    private static String renderBlock(BlockStructure node) {
         return switch (node) {
-            case ComposedZi comp -> "[" + compositionLabel(comp) + "]";
+            case ComposedBlock comp -> "[" + compositionLabel(comp) + "]";
             default -> {
-                if (node instanceof SingularZi sz
-                        && (!sz.name().equals(sz.glyph()) || !sz.meaning().isEmpty())) {
-                    yield sz.glyph() + "  " + sz.name() + " \u2014 " + sz.meaning()
-                            + " (\u2190 " + sz.standalone() + " " + sz.pinyin() + ")";
+                if (node instanceof SingularBlock sb
+                        && (!sb.name().equals(sb.glyph()) || !sb.meaning().isEmpty())) {
+                    yield sb.glyph() + "  " + sb.name() + " \u2014 " + sb.meaning()
+                            + " (\u2190 " + sb.standalone() + " " + sb.pinyin() + ")";
                 }
                 yield node.glyph();
             }
         };
     }
 
+    private static BlockStructure resolve(Composable c) {
+        return switch (c) {
+            case Composable.OfZi(var zi) -> zi.structure();
+            case Composable.OfBlock(var block) -> block;
+        };
+    }
+
     // ── Label helpers ───────────────────────────────────────────────────
 
-    private static String compositionLabel(kranji.zi.Zi structure) {
+    private static String compositionLabel(BlockStructure structure) {
         return switch (structure) {
-            case ComposedZi comp -> switch (comp) {
+            case ComposedBlock comp -> switch (comp) {
                 case LeftRight lr -> "Left-Right";
                 case TopBottom tb -> "Top-Bottom";
                 case LeftMiddleRight lmr -> "L-M-R";
@@ -501,15 +539,14 @@ public class KranjiDemoApp extends Application {
                 case SemiEnclosureTopThree se -> "Semi Top3";
                 case SemiEnclosureBottomThree se -> "Semi Bot3";
                 case SemiEnclosureLeftThree se -> "Semi Left3";
-                case Mosaic m -> "Mosaic";
             };
             default -> "Singular";
         };
     }
 
-    private static String compositionLabelChinese(kranji.zi.Zi structure) {
+    private static String compositionLabelChinese(BlockStructure structure) {
         return switch (structure) {
-            case ComposedZi comp -> switch (comp) {
+            case ComposedBlock comp -> switch (comp) {
                 case LeftRight lr -> "\u5de6\u53f3\u7ed3\u6784";
                 case TopBottom tb -> "\u4e0a\u4e0b\u7ed3\u6784";
                 case LeftMiddleRight lmr -> "\u5de6\u4e2d\u53f3\u7ed3\u6784";
@@ -521,7 +558,6 @@ public class KranjiDemoApp extends Application {
                 case SemiEnclosureTopThree se -> "\u4e0a\u4e09\u5305\u56f4";
                 case SemiEnclosureBottomThree se -> "\u4e0b\u4e09\u5305\u56f4";
                 case SemiEnclosureLeftThree se -> "\u5de6\u4e09\u5305\u56f4";
-                case Mosaic m -> "\u54c1\u5b57\u7ed3\u6784";
             };
             default -> "\u72ec\u4f53\u5b57";
         };
@@ -549,28 +585,31 @@ public class KranjiDemoApp extends Application {
         };
     }
 
-    /** Recursively collect all glyphs from a Zi tree into a single string for searching. */
-    private static String glyphsOf(Zi node) {
-        if (node instanceof ComposedZi comp) {
+    /** Recursively collect all glyphs from a BlockStructure tree for searching. */
+    private static String glyphsOf(BlockStructure node) {
+        if (node instanceof ComposedBlock comp) {
             return switch (comp) {
-                case LeftRight lr -> glyphsOf(lr.left()) + glyphsOf(lr.right());
-                case TopBottom tb -> glyphsOf(tb.top()) + glyphsOf(tb.bottom());
-                case LeftMiddleRight lmr -> glyphsOf(lmr.left()) + glyphsOf(lmr.middle()) + glyphsOf(lmr.right());
-                case TopMiddleBottom tmb -> glyphsOf(tmb.top()) + glyphsOf(tmb.middle()) + glyphsOf(tmb.bottom());
-                case FullEnclosure fe -> glyphsOf(fe.outer()) + glyphsOf(fe.inner());
-                case SemiEnclosureUpperLeft se -> glyphsOf(se.wrapper()) + glyphsOf(se.content());
-                case SemiEnclosureUpperRight se -> glyphsOf(se.wrapper()) + glyphsOf(se.content());
-                case SemiEnclosureBottomLeft se -> glyphsOf(se.wrapper()) + glyphsOf(se.content());
-                case SemiEnclosureTopThree se -> glyphsOf(se.wrapper()) + glyphsOf(se.content());
-                case SemiEnclosureBottomThree se -> glyphsOf(se.wrapper()) + glyphsOf(se.content());
-                case SemiEnclosureLeftThree se -> glyphsOf(se.wrapper()) + glyphsOf(se.content());
-                case Mosaic m -> glyphsOf(m.element());
+                case LeftRight lr -> glyphsOfC(lr.left()) + glyphsOfC(lr.right());
+                case TopBottom tb -> glyphsOfC(tb.top()) + glyphsOfC(tb.bottom());
+                case LeftMiddleRight lmr -> glyphsOfC(lmr.left()) + glyphsOfC(lmr.middle()) + glyphsOfC(lmr.right());
+                case TopMiddleBottom tmb -> glyphsOfC(tmb.top()) + glyphsOfC(tmb.middle()) + glyphsOfC(tmb.bottom());
+                case FullEnclosure fe -> glyphsOfC(fe.outer()) + glyphsOfC(fe.inner());
+                case SemiEnclosureUpperLeft se -> glyphsOfC(se.wrapper()) + glyphsOfC(se.content());
+                case SemiEnclosureUpperRight se -> glyphsOfC(se.wrapper()) + glyphsOfC(se.content());
+                case SemiEnclosureBottomLeft se -> glyphsOfC(se.wrapper()) + glyphsOfC(se.content());
+                case SemiEnclosureTopThree se -> glyphsOfC(se.wrapper()) + glyphsOfC(se.content());
+                case SemiEnclosureBottomThree se -> glyphsOfC(se.wrapper()) + glyphsOfC(se.content());
+                case SemiEnclosureLeftThree se -> glyphsOfC(se.wrapper()) + glyphsOfC(se.content());
             };
         }
         return node.glyph();
     }
 
-    private static String formatPinyin(ChineseCharacterEntry e) {
+    private static String glyphsOfC(Composable c) {
+        return glyphsOf(resolve(c));
+    }
+
+    private static String formatPinyin(Zi e) {
         return e.pinyin().stream()
                 .map(PinyinSyllable::numberedTone)
                 .collect(Collectors.joining(", "));
@@ -578,12 +617,14 @@ public class KranjiDemoApp extends Application {
 
     // ── UI building blocks ──────────────────────────────────────────────
 
-    private static VBox section(String title, VBox content) {
+    private static VBox section(String title, javafx.scene.Node content) {
         var titleLabel = new Label(title);
         titleLabel.setFont(Font.font("System", FontWeight.BOLD, 13));
         titleLabel.setStyle("-fx-text-fill: #444;");
 
-        content.setPadding(new Insets(6, 0, 0, 12));
+        if (content instanceof VBox vbox) {
+            vbox.setPadding(new Insets(6, 0, 0, 12));
+        }
 
         var section = new VBox(4, titleLabel, content);
         section.setPadding(new Insets(4, 0, 4, 0));

@@ -77,8 +77,4 @@ public interface CompositionStyle {
         @Override public String chineseName() { return "左三包围"; }
     }
 
-    /** 品字结构 — Triangular arrangement of three identical elements (e.g. 品 = 口×3). */
-    record Mosaic() implements CompositionStyle {
-        @Override public String chineseName() { return "品字结构"; }
-    }
 }

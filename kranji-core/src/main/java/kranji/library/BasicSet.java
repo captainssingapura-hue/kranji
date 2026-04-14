@@ -1,6 +1,5 @@
 package kranji.library;
 
-import kranji.component.HintedZi;
 import kranji.component.basic.*;
 
 import java.util.ArrayList;
@@ -50,7 +49,6 @@ public final class BasicSet implements ZiLibrary {
         registered = true;
 
         // ── kranji-core families (directly accessible) ──────────
-        components.addAll(HintedZi.ALL);
         components.addAll(PersonFamily.ALL);
         components.addAll(WaterFamily.ALL);
         components.addAll(HeartFamily.ALL);

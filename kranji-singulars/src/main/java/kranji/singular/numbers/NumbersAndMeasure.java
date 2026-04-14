@@ -133,16 +133,68 @@ public final class NumbersAndMeasure {
     }
     public static final Ban BAN = new Ban();
 
-    public record Shuang() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "双"; }
-        @Override public String meaning() { return "pair, double"; }
-        @Override public String pinyin()  { return "shuāng"; }
+    /** 丈 — ten feet, elder. */
+    public record Zhang() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "丈"; }
+        @Override public String meaning() { return "ten feet, elder"; }
+        @Override public String pinyin()  { return "zhàng"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Zhang ZHANG = new Zhang();
+
+    /** 两 — two, both. */
+    public record Liang() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "两"; }
+        @Override public String meaning() { return "two, both"; }
+        @Override public String pinyin()  { return "liǎng"; }
+        @Override public int strokes()    { return 7; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Liang LIANG = new Liang();
+
+    /** 丰 — abundant, lush. */
+    public record Feng_Abundant() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "丰"; }
+        @Override public String meaning() { return "abundant, lush"; }
+        @Override public String pinyin()  { return "fēng"; }
         @Override public int strokes()    { return 4; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
-    public static final Shuang SHUANG = new Shuang();
+    public static final Feng_Abundant FENG_ABUNDANT = new Feng_Abundant();
+
+    /** 卅 — thirty. */
+    public record Sa() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "卅"; }
+        @Override public String meaning() { return "thirty"; }
+        @Override public String pinyin()  { return "sà"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Sa SA = new Sa();
+
+    /** 廿 — twenty. */
+    public record Nian_Twenty() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "廿"; }
+        @Override public String meaning() { return "twenty"; }
+        @Override public String pinyin()  { return "niàn"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Nian_Twenty NIAN_TWENTY = new Nian_Twenty();
+
+    /** 幺 — tiny, youngest. */
+    public record Yao_Tiny() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "幺"; }
+        @Override public String meaning() { return "tiny, youngest"; }
+        @Override public String pinyin()  { return "yāo"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Yao_Tiny YAO_TINY = new Yao_Tiny();
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             YI, ER, SAN, SI, WU, LIU, QI, BA, JIU, SHI,
-            BAI, QIAN, WAN, BAN, SHUANG);
+            BAI, QIAN, WAN, BAN, ZHANG, LIANG, FENG_ABUNDANT,
+            SA, NIAN_TWENTY, YAO_TINY);
 }

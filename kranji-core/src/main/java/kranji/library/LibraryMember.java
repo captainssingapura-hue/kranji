@@ -1,6 +1,6 @@
 package kranji.library;
 
-import kranji.zi.SingularZi;
+import kranji.zi.SingularBlock;
 
 /**
  * A character component bound to a specific {@link ZiLibrary}.
@@ -9,12 +9,12 @@ import kranji.zi.SingularZi;
  * library at compile time. This enables validation that compositions
  * only reference components from the same library or its dependencies.</p>
  *
- * <p>Extends {@link SingularZi} — both standalone characters (木, 日) and
+ * <p>Extends {@link SingularBlock} — both standalone characters (木, 日) and
  * parts/偏旁 (氵, 亻) implement this interface when they belong to a library.</p>
  *
  * @param <L> the library this component belongs to
  */
-public interface LibraryMember<L extends ZiLibrary> extends SingularZi {
+public interface LibraryMember<L extends ZiLibrary> extends SingularBlock {
 
     /** The library instance this component belongs to. */
     L library();

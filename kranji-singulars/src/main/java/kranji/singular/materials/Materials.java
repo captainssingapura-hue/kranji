@@ -43,15 +43,6 @@ public final class Materials {
     }
     public static final Yu_Jade YU_JADE = new Yu_Jade();
 
-    public record Zhu_Pearl() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "珠"; }
-        @Override public String meaning() { return "pearl"; }
-        @Override public String pinyin()  { return "zhū"; }
-        @Override public int strokes()    { return 10; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Zhu_Pearl ZHU_PEARL = new Zhu_Pearl();
-
     public record Se() implements LibraryMember<BasicSet> {
         @Override public String glyph()   { return "色"; }
         @Override public String meaning() { return "color"; }
@@ -69,24 +60,6 @@ public final class Materials {
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
     public static final Bai_White BAI_WHITE = new Bai_White();
-
-    public record Hei() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "黑"; }
-        @Override public String meaning() { return "black"; }
-        @Override public String pinyin()  { return "hēi"; }
-        @Override public int strokes()    { return 12; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Hei HEI = new Hei();
-
-    public record Hong() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "红"; }
-        @Override public String meaning() { return "red"; }
-        @Override public String pinyin()  { return "hóng"; }
-        @Override public int strokes()    { return 6; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Hong HONG = new Hong();
 
     public record Huang() implements LibraryMember<BasicSet> {
         @Override public String glyph()   { return "黄"; }
@@ -115,34 +88,35 @@ public final class Materials {
     }
     public static final Dan DAN = new Dan();
 
-    public record Tie() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "铁"; }
-        @Override public String meaning() { return "iron"; }
-        @Override public String pinyin()  { return "tiě"; }
-        @Override public int strokes()    { return 10; }
+    public record Gan_Sweet() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "甘"; }
+        @Override public String meaning() { return "sweet"; }
+        @Override public String pinyin()  { return "gān"; }
+        @Override public int strokes()    { return 5; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
-    public static final Tie TIE = new Tie();
+    public static final Gan_Sweet GAN_SWEET = new Gan_Sweet();
 
-    public record Tong() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "铜"; }
-        @Override public String meaning() { return "copper"; }
-        @Override public String pinyin()  { return "tóng"; }
-        @Override public int strokes()    { return 11; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Tong TONG = new Tong();
-
-    public record Zhi_Paper() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "纸"; }
-        @Override public String meaning() { return "paper"; }
-        @Override public String pinyin()  { return "zhǐ"; }
+    public record Lu_Brine() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "卤"; }
+        @Override public String meaning() { return "brine/halogen"; }
+        @Override public String pinyin()  { return "lǔ"; }
         @Override public int strokes()    { return 7; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
-    public static final Zhi_Paper ZHI_PAPER = new Zhi_Paper();
+    public static final Lu_Brine LU_BRINE = new Lu_Brine();
+
+    public record Wei_Leather() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "韦"; }
+        @Override public String meaning() { return "leather/tanned hide"; }
+        @Override public String pinyin()  { return "wéi"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Wei_Leather WEI_LEATHER = new Wei_Leather();
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
-            YI_CLOTHES, JIN_TOWEL, GE, YU_JADE, ZHU_PEARL, SE,
-            BAI_WHITE, HEI, HONG, HUANG, QING, DAN, TIE, TONG, ZHI_PAPER);
+            YI_CLOTHES, JIN_TOWEL, GE, YU_JADE, SE,
+            BAI_WHITE, HUANG, QING, DAN,
+            GAN_SWEET, LU_BRINE, WEI_LEATHER);
 }

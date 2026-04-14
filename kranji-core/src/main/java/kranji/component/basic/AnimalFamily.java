@@ -1,7 +1,7 @@
 package kranji.component.basic;
 
 import kranji.classification.BlockRole;
-import kranji.zi.ComposedZi.LeftRight;
+import kranji.zi.ComposedBlock.LeftRight;
 import kranji.library.LibraryMember;
 import kranji.library.BasicSet;
 import kranji.layout.Politeness;

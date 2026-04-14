@@ -3,8 +3,8 @@ package kranji.classification;
 /**
  * The structural position a component occupies within its parent composition.
  *
- * <p>This is an open ADT — each {@link CharacterComposition} variant defines
- * its own set of role records (e.g. {@code LeftRight.Left}, {@code Mosaic.Top}).
+ * <p>This is an open ADT — each composition variant defines
+ * its own set of role records (e.g. {@code LeftRight.Left}, {@code TopBottom.Top}).
  * All role types implement this common interface so the layout engine and
  * renderers can handle them polymorphically.</p>
  *

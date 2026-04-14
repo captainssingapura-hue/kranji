@@ -1,9 +1,7 @@
 package kranji.stroke;
 
-import kranji.zi.ComposedZi;
-import kranji.zi.ComposedZi.*;
-import kranji.zi.SingularZi;
-import kranji.zi.Zi;
+import kranji.zi.*;
+import kranji.zi.ComposedBlock.*;
 
 import java.util.*;
 
@@ -25,92 +23,102 @@ public final class LayoutEngine {
     private LayoutEngine() {}
 
     // ═══════════════════════════════════════════════════════════════
+    //  Composable resolution
+    // ═══════════════════════════════════════════════════════════════
+
+    private static BlockStructure resolve(Composable c) {
+        return switch (c) {
+            case Composable.OfZi(var zi) -> zi.structure();
+            case Composable.OfBlock(var block) -> block;
+        };
+    }
+
+    // ═══════════════════════════════════════════════════════════════
     //  Pass 1 — Measure (bottom-up)
     // ═══════════════════════════════════════════════════════════════
 
     /** Compute the bounding box for a node and all its descendants. */
-    public static LayoutBox measure(Zi node) {
-        if (node instanceof SingularZi) {
+    public static LayoutBox measure(BlockStructure node) {
+        if (node instanceof SingularBlock) {
             return LayoutBox.LEAF;
         }
-        if (node instanceof ComposedZi comp) {
+        if (node instanceof ComposedBlock comp) {
             return measureComposition(comp);
         }
         return LayoutBox.LEAF;
     }
 
-    private static LayoutBox measureComposition(ComposedZi comp) {
+    private static LayoutBox measureComposable(Composable c) {
+        return measure(resolve(c));
+    }
+
+    private static LayoutBox measureComposition(ComposedBlock comp) {
         return switch (comp) {
             case LeftRight(var left, var right) -> {
-                LayoutBox lb = measure(left), rb = measure(right);
+                LayoutBox lb = measureComposable(left), rb = measureComposable(right);
                 yield new LayoutBox(lb.width() + rb.width(), Math.max(lb.height(), rb.height()));
             }
 
             case TopBottom(var top, var bottom) -> {
-                LayoutBox tb = measure(top), bb = measure(bottom);
+                LayoutBox tb = measureComposable(top), bb = measureComposable(bottom);
                 yield new LayoutBox(Math.max(tb.width(), bb.width()), tb.height() + bb.height());
             }
 
             case LeftMiddleRight(var l, var m, var r) -> {
-                LayoutBox lb = measure(l), mb = measure(m), rb = measure(r);
+                LayoutBox lb = measureComposable(l), mb = measureComposable(m), rb = measureComposable(r);
                 yield new LayoutBox(lb.width() + mb.width() + rb.width(),
                         Math.max(Math.max(lb.height(), mb.height()), rb.height()));
             }
 
             case TopMiddleBottom(var t, var m, var b) -> {
-                LayoutBox tb = measure(t), mb = measure(m), bb = measure(b);
+                LayoutBox tb = measureComposable(t), mb = measureComposable(m), bb = measureComposable(b);
                 yield new LayoutBox(Math.max(Math.max(tb.width(), mb.width()), bb.width()),
                         tb.height() + mb.height() + bb.height());
             }
 
             case FullEnclosure(var outer, var inner) -> {
-                LayoutBox ib = measure(inner);
+                LayoutBox ib = measureComposable(inner);
                 double margin = LayoutBox.BASE_SIZE * ENCLOSURE_MARGIN_FRAC;
                 yield new LayoutBox(ib.width() + 2 * margin, ib.height() + 2 * margin);
             }
 
             case SemiEnclosureBottomLeft(var wrapper, var content) -> {
-                LayoutBox cb = measure(content);
+                LayoutBox cb = measureComposable(content);
                 double leftM = LayoutBox.BASE_SIZE * 0.15;
                 double bottomM = LayoutBox.BASE_SIZE * 0.20;
                 yield new LayoutBox(cb.width() + leftM, cb.height() + bottomM);
             }
 
             case SemiEnclosureUpperLeft(var wrapper, var content) -> {
-                LayoutBox cb = measure(content);
+                LayoutBox cb = measureComposable(content);
                 double leftM = LayoutBox.BASE_SIZE * 0.20;
                 double topM = LayoutBox.BASE_SIZE * 0.20;
                 yield new LayoutBox(cb.width() + leftM, cb.height() + topM);
             }
 
             case SemiEnclosureUpperRight(var wrapper, var content) -> {
-                LayoutBox cb = measure(content);
+                LayoutBox cb = measureComposable(content);
                 double rightM = LayoutBox.BASE_SIZE * 0.20;
                 double topM = LayoutBox.BASE_SIZE * 0.20;
                 yield new LayoutBox(cb.width() + rightM, cb.height() + topM);
             }
 
             case SemiEnclosureTopThree(var wrapper, var content) -> {
-                LayoutBox cb = measure(content);
+                LayoutBox cb = measureComposable(content);
                 double margin = LayoutBox.BASE_SIZE * 0.20;
                 yield new LayoutBox(cb.width() + 2 * margin, cb.height() + margin);
             }
 
             case SemiEnclosureBottomThree(var wrapper, var content) -> {
-                LayoutBox cb = measure(content);
+                LayoutBox cb = measureComposable(content);
                 double margin = LayoutBox.BASE_SIZE * 0.20;
                 yield new LayoutBox(cb.width() + 2 * margin, cb.height() + margin);
             }
 
             case SemiEnclosureLeftThree(var wrapper, var content) -> {
-                LayoutBox cb = measure(content);
+                LayoutBox cb = measureComposable(content);
                 double margin = LayoutBox.BASE_SIZE * 0.20;
                 yield new LayoutBox(cb.width() + margin, cb.height() + 2 * margin);
-            }
-
-            case Mosaic(var element) -> {
-                LayoutBox eb = measure(element);
-                yield new LayoutBox(2 * eb.width(), 2 * eb.height());
             }
         };
     }
@@ -126,141 +134,129 @@ public final class LayoutEngine {
 
     /**
      * Place all leaves of the node tree, returning their transforms.
-     *
-     * @param node  the Zi node
-     * @param x     absolute x offset of this node's top-left corner
-     * @param y     absolute y offset of this node's top-left corner
-     * @param glyph the parent's glyph string (used for singular leaves)
-     * @return list of placed glyphs with their transforms
      */
-    public static List<PlacedGlyph> place(Zi node, double x, double y, String glyph) {
-        if (node instanceof SingularZi sz) {
-            String g = sz.glyph();
+    public static List<PlacedGlyph> place(BlockStructure node, double x, double y, String glyph) {
+        if (node instanceof SingularBlock sb) {
+            String g = sb.glyph();
             LayoutBox box = LayoutBox.LEAF;
             AffineTransform2D transform = AffineTransform2D.rect(x, y, box.width(), box.height());
             return List.of(new PlacedGlyph(g, transform));
         }
-        if (node instanceof ComposedZi comp) {
+        if (node instanceof ComposedBlock comp) {
             return placeComposition(comp, x, y, glyph);
         }
         return List.of();
     }
 
-    private static List<PlacedGlyph> placeComposition(ComposedZi comp, double x, double y, String glyph) {
+    private static List<PlacedGlyph> placeComposable(Composable c, double x, double y, String glyph) {
+        return place(resolve(c), x, y, glyph);
+    }
+
+    private static List<PlacedGlyph> placeComposition(ComposedBlock comp, double x, double y, String glyph) {
         List<PlacedGlyph> result = new ArrayList<>();
 
         switch (comp) {
             case LeftRight(var left, var right) -> {
-                LayoutBox lb = measure(left), rb = measure(right);
+                LayoutBox lb = measureComposable(left), rb = measureComposable(right);
                 double h = Math.max(lb.height(), rb.height());
-                result.addAll(place(left, x, y + (h - lb.height()) / 2, null));
-                result.addAll(place(right, x + lb.width(), y + (h - rb.height()) / 2, null));
+                result.addAll(placeComposable(left, x, y + (h - lb.height()) / 2, null));
+                result.addAll(placeComposable(right, x + lb.width(), y + (h - rb.height()) / 2, null));
             }
 
             case TopBottom(var top, var bottom) -> {
-                LayoutBox tb = measure(top), bb = measure(bottom);
+                LayoutBox tb = measureComposable(top), bb = measureComposable(bottom);
                 double w = Math.max(tb.width(), bb.width());
-                result.addAll(place(top, x + (w - tb.width()) / 2, y, null));
-                result.addAll(place(bottom, x + (w - bb.width()) / 2, y + tb.height(), null));
+                result.addAll(placeComposable(top, x + (w - tb.width()) / 2, y, null));
+                result.addAll(placeComposable(bottom, x + (w - bb.width()) / 2, y + tb.height(), null));
             }
 
             case LeftMiddleRight(var l, var m, var r) -> {
-                LayoutBox lb = measure(l), mb = measure(m), rb = measure(r);
+                LayoutBox lb = measureComposable(l), mb = measureComposable(m), rb = measureComposable(r);
                 double h = Math.max(Math.max(lb.height(), mb.height()), rb.height());
-                result.addAll(place(l, x, y + (h - lb.height()) / 2, null));
-                result.addAll(place(m, x + lb.width(), y + (h - mb.height()) / 2, null));
-                result.addAll(place(r, x + lb.width() + mb.width(), y + (h - rb.height()) / 2, null));
+                result.addAll(placeComposable(l, x, y + (h - lb.height()) / 2, null));
+                result.addAll(placeComposable(m, x + lb.width(), y + (h - mb.height()) / 2, null));
+                result.addAll(placeComposable(r, x + lb.width() + mb.width(), y + (h - rb.height()) / 2, null));
             }
 
             case TopMiddleBottom(var t, var m, var b) -> {
-                LayoutBox tb = measure(t), mb = measure(m), bb = measure(b);
+                LayoutBox tb = measureComposable(t), mb = measureComposable(m), bb = measureComposable(b);
                 double w = Math.max(Math.max(tb.width(), mb.width()), bb.width());
-                result.addAll(place(t, x + (w - tb.width()) / 2, y, null));
-                result.addAll(place(m, x + (w - mb.width()) / 2, y + tb.height(), null));
-                result.addAll(place(b, x + (w - bb.width()) / 2, y + tb.height() + mb.height(), null));
+                result.addAll(placeComposable(t, x + (w - tb.width()) / 2, y, null));
+                result.addAll(placeComposable(m, x + (w - mb.width()) / 2, y + tb.height(), null));
+                result.addAll(placeComposable(b, x + (w - bb.width()) / 2, y + tb.height() + mb.height(), null));
             }
 
             case FullEnclosure(var outer, var inner) -> {
-                LayoutBox ib = measure(inner);
+                LayoutBox ib = measureComposable(inner);
                 double margin = LayoutBox.BASE_SIZE * ENCLOSURE_MARGIN_FRAC;
                 double totalW = ib.width() + 2 * margin;
                 double totalH = ib.height() + 2 * margin;
                 AffineTransform2D outerTransform = AffineTransform2D.rect(x, y, totalW, totalH);
                 result.add(new PlacedGlyph(outer.glyph(), outerTransform));
-                result.addAll(place(inner, x + margin, y + margin, null));
+                result.addAll(placeComposable(inner, x + margin, y + margin, null));
             }
 
             case SemiEnclosureBottomLeft(var wrapper, var content) -> {
-                LayoutBox cb = measure(content);
+                LayoutBox cb = measureComposable(content);
                 double leftM = LayoutBox.BASE_SIZE * 0.15;
                 double bottomM = LayoutBox.BASE_SIZE * 0.20;
                 double totalW = cb.width() + leftM;
                 double totalH = cb.height() + bottomM;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
                 result.add(new PlacedGlyph(wrapper.glyph(), wrapperTransform));
-                result.addAll(place(content, x + leftM, y, null));
+                result.addAll(placeComposable(content, x + leftM, y, null));
             }
 
             case SemiEnclosureUpperLeft(var wrapper, var content) -> {
-                LayoutBox cb = measure(content);
+                LayoutBox cb = measureComposable(content);
                 double leftM = LayoutBox.BASE_SIZE * 0.20;
                 double topM = LayoutBox.BASE_SIZE * 0.20;
                 double totalW = cb.width() + leftM;
                 double totalH = cb.height() + topM;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
                 result.add(new PlacedGlyph(wrapper.glyph(), wrapperTransform));
-                result.addAll(place(content, x + leftM, y + topM, null));
+                result.addAll(placeComposable(content, x + leftM, y + topM, null));
             }
 
             case SemiEnclosureUpperRight(var wrapper, var content) -> {
-                LayoutBox cb = measure(content);
+                LayoutBox cb = measureComposable(content);
                 double rightM = LayoutBox.BASE_SIZE * 0.20;
                 double topM = LayoutBox.BASE_SIZE * 0.20;
                 double totalW = cb.width() + rightM;
                 double totalH = cb.height() + topM;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
                 result.add(new PlacedGlyph(wrapper.glyph(), wrapperTransform));
-                result.addAll(place(content, x, y + topM, null));
+                result.addAll(placeComposable(content, x, y + topM, null));
             }
 
             case SemiEnclosureTopThree(var wrapper, var content) -> {
-                LayoutBox cb = measure(content);
+                LayoutBox cb = measureComposable(content);
                 double margin = LayoutBox.BASE_SIZE * 0.20;
                 double totalW = cb.width() + 2 * margin;
                 double totalH = cb.height() + margin;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
                 result.add(new PlacedGlyph(wrapper.glyph(), wrapperTransform));
-                result.addAll(place(content, x + margin, y + margin, null));
+                result.addAll(placeComposable(content, x + margin, y + margin, null));
             }
 
             case SemiEnclosureBottomThree(var wrapper, var content) -> {
-                LayoutBox cb = measure(content);
+                LayoutBox cb = measureComposable(content);
                 double margin = LayoutBox.BASE_SIZE * 0.20;
                 double totalW = cb.width() + 2 * margin;
                 double totalH = cb.height() + margin;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
                 result.add(new PlacedGlyph(wrapper.glyph(), wrapperTransform));
-                result.addAll(place(content, x + margin, y, null));
+                result.addAll(placeComposable(content, x + margin, y, null));
             }
 
             case SemiEnclosureLeftThree(var wrapper, var content) -> {
-                LayoutBox cb = measure(content);
+                LayoutBox cb = measureComposable(content);
                 double margin = LayoutBox.BASE_SIZE * 0.20;
                 double totalW = cb.width() + margin;
                 double totalH = cb.height() + 2 * margin;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
                 result.add(new PlacedGlyph(wrapper.glyph(), wrapperTransform));
-                result.addAll(place(content, x + margin, y + margin, null));
-            }
-
-            case Mosaic(var element) -> {
-                LayoutBox eb = measure(element);
-                // Top-center
-                result.addAll(place(element, x + eb.width() / 2, y, null));
-                // Bottom-left
-                result.addAll(place(element, x, y + eb.height(), null));
-                // Bottom-right
-                result.addAll(place(element, x + eb.width(), y + eb.height(), null));
+                result.addAll(placeComposable(content, x + margin, y + margin, null));
             }
         }
 

@@ -1,7 +1,7 @@
 package kranji.layout;
 
 import kranji.classification.BlockRole;
-import kranji.entry.ChineseCharacterEntry;
+import kranji.zi.Zi;
 
 import java.awt.geom.Rectangle2D;
 import java.util.List;
@@ -65,7 +65,7 @@ public final class BlockSvgRenderer {
     /**
      * Render a character's block layout as a complete SVG document.
      */
-    public static String render(ChineseCharacterEntry entry) {
+    public static String render(Zi entry) {
         List<Block> blocks = BlockLayoutEngine.layout(entry);
 
         double svgW = CANVAS + 2 * PADDING;
@@ -112,7 +112,7 @@ public final class BlockSvgRenderer {
         return sb.toString();
     }
 
-    private static void appendHeader(StringBuilder sb, ChineseCharacterEntry entry, double svgW) {
+    private static void appendHeader(StringBuilder sb, Zi entry, double svgW) {
         double cx = svgW / 2;
         sb.append(String.format(
                 "<text x=\"%.1f\" y=\"24\" font-size=\"28\" font-weight=\"bold\" text-anchor=\"middle\" fill=\"#1a1a1a\">%s</text>\n",

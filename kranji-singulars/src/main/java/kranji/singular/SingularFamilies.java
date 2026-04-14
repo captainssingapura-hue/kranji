@@ -12,6 +12,7 @@ import kranji.singular.people.PeopleAndRoles;
 import kranji.singular.plants.PlantsAndAgriculture;
 import kranji.singular.space.SpaceAndDirection;
 import kranji.singular.structures.Structures;
+import kranji.singular.radicals.RadicalComponents;
 import kranji.singular.tools.ToolsAndVessels;
 
 /**
@@ -45,5 +46,6 @@ public final class SingularFamilies {
         basicSet.addAll(Structures.ALL);
         basicSet.addAll(Materials.ALL);
         basicSet.addAll(AbstractConcepts.ALL);
+        basicSet.addAll(RadicalComponents.ALL);
     }
 }

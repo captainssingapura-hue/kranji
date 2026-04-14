@@ -1,21 +1,19 @@
 package kranji.singular.plants;
 
 import kranji.classification.BlockRole;
-import kranji.zi.ComposedZi.LeftRight;
+import kranji.zi.ComposedBlock.LeftRight;
 import kranji.library.LibraryMember;
 import kranji.layout.Politeness;
 import kranji.library.BasicSet;
 import java.util.List;
 
 /**
- * Stateless record implementations of {@link SingularZi} for Chinese
+ * Stateless record implementations of {@link SingularBlock} for Chinese
  * characters related to plants and agriculture.
  */
 public final class PlantsAndAgriculture {
 
     private PlantsAndAgriculture() {}
-
-    // 木 is defined in WoodFamily (kranji-core) — the single source of truth.
 
     /** 禾 — grain, cereal. Yielding as left. */
     public record He() implements LibraryMember<BasicSet> {
@@ -41,65 +39,11 @@ public final class PlantsAndAgriculture {
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
-    /** 竹 — bamboo. */
-    public record Zhu() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "竹"; }
-        @Override public String meaning() { return "bamboo"; }
-        @Override public String pinyin()  { return "zhú"; }
-        @Override public int strokes()    { return 6; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-
-    /** 草 — grass. */
-    public record Cao() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "草"; }
-        @Override public String meaning() { return "grass"; }
-        @Override public String pinyin()  { return "cǎo"; }
-        @Override public int strokes()    { return 9; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-
-    /** 花 — flower. */
-    public record Hua() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "花"; }
-        @Override public String meaning() { return "flower"; }
-        @Override public String pinyin()  { return "huā"; }
-        @Override public int strokes()    { return 7; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-
     /** 果 — fruit. */
     public record Guo() implements LibraryMember<BasicSet> {
         @Override public String glyph()   { return "果"; }
         @Override public String meaning() { return "fruit"; }
         @Override public String pinyin()  { return "guǒ"; }
-        @Override public int strokes()    { return 8; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-
-    /** 叶 — leaf. */
-    public record Ye() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "叶"; }
-        @Override public String meaning() { return "leaf"; }
-        @Override public String pinyin()  { return "yè"; }
-        @Override public int strokes()    { return 5; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-
-    /** 根 — root. */
-    public record Gen() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "根"; }
-        @Override public String meaning() { return "root"; }
-        @Override public String pinyin()  { return "gēn"; }
-        @Override public int strokes()    { return 10; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-
-    /** 林 — forest. */
-    public record Lin() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "林"; }
-        @Override public String meaning() { return "forest"; }
-        @Override public String pinyin()  { return "lín"; }
         @Override public int strokes()    { return 8; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
@@ -110,33 +54,6 @@ public final class PlantsAndAgriculture {
         @Override public String meaning() { return "farming"; }
         @Override public String pinyin()  { return "nóng"; }
         @Override public int strokes()    { return 6; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-
-    /** 种 — seed, to plant. */
-    public record Zhong() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "种"; }
-        @Override public String meaning() { return "seed, to plant"; }
-        @Override public String pinyin()  { return "zhǒng"; }
-        @Override public int strokes()    { return 9; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-
-    /** 麦 — wheat. */
-    public record Mai() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "麦"; }
-        @Override public String meaning() { return "wheat"; }
-        @Override public String pinyin()  { return "mài"; }
-        @Override public int strokes()    { return 7; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-
-    /** 豆 — bean. */
-    public record Dou() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "豆"; }
-        @Override public String meaning() { return "bean"; }
-        @Override public String pinyin()  { return "dòu"; }
-        @Override public int strokes()    { return 7; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
@@ -194,29 +111,101 @@ public final class PlantsAndAgriculture {
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
+    /** 木 — tree, wood. */
+    public record Mu_Tree() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "木"; }
+        @Override public String meaning() { return "tree, wood"; }
+        @Override public String pinyin()  { return "mù"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+
+    /** 术 — art, technique. */
+    public record Shu_Art() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "术"; }
+        @Override public String meaning() { return "art, technique"; }
+        @Override public String pinyin()  { return "shù"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+
+    /** 柬 — select, letter. */
+    public record Jian_Select() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "柬"; }
+        @Override public String meaning() { return "select, letter"; }
+        @Override public String pinyin()  { return "jiǎn"; }
+        @Override public int strokes()    { return 9; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+
+    /** 耒 — plow handle. */
+    public record Lei_Plow() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "耒"; }
+        @Override public String meaning() { return "plow handle"; }
+        @Override public String pinyin()  { return "lěi"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+
+    /** 聿 — writing brush. */
+    public record Yu_Brush() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "聿"; }
+        @Override public String meaning() { return "writing brush"; }
+        @Override public String pinyin()  { return "yù"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+
+    /** 芈 — bleat, surname. */
+    public record Mi_Bleat() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "芈"; }
+        @Override public String meaning() { return "bleat, surname"; }
+        @Override public String pinyin()  { return "mǐ"; }
+        @Override public int strokes()    { return 7; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+
+    /** 歹 — bad, death remains. */
+    public record Dai() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "歹"; }
+        @Override public String meaning() { return "bad, death remains"; }
+        @Override public String pinyin()  { return "dǎi"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+
+    /** 冉 — slowly, gradually. */
+    public record Ran() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "冉"; }
+        @Override public String meaning() { return "slowly, gradually"; }
+        @Override public String pinyin()  { return "rǎn"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+
     // ── Singleton instances ───────────────────────────────────
 
-    public static final He        HE        = new He();
-    public static final Mi        MI        = new Mi();
-    public static final Zhu       ZHU       = new Zhu();
-    public static final Cao       CAO       = new Cao();
-    public static final Hua       HUA       = new Hua();
-    public static final Guo       GUO       = new Guo();
-    public static final Ye        YE        = new Ye();
-    public static final Gen       GEN       = new Gen();
-    public static final Lin       LIN       = new Lin();
-    public static final Nong      NONG      = new Nong();
-    public static final Zhong     ZHONG     = new Zhong();
-    public static final Mai       MAI       = new Mai();
-    public static final Dou       DOU       = new Dou();
-    public static final Gua       GUA       = new Gua();
-    public static final Shu       SHU       = new Shu();
-    public static final Zhu_Trunk ZHU_TRUNK = new Zhu_Trunk();
-    public static final Wei_Not   WEI_NOT   = new Wei_Not();
-    public static final Mo        MO        = new Mo();
-    public static final Ben       BEN       = new Ben();
+    public static final He          HE          = new He();
+    public static final Mi          MI          = new Mi();
+    public static final Guo         GUO         = new Guo();
+
+    public static final Nong        NONG        = new Nong();
+    public static final Gua         GUA         = new Gua();
+    public static final Shu         SHU         = new Shu();
+    public static final Zhu_Trunk   ZHU_TRUNK   = new Zhu_Trunk();
+    public static final Wei_Not     WEI_NOT     = new Wei_Not();
+    public static final Mo          MO          = new Mo();
+    public static final Ben         BEN         = new Ben();
+    public static final Mu_Tree     MU_TREE     = new Mu_Tree();
+    public static final Shu_Art     SHU_ART     = new Shu_Art();
+    public static final Jian_Select JIAN_SELECT = new Jian_Select();
+    public static final Lei_Plow    LEI_PLOW    = new Lei_Plow();
+    public static final Yu_Brush    YU_BRUSH    = new Yu_Brush();
+    public static final Mi_Bleat    MI_BLEAT    = new Mi_Bleat();
+    public static final Dai         DAI         = new Dai();
+    public static final Ran         RAN         = new Ran();
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
-            HE, MI, ZHU, CAO, HUA, GUO, YE, GEN, LIN, NONG,
-            ZHONG, MAI, DOU, GUA, SHU, ZHU_TRUNK, WEI_NOT, MO, BEN);
+            HE, MI, GUO, NONG, GUA, SHU, ZHU_TRUNK, WEI_NOT, MO, BEN,
+            MU_TREE, SHU_ART, JIAN_SELECT, LEI_PLOW, YU_BRUSH, MI_BLEAT, DAI, RAN);
 }

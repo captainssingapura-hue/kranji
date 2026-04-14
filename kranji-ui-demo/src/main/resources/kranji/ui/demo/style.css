@@ -1,0 +1,13 @@
+.split-pane,
+.scroll-pane,
+.scroll-pane > .viewport,
+.tree-view,
+.tree-view > .virtual-flow > .clipped-container > .sheet > .tree-cell {
+    -fx-background-color: white;
+}
+
+.tree-view {
+    -fx-control-inner-background: white;
+    -fx-font-family: 'Consolas';
+    -fx-font-size: 13;
+}

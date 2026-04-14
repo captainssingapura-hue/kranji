@@ -1,7 +1,7 @@
 package kranji.singular.tools;
 
 import kranji.classification.BlockRole;
-import kranji.zi.ComposedZi.LeftRight;
+import kranji.zi.ComposedBlock.LeftRight;
 import kranji.library.LibraryMember;
 import kranji.layout.Politeness;
 import kranji.library.BasicSet;
@@ -98,15 +98,6 @@ public final class ToolsAndVessels {
     }
     public static final Fou FOU = new Fou();
 
-    public record Ding() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "鼎"; }
-        @Override public String meaning() { return "tripod vessel"; }
-        @Override public String pinyin()  { return "dǐng"; }
-        @Override public int strokes()    { return 12; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Ding DING = new Ding();
-
     public record Wa() implements LibraryMember<BasicSet> {
         @Override public String glyph()   { return "瓦"; }
         @Override public String meaning() { return "tile"; }
@@ -151,15 +142,6 @@ public final class ToolsAndVessels {
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
     public static final Men MEN = new Men();
-
-    public record Jian() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "剑"; }
-        @Override public String meaning() { return "sword"; }
-        @Override public String pinyin()  { return "jiàn"; }
-        @Override public int strokes()    { return 9; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Jian JIAN = new Jian();
 
     public record Bi_Spoon() implements LibraryMember<BasicSet> {
         @Override public String glyph()   { return "匕"; }
@@ -206,26 +188,173 @@ public final class ToolsAndVessels {
     }
     public static final Jin_Metal JIN_METAL = new Jin_Metal();
 
-    public record Si() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "丝"; }
-        @Override public String meaning() { return "silk"; }
-        @Override public String pinyin()  { return "sī"; }
+    public record Ding_Nail() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "丁"; }
+        @Override public String meaning() { return "nail/4th Heavenly Stem"; }
+        @Override public String pinyin()  { return "dīng"; }
+        @Override public int strokes()    { return 2; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ding_Nail DING_NAIL = new Ding_Nail();
+
+    public record Wan_Pill() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "丸"; }
+        @Override public String meaning() { return "pill/pellet"; }
+        @Override public String pinyin()  { return "wán"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Wan_Pill WAN_PILL = new Wan_Pill();
+
+    public record Ce() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "册"; }
+        @Override public String meaning() { return "book/volume"; }
+        @Override public String pinyin()  { return "cè"; }
         @Override public int strokes()    { return 5; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
-    public static final Si SI = new Si();
+    public static final Ce CE = new Ce();
 
-    public record Zhen() implements LibraryMember<BasicSet> {
-        @Override public String glyph()   { return "针"; }
-        @Override public String meaning() { return "needle"; }
-        @Override public String pinyin()  { return "zhēn"; }
+    public record Ji_Table() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "几"; }
+        @Override public String meaning() { return "small table/how many"; }
+        @Override public String pinyin()  { return "jī"; }
+        @Override public int strokes()    { return 2; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ji_Table JI_TABLE = new Ji_Table();
+
+    public record Fan() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "凡"; }
+        @Override public String meaning() { return "ordinary/all"; }
+        @Override public String pinyin()  { return "fán"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Fan FAN = new Fan();
+
+    public record Bu_Divination() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "卜"; }
+        @Override public String meaning() { return "divination"; }
+        @Override public String pinyin()  { return "bǔ"; }
+        @Override public int strokes()    { return 2; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Bu_Divination BU_DIVINATION = new Bu_Divination();
+
+    public record Ka() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "卡"; }
+        @Override public String meaning() { return "card/clip"; }
+        @Override public String pinyin()  { return "kǎ"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ka KA = new Ka();
+
+    public record Wei_Guard() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "卫"; }
+        @Override public String meaning() { return "guard/defend"; }
+        @Override public String pinyin()  { return "wèi"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Wei_Guard WEI_GUARD = new Wei_Guard();
+
+    public record Cha() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "叉"; }
+        @Override public String meaning() { return "fork/cross"; }
+        @Override public String pinyin()  { return "chā"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Cha CHA = new Cha();
+
+    public record Diao() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "刁"; }
+        @Override public String meaning() { return "cunning/tricky"; }
+        @Override public String pinyin()  { return "diāo"; }
+        @Override public int strokes()    { return 2; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Diao DIAO = new Diao();
+
+    public record You_Wine() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "酉"; }
+        @Override public String meaning() { return "wine vessel/10th Earthly Branch"; }
+        @Override public String pinyin()  { return "yǒu"; }
         @Override public int strokes()    { return 7; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
-    public static final Zhen ZHEN = new Zhen();
+    public static final You_Wine YOU_WINE = new You_Wine();
+
+    public record Cai_Talent() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "才"; }
+        @Override public String meaning() { return "talent/just now"; }
+        @Override public String pinyin()  { return "cái"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Cai_Talent CAI_TALENT = new Cai_Talent();
+
+    public record Yi_Shoot() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "弋"; }
+        @Override public String meaning() { return "shoot/stake"; }
+        @Override public String pinyin()  { return "yì"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Yi_Shoot YI_SHOOT = new Yi_Shoot();
+
+    public record Fu_Not() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "弗"; }
+        @Override public String meaning() { return "not (archaic)"; }
+        @Override public String pinyin()  { return "fú"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Fu_Not FU_NOT = new Fu_Not();
+
+    public record Chi_Step() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "彳"; }
+        @Override public String meaning() { return "step (left foot)"; }
+        @Override public String pinyin()  { return "chì"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Chi_Step CHI_STEP = new Chi_Step();
+
+    public record Wu_Fifth() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "戊"; }
+        @Override public String meaning() { return "fifth Heavenly Stem"; }
+        @Override public String pinyin()  { return "wù"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Wu_Fifth WU_FIFTH = new Wu_Fifth();
+
+    public record Jian_Small() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "戋"; }
+        @Override public String meaning() { return "small/narrow"; }
+        @Override public String pinyin()  { return "jiān"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Jian_Small JIAN_SMALL = new Jian_Small();
+
+    public record Ya_Fork() implements LibraryMember<BasicSet> {
+        @Override public String glyph()   { return "丫"; }
+        @Override public String meaning() { return "fork/girl"; }
+        @Override public String pinyin()  { return "yā"; }
+        @Override public int strokes()    { return 3; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ya_Fork YA_FORK = new Ya_Fork();
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             DAO, REN_BLADE, GONG, MAO, SHI_ARROW, GE, JIN_AXE, DOU,
-            FOU, DING, WA, MIN, CHE, ZHOU, MEN, JIAN, BI_SPOON,
-            PIAN, LI_PLOW, SHAO, JIN_METAL, SI, ZHEN);
+            FOU, WA, MIN, CHE, ZHOU, MEN, BI_SPOON, PIAN, LI_PLOW,
+            SHAO, JIN_METAL, DING_NAIL, WAN_PILL, CE, JI_TABLE, FAN,
+            BU_DIVINATION, KA, WEI_GUARD, CHA, DIAO, YOU_WINE,
+            CAI_TALENT, YI_SHOOT, FU_NOT, CHI_STEP, WU_FIFTH,
+            JIAN_SMALL, YA_FORK);
 }
