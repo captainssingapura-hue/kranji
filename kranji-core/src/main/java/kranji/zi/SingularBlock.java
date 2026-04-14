@@ -36,7 +36,7 @@ public interface SingularBlock extends BlockStructure {
     default String meaning() { return ""; }
 
     /** Pinyin of the standalone form (e.g. "shuǐ"). */
-    default String pinyin() { return ""; }
+    default String pinyinText() { return ""; }
 
     /** Stroke count of this component form. */
     default int strokes() { return 0; }

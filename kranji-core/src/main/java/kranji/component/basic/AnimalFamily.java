@@ -13,12 +13,12 @@ public final class AnimalFamily {
     private AnimalFamily() {}
 
     /** 犭 — 反犬旁 (dog/animal). Derives from 犬 quǎn. */
-    public record FanQuanPang() implements LibraryMember<BasicSet> {
+    public record FanQuanPang() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
         @Override public String glyph()      { return "犭"; }
         @Override public String name()       { return "反犬旁"; }
         @Override public String standalone() { return "犬"; }
         @Override public String meaning()    { return "dog"; }
-        @Override public String pinyin()     { return "quǎn"; }
+        @Override public String pinyinText()     { return "quǎn"; }
         @Override public int strokes()       { return 3; }
 
         @Override

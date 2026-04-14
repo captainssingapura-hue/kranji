@@ -13,12 +13,12 @@ public final class MetalFamily {
     private MetalFamily() {}
 
     /** 钅 — 金字旁 (metal/gold). Derives from 金 jīn. */
-    public record JinZiPang() implements LibraryMember<BasicSet> {
+    public record JinZiPang() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
         @Override public String glyph()      { return "钅"; }
         @Override public String name()       { return "金字旁"; }
         @Override public String standalone() { return "金"; }
         @Override public String meaning()    { return "metal"; }
-        @Override public String pinyin()     { return "jīn"; }
+        @Override public String pinyinText()     { return "jīn"; }
         @Override public int strokes()       { return 5; }
 
         @Override

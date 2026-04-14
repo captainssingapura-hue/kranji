@@ -13,12 +13,12 @@ public final class HeartFamily {
     private HeartFamily() {}
 
     /** 忄 — 竖心旁 (heart). Derives from 心 xīn. */
-    public record ShuXinPang() implements LibraryMember<BasicSet> {
+    public record ShuXinPang() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
         @Override public String glyph()      { return "忄"; }
         @Override public String name()       { return "竖心旁"; }
         @Override public String standalone() { return "心"; }
         @Override public String meaning()    { return "heart"; }
-        @Override public String pinyin()     { return "xīn"; }
+        @Override public String pinyinText()     { return "xīn"; }
         @Override public int strokes()       { return 3; }
 
         @Override

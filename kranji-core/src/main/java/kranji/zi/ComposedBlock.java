@@ -10,9 +10,8 @@ import kranji.classification.CompositionStyle;
  * composed parts). Each variant names its component slots explicitly and defines
  * {@link BlockRole} records for the structural positions available in that layout.</p>
  *
- * <p>Every slot is typed as {@link Composable} — either a {@link Composable.OfZi}
- * reference to a full Zi, or a {@link Composable.OfBlock} raw structural fragment —
- * enabling recursive decomposition to arbitrary depth.</p>
+ * <p>Every slot is typed as {@link BlockStructure}, enabling recursive
+ * decomposition to arbitrary depth.</p>
  */
 public sealed interface ComposedBlock extends BlockStructure {
 
@@ -51,7 +50,7 @@ public sealed interface ComposedBlock extends BlockStructure {
     // ── Variants ──────────────────────────────────────────────────────
 
     /** 左右结构 — Two nodes side-by-side (e.g. 明 = 日 + 月, 清 = 氵 + 青). */
-    record LeftRight(Composable left, Composable right) implements ComposedBlock {
+    record LeftRight(BlockStructure left, BlockStructure right) implements ComposedBlock {
         public record Left() implements BlockRole {
             @Override public String label() { return "left"; }
         }
@@ -65,7 +64,7 @@ public sealed interface ComposedBlock extends BlockStructure {
     }
 
     /** 上下结构 — Two nodes stacked vertically (e.g. 字 = 宀 + 子, 花 = 艹 + 化). */
-    record TopBottom(Composable top, Composable bottom) implements ComposedBlock {
+    record TopBottom(BlockStructure top, BlockStructure bottom) implements ComposedBlock {
         public record Top() implements BlockRole {
             @Override public String label() { return "top"; }
         }
@@ -79,7 +78,7 @@ public sealed interface ComposedBlock extends BlockStructure {
     }
 
     /** 左中右结构 — Three nodes horizontally (e.g. 做 = 亻 + 古 + 攵). */
-    record LeftMiddleRight(Composable left, Composable middle, Composable right) implements ComposedBlock {
+    record LeftMiddleRight(BlockStructure left, BlockStructure middle, BlockStructure right) implements ComposedBlock {
         public record Left() implements BlockRole {
             @Override public String label() { return "left"; }
         }
@@ -97,7 +96,7 @@ public sealed interface ComposedBlock extends BlockStructure {
     }
 
     /** 上中下结构 — Three nodes vertically (e.g. 意 = 立 + 日 + 心). */
-    record TopMiddleBottom(Composable top, Composable middle, Composable bottom) implements ComposedBlock {
+    record TopMiddleBottom(BlockStructure top, BlockStructure middle, BlockStructure bottom) implements ComposedBlock {
         public record Top() implements BlockRole {
             @Override public String label() { return "top"; }
         }
@@ -115,7 +114,7 @@ public sealed interface ComposedBlock extends BlockStructure {
     }
 
     /** 全包围 — Outer node fully surrounds inner (e.g. 国 = 囗 + 玉). */
-    record FullEnclosure(Composable outer, Composable inner) implements ComposedBlock {
+    record FullEnclosure(BlockStructure outer, BlockStructure inner) implements ComposedBlock {
         public record OuterFrame() implements BlockRole {
             @Override public String label() { return "frame"; }
             @Override public boolean isOverlay() { return true; }
@@ -130,7 +129,7 @@ public sealed interface ComposedBlock extends BlockStructure {
     }
 
     /** 左上包围 — Wrapper on upper left (e.g. 厅 = 厂 + 丁, 病 = 疒 + 丙). */
-    record SemiEnclosureUpperLeft(Composable wrapper, Composable content) implements ComposedBlock {
+    record SemiEnclosureUpperLeft(BlockStructure wrapper, BlockStructure content) implements ComposedBlock {
         public static final Wrapper WRAPPER = new Wrapper();
         public static final Content CONTENT = new Content();
 
@@ -138,7 +137,7 @@ public sealed interface ComposedBlock extends BlockStructure {
     }
 
     /** 右上包围 — Wrapper on upper right (e.g. 句 = 勹 + 口). */
-    record SemiEnclosureUpperRight(Composable wrapper, Composable content) implements ComposedBlock {
+    record SemiEnclosureUpperRight(BlockStructure wrapper, BlockStructure content) implements ComposedBlock {
         public static final Wrapper WRAPPER = new Wrapper();
         public static final Content CONTENT = new Content();
 
@@ -146,7 +145,7 @@ public sealed interface ComposedBlock extends BlockStructure {
     }
 
     /** 左下包围 — Wrapper on lower left (e.g. 建 = 廴 + 聿, 远 = 辶 + 元). */
-    record SemiEnclosureBottomLeft(Composable wrapper, Composable content) implements ComposedBlock {
+    record SemiEnclosureBottomLeft(BlockStructure wrapper, BlockStructure content) implements ComposedBlock {
         public static final Wrapper WRAPPER = new Wrapper();
         public static final Content CONTENT = new Content();
 
@@ -154,7 +153,7 @@ public sealed interface ComposedBlock extends BlockStructure {
     }
 
     /** 上三包围 — Three-side top enclosure (e.g. 同 = 冂 + 口, 问 = 门 + 口). */
-    record SemiEnclosureTopThree(Composable wrapper, Composable content) implements ComposedBlock {
+    record SemiEnclosureTopThree(BlockStructure wrapper, BlockStructure content) implements ComposedBlock {
         public static final Wrapper WRAPPER = new Wrapper();
         public static final Content CONTENT = new Content();
 
@@ -162,7 +161,7 @@ public sealed interface ComposedBlock extends BlockStructure {
     }
 
     /** 下三包围 — Three-side bottom enclosure (e.g. 凶 = 凵 + 㐅). */
-    record SemiEnclosureBottomThree(Composable wrapper, Composable content) implements ComposedBlock {
+    record SemiEnclosureBottomThree(BlockStructure wrapper, BlockStructure content) implements ComposedBlock {
         public static final Wrapper WRAPPER = new Wrapper();
         public static final Content CONTENT = new Content();
 
@@ -170,7 +169,7 @@ public sealed interface ComposedBlock extends BlockStructure {
     }
 
     /** 左三包围 — Three-side left enclosure (e.g. 匹 = 匚 + 儿, 区 = 匚 + 㐅). */
-    record SemiEnclosureLeftThree(Composable wrapper, Composable content) implements ComposedBlock {
+    record SemiEnclosureLeftThree(BlockStructure wrapper, BlockStructure content) implements ComposedBlock {
         public static final Wrapper WRAPPER = new Wrapper();
         public static final Content CONTENT = new Content();
 

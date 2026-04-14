@@ -13,12 +13,12 @@ public final class StrikeFamily {
     private StrikeFamily() {}
 
     /** 攵 — 反文旁 (strike/tap). Derives from 攴 pū. */
-    public record FanWenPang() implements LibraryMember<BasicSet> {
+    public record FanWenPang() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
         @Override public String glyph()      { return "攵"; }
         @Override public String name()       { return "反文旁"; }
         @Override public String standalone() { return "攴"; }
         @Override public String meaning()    { return "strike"; }
-        @Override public String pinyin()     { return "pū"; }
+        @Override public String pinyinText()     { return "pū"; }
         @Override public int strokes()       { return 4; }
 
         @Override

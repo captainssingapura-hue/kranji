@@ -12,13 +12,13 @@ import java.util.List;
  * its glyph, pronunciation, stroke count, radical, meaning, internal
  * structure, and etymological classification.</p>
  *
- * <p>This is the "semantics" axis of the double hierarchy. The "grammar"
- * axis is {@link BlockStructure}, which describes spatial arrangement.
- * A {@code Zi} <em>contains</em> a {@code BlockStructure} via
- * {@link #structure()} but does not extend it.</p>
- *
- * <p>At composition sites, slots are typed as {@link Composable} — either
- * a {@code Zi} reference or a raw {@code BlockStructure} fragment.</p>
+ * <p>Two concrete forms:</p>
+ * <ul>
+ *   <li>{@link SingularZi} — a standalone character that <em>is</em> its own
+ *       {@link BlockStructure} (stateless singleton records).</li>
+ *   <li>{@link ComposedZi} — a composed character that delegates its structure
+ *       to a {@link ComposedBlock}.</li>
+ * </ul>
  */
 public interface Zi {
 

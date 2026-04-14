@@ -13,12 +13,12 @@ public final class SilkFamily {
     private SilkFamily() {}
 
     /** 纟 — 绞丝旁 (silk/thread). Derives from 丝 sī. */
-    public record JiaoSiPang() implements LibraryMember<BasicSet> {
+    public record JiaoSiPang() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
         @Override public String glyph()      { return "纟"; }
         @Override public String name()       { return "绞丝旁"; }
         @Override public String standalone() { return "丝"; }
         @Override public String meaning()    { return "silk"; }
-        @Override public String pinyin()     { return "sī"; }
+        @Override public String pinyinText()     { return "sī"; }
         @Override public int strokes()       { return 3; }
 
         @Override

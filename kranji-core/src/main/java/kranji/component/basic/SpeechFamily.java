@@ -13,12 +13,12 @@ public final class SpeechFamily {
     private SpeechFamily() {}
 
     /** 讠 — 言字旁 (speech). Derives from 言 yán. */
-    public record YanZiPang() implements LibraryMember<BasicSet> {
+    public record YanZiPang() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
         @Override public String glyph()      { return "讠"; }
         @Override public String name()       { return "言字旁"; }
         @Override public String standalone() { return "言"; }
         @Override public String meaning()    { return "speech"; }
-        @Override public String pinyin()     { return "yán"; }
+        @Override public String pinyinText()     { return "yán"; }
         @Override public int strokes()       { return 2; }
 
         @Override

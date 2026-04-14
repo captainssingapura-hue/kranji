@@ -56,26 +56,22 @@ public final class BlockLayoutEngine {
         }
         if (node instanceof ComposedBlock comp) {
             return switch (comp) {
-                case LeftRight(var l, var r) -> countComposable(l) + countComposable(r);
-                case TopBottom(var t, var b) -> countComposable(t) + countComposable(b);
+                case LeftRight(var l, var r) -> countBlocks(l) + countBlocks(r);
+                case TopBottom(var t, var b) -> countBlocks(t) + countBlocks(b);
                 case LeftMiddleRight(var l, var m, var r) ->
-                        countComposable(l) + countComposable(m) + countComposable(r);
+                        countBlocks(l) + countBlocks(m) + countBlocks(r);
                 case TopMiddleBottom(var t, var m, var b) ->
-                        countComposable(t) + countComposable(m) + countComposable(b);
-                case FullEnclosure(var o, var i) -> 1 + countComposable(i);
-                case SemiEnclosureUpperLeft(var w, var c) -> 1 + countComposable(c);
-                case SemiEnclosureUpperRight(var w, var c) -> 1 + countComposable(c);
-                case SemiEnclosureBottomLeft(var w, var c) -> 1 + countComposable(c);
-                case SemiEnclosureTopThree(var w, var c) -> 1 + countComposable(c);
-                case SemiEnclosureBottomThree(var w, var c) -> 1 + countComposable(c);
-                case SemiEnclosureLeftThree(var w, var c) -> 1 + countComposable(c);
+                        countBlocks(t) + countBlocks(m) + countBlocks(b);
+                case FullEnclosure(var o, var i) -> 1 + countBlocks(i);
+                case SemiEnclosureUpperLeft(var w, var c) -> 1 + countBlocks(c);
+                case SemiEnclosureUpperRight(var w, var c) -> 1 + countBlocks(c);
+                case SemiEnclosureBottomLeft(var w, var c) -> 1 + countBlocks(c);
+                case SemiEnclosureTopThree(var w, var c) -> 1 + countBlocks(c);
+                case SemiEnclosureBottomThree(var w, var c) -> 1 + countBlocks(c);
+                case SemiEnclosureLeftThree(var w, var c) -> 1 + countBlocks(c);
             };
         }
         return 1;
-    }
-
-    private static int countComposable(Composable c) {
-        return countBlocks(resolve(c));
     }
 
     public static List<Block> layout(Zi entry) {
@@ -128,20 +124,6 @@ public final class BlockLayoutEngine {
     }
 
     // ════════════════════════════════════════════════════════════
-    //  Composable resolution
-    // ════════════════════════════════════════════════════════════
-
-    /**
-     * Resolve a Composable to a BlockStructure for layout.
-     */
-    private static BlockStructure resolve(Composable c) {
-        return switch (c) {
-            case Composable.OfZi(var zi) -> zi.structure();
-            case Composable.OfBlock(var block) -> block;
-        };
-    }
-
-    // ════════════════════════════════════════════════════════════
     //  Recursive dispatch
     // ════════════════════════════════════════════════════════════
 
@@ -168,14 +150,6 @@ public final class BlockLayoutEngine {
         return List.of();
     }
 
-    private static List<Block> layoutComposable(
-            Composable c,
-            double x, double y, double w, double h,
-            int depth, BlockRole role, String fallbackGlyph
-    ) {
-        return layoutBlock(resolve(c), x, y, w, h, depth, role, fallbackGlyph);
-    }
-
     /** Placeholder role for top-level singular entries. */
     record SingularRole() implements BlockRole {
         @Override public String label() { return "singular"; }
@@ -190,54 +164,54 @@ public final class BlockLayoutEngine {
 
         switch (comp) {
             case LeftRight(var left, var right) -> {
-                Politeness lp = politenessOf(resolve(left), LeftRight.LEFT);
-                Politeness rp = politenessOf(resolve(right), LeftRight.RIGHT);
+                Politeness lp = politenessOf(left, LeftRight.LEFT);
+                Politeness rp = politenessOf(right, LeftRight.RIGHT);
                 double[] shares = twoWaySplit(lp, rp);
                 double splitX = w * shares[0];
-                result.addAll(layoutComposable(left, x, y, splitX, h, depth + 1, LeftRight.LEFT, null));
-                result.addAll(layoutComposable(right, x + splitX, y, w - splitX, h, depth + 1, LeftRight.RIGHT, null));
+                result.addAll(layoutBlock(left, x, y, splitX, h, depth + 1, LeftRight.LEFT, null));
+                result.addAll(layoutBlock(right, x + splitX, y, w - splitX, h, depth + 1, LeftRight.RIGHT, null));
             }
 
             case TopBottom(var top, var bottom) -> {
-                Politeness tp = politenessOf(resolve(top), TopBottom.TOP);
-                Politeness bp = politenessOf(resolve(bottom), TopBottom.BOTTOM);
+                Politeness tp = politenessOf(top, TopBottom.TOP);
+                Politeness bp = politenessOf(bottom, TopBottom.BOTTOM);
                 double[] shares = twoWaySplit(tp, bp);
                 double splitY = h * shares[0];
-                result.addAll(layoutComposable(top, x, y, w, splitY, depth + 1, TopBottom.TOP, null));
-                result.addAll(layoutComposable(bottom, x, y + splitY, w, h - splitY, depth + 1, TopBottom.BOTTOM, null));
+                result.addAll(layoutBlock(top, x, y, w, splitY, depth + 1, TopBottom.TOP, null));
+                result.addAll(layoutBlock(bottom, x, y + splitY, w, h - splitY, depth + 1, TopBottom.BOTTOM, null));
             }
 
             case LeftMiddleRight(var l, var m, var r) -> {
-                Politeness lp = politenessOf(resolve(l), LeftMiddleRight.LEFT);
-                Politeness mp = politenessOf(resolve(m), LeftMiddleRight.MIDDLE);
-                Politeness rp = politenessOf(resolve(r), LeftMiddleRight.RIGHT);
+                Politeness lp = politenessOf(l, LeftMiddleRight.LEFT);
+                Politeness mp = politenessOf(m, LeftMiddleRight.MIDDLE);
+                Politeness rp = politenessOf(r, LeftMiddleRight.RIGHT);
                 double[] shares = threeWaySplit(lp, mp, rp);
                 double w1 = w * shares[0];
                 double w2 = w * shares[1];
                 double w3 = w * shares[2];
-                result.addAll(layoutComposable(l, x, y, w1, h, depth + 1, LeftMiddleRight.LEFT, null));
-                result.addAll(layoutComposable(m, x + w1, y, w2, h, depth + 1, LeftMiddleRight.MIDDLE, null));
-                result.addAll(layoutComposable(r, x + w1 + w2, y, w3, h, depth + 1, LeftMiddleRight.RIGHT, null));
+                result.addAll(layoutBlock(l, x, y, w1, h, depth + 1, LeftMiddleRight.LEFT, null));
+                result.addAll(layoutBlock(m, x + w1, y, w2, h, depth + 1, LeftMiddleRight.MIDDLE, null));
+                result.addAll(layoutBlock(r, x + w1 + w2, y, w3, h, depth + 1, LeftMiddleRight.RIGHT, null));
             }
 
             case TopMiddleBottom(var t, var m, var b) -> {
-                Politeness tp = politenessOf(resolve(t), TopMiddleBottom.TOP);
-                Politeness mp = politenessOf(resolve(m), TopMiddleBottom.MIDDLE);
-                Politeness bp = politenessOf(resolve(b), TopMiddleBottom.BOTTOM);
+                Politeness tp = politenessOf(t, TopMiddleBottom.TOP);
+                Politeness mp = politenessOf(m, TopMiddleBottom.MIDDLE);
+                Politeness bp = politenessOf(b, TopMiddleBottom.BOTTOM);
                 double[] shares = threeWaySplit(tp, mp, bp);
                 double h1 = h * shares[0];
                 double h2 = h * shares[1];
                 double h3 = h * shares[2];
-                result.addAll(layoutComposable(t, x, y, w, h1, depth + 1, TopMiddleBottom.TOP, null));
-                result.addAll(layoutComposable(m, x, y + h1, w, h2, depth + 1, TopMiddleBottom.MIDDLE, null));
-                result.addAll(layoutComposable(b, x, y + h1 + h2, w, h3, depth + 1, TopMiddleBottom.BOTTOM, null));
+                result.addAll(layoutBlock(t, x, y, w, h1, depth + 1, TopMiddleBottom.TOP, null));
+                result.addAll(layoutBlock(m, x, y + h1, w, h2, depth + 1, TopMiddleBottom.MIDDLE, null));
+                result.addAll(layoutBlock(b, x, y + h1 + h2, w, h3, depth + 1, TopMiddleBottom.BOTTOM, null));
             }
 
             case FullEnclosure(var outer, var inner) -> {
                 String outerGlyph = outer.glyph();
                 result.add(new Block(outerGlyph, x, y, w, h, depth + 1, FullEnclosure.OUTER));
                 double mx = w * ENCL_MARGIN, my = h * ENCL_MARGIN;
-                result.addAll(layoutComposable(inner, x + mx, y + my, w - 2 * mx, h - 2 * my,
+                result.addAll(layoutBlock(inner, x + mx, y + my, w - 2 * mx, h - 2 * my,
                         depth + 1, FullEnclosure.INNER, null));
             }
 
@@ -248,7 +222,7 @@ public final class BlockLayoutEngine {
                 double contentH = contentW * 1.15;
                 double insetL = w * (1 - contentW);
                 double insetB = h * (1 - contentH);
-                result.addAll(layoutComposable(content, x + insetL, y, w - insetL, h - insetB,
+                result.addAll(layoutBlock(content, x + insetL, y, w - insetL, h - insetB,
                         depth + 1, SemiEnclosureBottomLeft.CONTENT, null));
             }
 
@@ -257,7 +231,7 @@ public final class BlockLayoutEngine {
                 result.add(new Block(wGlyph, x, y, w, h, depth + 1, SemiEnclosureUpperLeft.WRAPPER));
                 double insetL = w * 0.25;
                 double insetT = h * 0.30;
-                result.addAll(layoutComposable(content, x + insetL, y + insetT, w - insetL, h - insetT,
+                result.addAll(layoutBlock(content, x + insetL, y + insetT, w - insetL, h - insetT,
                         depth + 1, SemiEnclosureUpperLeft.CONTENT, null));
             }
 
@@ -266,7 +240,7 @@ public final class BlockLayoutEngine {
                 result.add(new Block(wGlyph, x, y, w, h, depth + 1, SemiEnclosureUpperRight.WRAPPER));
                 double insetR = w * 0.25;
                 double insetT = h * 0.30;
-                result.addAll(layoutComposable(content, x, y + insetT, w - insetR, h - insetT,
+                result.addAll(layoutBlock(content, x, y + insetT, w - insetR, h - insetT,
                         depth + 1, SemiEnclosureUpperRight.CONTENT, null));
             }
 
@@ -275,7 +249,7 @@ public final class BlockLayoutEngine {
                 result.add(new Block(wGlyph, x, y, w, h, depth + 1, SemiEnclosureTopThree.WRAPPER));
                 double insetX = w * 0.12;
                 double insetT = h * 0.18;
-                result.addAll(layoutComposable(content, x + insetX, y + insetT, w - 2 * insetX, h - insetT,
+                result.addAll(layoutBlock(content, x + insetX, y + insetT, w - 2 * insetX, h - insetT,
                         depth + 1, SemiEnclosureTopThree.CONTENT, null));
             }
 
@@ -284,7 +258,7 @@ public final class BlockLayoutEngine {
                 result.add(new Block(wGlyph, x, y, w, h, depth + 1, SemiEnclosureBottomThree.WRAPPER));
                 double insetX = w * 0.12;
                 double insetB = h * 0.25;
-                result.addAll(layoutComposable(content, x + insetX, y, w - 2 * insetX, h - insetB,
+                result.addAll(layoutBlock(content, x + insetX, y, w - 2 * insetX, h - insetB,
                         depth + 1, SemiEnclosureBottomThree.CONTENT, null));
             }
 
@@ -293,7 +267,7 @@ public final class BlockLayoutEngine {
                 result.add(new Block(wGlyph, x, y, w, h, depth + 1, SemiEnclosureLeftThree.WRAPPER));
                 double insetL = w * 0.18;
                 double insetY = h * 0.12;
-                result.addAll(layoutComposable(content, x + insetL, y + insetY, w - insetL, h - 2 * insetY,
+                result.addAll(layoutBlock(content, x + insetL, y + insetY, w - insetL, h - 2 * insetY,
                         depth + 1, SemiEnclosureLeftThree.CONTENT, null));
             }
         }

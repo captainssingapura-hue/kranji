@@ -426,8 +426,7 @@ public class KranjiDemoApp extends Application {
         };
     }
 
-    private static TreeItem<String> slotItem(String role, Composable c) {
-        var resolved = resolve(c);
+    private static TreeItem<String> slotItem(String role, BlockStructure resolved) {
         if (resolved instanceof ComposedBlock) {
             // Nested composed structure — recurse
             var sub = buildTreeItem(resolved);
@@ -438,7 +437,7 @@ public class KranjiDemoApp extends Application {
         return new TreeItem<>(role + ":  " + singularLabel(resolved));
     }
 
-    private static void addWrapperContentItems(TreeItem<String> parent, Composable wrapper, Composable content) {
+    private static void addWrapperContentItems(TreeItem<String> parent, BlockStructure wrapper, BlockStructure content) {
         parent.getChildren().add(slotItem("Wrapper", wrapper));
         parent.getChildren().add(slotItem("Content", content));
     }
@@ -463,9 +462,9 @@ public class KranjiDemoApp extends Application {
             case CompoundIndicative ci ->
                     box.getChildren().add(fieldLabel(ci.meaningHint()));
             case PhonoSemantic ps -> {
-                box.getChildren().add(fieldLabel("Semantic (\u5f62\u65c1): " + renderComposable(ps.semanticPart())
+                box.getChildren().add(fieldLabel("Semantic (\u5f62\u65c1): " + renderBlock(ps.semanticPart())
                         + "  \u2192  hints at meaning"));
-                box.getChildren().add(fieldLabel("Phonetic (\u58f0\u65c1): " + renderComposable(ps.phoneticPart())
+                box.getChildren().add(fieldLabel("Phonetic (\u58f0\u65c1): " + renderBlock(ps.phoneticPart())
                         + "  \u2192  hints at sound"));
             }
             case DerivativeCognate dc ->
@@ -496,11 +495,7 @@ public class KranjiDemoApp extends Application {
         return box;
     }
 
-    // ── BlockStructure/Composable → display string ──────────────────────
-
-    private static String renderComposable(Composable c) {
-        return renderBlock(resolve(c));
-    }
+    // ── BlockStructure → display string ──────────────────────────────────
 
     private static String renderBlock(BlockStructure node) {
         return switch (node) {
@@ -509,17 +504,10 @@ public class KranjiDemoApp extends Application {
                 if (node instanceof SingularBlock sb
                         && (!sb.name().equals(sb.glyph()) || !sb.meaning().isEmpty())) {
                     yield sb.glyph() + "  " + sb.name() + " \u2014 " + sb.meaning()
-                            + " (\u2190 " + sb.standalone() + " " + sb.pinyin() + ")";
+                            + " (\u2190 " + sb.standalone() + " " + sb.pinyinText() + ")";
                 }
                 yield node.glyph();
             }
-        };
-    }
-
-    private static BlockStructure resolve(Composable c) {
-        return switch (c) {
-            case Composable.OfZi(var zi) -> zi.structure();
-            case Composable.OfBlock(var block) -> block;
         };
     }
 
@@ -589,24 +577,20 @@ public class KranjiDemoApp extends Application {
     private static String glyphsOf(BlockStructure node) {
         if (node instanceof ComposedBlock comp) {
             return switch (comp) {
-                case LeftRight lr -> glyphsOfC(lr.left()) + glyphsOfC(lr.right());
-                case TopBottom tb -> glyphsOfC(tb.top()) + glyphsOfC(tb.bottom());
-                case LeftMiddleRight lmr -> glyphsOfC(lmr.left()) + glyphsOfC(lmr.middle()) + glyphsOfC(lmr.right());
-                case TopMiddleBottom tmb -> glyphsOfC(tmb.top()) + glyphsOfC(tmb.middle()) + glyphsOfC(tmb.bottom());
-                case FullEnclosure fe -> glyphsOfC(fe.outer()) + glyphsOfC(fe.inner());
-                case SemiEnclosureUpperLeft se -> glyphsOfC(se.wrapper()) + glyphsOfC(se.content());
-                case SemiEnclosureUpperRight se -> glyphsOfC(se.wrapper()) + glyphsOfC(se.content());
-                case SemiEnclosureBottomLeft se -> glyphsOfC(se.wrapper()) + glyphsOfC(se.content());
-                case SemiEnclosureTopThree se -> glyphsOfC(se.wrapper()) + glyphsOfC(se.content());
-                case SemiEnclosureBottomThree se -> glyphsOfC(se.wrapper()) + glyphsOfC(se.content());
-                case SemiEnclosureLeftThree se -> glyphsOfC(se.wrapper()) + glyphsOfC(se.content());
+                case LeftRight lr -> glyphsOf(lr.left()) + glyphsOf(lr.right());
+                case TopBottom tb -> glyphsOf(tb.top()) + glyphsOf(tb.bottom());
+                case LeftMiddleRight lmr -> glyphsOf(lmr.left()) + glyphsOf(lmr.middle()) + glyphsOf(lmr.right());
+                case TopMiddleBottom tmb -> glyphsOf(tmb.top()) + glyphsOf(tmb.middle()) + glyphsOf(tmb.bottom());
+                case FullEnclosure fe -> glyphsOf(fe.outer()) + glyphsOf(fe.inner());
+                case SemiEnclosureUpperLeft se -> glyphsOf(se.wrapper()) + glyphsOf(se.content());
+                case SemiEnclosureUpperRight se -> glyphsOf(se.wrapper()) + glyphsOf(se.content());
+                case SemiEnclosureBottomLeft se -> glyphsOf(se.wrapper()) + glyphsOf(se.content());
+                case SemiEnclosureTopThree se -> glyphsOf(se.wrapper()) + glyphsOf(se.content());
+                case SemiEnclosureBottomThree se -> glyphsOf(se.wrapper()) + glyphsOf(se.content());
+                case SemiEnclosureLeftThree se -> glyphsOf(se.wrapper()) + glyphsOf(se.content());
             };
         }
         return node.glyph();
-    }
-
-    private static String glyphsOfC(Composable c) {
-        return glyphsOf(resolve(c));
     }
 
     private static String formatPinyin(Zi e) {

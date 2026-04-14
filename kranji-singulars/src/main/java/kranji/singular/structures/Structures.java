@@ -15,118 +15,118 @@ public final class Structures {
     // ── Record types ─────────────────────────────────────────
 
     /** 广 — wide, shelter. */
-    public record Guang() implements LibraryMember<BasicSet> {
+    public record Guang() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "广"; }
         @Override public String meaning() { return "wide, shelter"; }
-        @Override public String pinyin()  { return "guǎng"; }
+        @Override public String pinyinText()  { return "guǎng"; }
         @Override public int strokes()    { return 3; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     /** 厂 — factory, cliff. */
-    public record Chang_Factory() implements LibraryMember<BasicSet> {
+    public record Chang_Factory() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "厂"; }
         @Override public String meaning() { return "factory, cliff"; }
-        @Override public String pinyin()  { return "chǎng"; }
+        @Override public String pinyinText()  { return "chǎng"; }
         @Override public int strokes()    { return 2; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     /** 穴 — cave, hole. */
-    public record Xue() implements LibraryMember<BasicSet> {
+    public record Xue() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "穴"; }
         @Override public String meaning() { return "cave, hole"; }
-        @Override public String pinyin()  { return "xué"; }
+        @Override public String pinyinText()  { return "xué"; }
         @Override public int strokes()    { return 5; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     /** 户 — door, household. */
-    public record Hu() implements LibraryMember<BasicSet> {
+    public record Hu() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "户"; }
         @Override public String meaning() { return "door, household"; }
-        @Override public String pinyin()  { return "hù"; }
+        @Override public String pinyinText()  { return "hù"; }
         @Override public int strokes()    { return 4; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     /** 尸 — body, corpse. */
-    public record Shi_Corpse() implements LibraryMember<BasicSet> {
+    public record Shi_Corpse() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "尸"; }
         @Override public String meaning() { return "body, corpse"; }
-        @Override public String pinyin()  { return "shī"; }
+        @Override public String pinyinText()  { return "shī"; }
         @Override public int strokes()    { return 3; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     /** 亭 — pavilion. */
-    public record Ting() implements LibraryMember<BasicSet> {
+    public record Ting() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "亭"; }
         @Override public String meaning() { return "pavilion"; }
-        @Override public String pinyin()  { return "tíng"; }
+        @Override public String pinyinText()  { return "tíng"; }
         @Override public int strokes()    { return 9; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     /** 台 — platform. */
-    public record Tai() implements LibraryMember<BasicSet> {
+    public record Tai() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "台"; }
         @Override public String meaning() { return "platform"; }
-        @Override public String pinyin()  { return "tái"; }
+        @Override public String pinyinText()  { return "tái"; }
         @Override public int strokes()    { return 5; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     /** 寸 — inch. */
-    public record Cun_Inch() implements LibraryMember<BasicSet> {
+    public record Cun_Inch() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "寸"; }
         @Override public String meaning() { return "inch"; }
-        @Override public String pinyin()  { return "cùn"; }
+        @Override public String pinyinText()  { return "cùn"; }
         @Override public int strokes()    { return 3; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     /** 尺 — ruler, foot. */
-    public record Chi_Ruler() implements LibraryMember<BasicSet> {
+    public record Chi_Ruler() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "尺"; }
         @Override public String meaning() { return "ruler, foot"; }
-        @Override public String pinyin()  { return "chǐ"; }
+        @Override public String pinyinText()  { return "chǐ"; }
         @Override public int strokes()    { return 4; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     /** 囱 — chimney, window. */
-    public record Cong_Chimney() implements LibraryMember<BasicSet> {
+    public record Cong_Chimney() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "囱"; }
         @Override public String meaning() { return "chimney, window"; }
-        @Override public String pinyin()  { return "cōng"; }
+        @Override public String pinyinText()  { return "cōng"; }
         @Override public int strokes()    { return 7; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     /** 巨 — huge, enormous. */
-    public record Ju() implements LibraryMember<BasicSet> {
+    public record Ju() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "巨"; }
         @Override public String meaning() { return "huge, enormous"; }
-        @Override public String pinyin()  { return "jù"; }
+        @Override public String pinyinText()  { return "jù"; }
         @Override public int strokes()    { return 4; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     /** 屯 — village, station. */
-    public record Tun() implements LibraryMember<BasicSet> {
+    public record Tun() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "屯"; }
         @Override public String meaning() { return "village, station"; }
-        @Override public String pinyin()  { return "tún"; }
+        @Override public String pinyinText()  { return "tún"; }
         @Override public int strokes()    { return 4; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
     /** 巴 — cling to, hope. */
-    public record Ba_Cling() implements LibraryMember<BasicSet> {
+    public record Ba_Cling() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "巴"; }
         @Override public String meaning() { return "cling to, hope"; }
-        @Override public String pinyin()  { return "bā"; }
+        @Override public String pinyinText()  { return "bā"; }
         @Override public int strokes()    { return 4; }
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }

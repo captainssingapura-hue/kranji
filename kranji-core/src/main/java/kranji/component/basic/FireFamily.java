@@ -13,12 +13,12 @@ public final class FireFamily {
     private FireFamily() {}
 
     /** 灬 — 四点底 (fire). Derives from 火 huǒ. */
-    public record SiDianDi() implements LibraryMember<BasicSet> {
+    public record SiDianDi() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
         @Override public String glyph()      { return "灬"; }
         @Override public String name()       { return "四点底"; }
         @Override public String standalone() { return "火"; }
         @Override public String meaning()    { return "fire"; }
-        @Override public String pinyin()     { return "huǒ"; }
+        @Override public String pinyinText()     { return "huǒ"; }
         @Override public int strokes()       { return 4; }
 
         @Override

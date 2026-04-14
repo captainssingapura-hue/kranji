@@ -13,12 +13,12 @@ public final class FoodFamily {
     private FoodFamily() {}
 
     /** 饣 — 食字旁 (food). Derives from 食 shí. */
-    public record ShiZiPang() implements LibraryMember<BasicSet> {
+    public record ShiZiPang() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
         @Override public String glyph()      { return "饣"; }
         @Override public String name()       { return "食字旁"; }
         @Override public String standalone() { return "食"; }
         @Override public String meaning()    { return "food"; }
-        @Override public String pinyin()     { return "shí"; }
+        @Override public String pinyinText()     { return "shí"; }
         @Override public int strokes()       { return 3; }
 
         @Override

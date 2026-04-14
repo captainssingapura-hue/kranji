@@ -13,10 +13,10 @@ public final class WoodFamily {
     private WoodFamily() {}
 
     /** 木 — wood/tree. Used as a standalone radical and as a left component. */
-    public record Mu() implements LibraryMember<BasicSet> {
+    public record Mu() implements LibraryMember<BasicSet>, kranji.zi.SingularPart, kranji.zi.SingularZi {
         @Override public String glyph()   { return "木"; }
         @Override public String meaning() { return "tree, wood"; }
-        @Override public String pinyin()  { return "mù"; }
+        @Override public String pinyinText()  { return "mù"; }
         @Override public int strokes()    { return 4; }
 
         @Override

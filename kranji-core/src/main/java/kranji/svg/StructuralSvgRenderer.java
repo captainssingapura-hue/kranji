@@ -98,18 +98,6 @@ public final class StructuralSvgRenderer {
         }
     }
 
-    private static void renderComposable(StringBuilder sb, Composable c,
-                                         Rect bounds, int depth, String parentGlyph) {
-        renderNode(sb, resolve(c), bounds, depth, parentGlyph);
-    }
-
-    private static BlockStructure resolve(Composable c) {
-        return switch (c) {
-            case Composable.OfZi(var zi) -> zi.structure();
-            case Composable.OfBlock(var block) -> block;
-        };
-    }
-
     // ── Composition dispatch ───────────────────────────────────────────
 
     private static void renderComposition(StringBuilder sb,
@@ -120,37 +108,37 @@ public final class StructuralSvgRenderer {
         switch (comp) {
             case LeftRight lr -> {
                 double mid = bounds.w / 2;
-                renderComposable(sb, lr.left(),
+                renderNode(sb,lr.left(),
                         new Rect(bounds.x, bounds.y, mid, bounds.h), next, null);
-                renderComposable(sb, lr.right(),
+                renderNode(sb,lr.right(),
                         new Rect(bounds.x + mid, bounds.y, mid, bounds.h), next, null);
             }
 
             case TopBottom tb -> {
                 double mid = bounds.h / 2;
-                renderComposable(sb, tb.top(),
+                renderNode(sb,tb.top(),
                         new Rect(bounds.x, bounds.y, bounds.w, mid), next, null);
-                renderComposable(sb, tb.bottom(),
+                renderNode(sb,tb.bottom(),
                         new Rect(bounds.x, bounds.y + mid, bounds.w, mid), next, null);
             }
 
             case LeftMiddleRight lmr -> {
                 double third = bounds.w / 3;
-                renderComposable(sb, lmr.left(),
+                renderNode(sb,lmr.left(),
                         new Rect(bounds.x, bounds.y, third, bounds.h), next, null);
-                renderComposable(sb, lmr.middle(),
+                renderNode(sb,lmr.middle(),
                         new Rect(bounds.x + third, bounds.y, third, bounds.h), next, null);
-                renderComposable(sb, lmr.right(),
+                renderNode(sb,lmr.right(),
                         new Rect(bounds.x + 2 * third, bounds.y, third, bounds.h), next, null);
             }
 
             case TopMiddleBottom tmb -> {
                 double third = bounds.h / 3;
-                renderComposable(sb, tmb.top(),
+                renderNode(sb,tmb.top(),
                         new Rect(bounds.x, bounds.y, bounds.w, third), next, null);
-                renderComposable(sb, tmb.middle(),
+                renderNode(sb,tmb.middle(),
                         new Rect(bounds.x, bounds.y + third, bounds.w, third), next, null);
-                renderComposable(sb, tmb.bottom(),
+                renderNode(sb,tmb.bottom(),
                         new Rect(bounds.x, bounds.y + 2 * third, bounds.w, third), next, null);
             }
 
@@ -194,7 +182,7 @@ public final class StructuralSvgRenderer {
     // ── Enclosure helper ───────────────────────────────────────────────
 
     private static void renderEnclosure(StringBuilder sb,
-                                        Composable wrapper, Composable content,
+                                        BlockStructure wrapper, BlockStructure content,
                                         Rect bounds, int depth,
                                         double inX, double inY,
                                         double inW, double inH) {
@@ -208,7 +196,7 @@ public final class StructuralSvgRenderer {
                 bounds.w * inW,
                 bounds.h * inH
         );
-        renderComposable(sb, content, inner, depth, null);
+        renderNode(sb,content, inner, depth, null);
     }
 
     // ── Leaf rendering ─────────────────────────────────────────────────

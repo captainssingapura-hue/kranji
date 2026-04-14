@@ -13,12 +13,12 @@ public final class ClothingFamily {
     private ClothingFamily() {}
 
     /** 礻 — 示字旁 (spirit/altar). Derives from 示 shì. */
-    public record ShiZiPangSpirit() implements LibraryMember<BasicSet> {
+    public record ShiZiPangSpirit() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
         @Override public String glyph()      { return "礻"; }
         @Override public String name()       { return "示字旁"; }
         @Override public String standalone() { return "示"; }
         @Override public String meaning()    { return "spirit"; }
-        @Override public String pinyin()     { return "shì"; }
+        @Override public String pinyinText()     { return "shì"; }
         @Override public int strokes()       { return 4; }
 
         @Override
@@ -31,12 +31,12 @@ public final class ClothingFamily {
     }
 
     /** 衤 — 衣字旁 (clothing). Derives from 衣 yī. */
-    public record YiZiPang() implements LibraryMember<BasicSet> {
+    public record YiZiPang() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
         @Override public String glyph()      { return "衤"; }
         @Override public String name()       { return "衣字旁"; }
         @Override public String standalone() { return "衣"; }
         @Override public String meaning()    { return "clothing"; }
-        @Override public String pinyin()     { return "yī"; }
+        @Override public String pinyinText()     { return "yī"; }
         @Override public int strokes()       { return 5; }
 
         @Override
