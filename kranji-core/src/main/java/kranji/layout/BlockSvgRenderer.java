@@ -181,8 +181,15 @@ public final class BlockSvgRenderer {
             double rawSx = (FILL_FACTOR * pw * innerScaleW) / vw;
             double rawSy = (FILL_FACTOR * ph * innerScaleH) / vh;
             double sUniform = Math.sqrt(rawSx * rawSy);
-            double sx = rawSx * (1 - STRETCH_RESISTANCE) + sUniform * STRETCH_RESISTANCE;
-            double sy = rawSy * (1 - STRETCH_RESISTANCE) + sUniform * STRETCH_RESISTANCE;
+
+            // For extreme aspect ratios (like 一), use uniform scaling
+            // to prevent thin strokes from becoming huge black bars.
+            double glyphAspect = Math.max(vw / vh, vh / vw);
+            double resistance = glyphAspect > 3.0
+                    ? Math.min(1.0, STRETCH_RESISTANCE + (glyphAspect - 3.0) * 0.20)
+                    : STRETCH_RESISTANCE;
+            double sx = rawSx * (1 - resistance) + sUniform * resistance;
+            double sy = rawSy * (1 - resistance) + sUniform * resistance;
             // Cap so visual bounds never exceed block
             sx = Math.min(sx, pw / vw);
             sy = Math.min(sy, ph / vh);

@@ -238,8 +238,8 @@ public final class BlockLayoutEngine {
             case SemiEnclosureUpperRight(var wrapper, var content) -> {
                 String wGlyph = wrapper.glyph();
                 result.add(new Block(wGlyph, x, y, w, h, depth + 1, SemiEnclosureUpperRight.WRAPPER));
-                double insetR = w * 0.25;
-                double insetT = h * 0.30;
+                double insetR = w * 0.20;
+                double insetT = h * 0.20;
                 result.addAll(layoutBlock(content, x, y + insetT, w - insetR, h - insetT,
                         depth + 1, SemiEnclosureUpperRight.CONTENT, null));
             }

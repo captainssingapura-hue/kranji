@@ -29,14 +29,44 @@ import kranji.library.BasicSet;
 import kranji.library.ZiLibrary;
 import kranji.singular.SingularFamilies;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class KranjiDemoApp extends Application {
 
+    /**
+     * Lightweight adapter presenting a {@link SingularPart} as a {@link Zi}
+     * for display in the character table. Parts are radical variants (偏旁)
+     * that don't carry full Zi metadata.
+     */
+    private record PartAsZi(SingularPart part) implements Zi {
+        @Override public String character()             { return part.glyph(); }
+        @Override public List<PinyinSyllable> pinyin()  { return List.of(); }
+        @Override public int strokes()                  { return part.strokes(); }
+        @Override public int radicalNo()                { return 0; }
+        @Override public String meaning()               { return part.meaning(); }
+        @Override public BlockStructure structure()      { return part; }
+        @Override public EtymologicalCategory etymology() {
+            return new EtymologicalCategory.Pictograph();
+        }
+    }
+
+    private static final String SRC_ALL          = "All";
+    private static final String SRC_SINGULAR_ZI  = "Singular Zi (\u72ec\u4f53\u5b57)";
+    private static final String SRC_PARTS        = "Parts (\u504f\u65c1)";
+    private static final String SRC_COMPOSED     = "Composed Examples";
+
     private ObservableList<Zi> backingList;
     private FilteredList<Zi> filteredList;
+
+    /** Cached sub-lists built once at startup. */
+    private List<Zi> singularZiList;
+    private List<Zi> partsList;
+    private List<Zi> composedList;
+    private List<Zi> allList;
 
     private TextField searchField;
     private ComboBox<String> sourceFilter;
@@ -51,8 +81,11 @@ public class KranjiDemoApp extends Application {
         SingularFamilies.registerInto(BasicSet.INSTANCE);
         ZiLibrary.load(BasicSet.INSTANCE);
 
-        // Wrap data in a FilteredList for dynamic filtering — start with curated set
-        backingList = FXCollections.observableArrayList(ExampleCharacters.ALL);
+        // Build categorised lists from the library
+        buildLists();
+
+        // Wrap data in a FilteredList for dynamic filtering — start with all
+        backingList = FXCollections.observableArrayList(allList);
         filteredList = new FilteredList<>(backingList, e -> true);
 
         var table = createTable(filteredList);
@@ -130,6 +163,48 @@ public class KranjiDemoApp extends Application {
         table.getSelectionModel().selectFirst();
     }
 
+    // ── Data loading ──────────────────────────────────────────────────
+
+    private void buildLists() {
+        var singulars = new ArrayList<Zi>();
+        var parts = new ArrayList<Zi>();
+
+        for (var member : BasicSet.INSTANCE.components()) {
+            if (member instanceof SingularZi sz) {
+                singulars.add(sz);
+            } else if (member instanceof SingularPart sp) {
+                parts.add(new PartAsZi(sp));
+            }
+        }
+
+        // Sort by stroke count, then by glyph codepoint
+        Comparator<Zi> byStrokes = Comparator.comparingInt(Zi::strokes)
+                .thenComparing(z -> z.character().codePointAt(0));
+        singulars.sort(byStrokes);
+        parts.sort(byStrokes);
+
+        singularZiList = List.copyOf(singulars);
+        partsList = List.copyOf(parts);
+        composedList = List.copyOf(ExampleCharacters.ALL);
+
+        var all = new ArrayList<Zi>();
+        all.addAll(singularZiList);
+        all.addAll(partsList);
+        all.addAll(composedList);
+        allList = List.copyOf(all);
+    }
+
+    private void switchSource(String source) {
+        var items = switch (source) {
+            case SRC_SINGULAR_ZI -> singularZiList;
+            case SRC_PARTS       -> partsList;
+            case SRC_COMPOSED    -> composedList;
+            default              -> allList;
+        };
+        backingList.setAll(items);
+        applyFilters();
+    }
+
     // ── Filter bar ─────────────────────────────────────────────────────
 
     private VBox createFilterBar() {
@@ -141,8 +216,9 @@ public class KranjiDemoApp extends Application {
         HBox.setHgrow(searchField, Priority.ALWAYS);
 
         sourceFilter = new ComboBox<>();
-        sourceFilter.getItems().addAll("Curated Examples");
-        sourceFilter.setValue("Curated Examples");
+        sourceFilter.getItems().addAll(SRC_ALL, SRC_SINGULAR_ZI, SRC_PARTS, SRC_COMPOSED);
+        sourceFilter.setValue(SRC_ALL);
+        sourceFilter.setOnAction(e -> switchSource(sourceFilter.getValue()));
 
         var countLabel = new Label(filteredList.size() + " chars");
         countLabel.setStyle("-fx-font-size: 11; -fx-text-fill: #888;");
