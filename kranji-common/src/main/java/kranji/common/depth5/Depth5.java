@@ -1,9 +1,11 @@
-package kranji.demos;
+package kranji.common.depth5;
 
 import kranji.classification.EtymologicalCategory.*;
 import kranji.singular.actions.ActionsAndStates;
 import kranji.singular.animals.Animals;
+import kranji.singular.body.BodyParts;
 import kranji.singular.nature.NatureElements;
+import kranji.singular.numbers.NumbersAndMeasure;
 import kranji.singular.space.SpaceAndDirection;
 import kranji.singular.structures.Structures;
 import kranji.pinyin.*;
@@ -20,6 +22,8 @@ import static kranji.component.basic.BasicComponents.*;
  * <p>Depth is defined recursively as {@code max(depth of components) + 1},
  * where singular blocks have depth 0.</p>
  *
+ * <p>Characters are organized by stroke count within this depth level.</p>
+ *
  * <pre>
  * 𰻝 (biáng) — depth breakdown:
  *   SemiEnclosureBottomLeft                          depth 5
@@ -30,13 +34,15 @@ import static kranji.component.basic.BasicComponents.*;
  *            └─ LeftMiddleRight(長, 馬, 長)           depth 1
  * </pre>
  */
-public final class Depth5Examples {
+public final class Depth5 {
 
-    private Depth5Examples() {}
+    private Depth5() {}
 
     private static PinyinSyllable py(Initial ini, Head h, Body b, Tail t, Tone tone) {
         return new PinyinSyllable(ini, new Final(h, b, t), tone);
     }
+
+    // ── 58 strokes ─────────────────────────────────────────────────────
 
     /**
      * 𰻝 (biáng) — the notoriously complex character from biángbiáng noodles (𰻝𰻝面).
@@ -56,12 +62,12 @@ public final class Depth5Examples {
                             new LeftMiddleRight(
                                 NatureElements.YUE,                       // 月
                                 new TopBottom(
-                                        new LeftMiddleRight(SingularBlock.plain("幺"), ActionsAndStates.YAN_SPEECH, SingularBlock.plain("幺")),
+                                        new LeftMiddleRight(NumbersAndMeasure.YAO_TINY, ActionsAndStates.YAN_SPEECH, NumbersAndMeasure.YAO_TINY),
                                         new LeftMiddleRight(SpaceAndDirection.CHANG, Animals.MA, SpaceAndDirection.CHANG)
                                 ),
                                 LI_DAO_PANG                              // 刂
                             ),
-                            SingularBlock.plain("心")                  // 心 — heart
+                            BodyParts.XIN                  // 心 — heart
                     )
             ),
             new CompoundIndicative(
@@ -70,6 +76,11 @@ public final class Depth5Examples {
             )
     );
 
-    /** All depth-5 examples. */
-    public static final List<ComposedZi> ALL = List.of(BIANG);
+    // ════════════════════════════════════════════════════════════════════
+
+    /** All depth-5 composed characters, ordered by stroke count. */
+    public static final List<ComposedZi> ALL = List.of(
+            // 58 strokes
+            BIANG
+    );
 }

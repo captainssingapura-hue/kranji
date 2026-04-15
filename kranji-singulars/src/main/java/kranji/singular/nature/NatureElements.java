@@ -346,9 +346,19 @@ public final class NatureElements {
     public static final Chuan      CHUAN      = new Chuan();
     public static final Jing       JING       = new Jing();
 
+    /** 春 — spring (season). */
+    public record Chun_Spring() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u6625"; }
+        @Override public String meaning() { return "spring"; }
+        @Override public String pinyinText()  { return "ch\u016Bn"; }
+        @Override public int strokes()    { return 9; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Chun_Spring CHUN_SPRING = new Chun_Spring();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             RI, YUE, TIAN, SHAN, SHUI, HUO, TU, SHI, YU, YUN, TIAN_SKY,
-            DIAN, QI, GU, CHUAN, JING,
+            DIAN, QI, GU, CHUAN, JING, CHUN_SPRING,
             QIU_HILL, YONG_ETERNAL, DI_FOUNDATION, XI_EVENING, TU_CONVEX,
             AO_CONCAVE, CHUI, ZHOU_STATE, WU_LOFTY);
 }

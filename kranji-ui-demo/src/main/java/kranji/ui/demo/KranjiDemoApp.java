@@ -20,7 +20,7 @@ import kranji.classification.EtymologicalCategory;
 import kranji.classification.EtymologicalCategory.*;
 import kranji.zi.*;
 import kranji.zi.ComposedBlock.*;
-import kranji.demos.ExampleCharacters;
+import kranji.common.CommonCharacters;
 import kranji.pinyin.Initial;
 import kranji.pinyin.PinyinSyllable;
 import kranji.pinyin.Tone;
@@ -185,7 +185,7 @@ public class KranjiDemoApp extends Application {
 
         singularZiList = List.copyOf(singulars);
         partsList = List.copyOf(parts);
-        composedList = List.copyOf(ExampleCharacters.ALL);
+        composedList = List.copyOf(CommonCharacters.ALL);
 
         var all = new ArrayList<Zi>();
         all.addAll(singularZiList);

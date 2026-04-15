@@ -553,6 +553,26 @@ public final class ActionsAndStates {
     }
     public static final Yi_Govern YI_GOVERN = new Yi_Govern();
 
+    /** 化 — change, transform. */
+    public record Hua_Change() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5316"; }
+        @Override public String meaning() { return "change, transform"; }
+        @Override public String pinyinText()  { return "hu\u00E0"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Hua_Change HUA_CHANGE = new Hua_Change();
+
+    /** 敖 — roam, ramble. */
+    public record Ao_Roam() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u6556"; }
+        @Override public String meaning() { return "roam, ramble"; }
+        @Override public String pinyinText()  { return "\u00E1o"; }
+        @Override public int strokes()    { return 10; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ao_Roam AO_ROAM = new Ao_Roam();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             WANG, ZOU, LI_STAND, ZHI_STOP, YOU_AGAIN, JIAN_SEE, YAN_SPEECH,
             CHU, RU, SHENG, SHI_EAT, FEI, JIAO, KAI,
@@ -563,5 +583,6 @@ public final class ActionsAndStates {
             CHI_REPEL, YE_DRAG, GENG, QIU, SHUAI, LE_JOY, ZAI,
             WU_NOT, CONG, SHENG_RISE, SHI_LOSE, WO, JIAN_COMBINE,
             BING_GRASP, CHAN, ZHONG_HEAVY, QU_BEND, ZHA, JIA_CLAMP,
-            WU_DONT, GUAN_PIERCE, MIE, YI_GOVERN);
+            WU_DONT, GUAN_PIERCE, MIE, YI_GOVERN,
+            HUA_CHANGE, AO_ROAM);
 }

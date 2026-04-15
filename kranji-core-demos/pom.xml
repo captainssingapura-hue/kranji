@@ -13,12 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-core</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-singulars</artifactId>
+            <artifactId>kranji-common</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 

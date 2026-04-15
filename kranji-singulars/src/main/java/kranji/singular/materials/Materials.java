@@ -115,8 +115,19 @@ public final class Materials {
     }
     public static final Wei_Leather WEI_LEATHER = new Wei_Leather();
 
+    /** 圭 — jade tablet. */
+    public record Gui_Tablet() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u572D"; }
+        @Override public String meaning() { return "jade tablet"; }
+        @Override public String pinyinText()  { return "gu\u012B"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Gui_Tablet GUI_TABLET = new Gui_Tablet();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             YI_CLOTHES, JIN_TOWEL, GE, YU_JADE, SE,
             BAI_WHITE, HUANG, QING, DAN,
-            GAN_SWEET, LU_BRINE, WEI_LEATHER);
+            GAN_SWEET, LU_BRINE, WEI_LEATHER,
+            GUI_TABLET);
 }

@@ -315,11 +315,22 @@ public final class AbstractConcepts {
     }
     public static final Bi_Must BI_MUST = new Bi_Must();
 
+    /** 佳 — fine, good, beautiful. */
+    public record Jia_Fine() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u4F73"; }
+        @Override public String meaning() { return "fine, good"; }
+        @Override public String pinyinText()  { return "ji\u0101"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Jia_Fine JIA_FINE = new Jia_Fine();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             BU, ZHENG, ZHI_STRAIGHT, PING, YI_MEANING,
             SHI_THING, XUE_STUDY, YE_ALSO, NAI, QI_ITS,
             CHOU, QIE, SHI_WORLD, YE_BUSINESS, ZHU_LORD, YI_ALSO,
             ZHI_OF, HU_QUESTION, WU_NONE, YUE_SAY, HU_MUTUAL, YA_SECOND,
             GE_MEASURE, YAN_STRICT, LI_SUBORDINATE, YI_SECOND, BING_THIRD,
-            HAI, ME, GUAI, JI_SELF, YI_ALREADY, SI_SIXTH, BI_MUST);
+            HAI, ME, GUAI, JI_SELF, YI_ALREADY, SI_SIXTH, BI_MUST,
+            JIA_FINE);
 }

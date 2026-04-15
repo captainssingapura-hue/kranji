@@ -82,16 +82,4 @@ public interface SingularBlock extends BlockStructure {
         return new HintedComponent(this, role);
     }
 
-    // ── Fallback ──────────────────────────────────────────────────────
-
-    /**
-     * Create a plain SingularBlock with no position-specific hints.
-     * Used for glyphs that don't yet have a dedicated record.
-     */
-    static SingularBlock plain(String glyph) {
-        return new Plain(glyph);
-    }
-
-    /** A SingularBlock with no position-specific hints. */
-    record Plain(String glyph) implements SingularBlock {}
 }
