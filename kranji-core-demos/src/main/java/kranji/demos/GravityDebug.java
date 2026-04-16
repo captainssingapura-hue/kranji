@@ -4,7 +4,7 @@ import kranji.layout.*;
 
 public class GravityDebug {
     public static void main(String[] args) {
-        for (var e : ExampleCharacters.ALL) {
+        for (var e : kranji.common.CommonCharacters.ALL) {
             String ch = e.character();
             if (ch.equals("清") || ch.equals("花") || ch.equals("明") || ch.equals("森") || ch.equals("品") || ch.equals("𰻝")) {
                 var blocks = BlockLayoutEngine.layout(e);

@@ -11,7 +11,7 @@
     <modules>
         <module>kranji-core</module>
         <module>kranji-singulars</module>
-        <module>kranji-characters</module>
+        <module>kranji-common</module>
         <module>kranji-core-demos</module>
         <module>kranji-ui-demo</module>
     </modules>

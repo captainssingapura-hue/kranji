@@ -1,9 +1,7 @@
 package kranji.stroke;
 
-import kranji.classification.CharacterComposition;
-import kranji.classification.CharacterComposition.*;
-import kranji.classification.StructuralNode;
-import kranji.component.LeafNode;
+import kranji.zi.*;
+import kranji.zi.ComposedBlock.*;
 
 import java.util.*;
 
@@ -29,20 +27,18 @@ public final class LayoutEngine {
     // ═══════════════════════════════════════════════════════════════
 
     /** Compute the bounding box for a node and all its descendants. */
-    public static LayoutBox measure(StructuralNode node) {
-        if (node instanceof LeafNode) {
+    public static LayoutBox measure(BlockStructure node) {
+        if (node instanceof SingularBlock) {
             return LayoutBox.LEAF;
         }
-        if (node instanceof CharacterComposition comp) {
+        if (node instanceof ComposedBlock comp) {
             return measureComposition(comp);
         }
         return LayoutBox.LEAF;
     }
 
-    private static LayoutBox measureComposition(CharacterComposition comp) {
+    private static LayoutBox measureComposition(ComposedBlock comp) {
         return switch (comp) {
-            case Singular() -> LayoutBox.LEAF;
-
             case LeftRight(var left, var right) -> {
                 LayoutBox lb = measure(left), rb = measure(right);
                 yield new LayoutBox(lb.width() + rb.width(), Math.max(lb.height(), rb.height()));
@@ -109,11 +105,6 @@ public final class LayoutEngine {
                 double margin = LayoutBox.BASE_SIZE * 0.20;
                 yield new LayoutBox(cb.width() + margin, cb.height() + 2 * margin);
             }
-
-            case Mosaic(var element) -> {
-                LayoutBox eb = measure(element);
-                yield new LayoutBox(2 * eb.width(), 2 * eb.height());
-            }
         };
     }
 
@@ -128,35 +119,24 @@ public final class LayoutEngine {
 
     /**
      * Place all leaves of the node tree, returning their transforms.
-     *
-     * @param node  the structural node
-     * @param x     absolute x offset of this node's top-left corner
-     * @param y     absolute y offset of this node's top-left corner
-     * @param glyph the parent's glyph string (used for Singular leaves)
-     * @return list of placed glyphs with their transforms
      */
-    public static List<PlacedGlyph> place(StructuralNode node, double x, double y, String glyph) {
-        if (node instanceof LeafNode leaf) {
-            String g = leaf.glyph();
+    public static List<PlacedGlyph> place(BlockStructure node, double x, double y, String glyph) {
+        if (node instanceof SingularBlock sb) {
+            String g = sb.glyph();
             LayoutBox box = LayoutBox.LEAF;
             AffineTransform2D transform = AffineTransform2D.rect(x, y, box.width(), box.height());
             return List.of(new PlacedGlyph(g, transform));
         }
-        if (node instanceof CharacterComposition comp) {
+        if (node instanceof ComposedBlock comp) {
             return placeComposition(comp, x, y, glyph);
         }
         return List.of();
     }
 
-    private static List<PlacedGlyph> placeComposition(CharacterComposition comp, double x, double y, String glyph) {
+    private static List<PlacedGlyph> placeComposition(ComposedBlock comp, double x, double y, String glyph) {
         List<PlacedGlyph> result = new ArrayList<>();
 
         switch (comp) {
-            case Singular() -> {
-                AffineTransform2D transform = AffineTransform2D.rect(x, y, LayoutBox.BASE_SIZE, LayoutBox.BASE_SIZE);
-                result.add(new PlacedGlyph(glyph != null ? glyph : "?", transform));
-            }
-
             case LeftRight(var left, var right) -> {
                 LayoutBox lb = measure(left), rb = measure(right);
                 double h = Math.max(lb.height(), rb.height());
@@ -192,11 +172,8 @@ public final class LayoutEngine {
                 double margin = LayoutBox.BASE_SIZE * ENCLOSURE_MARGIN_FRAC;
                 double totalW = ib.width() + 2 * margin;
                 double totalH = ib.height() + 2 * margin;
-                // Outer wrapper fills the full box
                 AffineTransform2D outerTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String outerGlyph = (outer instanceof LeafNode ln) ? ln.glyph() : null;
-                result.add(new PlacedGlyph(outerGlyph, outerTransform));
-                // Inner content centered
+                result.add(new PlacedGlyph(outer.glyph(), outerTransform));
                 result.addAll(place(inner, x + margin, y + margin, null));
             }
 
@@ -206,11 +183,8 @@ public final class LayoutEngine {
                 double bottomM = LayoutBox.BASE_SIZE * 0.20;
                 double totalW = cb.width() + leftM;
                 double totalH = cb.height() + bottomM;
-                // Wrapper (e.g. 辶) fills the full box
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String wrapperGlyph = (wrapper instanceof LeafNode ln) ? ln.glyph() : null;
-                result.add(new PlacedGlyph(wrapperGlyph, wrapperTransform));
-                // Content positioned at top-right
+                result.add(new PlacedGlyph(wrapper.glyph(), wrapperTransform));
                 result.addAll(place(content, x + leftM, y, null));
             }
 
@@ -221,8 +195,7 @@ public final class LayoutEngine {
                 double totalW = cb.width() + leftM;
                 double totalH = cb.height() + topM;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String wrapperGlyph = (wrapper instanceof LeafNode ln) ? ln.glyph() : null;
-                result.add(new PlacedGlyph(wrapperGlyph, wrapperTransform));
+                result.add(new PlacedGlyph(wrapper.glyph(), wrapperTransform));
                 result.addAll(place(content, x + leftM, y + topM, null));
             }
 
@@ -233,8 +206,7 @@ public final class LayoutEngine {
                 double totalW = cb.width() + rightM;
                 double totalH = cb.height() + topM;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String wrapperGlyph = (wrapper instanceof LeafNode ln) ? ln.glyph() : null;
-                result.add(new PlacedGlyph(wrapperGlyph, wrapperTransform));
+                result.add(new PlacedGlyph(wrapper.glyph(), wrapperTransform));
                 result.addAll(place(content, x, y + topM, null));
             }
 
@@ -244,8 +216,7 @@ public final class LayoutEngine {
                 double totalW = cb.width() + 2 * margin;
                 double totalH = cb.height() + margin;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String wrapperGlyph = (wrapper instanceof LeafNode ln) ? ln.glyph() : null;
-                result.add(new PlacedGlyph(wrapperGlyph, wrapperTransform));
+                result.add(new PlacedGlyph(wrapper.glyph(), wrapperTransform));
                 result.addAll(place(content, x + margin, y + margin, null));
             }
 
@@ -255,8 +226,7 @@ public final class LayoutEngine {
                 double totalW = cb.width() + 2 * margin;
                 double totalH = cb.height() + margin;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String wrapperGlyph = (wrapper instanceof LeafNode ln) ? ln.glyph() : null;
-                result.add(new PlacedGlyph(wrapperGlyph, wrapperTransform));
+                result.add(new PlacedGlyph(wrapper.glyph(), wrapperTransform));
                 result.addAll(place(content, x + margin, y, null));
             }
 
@@ -266,19 +236,8 @@ public final class LayoutEngine {
                 double totalW = cb.width() + margin;
                 double totalH = cb.height() + 2 * margin;
                 AffineTransform2D wrapperTransform = AffineTransform2D.rect(x, y, totalW, totalH);
-                String wrapperGlyph = (wrapper instanceof LeafNode ln) ? ln.glyph() : null;
-                result.add(new PlacedGlyph(wrapperGlyph, wrapperTransform));
+                result.add(new PlacedGlyph(wrapper.glyph(), wrapperTransform));
                 result.addAll(place(content, x + margin, y + margin, null));
-            }
-
-            case Mosaic(var element) -> {
-                LayoutBox eb = measure(element);
-                // Top-center
-                result.addAll(place(element, x + eb.width() / 2, y, null));
-                // Bottom-left
-                result.addAll(place(element, x, y + eb.height(), null));
-                // Bottom-right
-                result.addAll(place(element, x + eb.width(), y + eb.height(), null));
             }
         }
 

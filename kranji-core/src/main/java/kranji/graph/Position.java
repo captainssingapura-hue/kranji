@@ -29,9 +29,5 @@ public enum Position {
     @JsonProperty("outer")            POS_OUTER,
     @JsonProperty("inner")            POS_INNER,
     @JsonProperty("wrapper")          POS_WRAPPER,
-    @JsonProperty("content")          POS_CONTENT,
-
-    // ── Mosaic ──────────────────────────────────────────────────────────
-
-    @JsonProperty("mosaic")           POS_MOSAIC
+    @JsonProperty("content")          POS_CONTENT
 }

@@ -1,6 +1,6 @@
 package kranji.svg;
 
-import kranji.entry.ChineseCharacterEntry;
+import kranji.zi.Zi;
 import kranji.stroke.*;
 import kranji.stroke.glyph.GlyphDef;
 import kranji.stroke.glyph.GlyphRegistry;
@@ -8,7 +8,7 @@ import kranji.stroke.glyph.GlyphRegistry;
 import java.util.List;
 
 /**
- * Renders a {@link ChineseCharacterEntry} as an SVG with actual stroke paths.
+ * Renders a {@link Zi} as an SVG with actual stroke paths.
  *
  * <p>Uses bottom-up sizing: leaf components have a fixed base size, parent nodes
  * compute their dimensions from children. Complex characters naturally produce
@@ -28,13 +28,13 @@ public final class StrokeSvgRenderer {
     /**
      * Render a character entry as a complete SVG document string.
      */
-    public static String render(ChineseCharacterEntry entry) {
+    public static String render(Zi entry) {
         // Pass 1: measure
-        LayoutBox box = LayoutEngine.measure(entry.composition());
+        LayoutBox box = LayoutEngine.measure(entry.structure());
 
         // Pass 2: place
         List<LayoutEngine.PlacedGlyph> placed = LayoutEngine.place(
-                entry.composition(), PADDING, HEADER_HEIGHT + PADDING, entry.character());
+                entry.structure(), PADDING, HEADER_HEIGHT + PADDING, entry.character());
 
         double svgWidth = box.width() + 2 * PADDING;
         double svgHeight = box.height() + HEADER_HEIGHT + 2 * PADDING;
@@ -68,7 +68,7 @@ public final class StrokeSvgRenderer {
         return sb.toString();
     }
 
-    private static void appendHeader(StringBuilder sb, ChineseCharacterEntry entry, double svgWidth) {
+    private static void appendHeader(StringBuilder sb, Zi entry, double svgWidth) {
         double cx = svgWidth / 2;
         // Character glyph
         sb.append(String.format(

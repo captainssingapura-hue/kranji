@@ -25,7 +25,7 @@ public final class SvgExportDemo {
         Files.createDirectories(strokeDir);
         Files.createDirectories(blockDir);
 
-        for (var entry : ExampleCharacters.ALL) {
+        for (var entry : kranji.common.CommonCharacters.ALL) {
             var cpName = entry.codepoint().replace("+", "") + "_" + entry.character();
 
             // Structural (rectangle) SVG
@@ -46,6 +46,6 @@ public final class SvgExportDemo {
             Files.writeString(strokePath, strokeSvg);
             System.out.println("stroke      " + entry.character() + "  →  " + strokePath);
         }
-        System.out.println("\n" + ExampleCharacters.ALL.size() + " characters exported (structural + block + stroke)");
+        System.out.println("\n" + kranji.common.CommonCharacters.ALL.size() + " characters exported (structural + block + stroke)");
     }
 }

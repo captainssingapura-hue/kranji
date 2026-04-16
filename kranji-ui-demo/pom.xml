@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-core-demos</artifactId>
+            <artifactId>kranji-common</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
