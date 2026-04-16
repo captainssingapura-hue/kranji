@@ -193,8 +193,18 @@ public final class NumbersAndMeasure {
     }
     public static final Yao_Tiny YAO_TINY = new Yao_Tiny();
 
+    /** 匹 — bolt (of cloth), measure word. */
+    public record Pi() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5339"; }
+        @Override public String meaning() { return "bolt of cloth, measure word"; }
+        @Override public String pinyinText()  { return "p\u01D0"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Pi PI = new Pi();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             YI, ER, SAN, SI, WU, LIU, QI, BA, JIU, SHI,
             BAI, QIAN, WAN, BAN, ZHANG, LIANG, FENG_ABUNDANT,
-            SA, NIAN_TWENTY, YAO_TINY);
+            SA, NIAN_TWENTY, YAO_TINY, PI);
 }

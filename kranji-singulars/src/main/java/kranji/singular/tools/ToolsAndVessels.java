@@ -350,11 +350,22 @@ public final class ToolsAndVessels {
     }
     public static final Ya_Fork YA_FORK = new Ya_Fork();
 
+    /** 印 — seal, stamp. */
+    public record Yin_Seal() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5370"; }
+        @Override public String meaning() { return "seal, stamp"; }
+        @Override public String pinyinText()  { return "y\u00ECn"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Yin_Seal YIN_SEAL = new Yin_Seal();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             DAO, REN_BLADE, GONG, MAO, SHI_ARROW, GE, JIN_AXE, DOU,
             FOU, WA, MIN, CHE, ZHOU, MEN, BI_SPOON, PIAN, LI_PLOW,
             SHAO, JIN_METAL, DING_NAIL, WAN_PILL, CE, JI_TABLE, FAN,
             BU_DIVINATION, KA, WEI_GUARD, CHA, DIAO, YOU_WINE,
             CAI_TALENT, YI_SHOOT, FU_NOT, CHI_STEP, WU_FIFTH,
-            JIAN_SMALL, YA_FORK);
+            JIAN_SMALL, YA_FORK,
+            YIN_SEAL);
 }

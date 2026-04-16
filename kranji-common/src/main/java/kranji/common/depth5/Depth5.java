@@ -42,6 +42,9 @@ public final class Depth5 {
         return new PinyinSyllable(ini, new Final(h, b, t), tone);
     }
 
+    private static ZiChar lit(String s) { return new ZiChar.Literal(s); }
+    private static ZiChar uni(String s) { return new ZiChar.Unicode(s); }
+
     // ── 58 strokes ─────────────────────────────────────────────────────
 
     /**
@@ -52,7 +55,7 @@ public final class Depth5 {
      * a complex center column over 心.</p>
      */
     public static final ComposedZi BIANG = new ComposedZi(
-            "𰻝",
+            lit("𰻝"),
             List.of(py(Initial.B, Head.I, Body.A, Tail.NG, Tone.SECOND)),
             58, 162, "",
             new SemiEnclosureBottomLeft(

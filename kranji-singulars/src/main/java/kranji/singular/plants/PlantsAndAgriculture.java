@@ -205,7 +205,49 @@ public final class PlantsAndAgriculture {
     public static final Dai         DAI         = new Dai();
     public static final Ran         RAN         = new Ran();
 
+    /** 丛 — cluster, thicket. */
+    public record Cong_Cluster() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u4E1B"; }
+        @Override public String meaning() { return "cluster, thicket"; }
+        @Override public String pinyinText()  { return "c\u00F3ng"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Cong_Cluster CONG_CLUSTER = new Cong_Cluster();
+
+    /** 兰 — orchid. */
+    public record Lan() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5170"; }
+        @Override public String meaning() { return "orchid"; }
+        @Override public String pinyinText()  { return "l\u00E1n"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Lan LAN = new Lan();
+
+    /** \u9EA6 — wheat. */
+    public record Mai() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u9EA6"; }
+        @Override public String meaning() { return "wheat"; }
+        @Override public String pinyinText()  { return "m\u00E0i"; }
+        @Override public int strokes()    { return 7; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Mai MAI = new Mai();
+
+    /** \u8C46 — bean. */
+    public record Dou_Bean() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u8C46"; }
+        @Override public String meaning() { return "bean"; }
+        @Override public String pinyinText()  { return "d\u00F2u"; }
+        @Override public int strokes()    { return 7; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Dou_Bean DOU_BEAN = new Dou_Bean();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             HE, MI, GUO, NONG, GUA, SHU, ZHU_TRUNK, WEI_NOT, MO, BEN,
-            MU_TREE, SHU_ART, JIAN_SELECT, LEI_PLOW, YU_BRUSH, MI_BLEAT, DAI, RAN);
+            MU_TREE, SHU_ART, JIAN_SELECT, LEI_PLOW, YU_BRUSH, MI_BLEAT, DAI, RAN,
+            CONG_CLUSTER, LAN,
+            MAI, DOU_BEAN);
 }

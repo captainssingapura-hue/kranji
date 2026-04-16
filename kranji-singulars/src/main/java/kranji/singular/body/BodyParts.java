@@ -253,8 +253,19 @@ public final class BodyParts {
     }
     public static final Gen_Tough GEN_TOUGH = new Gen_Tough();
 
+    /** \u89D2 — horn/angle. */
+    public record Jiao_Horn() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u89D2"; }
+        @Override public String meaning() { return "horn, angle"; }
+        @Override public String pinyinText()  { return "ji\u01CEo"; }
+        @Override public int strokes()    { return 7; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Jiao_Horn JIAO_HORN = new Jiao_Horn();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             KOU, MU, ER, SHOU, ZU, XIN, TOU, MIAN, SHEN, SHOU_HEAD, YA,
             SHE, PI, MAO, ROU, XUE, WEI,
-            ZI_SELF, JIU_MORTAR, YU_MOMENT, ZHUA, XIN_FONTANEL, GEN_TOUGH);
+            ZI_SELF, JIU_MORTAR, YU_MOMENT, ZHUA, XIN_FONTANEL, GEN_TOUGH,
+            JIAO_HORN);
 }

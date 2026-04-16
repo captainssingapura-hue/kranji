@@ -169,8 +169,39 @@ public final class Animals {
     }
     public static final He_Crane HE_CRANE = new He_Crane();
 
+    /** 凤 — phoenix. */
+    public record Feng_Phoenix() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u51E4"; }
+        @Override public String meaning() { return "phoenix"; }
+        @Override public String pinyinText()  { return "f\u00E8ng"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Feng_Phoenix FENG_PHOENIX = new Feng_Phoenix();
+
+    /** \u9F9F — turtle. */
+    public record Gui_Turtle() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u9F9F"; }
+        @Override public String meaning() { return "turtle"; }
+        @Override public String pinyinText()  { return "gu\u012B"; }
+        @Override public int strokes()    { return 7; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Gui_Turtle GUI_TURTLE = new Gui_Turtle();
+
+    /** \u5375 — egg. */
+    public record Luan_Egg() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5375"; }
+        @Override public String meaning() { return "egg"; }
+        @Override public String pinyinText()  { return "lu\u01CEn"; }
+        @Override public int strokes()    { return 7; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Luan_Egg LUAN_EGG = new Luan_Egg();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             MA, NIU, YANG, NIAO, YU, CHONG, QUAN, SHI_PIG,
             ZHUI, LONG, SHU, BEI, WU_CROW, XIANG, ZHI_BEAST,
-            GUI_GHOST, QIANG, HE_CRANE);
+            GUI_GHOST, QIANG, HE_CRANE, FENG_PHOENIX,
+            GUI_TURTLE, LUAN_EGG);
 }

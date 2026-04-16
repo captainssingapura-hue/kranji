@@ -1,7 +1,8 @@
 package kranji.common.depth3;
 
 import kranji.classification.EtymologicalCategory.*;
-import kranji.common.depth1.Depth1;
+import kranji.common.CommonBlocks;
+import kranji.common.depth1.Depth1StrokesHigh;
 import kranji.singular.animals.Animals;
 import kranji.singular.structures.Structures;
 import kranji.pinyin.*;
@@ -27,6 +28,9 @@ public final class Depth3 {
         return new PinyinSyllable(ini, new Final(h, b, t), tone);
     }
 
+    private static ZiChar lit(String s) { return new ZiChar.Literal(s); }
+    private static ZiChar uni(String s) { return new ZiChar.Unicode(s); }
+
     // ── 20 strokes ─────────────────────────────────────────────────────
 
     /**
@@ -43,15 +47,11 @@ public final class Depth3 {
      * </pre>
      */
     public static final ComposedZi MO_DEMON = new ComposedZi(
-            "魔",
+            lit("魔"),
             List.of(py(Initial.M, Head.OPEN, Body.O, Tail.NONE, Tone.SECOND)),
             20, 194, "",
-            new SemiEnclosureUpperLeft(Structures.GUANG,
-                    new TopBottom(
-                            Depth1.LIN.structure(),
-                            Animals.GUI_GHOST)),
-            new PhonoSemantic(Animals.GUI_GHOST,
-                    new SemiEnclosureUpperLeft(Structures.GUANG, Depth1.LIN.structure()))
+            new SemiEnclosureUpperLeft(Structures.GUANG, CommonBlocks.LIN_GUI),
+            new PhonoSemantic(Animals.GUI_GHOST, CommonBlocks.GUANG_LIN)
     );
 
     // ════════════════════════════════════════════════════════════════════

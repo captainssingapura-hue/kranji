@@ -356,9 +356,41 @@ public final class NatureElements {
     }
     public static final Chun_Spring CHUN_SPRING = new Chun_Spring();
 
+    /** 风 — wind. */
+    public record Feng_Wind() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u98CE"; }
+        @Override public String meaning() { return "wind"; }
+        @Override public String pinyinText()  { return "f\u0113ng"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Feng_Wind FENG_WIND = new Feng_Wind();
+
+    /** 冬 — winter. */
+    public record Dong_Winter() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u51AC"; }
+        @Override public String meaning() { return "winter"; }
+        @Override public String pinyinText()  { return "d\u014Dng"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Dong_Winter DONG_WINTER = new Dong_Winter();
+
+    /** \u58F3 — shell. */
+    public record Ke_Shell() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u58F3"; }
+        @Override public String meaning() { return "shell"; }
+        @Override public String pinyinText()  { return "k\u00E9"; }
+        @Override public int strokes()    { return 7; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ke_Shell KE_SHELL = new Ke_Shell();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             RI, YUE, TIAN, SHAN, SHUI, HUO, TU, SHI, YU, YUN, TIAN_SKY,
             DIAN, QI, GU, CHUAN, JING, CHUN_SPRING,
             QIU_HILL, YONG_ETERNAL, DI_FOUNDATION, XI_EVENING, TU_CONVEX,
-            AO_CONCAVE, CHUI, ZHOU_STATE, WU_LOFTY);
+            AO_CONCAVE, CHUI, ZHOU_STATE, WU_LOFTY, FENG_WIND,
+            DONG_WINTER,
+            KE_SHELL);
 }

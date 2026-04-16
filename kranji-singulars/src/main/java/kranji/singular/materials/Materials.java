@@ -125,9 +125,51 @@ public final class Materials {
     }
     public static final Gui_Tablet GUI_TABLET = new Gui_Tablet();
 
+    /** 币 — currency, money. */
+    public record Bi_Currency() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5E01"; }
+        @Override public String meaning() { return "currency, money"; }
+        @Override public String pinyinText()  { return "b\u00EC"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Bi_Currency BI_CURRENCY = new Bi_Currency();
+
+    /** 布 — cloth, spread. */
+    public record Bu_Cloth() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5E03"; }
+        @Override public String meaning() { return "cloth, spread"; }
+        @Override public String pinyinText()  { return "b\u00F9"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Bu_Cloth BU_CLOTH = new Bu_Cloth();
+
+    /** 丝 — silk, thread. */
+    public record Si_Silk() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u4E1D"; }
+        @Override public String meaning() { return "silk, thread"; }
+        @Override public String pinyinText()  { return "s\u012B"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Si_Silk SI_SILK = new Si_Silk();
+
+    /** \u8D64 — red/bare. */
+    public record Chi_Red() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u8D64"; }
+        @Override public String meaning() { return "red, bare"; }
+        @Override public String pinyinText()  { return "ch\u00EC"; }
+        @Override public int strokes()    { return 7; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Chi_Red CHI_RED = new Chi_Red();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             YI_CLOTHES, JIN_TOWEL, GE, YU_JADE, SE,
             BAI_WHITE, HUANG, QING, DAN,
             GAN_SWEET, LU_BRINE, WEI_LEATHER,
-            GUI_TABLET);
+            GUI_TABLET, BI_CURRENCY,
+            BU_CLOTH, SI_SILK,
+            CHI_RED);
 }

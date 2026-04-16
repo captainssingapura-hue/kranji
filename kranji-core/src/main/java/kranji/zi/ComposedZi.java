@@ -12,7 +12,7 @@ import java.util.List;
  * <p>Unlike {@link SingularZi} which is its own structure, a ComposedZi
  * delegates its structural decomposition to an inner {@link ComposedBlock}.</p>
  *
- * @param character   the glyph (e.g. "清")
+ * @param ziChar      the glyph wrapped as {@link ZiChar} for source readability
  * @param pinyin      Mandarin reading(s)
  * @param strokes     total stroke count
  * @param radicalNo   Kangxi radical number (1–214)
@@ -21,7 +21,7 @@ import java.util.List;
  * @param etymology   etymological classification (六书)
  */
 public record ComposedZi(
-        String character,
+        ZiChar ziChar,
         List<PinyinSyllable> pinyin,
         int strokes,
         int radicalNo,
@@ -29,6 +29,9 @@ public record ComposedZi(
         ComposedBlock composition,
         EtymologicalCategory etymology
 ) implements Zi {
+
+    @Override
+    public String character() { return ziChar.value(); }
 
     @Override
     public BlockStructure structure() { return composition; }

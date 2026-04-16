@@ -340,11 +340,43 @@ public final class PeopleAndRoles {
     }
     public static final Yao YAO = new Yao();
 
+    /** 帅 — commander, handsome. */
+    public record Shuai() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5E05"; }
+        @Override public String meaning() { return "commander, handsome"; }
+        @Override public String pinyinText()  { return "shu\u00E0i"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Shuai SHUAI = new Shuai();
+
+    /** 司 — manage, department. */
+    public record Si_Manage() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u53F8"; }
+        @Override public String meaning() { return "manage, department"; }
+        @Override public String pinyinText()  { return "s\u012B"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Si_Manage SI_MANAGE = new Si_Manage();
+
+    /** \u5175 — soldier. */
+    public record Bing() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5175"; }
+        @Override public String meaning() { return "soldier"; }
+        @Override public String pinyinText()  { return "b\u012Bng"; }
+        @Override public int strokes()    { return 7; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Bing BING = new Bing();
+
     public static final List<kranji.library.LibraryMember<BasicSet>> ALL = List.of(
             REN, NV, ZI, DA, FU_HUSBAND, FU_FATHER, MU_MOTHER, XIONG, DI,
             WANG, CHEN, SHI, MIN, ER_CHILD, YOU, JUN, GUAN, SHI_CLAN,
             XIAO, SHAO, WEN, GAI, REN_NINTH, YI_BARBARIAN,
             JIE_ALONE, JUE_LARVA, YIN_GOVERNOR, LI_OFFICIAL, SHI_HISTORY,
             YU_YU, YU_MONKEY, YOU_ESPECIALLY, SU, ER_AND, MIAN_HIDE,
-            TAI_GREAT, YAO);
+            TAI_GREAT, YAO,
+            SHUAI, SI_MANAGE,
+            BING);
 }

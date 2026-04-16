@@ -232,9 +232,51 @@ public final class SpaceAndDirection {
     }
     public static final Gan_Dry GAN_DRY = new Gan_Dry();
 
+    /** 区 — area, district. */
+    public record Qu_Area() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u533A"; }
+        @Override public String meaning() { return "area, district"; }
+        @Override public String pinyinText()  { return "q\u016B"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Qu_Area QU_AREA = new Qu_Area();
+
+    /** 左 — left. */
+    public record Zuo_Left() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5DE6"; }
+        @Override public String meaning() { return "left"; }
+        @Override public String pinyinText()  { return "zu\u01D2"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Zuo_Left ZUO_LEFT = new Zuo_Left();
+
+    /** 右 — right. */
+    public record You_Right() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u53F3"; }
+        @Override public String meaning() { return "right"; }
+        @Override public String pinyinText()  { return "y\u00F2u"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final You_Right YOU_RIGHT = new You_Right();
+
+    /** \u8FB0 — celestial/dragon. */
+    public record Chen() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u8FB0"; }
+        @Override public String meaning() { return "celestial, dragon"; }
+        @Override public String pinyinText()  { return "ch\u00E9n"; }
+        @Override public int strokes()    { return 7; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Chen CHEN = new Chen();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             SHANG, XIA, ZHONG, LI_INSIDE, FANG, DONG, XI, NAN, BEI_NORTH,
             QIAN_FRONT, NEI, CHANG, YU_AT, YANG_CENTER, XIANG_VILLAGE,
             JIA_FIRST, SHEN_EXTEND, YOU_FROM, FU_BEGIN, PAN, YE_PAGE,
-            JIU_LONG, WU_NOON, NIAN_YEAR, GAN_DRY);
+            JIU_LONG, WU_NOON, NIAN_YEAR, GAN_DRY, QU_AREA,
+            ZUO_LEFT, YOU_RIGHT,
+            CHEN);
 }

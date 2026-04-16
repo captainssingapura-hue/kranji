@@ -101,6 +101,24 @@ Outputs three SVG variants per character into `output/`:
 - `svg-block/` — block layout with glyph rendering
 - `svg-stroke/` — stroke-based visualization
 
+### Character lookup
+
+Check which characters already exist in the system. Pass a UTF-8 text file containing comma-separated characters:
+
+```bash
+mvn -pl kranji-core-demos exec:java \
+    -Dexec.mainClass=kranji.demos.ZiLookup \
+    -Dexec.args="zi-check.txt"
+```
+
+Writes `zi-check-result.txt` alongside the input with a full report (type, depth, source class for each character). You can also specify an explicit output path:
+
+```bash
+mvn -pl kranji-core-demos exec:java \
+    -Dexec.mainClass=kranji.demos.ZiLookup \
+    -Dexec.args="input.txt results/output.txt"
+```
+
 ### Interactive explorer (JavaFX)
 
 ```bash
@@ -139,6 +157,7 @@ Kranji/
 │   └── src/main/java/kranji/demos/
 │       ├── ExampleCharacters.java    # 21 curated showcase entries
 │       ├── SvgExportDemo.java        # Batch SVG export
+│       ├── ZiLookup.java             # Character coverage checker (file-based I/O)
 │       └── CharacterCodeGen.java     # Registry code generator
 ├── kranji-ui-demo/
 │   └── src/main/java/kranji/ui/demo/

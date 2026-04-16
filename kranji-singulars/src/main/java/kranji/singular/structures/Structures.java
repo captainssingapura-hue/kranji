@@ -148,7 +148,28 @@ public final class Structures {
     public static final Tun           TUN           = new Tun();
     public static final Ba_Cling      BA_CLING      = new Ba_Cling();
 
+    /** 仓 — warehouse, granary. */
+    public record Cang() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u4ED3"; }
+        @Override public String meaning() { return "warehouse, granary"; }
+        @Override public String pinyinText()  { return "c\u0101ng"; }
+        @Override public int strokes()    { return 4; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Cang CANG = new Cang();
+
+    /** 市 — market, city. */
+    public record Shi_Market() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5E02"; }
+        @Override public String meaning() { return "market, city"; }
+        @Override public String pinyinText()  { return "sh\u00EC"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Shi_Market SHI_MARKET = new Shi_Market();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             GUANG, CHANG_FACTORY, XUE, HU, SHI_CORPSE, TING, TAI,
-            CUN_INCH, CHI_RULER, CONG_CHIMNEY, JU, TUN, BA_CLING);
+            CUN_INCH, CHI_RULER, CONG_CHIMNEY, JU, TUN, BA_CLING,
+            CANG, SHI_MARKET);
 }
