@@ -168,8 +168,19 @@ public final class Structures {
     }
     public static final Shi_Market SHI_MARKET = new Shi_Market();
 
+    /** \u4EAC — capital (city). */
+    public record Jing_Capital() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u4EAC"; }
+        @Override public String meaning() { return "capital (city)"; }
+        @Override public String pinyinText()  { return "j\u012Bng"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Jing_Capital JING_CAPITAL = new Jing_Capital();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             GUANG, CHANG_FACTORY, XUE, HU, SHI_CORPSE, TING, TAI,
             CUN_INCH, CHI_RULER, CONG_CHIMNEY, JU, TUN, BA_CLING,
-            CANG, SHI_MARKET);
+            CANG, SHI_MARKET,
+            JING_CAPITAL);
 }

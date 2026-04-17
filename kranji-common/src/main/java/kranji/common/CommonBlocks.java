@@ -57,7 +57,7 @@ public final class CommonBlocks {
 
     /** 人彡 — person over three-strokes, phonetic component of 诊. */
     public static final TopBottom REN_SHAN =
-            new TopBottom(PeopleAndRoles.REN, RadicalComponents.SAN_PIAO);
+            new TopBottom(PeopleAndRoles.REN, RadicalComponents.SHAN_HAIR);
 
     /** 一工 — one over work, left side of 式. */
     public static final TopBottom YI_GONG =

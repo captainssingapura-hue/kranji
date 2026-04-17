@@ -72,7 +72,7 @@ public final class CharacterCodeGen {
         KNOWN_PARTS.put("纟", "JIAO_SI_PANG");
         KNOWN_PARTS.put("礻", "SHI_ZI_PANG_SPIRIT");
         KNOWN_PARTS.put("衤", "YI_ZI_PANG");
-        KNOWN_PARTS.put("彳", "SHUANG_REN_PANG");
+        KNOWN_PARTS.put("彳", "ToolsAndVessels.CHI_STEP");
         // Note: 阝 is ambiguous (left vs right ear), default to left
         KNOWN_PARTS.put("刂", "LI_DAO_PANG");
         KNOWN_PARTS.put("攵", "FAN_WEN_PANG");

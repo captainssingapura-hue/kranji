@@ -105,8 +105,8 @@ public final class Depth2Strokes7 {
     /** 估 (gū) — estimate. LeftRight: 亻(semantic) + 古(phonetic, depth-1). */
     public static final ComposedZi GU_ESTIMATE = new ComposedZi(
             uni("\u4F30"), List.of(py(Initial.G, Head.U, Body.NULL, Tail.NONE, Tone.FIRST)),
-            7, 9, "", new LeftRight(DAN_REN_PANG, Depth1Strokes5.GU_ANCIENT.structure()),
-            new PhonoSemantic(DAN_REN_PANG, Depth1Strokes5.GU_ANCIENT.structure()));
+            7, 9, "", new LeftRight(DAN_REN_PANG, AbstractConcepts.GU),
+            new PhonoSemantic(DAN_REN_PANG, AbstractConcepts.GU));
 
     /** 但 (dàn) — but, however. LeftRight: 亻(semantic) + 旦(phonetic, depth-1). */
     public static final ComposedZi DAN_BUT = new ComposedZi(
@@ -141,8 +141,8 @@ public final class Depth2Strokes7 {
     /** 彻 (chè) — thorough. LeftRight: 彳(semantic) + 切(phonetic, depth-1). */
     public static final ComposedZi CHE_THOROUGH = new ComposedZi(
             uni("\u5F7B"), List.of(py(Initial.CH, Head.OPEN, Body.E, Tail.NONE, Tone.FOURTH)),
-            7, 60, "", new LeftRight(SHUANG_REN_PANG, Depth1Strokes4.QIE_CUT.structure()),
-            new PhonoSemantic(SHUANG_REN_PANG, Depth1Strokes4.QIE_CUT.structure()));
+            7, 60, "", new LeftRight(ToolsAndVessels.CHI_STEP, Depth1Strokes4.QIE_CUT.structure()),
+            new PhonoSemantic(ToolsAndVessels.CHI_STEP, Depth1Strokes4.QIE_CUT.structure()));
 
     /** 饭 (fàn) — meal, rice. LeftRight: 饣(semantic) + 反(phonetic, depth-1). */
     public static final ComposedZi FAN_MEAL = new ComposedZi(
@@ -153,8 +153,8 @@ public final class Depth2Strokes7 {
     /** 励 (lì) — encourage. LeftRight: 厉(depth-1) + 力. */
     public static final ComposedZi LI_ENCOURAGE = new ComposedZi(
             uni("\u52B1"), List.of(py(Initial.L, Head.OPEN, Body.I, Tail.NONE, Tone.FOURTH)),
-            7, 19, "", new LeftRight(Depth1Strokes5.LI_SEVERE.structure(), ToolsAndVessels.LI_PLOW),
-            new PhonoSemantic(Depth1Strokes5.LI_SEVERE.structure(), ToolsAndVessels.LI_PLOW));
+            7, 19, "", new LeftRight(Depth1Strokes5.LI_STRICT.structure(), ToolsAndVessels.LI_PLOW),
+            new PhonoSemantic(Depth1Strokes5.LI_STRICT.structure(), ToolsAndVessels.LI_PLOW));
 
     public static final List<ComposedZi> ALL = List.of(
             YUAN_FAR, BAN_DRESS, FEN_FRAGRANCE, WAN_COMPLETE, YUAN_GARDEN,

@@ -783,6 +783,256 @@ public final class ActionsAndStates {
     }
     public static final Qi_Abandon QI_ABANDON = new Qi_Abandon();
 
+    /** 共 — together, common. */
+    public record Gong_Together() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5171"; }
+        @Override public String meaning() { return "together, common"; }
+        @Override public String pinyinText()  { return "g\u00F2ng"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Gong_Together GONG_TOGETHER = new Gong_Together();
+
+    /** 武 — martial, military. */
+    public record Wu_Martial() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u6B66"; }
+        @Override public String meaning() { return "martial, military"; }
+        @Override public String pinyinText()  { return "w\u01D4"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Wu_Martial WU_MARTIAL = new Wu_Martial();
+
+    /** 奔 — rush, run. */
+    public record Ben() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5954"; }
+        @Override public String meaning() { return "rush, run"; }
+        @Override public String pinyinText()  { return "b\u0113n"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ben BEN = new Ben();
+
+    /** 受 — receive, accept. */
+    public record Shou_Receive() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u53D7"; }
+        @Override public String meaning() { return "receive, accept"; }
+        @Override public String pinyinText()  { return "sh\u00F2u"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Shou_Receive SHOU_RECEIVE = new Shou_Receive();
+
+    /** 卖 — sell. */
+    public record Mai_Sell() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5356"; }
+        @Override public String meaning() { return "sell"; }
+        @Override public String pinyinText()  { return "m\u00E0i"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Mai_Sell MAI_SELL = new Mai_Sell();
+
+    /** 制 — make, system. */
+    public record Zhi_Make() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5236"; }
+        @Override public String meaning() { return "make, system"; }
+        @Override public String pinyinText()  { return "zh\u00EC"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Zhi_Make ZHI_MAKE = new Zhi_Make();
+
+    /** 建 — build, construct. */
+    public record Jian_Build() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5EFA"; }
+        @Override public String meaning() { return "build, construct"; }
+        @Override public String pinyinText()  { return "ji\u00E0n"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Jian_Build JIAN_BUILD = new Jian_Build();
+
+    /** 画 — draw, painting. */
+    public record Hua_Draw() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u753B"; }
+        @Override public String meaning() { return "draw, painting"; }
+        @Override public String pinyinText()  { return "hu\u00E0"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Hua_Draw HUA_DRAW = new Hua_Draw();
+
+    /** 育 — nurture, educate. */
+    public record Yu_Nurture() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u80B2"; }
+        @Override public String meaning() { return "nurture, educate"; }
+        @Override public String pinyinText()  { return "y\u00F9"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Yu_Nurture YU_NURTURE = new Yu_Nurture();
+
+    /** 变 — change, transform. */
+    public record Bian() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u53D8"; }
+        @Override public String meaning() { return "change, transform"; }
+        @Override public String pinyinText()  { return "bi\u00E0n"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Bian BIAN = new Bian();
+
+    /** 录 — record, copy. */
+    public record Lu_Record() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5F55"; }
+        @Override public String meaning() { return "record, copy"; }
+        @Override public String pinyinText()  { return "l\u00F9"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Lu_Record LU_RECORD = new Lu_Record();
+
+    /** 刻 — carve, moment. */
+    public record Ke_Carve() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u523B"; }
+        @Override public String meaning() { return "carve, moment"; }
+        @Override public String pinyinText()  { return "k\u00E8"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ke_Carve KE_CARVE = new Ke_Carve();
+
+    /** 享 — enjoy. */
+    public record Xiang_Enjoy() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u4EAB"; }
+        @Override public String meaning() { return "enjoy"; }
+        @Override public String pinyinText()  { return "xi\u01CEng"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Xiang_Enjoy XIANG_ENJOY = new Xiang_Enjoy();
+
+    /** 卧 — lie down. */
+    public record Wo_Lie() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5367"; }
+        @Override public String meaning() { return "lie down"; }
+        @Override public String pinyinText()  { return "w\u00F2"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Wo_Lie WO_LIE = new Wo_Lie();
+
+    /** 丧 — mourn, funeral. */
+    public record Sang() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u4E27"; }
+        @Override public String meaning() { return "mourn, funeral"; }
+        @Override public String pinyinText()  { return "s\u00E0ng"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Sang SANG = new Sang();
+
+    /** 参 — participate, ginseng. */
+    public record Can() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u53C2"; }
+        @Override public String meaning() { return "participate, ginseng"; }
+        @Override public String pinyinText()  { return "c\u0101n"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Can CAN = new Can();
+
+    /** 肯 — willing, agree. */
+    public record Ken() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u80AF"; }
+        @Override public String meaning() { return "willing, agree"; }
+        @Override public String pinyinText()  { return "k\u011Bn"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ken KEN = new Ken();
+
+    /** 易 — easy, change. */
+    public record Yi_Easy() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u6613"; }
+        @Override public String meaning() { return "easy, change"; }
+        @Override public String pinyinText()  { return "y\u00EC"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Yi_Easy YI_EASY = new Yi_Easy();
+
+    /** 昂 — raise, hold high. */
+    public record Ang() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u6602"; }
+        @Override public String meaning() { return "raise, hold high"; }
+        @Override public String pinyinText()  { return "\u00E1ng"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ang ANG = new Ang();
+
+    /** 奉 — offer, serve. */
+    public record Feng_Offer() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5949"; }
+        @Override public String meaning() { return "offer, serve"; }
+        @Override public String pinyinText()  { return "f\u00E8ng"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Feng_Offer FENG_OFFER = new Feng_Offer();
+
+    /** 畅 — smooth, fluent. */
+    public record Chang_Smooth() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u7545"; }
+        @Override public String meaning() { return "smooth, fluent"; }
+        @Override public String pinyinText()  { return "ch\u00E0ng"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Chang_Smooth CHANG_SMOOTH = new Chang_Smooth();
+
+    /** 备 — prepare, equipped. */
+    public record Bei_Prepare() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5907"; }
+        @Override public String meaning() { return "prepare, equipped"; }
+        @Override public String pinyinText()  { return "b\u00E8i"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Bei_Prepare BEI_PREPARE = new Bei_Prepare();
+
+    /** 势 — power, momentum. */
+    public record Shi_Power() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u52BF"; }
+        @Override public String meaning() { return "power, momentum"; }
+        @Override public String pinyinText()  { return "sh\u00EC"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Shi_Power SHI_POWER = new Shi_Power();
+
+    /** 舍 — give up, shed. */
+    public record She_Shed() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u820D"; }
+        @Override public String meaning() { return "give up, shed"; }
+        @Override public String pinyinText()  { return "sh\u011B"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final She_Shed SHE_SHED = new She_Shed();
+
+    /** 刷 — brush, swipe. */
+    public record Shua() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5237"; }
+        @Override public String meaning() { return "brush, swipe"; }
+        @Override public String pinyinText()  { return "shu\u0101"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Shua SHUA = new Shua();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             WANG, ZOU, LI_STAND, ZHI_STOP, YOU_AGAIN, JIAN_SEE, YAN_SPEECH,
             CHU, RU, SHENG, SHI_EAT, FEI, JIAO, KAI,
@@ -798,5 +1048,10 @@ public final class ActionsAndStates {
             QI_BEG, ZHI_BRANCH, BI_COMPARE, GOU,
             GUI, JIAO_CALL, LING, FAN_VIOLATE, CHU_PLACE, WU_AFFAIR,
             HUI_CONVERGE, XUN_MESSAGE, FA_SEND, YUN_PREGNANT, JIU_ENTANGLE,
-            KE_OVERCOME, MIAN, BU_STEP, LUAN, YING, QI_ABANDON);
+            KE_OVERCOME, MIAN, BU_STEP, LUAN, YING, QI_ABANDON,
+            GONG_TOGETHER, WU_MARTIAL, BEN, SHOU_RECEIVE, MAI_SELL,
+            ZHI_MAKE, JIAN_BUILD, HUA_DRAW, YU_NURTURE, BIAN,
+            LU_RECORD, KE_CARVE, XIANG_ENJOY, WO_LIE, SANG, CAN, KEN,
+            YI_EASY, ANG, FENG_OFFER, CHANG_SMOOTH,
+            BEI_PREPARE, SHI_POWER, SHE_SHED, SHUA);
 }

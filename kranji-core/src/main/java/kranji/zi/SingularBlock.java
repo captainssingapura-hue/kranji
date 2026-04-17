@@ -41,6 +41,30 @@ public interface SingularBlock extends BlockStructure {
     /** Stroke count of this component form. */
     default int strokes() { return 0; }
 
+    // ── Role-aware identity accessors ─────────────────────────────────
+    //
+    // Some parts share a glyph but carry different derivation semantics
+    // depending on structural position — 阝 is the canonical case: left-阝
+    // derives from 阜 (mound/fù) and right-阝 derives from 邑 (city/yì).
+    // Rather than split into two records (which would make the glyph
+    // non-unique in the registry), those components override the
+    // role-aware overloads below while keeping a single identity.
+    //
+    // Default implementations fall back to the zero-arg form, so parts
+    // whose semantics are role-independent need no extra code.
+
+    /** Role-aware variant of {@link #name()}. Defaults to {@link #name()}. */
+    default String name(BlockRole role)       { return name(); }
+
+    /** Role-aware variant of {@link #standalone()}. Defaults to {@link #standalone()}. */
+    default String standalone(BlockRole role) { return standalone(); }
+
+    /** Role-aware variant of {@link #meaning()}. Defaults to {@link #meaning()}. */
+    default String meaning(BlockRole role)    { return meaning(); }
+
+    /** Role-aware variant of {@link #pinyinText()}. Defaults to {@link #pinyinText()}. */
+    default String pinyinText(BlockRole role) { return pinyinText(); }
+
     // ── Intrinsic layout knowledge ────────────────────────────────────
 
     /**

@@ -1,0 +1,138 @@
+{
+  "version": "1",
+  "singularZi": [
+    {
+      "glyph": "日",
+      "codepoint": "U+65E5",
+      "strokes": 4,
+      "radicalNo": 72,
+      "pinyinText": "rì",
+      "pinyin": [{"initial":"r","final":"i","tone":4}],
+      "meaning": "sun",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "月",
+      "codepoint": "U+6708",
+      "strokes": 4,
+      "radicalNo": 74,
+      "pinyinText": "yuè",
+      "pinyin": [{"initial":"","final":"üe","tone":4}],
+      "meaning": "moon",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "木",
+      "codepoint": "U+6728",
+      "strokes": 4,
+      "radicalNo": 75,
+      "pinyinText": "mù",
+      "pinyin": [{"initial":"m","final":"u","tone":4}],
+      "meaning": "wood",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "水",
+      "codepoint": "U+6C34",
+      "strokes": 4,
+      "radicalNo": 85,
+      "pinyinText": "shuǐ",
+      "pinyin": [{"initial":"sh","final":"uei","tone":3}],
+      "meaning": "water",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "青",
+      "codepoint": "U+9752",
+      "strokes": 8,
+      "radicalNo": 174,
+      "pinyinText": "qīng",
+      "pinyin": [{"initial":"q","final":"ing","tone":1}],
+      "meaning": "green/blue",
+      "etymology": {"kind":"pictograph"}
+    }
+  ],
+  "singularParts": [
+    {
+      "glyph": "氵",
+      "name": "三点水",
+      "strokes": 3,
+      "pinyinText": "shuǐ",
+      "meaning": "water radical",
+      "derivedFrom": "水"
+    }
+  ],
+  "composedZi": [
+    {
+      "glyph": "明",
+      "ziCharForm": "literal",
+      "strokes": 8,
+      "radicalNo": 72,
+      "pinyin": [{"initial":"m","final":"ing","tone":2}],
+      "meaning": "bright",
+      "composition": {
+        "style": "left_right",
+        "slots": { "left": "日", "right": "月" }
+      },
+      "etymology": { "kind": "compound_indicative", "meaningHint": "sun and moon together = bright" }
+    },
+    {
+      "glyph": "清",
+      "ziCharForm": "literal",
+      "strokes": 11,
+      "radicalNo": 85,
+      "pinyin": [{"initial":"q","final":"ing","tone":1}],
+      "meaning": "clear",
+      "composition": {
+        "style": "left_right",
+        "slots": { "left": "氵", "right": "青" }
+      },
+      "etymology": { "kind": "phono_semantic", "semanticPart": "氵", "phoneticPart": "青" }
+    },
+    {
+      "glyph": "林",
+      "ziCharForm": "literal",
+      "strokes": 8,
+      "radicalNo": 75,
+      "pinyin": [{"initial":"l","final":"in","tone":2}],
+      "meaning": "forest",
+      "composition": {
+        "style": "left_right",
+        "slots": { "left": "木", "right": "木" }
+      },
+      "etymology": { "kind": "compound_indicative", "meaningHint": "two trees" }
+    },
+    {
+      "glyph": "森",
+      "ziCharForm": "literal",
+      "strokes": 12,
+      "radicalNo": 75,
+      "pinyin": [{"initial":"s","final":"en","tone":1}],
+      "meaning": "dense forest",
+      "composition": {
+        "style": "top_bottom",
+        "slots": {
+          "top":    "木",
+          "bottom": {
+            "style": "left_right",
+            "slots": { "left": "木", "right": "木" }
+          }
+        }
+      },
+      "etymology": { "kind": "compound_indicative", "meaningHint": "three trees" }
+    },
+    {
+      "glyph": "晴",
+      "ziCharForm": "literal",
+      "strokes": 12,
+      "radicalNo": 72,
+      "pinyin": [{"initial":"q","final":"ing","tone":2}],
+      "meaning": "sunny",
+      "composition": {
+        "style": "left_right",
+        "slots": { "left": "日", "right": "青" }
+      },
+      "etymology": { "kind": "phono_semantic", "semanticPart": "日", "phoneticPart": "青" }
+    }
+  ]
+}

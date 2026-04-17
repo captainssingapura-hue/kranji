@@ -72,11 +72,10 @@ public final class Depth1Strokes5 {
             5, 64, "", new LeftRight(TI_SHOU_PANG, AbstractConcepts.NAI),
             new PhonoSemantic(TI_SHOU_PANG, AbstractConcepts.NAI));
 
-    /** 古 (gǔ) — ancient. TopBottom: 十 + 口. */
-    public static final ComposedZi GU_ANCIENT = new ComposedZi(
-            uni("\u53E4"), List.of(py(Initial.G, Head.U, Body.U, Tail.NONE, Tone.THIRD)),
-            5, 30, "", new TopBottom(NumbersAndMeasure.SHI, BodyParts.KOU),
-            new CompoundIndicative("\u5341(ten) + \u53E3(mouth/generations) \u2192 ancient"));
+    // 古 (gǔ) — ancient. Modeled atomically as AbstractConcepts.GU
+    // (SingularZi); the structural decomposition TopBottom(\u5341, \u53E3)
+    // is well known but conventional modeling treats 古 as a non-decomposed
+    // unit for semantic purposes.
 
     /** 节 (jié) — festival, joint. TopBottom: 艹(semantic) + 卩(phonetic). */
     public static final ComposedZi JIE_FESTIVAL = new ComposedZi(
@@ -366,15 +365,14 @@ public final class Depth1Strokes5 {
             5, 52, "", new LeftRight(NumbersAndMeasure.YAO_TINY, ToolsAndVessels.LI_PLOW),
             new CompoundIndicative("\u5E7A(tiny) + \u529B(strength) \u2192 young, immature"));
 
-    /** 厉 (lì) — severe, strict. SemiEnclosureUpperLeft: 厂 + 万. */
-    public static final ComposedZi LI_SEVERE = new ComposedZi(
-            uni("\u5389"), List.of(py(Initial.L, Head.OPEN, Body.I, Tail.NONE, Tone.FOURTH)),
-            5, 27, "", new SemiEnclosureUpperLeft(Structures.CHANG_FACTORY, NumbersAndMeasure.WAN),
-            new PhonoSemantic(Structures.CHANG_FACTORY, NumbersAndMeasure.WAN));
+    // 厉 (lì) — severe, strict. Canonical definition is LI_STRICT above.
+    // LI_SEVERE was a duplicate ComposedZi for the same glyph (\u5389) and
+    // has been removed; callers should use LI_STRICT.structure() or
+    // Depth1Strokes5.LI_STRICT directly.
 
     public static final List<ComposedZi> ALL = List.of(
             KAN, DA_HIT, PU_POUNCE, BA_RAKE, GONG_MERIT, RENG_THROW,
-            GU_ANCIENT, JIE_FESTIVAL, LI_STRICT, MIE_EXTINGUISH, YA_CRUSH,
+            JIE_FESTIVAL, LI_STRICT, MIE_EXTINGUISH, YA_CRUSH,
             ZHAN_OCCUPY, JIU_OLD, DAN_DAWN, YE_LEAF, DING_STING,
             ZHI_ONLY, DIAO_HOLD, LING_OTHER, DAO_CHATTER, TAN_SIGH,
             FU_PAY, ZHANG_BATTLE, DAI_GENERATION, XIAN_IMMORTAL, MEN_PLURAL,
@@ -383,7 +381,6 @@ public final class Depth1Strokes5 {
             ZHI_JUICE, HAN, NING, TA_IT,
             TAO_DISCUSS, XIE_WRITE, RANG_LET, LI_CEREMONY, XUN_INSTRUCT,
             YI_DISCUSS, JI_RECORD, NI_NUN, LIAO, NAI_MILK, NU_SLAVE,
-            JIA_ADD, ZHAO_SUMMON, BIAN_SIDE, SHENG_SAINT, DUI_CORRECT, YOU_YOUNG,
-            LI_SEVERE
+            JIA_ADD, ZHAO_SUMMON, BIAN_SIDE, SHENG_SAINT, DUI_CORRECT, YOU_YOUNG
     );
 }

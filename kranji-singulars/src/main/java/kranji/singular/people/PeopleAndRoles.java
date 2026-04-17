@@ -370,13 +370,52 @@ public final class PeopleAndRoles {
     }
     public static final Bing BING = new Bing();
 
+    /** \u8005 — one who, -er (suffix). */
+    public record Zhe() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u8005"; }
+        @Override public String meaning() { return "one who, -er"; }
+        @Override public String pinyinText()  { return "zh\u011B"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Zhe ZHE = new Zhe();
+
+    /** \u53D4 — uncle (father's younger brother). */
+    public record Shu_Uncle() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u53D4"; }
+        @Override public String meaning() { return "uncle"; }
+        @Override public String pinyinText()  { return "sh\u016B"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Shu_Uncle SHU_UNCLE = new Shu_Uncle();
+
+    /** \u59BB — wife. */
+    public record Qi_Wife() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u59BB"; }
+        @Override public String meaning() { return "wife"; }
+        @Override public String pinyinText()  { return "q\u012B"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Qi_Wife QI_WIFE = new Qi_Wife();
+
+    /** \u5B5F — eldest, first (month). */
+    public record Meng() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5B5F"; }
+        @Override public String meaning() { return "eldest, first"; }
+        @Override public String pinyinText()  { return "m\u00E8ng"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Meng MENG = new Meng();
+
     public static final List<kranji.library.LibraryMember<BasicSet>> ALL = List.of(
             REN, NV, ZI, DA, FU_HUSBAND, FU_FATHER, MU_MOTHER, XIONG, DI,
             WANG, CHEN, SHI, MIN, ER_CHILD, YOU, JUN, GUAN, SHI_CLAN,
             XIAO, SHAO, WEN, GAI, REN_NINTH, YI_BARBARIAN,
             JIE_ALONE, JUE_LARVA, YIN_GOVERNOR, LI_OFFICIAL, SHI_HISTORY,
             YU_YU, YU_MONKEY, YOU_ESPECIALLY, SU, ER_AND, MIAN_HIDE,
-            TAI_GREAT, YAO,
-            SHUAI, SI_MANAGE,
-            BING);
+            TAI_GREAT, YAO, SHUAI, SI_MANAGE, BING,
+            ZHE, SHU_UNCLE, QI_WIFE, MENG);
 }

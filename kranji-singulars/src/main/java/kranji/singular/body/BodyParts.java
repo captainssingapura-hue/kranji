@@ -263,9 +263,30 @@ public final class BodyParts {
     }
     public static final Jiao_Horn JIAO_HORN = new Jiao_Horn();
 
+    /** \u9F7F — tooth/teeth. */
+    public record Chi_Tooth() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u9F7F"; }
+        @Override public String meaning() { return "tooth, teeth"; }
+        @Override public String pinyinText()  { return "ch\u01D0"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Chi_Tooth CHI_TOOTH = new Chi_Tooth();
+
+    /** \u4E73 — breast, milk. */
+    public record Ru_Milk() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u4E73"; }
+        @Override public String meaning() { return "breast, milk"; }
+        @Override public String pinyinText()  { return "r\u01D4"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ru_Milk RU_MILK = new Ru_Milk();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             KOU, MU, ER, SHOU, ZU, XIN, TOU, MIAN, SHEN, SHOU_HEAD, YA,
             SHE, PI, MAO, ROU, XUE, WEI,
             ZI_SELF, JIU_MORTAR, YU_MOMENT, ZHUA, XIN_FONTANEL, GEN_TOUGH,
-            JIAO_HORN);
+            JIAO_HORN,
+            CHI_TOOTH, RU_MILK);
 }

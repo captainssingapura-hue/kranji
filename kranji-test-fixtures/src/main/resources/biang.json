@@ -1,0 +1,137 @@
+{
+  "version": "1",
+  "singularZi": [
+    {
+      "glyph": "穴",
+      "codepoint": "U+7A74",
+      "strokes": 5,
+      "radicalNo": 116,
+      "pinyinText": "xué",
+      "pinyin": [{"initial":"x","final":"ue","tone":2}],
+      "meaning": "cave",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "言",
+      "codepoint": "U+8A00",
+      "strokes": 7,
+      "radicalNo": 149,
+      "pinyinText": "yán",
+      "pinyin": [{"initial":"y","final":"an","tone":2}],
+      "meaning": "speech",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "長",
+      "codepoint": "U+9577",
+      "strokes": 8,
+      "radicalNo": 168,
+      "pinyinText": "cháng",
+      "pinyin": [{"initial":"ch","final":"ang","tone":2}],
+      "meaning": "long",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "馬",
+      "codepoint": "U+99AC",
+      "strokes": 10,
+      "radicalNo": 187,
+      "pinyinText": "mǎ",
+      "pinyin": [{"initial":"m","final":"a","tone":3}],
+      "meaning": "horse",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "月",
+      "codepoint": "U+6708",
+      "strokes": 4,
+      "radicalNo": 74,
+      "pinyinText": "yuè",
+      "pinyin": [{"initial":"","final":"üe","tone":4}],
+      "meaning": "moon",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "心",
+      "codepoint": "U+5FC3",
+      "strokes": 4,
+      "radicalNo": 61,
+      "pinyinText": "xīn",
+      "pinyin": [{"initial":"x","final":"in","tone":1}],
+      "meaning": "heart",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "幺",
+      "codepoint": "U+5E7A",
+      "strokes": 3,
+      "radicalNo": 52,
+      "pinyinText": "yāo",
+      "pinyin": [{"initial":"y","final":"ao","tone":1}],
+      "meaning": "tiny",
+      "etymology": {"kind":"pictograph"}
+    }
+  ],
+  "singularParts": [
+    {
+      "glyph": "辶",
+      "name": "走之底",
+      "strokes": 3,
+      "pinyinText": "chuò",
+      "meaning": "walk radical",
+      "derivedFrom": "辵"
+    },
+    {
+      "glyph": "刂",
+      "name": "立刀旁",
+      "strokes": 2,
+      "pinyinText": "dāo",
+      "meaning": "knife radical",
+      "derivedFrom": "刀"
+    }
+  ],
+  "composedZi": [
+    {
+      "glyph": "𰻞",
+      "ziCharForm": "unicode",
+      "strokes": 58,
+      "radicalNo": 162,
+      "pinyin": [{"initial":"b","final":"iang","tone":2}],
+      "meaning": "biáng (a Shaanxi noodle)",
+      "composition": {
+        "style": "semi_enclosure_bottom_left",
+        "slots": {
+          "wrapper": "辶",
+          "content": {
+            "style": "top_middle_bottom",
+            "slots": {
+              "top": "穴",
+              "middle": {
+                "style": "left_middle_right",
+                "slots": { "left": "幺", "middle": "言", "right": "幺" }
+              },
+              "bottom": {
+                "style": "top_middle_bottom",
+                "slots": {
+                  "top": {
+                    "style": "left_middle_right",
+                    "slots": { "left": "長", "middle": "馬", "right": "長" }
+                  },
+                  "middle": {
+                    "style": "left_right",
+                    "slots": { "left": "月", "right": "刂" }
+                  },
+                  "bottom": "心"
+                }
+              }
+            }
+          }
+        }
+      },
+      "etymology": {
+        "kind": "compound_indicative",
+        "meaningHint": "folk-invented character"
+      }
+    }
+  ]
+}

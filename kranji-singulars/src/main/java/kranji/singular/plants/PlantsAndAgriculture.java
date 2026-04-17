@@ -111,14 +111,10 @@ public final class PlantsAndAgriculture {
         @Override public BasicSet library() { return BasicSet.INSTANCE; }
     }
 
-    /** 木 — tree, wood. */
-    public record Mu_Tree() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
-        @Override public String glyph()   { return "木"; }
-        @Override public String meaning() { return "tree, wood"; }
-        @Override public String pinyinText()  { return "mù"; }
-        @Override public int strokes()    { return 4; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
+    // 木 (mù) — tree, wood. Canonical record is
+    // kranji.component.basic.WoodFamily.MU (SingularPart + SingularZi),
+    // exposed via BasicComponents.MU. Mu_Tree was a duplicate and has
+    // been removed; callers should reference WoodFamily.MU.
 
     /** 术 — art, technique. */
     public record Shu_Art() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
@@ -196,7 +192,7 @@ public final class PlantsAndAgriculture {
     public static final Wei_Not     WEI_NOT     = new Wei_Not();
     public static final Mo          MO          = new Mo();
     public static final Ben         BEN         = new Ben();
-    public static final Mu_Tree     MU_TREE     = new Mu_Tree();
+    // MU_TREE removed — use WoodFamily.MU / BasicComponents.MU instead.
     public static final Shu_Art     SHU_ART     = new Shu_Art();
     public static final Jian_Select JIAN_SELECT = new Jian_Select();
     public static final Lei_Plow    LEI_PLOW    = new Lei_Plow();
@@ -247,7 +243,7 @@ public final class PlantsAndAgriculture {
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             HE, MI, GUO, NONG, GUA, SHU, ZHU_TRUNK, WEI_NOT, MO, BEN,
-            MU_TREE, SHU_ART, JIAN_SELECT, LEI_PLOW, YU_BRUSH, MI_BLEAT, DAI, RAN,
+            SHU_ART, JIAN_SELECT, LEI_PLOW, YU_BRUSH, MI_BLEAT, DAI, RAN,
             CONG_CLUSTER, LAN,
             MAI, DOU_BEAN);
 }

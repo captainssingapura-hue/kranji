@@ -56,8 +56,8 @@ public final class Depth1Strokes7 {
     /** 形 (xíng) — shape, form. LeftRight: 开(semantic) + 彡(phonetic). */
     public static final ComposedZi XING_SHAPE = new ComposedZi(
             uni("\u5F62"), List.of(py(Initial.X, Head.OPEN, Body.I, Tail.NG, Tone.SECOND)),
-            7, 59, "", new LeftRight(ActionsAndStates.KAI, RadicalComponents.SAN_PIAO),
-            new PhonoSemantic(ActionsAndStates.KAI, RadicalComponents.SAN_PIAO));
+            7, 59, "", new LeftRight(ActionsAndStates.KAI, RadicalComponents.SHAN_HAIR),
+            new PhonoSemantic(ActionsAndStates.KAI, RadicalComponents.SHAN_HAIR));
 
     /** 进 (jìn) — advance, enter. SemiEnclosureBottomLeft: 辶 + 井. */
     public static final ComposedZi JIN_ADVANCE = new ComposedZi(
@@ -218,8 +218,8 @@ public final class Depth1Strokes7 {
     /** 投 (tóu) — throw, cast. LeftRight: 扌 + 殳. */
     public static final ComposedZi TOU_THROW = new ComposedZi(
             uni("\u6295"), List.of(py(Initial.T, Head.OPEN, Body.O, Tail.VOWEL_U, Tone.SECOND)),
-            7, 64, "", new LeftRight(TI_SHOU_PANG, RadicalComponents.SHU_WEAPON),
-            new PhonoSemantic(TI_SHOU_PANG, RadicalComponents.SHU_WEAPON));
+            7, 64, "", new LeftRight(TI_SHOU_PANG, RadicalComponents.SHU_LANCE),
+            new PhonoSemantic(TI_SHOU_PANG, RadicalComponents.SHU_LANCE));
 
     /** 坟 (fén) — grave, tomb. LeftRight: 土 + 文. */
     public static final ComposedZi FEN_GRAVE = new ComposedZi(
@@ -272,8 +272,8 @@ public final class Depth1Strokes7 {
     /** 块 (kuài) — block, piece. LeftRight: 土 + 夬. */
     public static final ComposedZi KUAI_BLOCK = new ComposedZi(
             uni("\u5757"), List.of(py(Initial.K, Head.U, Body.A, Tail.VOWEL_I, Tone.FOURTH)),
-            7, 32, "", new LeftRight(NatureElements.TU, RadicalComponents.GUAI),
-            new PhonoSemantic(NatureElements.TU, RadicalComponents.GUAI));
+            7, 32, "", new LeftRight(NatureElements.TU, AbstractConcepts.GUAI),
+            new PhonoSemantic(NatureElements.TU, AbstractConcepts.GUAI));
 
     /** 把 (bǎ) — hold, handle. LeftRight: 扌 + 巴. */
     public static final ComposedZi BA_HOLD = new ComposedZi(
@@ -374,8 +374,8 @@ public final class Depth1Strokes7 {
     /** 杏 (xìng) — apricot. TopBottom: 木 + 口. */
     public static final ComposedZi XING_APRICOT = new ComposedZi(
             uni("\u674F"), List.of(py(Initial.X, Head.OPEN, Body.I, Tail.NG, Tone.FOURTH)),
-            7, 75, "", new TopBottom(PlantsAndAgriculture.MU_TREE, BodyParts.KOU),
-            new PhonoSemantic(PlantsAndAgriculture.MU_TREE, BodyParts.KOU));
+            7, 75, "", new TopBottom(WoodFamily.MU, BodyParts.KOU),
+            new PhonoSemantic(WoodFamily.MU, BodyParts.KOU));
 
     /** 极 (jí) — extreme, pole. LeftRight: 木 + 及. */
     public static final ComposedZi JI_EXTREME = new ComposedZi(
@@ -386,7 +386,7 @@ public final class Depth1Strokes7 {
     /** 李 (lǐ) — plum, surname. TopBottom: 木 + 子. */
     public static final ComposedZi LI_PLUM = new ComposedZi(
             uni("\u674E"), List.of(py(Initial.L, Head.I, Body.NULL, Tail.NONE, Tone.THIRD)),
-            7, 75, "", new TopBottom(PlantsAndAgriculture.MU_TREE, PeopleAndRoles.ZI),
+            7, 75, "", new TopBottom(WoodFamily.MU, PeopleAndRoles.ZI),
             new CompoundIndicative("\u6728(tree) + \u5B50(seed) \u2192 plum tree"));
 
     /** 否 (fǒu) — no, negate. TopBottom: 不 + 口. */
@@ -458,7 +458,7 @@ public final class Depth1Strokes7 {
     /** 呆 (dāi) — dull, silly. TopBottom: 口 + 木. */
     public static final ComposedZi DAI_DULL = new ComposedZi(
             uni("\u5446"), List.of(py(Initial.D, Head.OPEN, Body.A, Tail.VOWEL_I, Tone.FIRST)),
-            7, 30, "", new TopBottom(BodyParts.KOU, PlantsAndAgriculture.MU_TREE),
+            7, 30, "", new TopBottom(BodyParts.KOU, WoodFamily.MU),
             new CompoundIndicative("\u53E3(mouth) + \u6728(wood) \u2192 dull"));
 
     /** 旷 (kuàng) — vast, open. LeftRight: 日 + 广. */
@@ -500,7 +500,7 @@ public final class Depth1Strokes7 {
     /** 困 (kùn) — sleepy, stuck. FullEnclosure: 囗 + 木. */
     public static final ComposedZi KUN = new ComposedZi(
             uni("\u56F0"), List.of(py(Initial.K, Head.U, Body.NULL, Tail.N, Tone.FOURTH)),
-            7, 31, "", new FullEnclosure(GUO_ZI_KUANG, PlantsAndAgriculture.MU_TREE),
+            7, 31, "", new FullEnclosure(GUO_ZI_KUANG, WoodFamily.MU),
             new CompoundIndicative("\u56D7(enclosure) + \u6728(tree) \u2192 tree confined \u2192 stuck"));
 
     /** 吵 (chǎo) — quarrel, noisy. LeftRight: 口 + 少. */
@@ -692,8 +692,8 @@ public final class Depth1Strokes7 {
     /** 役 (yì) — service, battle. LeftRight: 彳 + 殳. */
     public static final ComposedZi YI_SERVICE = new ComposedZi(
             uni("\u5F79"), List.of(py(Initial.ZERO, Head.I, Body.NULL, Tail.NONE, Tone.FOURTH)),
-            7, 60, "", new LeftRight(JIAN_ZHI_PANG, RadicalComponents.SHU_WEAPON),
-            new PhonoSemantic(JIAN_ZHI_PANG, RadicalComponents.SHU_WEAPON));
+            7, 60, "", new LeftRight(JIAN_ZHI_PANG, RadicalComponents.SHU_LANCE),
+            new PhonoSemantic(JIAN_ZHI_PANG, RadicalComponents.SHU_LANCE));
 
     /** 妥 (tuǒ) — suitable. TopBottom: 爫 + 女. */
     public static final ComposedZi TUO = new ComposedZi(
@@ -746,8 +746,8 @@ public final class Depth1Strokes7 {
     /** 条 (tiáo) — strip, item. TopBottom: 夂 + 木. */
     public static final ComposedZi TIAO = new ComposedZi(
             uni("\u6761"), List.of(py(Initial.T, Head.I, Body.A, Tail.VOWEL_U, Tone.SECOND)),
-            7, 75, "", new TopBottom(RadicalComponents.ZHI_SLOW, PlantsAndAgriculture.MU_TREE),
-            new PhonoSemantic(PlantsAndAgriculture.MU_TREE, RadicalComponents.ZHI_SLOW));
+            7, 75, "", new TopBottom(RadicalComponents.ZHI_SLOW, WoodFamily.MU),
+            new PhonoSemantic(WoodFamily.MU, RadicalComponents.ZHI_SLOW));
 
     /** 迎 (yíng) — welcome. SemiEnclosureBottomLeft: 辶 + 卬. */
     public static final ComposedZi YING_WELCOME = new ComposedZi(
@@ -776,8 +776,8 @@ public final class Depth1Strokes7 {
     /** 亩 (mǔ) — acre. TopBottom: 亠 + 田. */
     public static final ComposedZi MU_ACRE = new ComposedZi(
             uni("\u4EA9"), List.of(py(Initial.M, Head.U, Body.NULL, Tail.NONE, Tone.THIRD)),
-            7, 102, "", new TopBottom(RadicalComponents.TOU_ZI_TOU, NatureElements.TIAN),
-            new PhonoSemantic(NatureElements.TIAN, RadicalComponents.TOU_ZI_TOU));
+            7, 102, "", new TopBottom(WEN_ZI_TOU, NatureElements.TIAN),
+            new PhonoSemantic(NatureElements.TIAN, WEN_ZI_TOU));
 
     /** 况 (kuàng) — situation. LeftRight: 冫 + 兄. */
     public static final ComposedZi KUANG_SITUATION = new ComposedZi(
@@ -788,8 +788,8 @@ public final class Depth1Strokes7 {
     /** 床 (chuáng) — bed. SemiEnclosureUpperLeft: 广 + 木. */
     public static final ComposedZi CHUANG_BED = new ComposedZi(
             uni("\u5E8A"), List.of(py(Initial.CH, Head.U, Body.A, Tail.NG, Tone.SECOND)),
-            7, 53, "", new SemiEnclosureUpperLeft(Structures.GUANG, PlantsAndAgriculture.MU_TREE),
-            new PhonoSemantic(Structures.GUANG, PlantsAndAgriculture.MU_TREE));
+            7, 53, "", new SemiEnclosureUpperLeft(Structures.GUANG, WoodFamily.MU),
+            new PhonoSemantic(Structures.GUANG, WoodFamily.MU));
 
     /** 库 (kù) — warehouse. SemiEnclosureUpperLeft: 广 + 车. */
     public static final ComposedZi KU_WAREHOUSE = new ComposedZi(
@@ -800,8 +800,8 @@ public final class Depth1Strokes7 {
     /** 疗 (liáo) — cure, treat. SemiEnclosureUpperLeft: 疒 + 了. */
     public static final ComposedZi LIAO_CURE = new ComposedZi(
             uni("\u7597"), List.of(py(Initial.L, Head.I, Body.A, Tail.VOWEL_U, Tone.SECOND)),
-            7, 104, "", new SemiEnclosureUpperLeft(RadicalComponents.NE_ZI_PANG, ActionsAndStates.LE),
-            new PhonoSemantic(RadicalComponents.NE_ZI_PANG, ActionsAndStates.LE));
+            7, 104, "", new SemiEnclosureUpperLeft(BING_ZI_PANG, ActionsAndStates.LE),
+            new PhonoSemantic(BING_ZI_PANG, ActionsAndStates.LE));
 
     /** 冷 (lěng) — cold. LeftRight: 冫 + 令. */
     public static final ComposedZi LENG = new ComposedZi(
@@ -836,8 +836,8 @@ public final class Depth1Strokes7 {
     /** 闲 (xián) — idle. SemiEnclosureTopThree: 门 + 木. */
     public static final ComposedZi XIAN_IDLE = new ComposedZi(
             uni("\u95F2"), List.of(py(Initial.X, Head.I, Body.A, Tail.N, Tone.SECOND)),
-            7, 169, "", new SemiEnclosureTopThree(ToolsAndVessels.MEN, PlantsAndAgriculture.MU_TREE),
-            new PhonoSemantic(ToolsAndVessels.MEN, PlantsAndAgriculture.MU_TREE));
+            7, 169, "", new SemiEnclosureTopThree(ToolsAndVessels.MEN, WoodFamily.MU),
+            new PhonoSemantic(ToolsAndVessels.MEN, WoodFamily.MU));
 
     /** 间 (jiān) — between. SemiEnclosureTopThree: 门 + 日. */
     public static final ComposedZi JIAN_BETWEEN = new ComposedZi(
@@ -908,8 +908,8 @@ public final class Depth1Strokes7 {
     /** 没 (méi/mò) — not have, sink. LeftRight: 氵 + 殳. */
     public static final ComposedZi MEI_NOT = new ComposedZi(
             uni("\u6CA1"), List.of(py(Initial.M, Head.OPEN, Body.E, Tail.VOWEL_I, Tone.SECOND)),
-            7, 85, "", new LeftRight(SAN_DIAN_SHUI, RadicalComponents.SHU_WEAPON),
-            new PhonoSemantic(SAN_DIAN_SHUI, RadicalComponents.SHU_WEAPON));
+            7, 85, "", new LeftRight(SAN_DIAN_SHUI, RadicalComponents.SHU_LANCE),
+            new PhonoSemantic(SAN_DIAN_SHUI, RadicalComponents.SHU_LANCE));
 
     /** 沈 (shěn) — sink, surname. LeftRight: 氵 + 冘. */
     public static final ComposedZi SHEN_SINK = new ComposedZi(
@@ -938,14 +938,14 @@ public final class Depth1Strokes7 {
     /** 快 (kuài) — fast. LeftRight: 忄 + 夬. */
     public static final ComposedZi KUAI_FAST = new ComposedZi(
             uni("\u5FEB"), List.of(py(Initial.K, Head.U, Body.A, Tail.VOWEL_I, Tone.FOURTH)),
-            7, 61, "", new LeftRight(SHU_XIN_PANG, RadicalComponents.GUAI),
-            new PhonoSemantic(SHU_XIN_PANG, RadicalComponents.GUAI));
+            7, 61, "", new LeftRight(SHU_XIN_PANG, AbstractConcepts.GUAI),
+            new PhonoSemantic(SHU_XIN_PANG, AbstractConcepts.GUAI));
 
     /** 宋 (sòng) — Song dynasty, surname. TopBottom: 宀 + 木. */
     public static final ComposedZi SONG = new ComposedZi(
             uni("\u5B8B"), List.of(py(Initial.S, Head.OPEN, Body.O, Tail.NG, Tone.FOURTH)),
-            7, 40, "", new TopBottom(BAO_GAI_TOU, PlantsAndAgriculture.MU_TREE),
-            new PhonoSemantic(BAO_GAI_TOU, PlantsAndAgriculture.MU_TREE));
+            7, 40, "", new TopBottom(BAO_GAI_TOU, WoodFamily.MU),
+            new PhonoSemantic(BAO_GAI_TOU, WoodFamily.MU));
 
     /** 牢 (láo) — prison, firm. TopBottom: 宀 + 牛. */
     public static final ComposedZi LAO_PRISON = new ComposedZi(
