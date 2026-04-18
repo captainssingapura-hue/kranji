@@ -3,7 +3,7 @@ package kranji.demos;
 import kranji.common.CommonCharacters;
 import kranji.library.BasicSet;
 import kranji.library.LibraryMember;
-import kranji.singular.SingularFamilies;
+import kranji.singular.SingularFamiliesPerclass;
 import kranji.zi.ComposedZi;
 import kranji.zi.SingularBlock;
 import kranji.zi.SingularPart;
@@ -42,7 +42,7 @@ public final class ZiLookup {
     public static void main(String[] args) throws IOException {
         // Bootstrap the library
         BasicSet.INSTANCE.register();
-        SingularFamilies.registerInto(BasicSet.INSTANCE);
+        SingularFamiliesPerclass.registerInto(BasicSet.INSTANCE);
 
         // Build glyph index
         Map<String, String> index = buildIndex();

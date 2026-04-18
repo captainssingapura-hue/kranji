@@ -10,6 +10,11 @@
     </parent>
 
     <artifactId>kranji-core-demos</artifactId>
+
+    <properties>
+        <junit.version>5.10.2</junit.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
@@ -17,6 +22,32 @@
             <version>${project.parent.version}</version>
         </dependency>
 
+        <!-- Per-class singulars: coexists with kranji-singulars (brought in
+             transitively via kranji-common). ZiLookup registers via this
+             sibling so the per-class path gets exercised; BlockLookup's
+             reflective scanning still uses the legacy flat families. -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-singulars-perclass</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
