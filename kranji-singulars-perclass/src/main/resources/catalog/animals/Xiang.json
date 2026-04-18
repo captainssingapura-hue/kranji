@@ -1,0 +1,12 @@
+{
+  "glyph" : "象",
+  "codepoint" : "U+8C61",
+  "name" : "象",
+  "strokes" : 11,
+  "pinyinText" : "xiàng",
+  "pinyin" : [ ],
+  "meaning" : "elephant/image",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

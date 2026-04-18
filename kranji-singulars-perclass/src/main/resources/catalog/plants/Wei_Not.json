@@ -1,0 +1,12 @@
+{
+  "glyph" : "未",
+  "codepoint" : "U+672A",
+  "name" : "未",
+  "strokes" : 5,
+  "pinyinText" : "wèi",
+  "pinyin" : [ ],
+  "meaning" : "not yet",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

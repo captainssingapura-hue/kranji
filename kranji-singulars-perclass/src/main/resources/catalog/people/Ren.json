@@ -1,0 +1,12 @@
+{
+  "glyph" : "人",
+  "codepoint" : "U+4EBA",
+  "name" : "人",
+  "strokes" : 2,
+  "pinyinText" : "rén",
+  "pinyin" : [ ],
+  "meaning" : "person",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

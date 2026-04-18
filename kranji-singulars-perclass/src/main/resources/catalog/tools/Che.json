@@ -1,0 +1,12 @@
+{
+  "glyph" : "车",
+  "codepoint" : "U+8F66",
+  "name" : "车",
+  "strokes" : 4,
+  "pinyinText" : "chē",
+  "pinyin" : [ ],
+  "meaning" : "vehicle",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "乌",
+  "codepoint" : "U+4E4C",
+  "name" : "乌",
+  "strokes" : 4,
+  "pinyinText" : "wū",
+  "pinyin" : [ ],
+  "meaning" : "crow/black",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

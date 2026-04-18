@@ -1,0 +1,12 @@
+{
+  "glyph" : "母",
+  "codepoint" : "U+6BCD",
+  "name" : "母",
+  "strokes" : 5,
+  "pinyinText" : "mǔ",
+  "pinyin" : [ ],
+  "meaning" : "mother",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

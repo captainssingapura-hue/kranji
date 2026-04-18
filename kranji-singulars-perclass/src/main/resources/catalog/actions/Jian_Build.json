@@ -1,0 +1,12 @@
+{
+  "glyph" : "建",
+  "codepoint" : "U+5EFA",
+  "name" : "建",
+  "strokes" : 8,
+  "pinyinText" : "jiàn",
+  "pinyin" : [ ],
+  "meaning" : "build, construct",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

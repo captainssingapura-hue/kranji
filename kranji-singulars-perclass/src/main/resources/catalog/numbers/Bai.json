@@ -1,0 +1,12 @@
+{
+  "glyph" : "百",
+  "codepoint" : "U+767E",
+  "name" : "百",
+  "strokes" : 6,
+  "pinyinText" : "bǎi",
+  "pinyin" : [ ],
+  "meaning" : "hundred",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

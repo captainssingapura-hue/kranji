@@ -1,0 +1,12 @@
+{
+  "glyph" : "世",
+  "codepoint" : "U+4E16",
+  "name" : "世",
+  "strokes" : 5,
+  "pinyinText" : "shì",
+  "pinyin" : [ ],
+  "meaning" : "world, generation",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

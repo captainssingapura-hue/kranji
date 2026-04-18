@@ -1,0 +1,12 @@
+{
+  "glyph" : "自",
+  "codepoint" : "U+81EA",
+  "name" : "自",
+  "strokes" : 6,
+  "pinyinText" : "zì",
+  "pinyin" : [ ],
+  "meaning" : "self/from",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

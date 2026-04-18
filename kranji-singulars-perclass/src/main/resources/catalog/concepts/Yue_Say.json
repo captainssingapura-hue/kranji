@@ -1,0 +1,12 @@
+{
+  "glyph" : "曰",
+  "codepoint" : "U+66F0",
+  "name" : "曰",
+  "strokes" : 4,
+  "pinyinText" : "yuē",
+  "pinyin" : [ ],
+  "meaning" : "say, speak",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

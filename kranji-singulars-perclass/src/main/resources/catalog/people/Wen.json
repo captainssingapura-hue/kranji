@@ -1,0 +1,12 @@
+{
+  "glyph" : "文",
+  "codepoint" : "U+6587",
+  "name" : "文",
+  "strokes" : 4,
+  "pinyinText" : "wén",
+  "pinyin" : [ ],
+  "meaning" : "writing, culture",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "寿",
+  "codepoint" : "U+5BFF",
+  "name" : "寿",
+  "strokes" : 7,
+  "pinyinText" : "shòu",
+  "pinyin" : [ ],
+  "meaning" : "longevity",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

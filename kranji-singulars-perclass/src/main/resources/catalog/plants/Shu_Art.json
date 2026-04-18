@@ -1,0 +1,12 @@
+{
+  "glyph" : "术",
+  "codepoint" : "U+672F",
+  "name" : "术",
+  "strokes" : 5,
+  "pinyinText" : "shù",
+  "pinyin" : [ ],
+  "meaning" : "art, technique",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

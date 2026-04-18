@@ -1,0 +1,12 @@
+{
+  "glyph" : "求",
+  "codepoint" : "U+6C42",
+  "name" : "求",
+  "strokes" : 7,
+  "pinyinText" : "qiú",
+  "pinyin" : [ ],
+  "meaning" : "seek/request",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

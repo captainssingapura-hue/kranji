@@ -1,0 +1,12 @@
+{
+  "glyph" : "束",
+  "codepoint" : "U+675F",
+  "name" : "束",
+  "strokes" : 7,
+  "pinyinText" : "shù",
+  "pinyin" : [ ],
+  "meaning" : "bundle, to bind",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

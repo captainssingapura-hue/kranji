@@ -1,0 +1,12 @@
+{
+  "glyph" : "卷",
+  "codepoint" : "U+5377",
+  "name" : "卷",
+  "strokes" : 8,
+  "pinyinText" : "juǎn",
+  "pinyin" : [ ],
+  "meaning" : "scroll, roll",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

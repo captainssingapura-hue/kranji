@@ -1,0 +1,12 @@
+{
+  "glyph" : "丝",
+  "codepoint" : "U+4E1D",
+  "name" : "丝",
+  "strokes" : 5,
+  "pinyinText" : "sī",
+  "pinyin" : [ ],
+  "meaning" : "silk, thread",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

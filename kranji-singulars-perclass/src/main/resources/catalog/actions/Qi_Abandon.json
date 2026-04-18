@@ -1,0 +1,12 @@
+{
+  "glyph" : "弃",
+  "codepoint" : "U+5F03",
+  "name" : "弃",
+  "strokes" : 7,
+  "pinyinText" : "qì",
+  "pinyin" : [ ],
+  "meaning" : "abandon",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

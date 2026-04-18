@@ -1,0 +1,12 @@
+{
+  "glyph" : "瓦",
+  "codepoint" : "U+74E6",
+  "name" : "瓦",
+  "strokes" : 4,
+  "pinyinText" : "wǎ",
+  "pinyin" : [ ],
+  "meaning" : "tile",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

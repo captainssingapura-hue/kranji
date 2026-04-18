@@ -1,0 +1,12 @@
+{
+  "glyph" : "鱼",
+  "codepoint" : "U+9C7C",
+  "name" : "鱼",
+  "strokes" : 8,
+  "pinyinText" : "yú",
+  "pinyin" : [ ],
+  "meaning" : "fish",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

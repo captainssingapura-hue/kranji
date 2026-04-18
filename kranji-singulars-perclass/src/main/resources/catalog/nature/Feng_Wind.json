@@ -1,0 +1,12 @@
+{
+  "glyph" : "风",
+  "codepoint" : "U+98CE",
+  "name" : "风",
+  "strokes" : 4,
+  "pinyinText" : "fēng",
+  "pinyin" : [ ],
+  "meaning" : "wind",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

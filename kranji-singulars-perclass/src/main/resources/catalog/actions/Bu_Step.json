@@ -1,0 +1,12 @@
+{
+  "glyph" : "步",
+  "codepoint" : "U+6B65",
+  "name" : "步",
+  "strokes" : 7,
+  "pinyinText" : "bù",
+  "pinyin" : [ ],
+  "meaning" : "step, walk",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "弋",
+  "codepoint" : "U+5F0B",
+  "name" : "弋",
+  "strokes" : 3,
+  "pinyinText" : "yì",
+  "pinyin" : [ ],
+  "meaning" : "shoot/stake",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "乡",
+  "codepoint" : "U+4E61",
+  "name" : "乡",
+  "strokes" : 3,
+  "pinyinText" : "xiāng",
+  "pinyin" : [ ],
+  "meaning" : "village/countryside",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

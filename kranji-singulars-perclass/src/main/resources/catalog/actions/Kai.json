@@ -1,0 +1,12 @@
+{
+  "glyph" : "开",
+  "codepoint" : "U+5F00",
+  "name" : "开",
+  "strokes" : 4,
+  "pinyinText" : "kāi",
+  "pinyin" : [ ],
+  "meaning" : "open",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "三",
+  "codepoint" : "U+4E09",
+  "name" : "三",
+  "strokes" : 3,
+  "pinyinText" : "sān",
+  "pinyin" : [ ],
+  "meaning" : "three",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

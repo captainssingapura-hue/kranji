@@ -1,0 +1,12 @@
+{
+  "glyph" : "爪",
+  "codepoint" : "U+722A",
+  "name" : "爪",
+  "strokes" : 4,
+  "pinyinText" : "zhǎo",
+  "pinyin" : [ ],
+  "meaning" : "claw/talon",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

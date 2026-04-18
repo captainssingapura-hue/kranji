@@ -1,0 +1,12 @@
+{
+  "glyph" : "二",
+  "codepoint" : "U+4E8C",
+  "name" : "二",
+  "strokes" : 2,
+  "pinyinText" : "èr",
+  "pinyin" : [ ],
+  "meaning" : "two",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

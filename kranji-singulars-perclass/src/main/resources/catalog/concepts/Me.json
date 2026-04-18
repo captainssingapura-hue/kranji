@@ -1,0 +1,12 @@
+{
+  "glyph" : "么",
+  "codepoint" : "U+4E48",
+  "name" : "么",
+  "strokes" : 3,
+  "pinyinText" : "me",
+  "pinyin" : [ ],
+  "meaning" : "interrogative particle",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

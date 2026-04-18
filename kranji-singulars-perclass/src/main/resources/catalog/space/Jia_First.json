@@ -1,0 +1,12 @@
+{
+  "glyph" : "甲",
+  "codepoint" : "U+7532",
+  "name" : "甲",
+  "strokes" : 5,
+  "pinyinText" : "jiǎ",
+  "pinyin" : [ ],
+  "meaning" : "first/armor",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

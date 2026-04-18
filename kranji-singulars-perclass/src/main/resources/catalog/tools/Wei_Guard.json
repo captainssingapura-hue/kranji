@@ -1,0 +1,12 @@
+{
+  "glyph" : "卫",
+  "codepoint" : "U+536B",
+  "name" : "卫",
+  "strokes" : 3,
+  "pinyinText" : "wèi",
+  "pinyin" : [ ],
+  "meaning" : "guard/defend",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "四",
+  "codepoint" : "U+56DB",
+  "name" : "四",
+  "strokes" : 5,
+  "pinyinText" : "sì",
+  "pinyin" : [ ],
+  "meaning" : "four",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

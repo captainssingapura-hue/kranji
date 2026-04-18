@@ -1,0 +1,12 @@
+{
+  "glyph" : "辰",
+  "codepoint" : "U+8FB0",
+  "name" : "辰",
+  "strokes" : 7,
+  "pinyinText" : "chén",
+  "pinyin" : [ ],
+  "meaning" : "celestial, dragon",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

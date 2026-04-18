@@ -1,0 +1,12 @@
+{
+  "glyph" : "曳",
+  "codepoint" : "U+66F3",
+  "name" : "曳",
+  "strokes" : 6,
+  "pinyinText" : "yè",
+  "pinyin" : [ ],
+  "meaning" : "drag/pull",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

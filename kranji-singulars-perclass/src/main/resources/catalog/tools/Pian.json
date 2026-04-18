@@ -1,0 +1,12 @@
+{
+  "glyph" : "片",
+  "codepoint" : "U+7247",
+  "name" : "片",
+  "strokes" : 4,
+  "pinyinText" : "piàn",
+  "pinyin" : [ ],
+  "meaning" : "slice, piece",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

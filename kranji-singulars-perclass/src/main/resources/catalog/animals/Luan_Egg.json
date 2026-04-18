@@ -1,0 +1,12 @@
+{
+  "glyph" : "卵",
+  "codepoint" : "U+5375",
+  "name" : "卵",
+  "strokes" : 7,
+  "pinyinText" : "luǎn",
+  "pinyin" : [ ],
+  "meaning" : "egg",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

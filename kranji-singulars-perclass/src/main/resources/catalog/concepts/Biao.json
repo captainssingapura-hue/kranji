@@ -1,0 +1,12 @@
+{
+  "glyph" : "表",
+  "codepoint" : "U+8868",
+  "name" : "表",
+  "strokes" : 8,
+  "pinyinText" : "biǎo",
+  "pinyin" : [ ],
+  "meaning" : "surface, express",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

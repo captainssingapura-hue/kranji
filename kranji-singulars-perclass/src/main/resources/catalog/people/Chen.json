@@ -1,0 +1,12 @@
+{
+  "glyph" : "臣",
+  "codepoint" : "U+81E3",
+  "name" : "臣",
+  "strokes" : 6,
+  "pinyinText" : "chén",
+  "pinyin" : [ ],
+  "meaning" : "minister",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

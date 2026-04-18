@@ -1,0 +1,12 @@
+{
+  "glyph" : "发",
+  "codepoint" : "U+53D1",
+  "name" : "发",
+  "strokes" : 5,
+  "pinyinText" : "fā",
+  "pinyin" : [ ],
+  "meaning" : "send, emit",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "专",
+  "codepoint" : "U+4E13",
+  "name" : "专",
+  "strokes" : 4,
+  "pinyinText" : "zhuān",
+  "pinyin" : [ ],
+  "meaning" : "exclusive/special",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "井",
+  "codepoint" : "U+4E95",
+  "name" : "井",
+  "strokes" : 4,
+  "pinyinText" : "jǐng",
+  "pinyin" : [ ],
+  "meaning" : "well",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

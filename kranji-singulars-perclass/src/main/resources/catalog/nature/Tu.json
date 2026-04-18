@@ -1,0 +1,12 @@
+{
+  "glyph" : "土",
+  "codepoint" : "U+571F",
+  "name" : "土",
+  "strokes" : 3,
+  "pinyinText" : "tǔ",
+  "pinyin" : [ ],
+  "meaning" : "earth, soil",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

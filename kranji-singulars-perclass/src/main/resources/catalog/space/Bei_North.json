@@ -1,0 +1,12 @@
+{
+  "glyph" : "北",
+  "codepoint" : "U+5317",
+  "name" : "北",
+  "strokes" : 5,
+  "pinyinText" : "běi",
+  "pinyin" : [ ],
+  "meaning" : "north",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

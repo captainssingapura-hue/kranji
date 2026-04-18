@@ -1,0 +1,12 @@
+{
+  "glyph" : "见",
+  "codepoint" : "U+89C1",
+  "name" : "见",
+  "strokes" : 4,
+  "pinyinText" : "jiàn",
+  "pinyin" : [ ],
+  "meaning" : "see",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

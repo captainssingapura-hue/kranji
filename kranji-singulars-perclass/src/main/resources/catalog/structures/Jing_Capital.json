@@ -1,0 +1,12 @@
+{
+  "glyph" : "京",
+  "codepoint" : "U+4EAC",
+  "name" : "京",
+  "strokes" : 8,
+  "pinyinText" : "jīng",
+  "pinyin" : [ ],
+  "meaning" : "capital (city)",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

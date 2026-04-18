@@ -1,0 +1,12 @@
+{
+  "glyph" : "本",
+  "codepoint" : "U+672C",
+  "name" : "本",
+  "strokes" : 5,
+  "pinyinText" : "běn",
+  "pinyin" : [ ],
+  "meaning" : "root, origin",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

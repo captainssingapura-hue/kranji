@@ -1,0 +1,12 @@
+{
+  "glyph" : "已",
+  "codepoint" : "U+5DF2",
+  "name" : "已",
+  "strokes" : 3,
+  "pinyinText" : "yǐ",
+  "pinyin" : [ ],
+  "meaning" : "already, cease",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "化",
+  "codepoint" : "U+5316",
+  "name" : "化",
+  "strokes" : 4,
+  "pinyinText" : "huà",
+  "pinyin" : [ ],
+  "meaning" : "change, transform",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

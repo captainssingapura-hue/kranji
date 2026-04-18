@@ -1,0 +1,12 @@
+{
+  "glyph" : "兵",
+  "codepoint" : "U+5175",
+  "name" : "兵",
+  "strokes" : 7,
+  "pinyinText" : "bīng",
+  "pinyin" : [ ],
+  "meaning" : "soldier",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

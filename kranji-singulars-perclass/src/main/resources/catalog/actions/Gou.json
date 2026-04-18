@@ -1,0 +1,12 @@
+{
+  "glyph" : "勾",
+  "codepoint" : "U+52FE",
+  "name" : "勾",
+  "strokes" : 4,
+  "pinyinText" : "gōu",
+  "pinyin" : [ ],
+  "meaning" : "hook, tick mark",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

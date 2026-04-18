@@ -1,0 +1,12 @@
+{
+  "glyph" : "夜",
+  "codepoint" : "U+591C",
+  "name" : "夜",
+  "strokes" : 8,
+  "pinyinText" : "yè",
+  "pinyin" : [ ],
+  "meaning" : "night",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

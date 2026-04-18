@@ -1,0 +1,12 @@
+{
+  "glyph" : "穴",
+  "codepoint" : "U+7A74",
+  "name" : "穴",
+  "strokes" : 5,
+  "pinyinText" : "xué",
+  "pinyin" : [ ],
+  "meaning" : "cave, hole",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

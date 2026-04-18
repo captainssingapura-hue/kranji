@@ -1,0 +1,12 @@
+{
+  "glyph" : "券",
+  "codepoint" : "U+5238",
+  "name" : "券",
+  "strokes" : 8,
+  "pinyinText" : "quàn",
+  "pinyin" : [ ],
+  "meaning" : "ticket, voucher",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "目",
+  "codepoint" : "U+76EE",
+  "name" : "目",
+  "strokes" : 5,
+  "pinyinText" : "mù",
+  "pinyin" : [ ],
+  "meaning" : "eye",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

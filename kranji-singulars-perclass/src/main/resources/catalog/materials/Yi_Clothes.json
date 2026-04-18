@@ -1,0 +1,12 @@
+{
+  "glyph" : "衣",
+  "codepoint" : "U+8863",
+  "name" : "衣",
+  "strokes" : 6,
+  "pinyinText" : "yī",
+  "pinyin" : [ ],
+  "meaning" : "clothes",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

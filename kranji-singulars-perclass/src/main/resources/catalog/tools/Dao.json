@@ -1,0 +1,12 @@
+{
+  "glyph" : "刀",
+  "codepoint" : "U+5200",
+  "name" : "刀",
+  "strokes" : 2,
+  "pinyinText" : "dāo",
+  "pinyin" : [ ],
+  "meaning" : "knife",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

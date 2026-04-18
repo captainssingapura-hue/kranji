@@ -1,0 +1,12 @@
+{
+  "glyph" : "刷",
+  "codepoint" : "U+5237",
+  "name" : "刷",
+  "strokes" : 8,
+  "pinyinText" : "shuā",
+  "pinyin" : [ ],
+  "meaning" : "brush, swipe",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

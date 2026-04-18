@@ -1,0 +1,12 @@
+{
+  "glyph" : "声",
+  "codepoint" : "U+58F0",
+  "name" : "声",
+  "strokes" : 7,
+  "pinyinText" : "shēng",
+  "pinyin" : [ ],
+  "meaning" : "sound, voice",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

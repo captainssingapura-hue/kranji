@@ -1,0 +1,12 @@
+{
+  "glyph" : "孟",
+  "codepoint" : "U+5B5F",
+  "name" : "孟",
+  "strokes" : 8,
+  "pinyinText" : "mèng",
+  "pinyin" : [ ],
+  "meaning" : "eldest, first",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

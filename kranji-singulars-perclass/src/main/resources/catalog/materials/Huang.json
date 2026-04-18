@@ -1,0 +1,12 @@
+{
+  "glyph" : "黄",
+  "codepoint" : "U+9EC4",
+  "name" : "黄",
+  "strokes" : 11,
+  "pinyinText" : "huáng",
+  "pinyin" : [ ],
+  "meaning" : "yellow",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

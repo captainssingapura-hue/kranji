@@ -1,0 +1,12 @@
+{
+  "glyph" : "天",
+  "codepoint" : "U+5929",
+  "name" : "天",
+  "strokes" : 4,
+  "pinyinText" : "tiān",
+  "pinyin" : [ ],
+  "meaning" : "sky, heaven",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "广",
+  "codepoint" : "U+5E7F",
+  "name" : "广",
+  "strokes" : 3,
+  "pinyinText" : "guǎng",
+  "pinyin" : [ ],
+  "meaning" : "wide, shelter",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "应",
+  "codepoint" : "U+5E94",
+  "name" : "应",
+  "strokes" : 7,
+  "pinyinText" : "yīng",
+  "pinyin" : [ ],
+  "meaning" : "should, respond",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

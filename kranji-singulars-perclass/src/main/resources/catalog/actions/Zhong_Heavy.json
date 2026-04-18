@@ -1,0 +1,12 @@
+{
+  "glyph" : "重",
+  "codepoint" : "U+91CD",
+  "name" : "重",
+  "strokes" : 9,
+  "pinyinText" : "zhòng",
+  "pinyin" : [ ],
+  "meaning" : "heavy/repeat",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

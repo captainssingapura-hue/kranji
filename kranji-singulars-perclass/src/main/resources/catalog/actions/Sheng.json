@@ -1,0 +1,12 @@
+{
+  "glyph" : "生",
+  "codepoint" : "U+751F",
+  "name" : "生",
+  "strokes" : 5,
+  "pinyinText" : "shēng",
+  "pinyin" : [ ],
+  "meaning" : "life, birth",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "门",
+  "codepoint" : "U+95E8",
+  "name" : "门",
+  "strokes" : 3,
+  "pinyinText" : "mén",
+  "pinyin" : [ ],
+  "meaning" : "gate, door",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

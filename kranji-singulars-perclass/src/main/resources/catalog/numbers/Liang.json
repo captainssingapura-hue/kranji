@@ -1,0 +1,12 @@
+{
+  "glyph" : "两",
+  "codepoint" : "U+4E24",
+  "name" : "两",
+  "strokes" : 7,
+  "pinyinText" : "liǎng",
+  "pinyin" : [ ],
+  "meaning" : "two, both",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

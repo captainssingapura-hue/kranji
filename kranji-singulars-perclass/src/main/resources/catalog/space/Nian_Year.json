@@ -1,0 +1,12 @@
+{
+  "glyph" : "年",
+  "codepoint" : "U+5E74",
+  "name" : "年",
+  "strokes" : 6,
+  "pinyinText" : "nián",
+  "pinyin" : [ ],
+  "meaning" : "year",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

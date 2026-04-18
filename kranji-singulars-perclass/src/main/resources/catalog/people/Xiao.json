@@ -1,0 +1,12 @@
+{
+  "glyph" : "小",
+  "codepoint" : "U+5C0F",
+  "name" : "小",
+  "strokes" : 3,
+  "pinyinText" : "xiǎo",
+  "pinyin" : [ ],
+  "meaning" : "small",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

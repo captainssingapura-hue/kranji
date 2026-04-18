@@ -1,0 +1,12 @@
+{
+  "glyph" : "变",
+  "codepoint" : "U+53D8",
+  "name" : "变",
+  "strokes" : 8,
+  "pinyinText" : "biàn",
+  "pinyin" : [ ],
+  "meaning" : "change, transform",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

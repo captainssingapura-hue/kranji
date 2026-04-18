@@ -1,0 +1,12 @@
+{
+  "glyph" : "尺",
+  "codepoint" : "U+5C3A",
+  "name" : "尺",
+  "strokes" : 4,
+  "pinyinText" : "chǐ",
+  "pinyin" : [ ],
+  "meaning" : "ruler, foot",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

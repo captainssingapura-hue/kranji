@@ -1,0 +1,12 @@
+{
+  "glyph" : "采",
+  "codepoint" : "U+91C7",
+  "name" : "采",
+  "strokes" : 8,
+  "pinyinText" : "cǎi",
+  "pinyin" : [ ],
+  "meaning" : "gather, pick",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

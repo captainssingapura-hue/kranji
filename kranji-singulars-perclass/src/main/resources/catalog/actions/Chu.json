@@ -1,0 +1,12 @@
+{
+  "glyph" : "出",
+  "codepoint" : "U+51FA",
+  "name" : "出",
+  "strokes" : 5,
+  "pinyinText" : "chū",
+  "pinyin" : [ ],
+  "meaning" : "go out",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

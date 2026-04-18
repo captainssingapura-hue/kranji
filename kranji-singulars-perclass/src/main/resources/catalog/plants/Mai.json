@@ -1,0 +1,12 @@
+{
+  "glyph" : "麦",
+  "codepoint" : "U+9EA6",
+  "name" : "麦",
+  "strokes" : 7,
+  "pinyinText" : "mài",
+  "pinyin" : [ ],
+  "meaning" : "wheat",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

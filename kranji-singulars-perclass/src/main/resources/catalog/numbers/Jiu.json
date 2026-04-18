@@ -1,0 +1,12 @@
+{
+  "glyph" : "九",
+  "codepoint" : "U+4E5D",
+  "name" : "九",
+  "strokes" : 2,
+  "pinyinText" : "jiǔ",
+  "pinyin" : [ ],
+  "meaning" : "nine",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

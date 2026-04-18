@@ -1,0 +1,12 @@
+{
+  "glyph" : "串",
+  "codepoint" : "U+4E32",
+  "name" : "串",
+  "strokes" : 7,
+  "pinyinText" : "chuàn",
+  "pinyin" : [ ],
+  "meaning" : "string together",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "金",
+  "codepoint" : "U+91D1",
+  "name" : "金",
+  "strokes" : 8,
+  "pinyinText" : "jīn",
+  "pinyin" : [ ],
+  "meaning" : "gold, metal",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

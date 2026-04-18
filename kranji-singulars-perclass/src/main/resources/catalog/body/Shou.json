@@ -1,0 +1,12 @@
+{
+  "glyph" : "手",
+  "codepoint" : "U+624B",
+  "name" : "手",
+  "strokes" : 4,
+  "pinyinText" : "shǒu",
+  "pinyin" : [ ],
+  "meaning" : "hand",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "台",
+  "codepoint" : "U+53F0",
+  "name" : "台",
+  "strokes" : 5,
+  "pinyinText" : "tái",
+  "pinyin" : [ ],
+  "meaning" : "platform",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

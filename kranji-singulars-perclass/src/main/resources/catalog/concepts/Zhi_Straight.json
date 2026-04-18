@@ -1,0 +1,12 @@
+{
+  "glyph" : "直",
+  "codepoint" : "U+76F4",
+  "name" : "直",
+  "strokes" : 8,
+  "pinyinText" : "zhí",
+  "pinyin" : [ ],
+  "meaning" : "straight",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

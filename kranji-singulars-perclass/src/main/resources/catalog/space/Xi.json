@@ -1,0 +1,12 @@
+{
+  "glyph" : "西",
+  "codepoint" : "U+897F",
+  "name" : "西",
+  "strokes" : 6,
+  "pinyinText" : "xī",
+  "pinyin" : [ ],
+  "meaning" : "west",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

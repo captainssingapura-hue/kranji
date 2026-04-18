@@ -1,0 +1,12 @@
+{
+  "glyph" : "周",
+  "codepoint" : "U+5468",
+  "name" : "周",
+  "strokes" : 8,
+  "pinyinText" : "zhōu",
+  "pinyin" : [ ],
+  "meaning" : "cycle, week",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

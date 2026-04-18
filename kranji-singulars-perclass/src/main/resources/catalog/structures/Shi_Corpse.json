@@ -1,0 +1,12 @@
+{
+  "glyph" : "尸",
+  "codepoint" : "U+5C38",
+  "name" : "尸",
+  "strokes" : 3,
+  "pinyinText" : "shī",
+  "pinyin" : [ ],
+  "meaning" : "body, corpse",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "大",
+  "codepoint" : "U+5927",
+  "name" : "大",
+  "strokes" : 3,
+  "pinyinText" : "dà",
+  "pinyin" : [ ],
+  "meaning" : "big, great",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

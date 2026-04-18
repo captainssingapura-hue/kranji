@@ -1,0 +1,12 @@
+{
+  "glyph" : "飞",
+  "codepoint" : "U+98DE",
+  "name" : "飞",
+  "strokes" : 3,
+  "pinyinText" : "fēi",
+  "pinyin" : [ ],
+  "meaning" : "fly",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "交",
+  "codepoint" : "U+4EA4",
+  "name" : "交",
+  "strokes" : 6,
+  "pinyinText" : "jiāo",
+  "pinyin" : [ ],
+  "meaning" : "exchange, cross",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

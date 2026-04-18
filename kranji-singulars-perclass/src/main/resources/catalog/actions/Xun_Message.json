@@ -1,0 +1,12 @@
+{
+  "glyph" : "讯",
+  "codepoint" : "U+8BAF",
+  "name" : "讯",
+  "strokes" : 5,
+  "pinyinText" : "xùn",
+  "pinyin" : [ ],
+  "meaning" : "message, interrogate",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

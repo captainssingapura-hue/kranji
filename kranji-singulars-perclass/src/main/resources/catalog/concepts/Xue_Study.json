@@ -1,0 +1,12 @@
+{
+  "glyph" : "学",
+  "codepoint" : "U+5B66",
+  "name" : "学",
+  "strokes" : 8,
+  "pinyinText" : "xué",
+  "pinyin" : [ ],
+  "meaning" : "study, learn",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

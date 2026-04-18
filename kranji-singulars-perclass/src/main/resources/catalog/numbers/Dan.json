@@ -1,0 +1,12 @@
+{
+  "glyph" : "单",
+  "codepoint" : "U+5355",
+  "name" : "单",
+  "strokes" : 8,
+  "pinyinText" : "dān",
+  "pinyin" : [ ],
+  "meaning" : "single, simple",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

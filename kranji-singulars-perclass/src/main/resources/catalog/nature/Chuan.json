@@ -1,0 +1,12 @@
+{
+  "glyph" : "川",
+  "codepoint" : "U+5DDD",
+  "name" : "川",
+  "strokes" : 3,
+  "pinyinText" : "chuān",
+  "pinyin" : [ ],
+  "meaning" : "river",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

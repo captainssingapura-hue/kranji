@@ -1,0 +1,12 @@
+{
+  "glyph" : "舟",
+  "codepoint" : "U+821F",
+  "name" : "舟",
+  "strokes" : 6,
+  "pinyinText" : "zhōu",
+  "pinyin" : [ ],
+  "meaning" : "boat",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

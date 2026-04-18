@@ -1,0 +1,12 @@
+{
+  "glyph" : "支",
+  "codepoint" : "U+652F",
+  "name" : "支",
+  "strokes" : 4,
+  "pinyinText" : "zhī",
+  "pinyin" : [ ],
+  "meaning" : "branch, support",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

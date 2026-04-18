@@ -1,0 +1,12 @@
+{
+  "glyph" : "止",
+  "codepoint" : "U+6B62",
+  "name" : "止",
+  "strokes" : 4,
+  "pinyinText" : "zhǐ",
+  "pinyin" : [ ],
+  "meaning" : "stop",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "州",
+  "codepoint" : "U+5DDE",
+  "name" : "州",
+  "strokes" : 6,
+  "pinyinText" : "zhōu",
+  "pinyin" : [ ],
+  "meaning" : "state, prefecture",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

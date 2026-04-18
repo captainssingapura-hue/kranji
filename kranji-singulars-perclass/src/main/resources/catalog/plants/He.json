@@ -1,0 +1,12 @@
+{
+  "glyph" : "禾",
+  "codepoint" : "U+79BE",
+  "name" : "禾",
+  "strokes" : 5,
+  "pinyinText" : "hé",
+  "pinyin" : [ ],
+  "meaning" : "grain, cereal",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

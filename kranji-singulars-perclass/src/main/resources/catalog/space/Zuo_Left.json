@@ -1,0 +1,12 @@
+{
+  "glyph" : "左",
+  "codepoint" : "U+5DE6",
+  "name" : "左",
+  "strokes" : 5,
+  "pinyinText" : "zuǒ",
+  "pinyin" : [ ],
+  "meaning" : "left",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

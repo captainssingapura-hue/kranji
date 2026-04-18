@@ -1,0 +1,12 @@
+{
+  "glyph" : "归",
+  "codepoint" : "U+5F52",
+  "name" : "归",
+  "strokes" : 5,
+  "pinyinText" : "guī",
+  "pinyin" : [ ],
+  "meaning" : "return",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

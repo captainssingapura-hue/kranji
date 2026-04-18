@@ -1,0 +1,12 @@
+{
+  "glyph" : "身",
+  "codepoint" : "U+8EAB",
+  "name" : "身",
+  "strokes" : 7,
+  "pinyinText" : "shēn",
+  "pinyin" : [ ],
+  "meaning" : "body",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

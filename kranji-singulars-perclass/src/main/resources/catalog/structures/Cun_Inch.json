@@ -1,0 +1,12 @@
+{
+  "glyph" : "寸",
+  "codepoint" : "U+5BF8",
+  "name" : "寸",
+  "strokes" : 3,
+  "pinyinText" : "cùn",
+  "pinyin" : [ ],
+  "meaning" : "inch",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

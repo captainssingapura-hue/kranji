@@ -1,0 +1,12 @@
+{
+  "glyph" : "乎",
+  "codepoint" : "U+4E4E",
+  "name" : "乎",
+  "strokes" : 5,
+  "pinyinText" : "hū",
+  "pinyin" : [ ],
+  "meaning" : "question particle",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

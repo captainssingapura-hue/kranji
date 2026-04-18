@@ -1,0 +1,12 @@
+{
+  "glyph" : "上",
+  "codepoint" : "U+4E0A",
+  "name" : "上",
+  "strokes" : 3,
+  "pinyinText" : "shàng",
+  "pinyin" : [ ],
+  "meaning" : "above, up",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

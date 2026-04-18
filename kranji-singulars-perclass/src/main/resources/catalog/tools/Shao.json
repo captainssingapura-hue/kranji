@@ -1,0 +1,12 @@
+{
+  "glyph" : "勺",
+  "codepoint" : "U+52FA",
+  "name" : "勺",
+  "strokes" : 3,
+  "pinyinText" : "sháo",
+  "pinyin" : [ ],
+  "meaning" : "spoon, ladle",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

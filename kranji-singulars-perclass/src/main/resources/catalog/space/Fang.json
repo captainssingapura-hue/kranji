@@ -1,0 +1,12 @@
+{
+  "glyph" : "方",
+  "codepoint" : "U+65B9",
+  "name" : "方",
+  "strokes" : 4,
+  "pinyinText" : "fāng",
+  "pinyin" : [ ],
+  "meaning" : "direction, square",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

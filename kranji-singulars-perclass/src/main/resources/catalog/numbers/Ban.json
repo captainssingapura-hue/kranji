@@ -1,0 +1,12 @@
+{
+  "glyph" : "半",
+  "codepoint" : "U+534A",
+  "name" : "半",
+  "strokes" : 5,
+  "pinyinText" : "bàn",
+  "pinyin" : [ ],
+  "meaning" : "half",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

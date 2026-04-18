@@ -1,0 +1,12 @@
+{
+  "glyph" : "个",
+  "codepoint" : "U+4E2A",
+  "name" : "个",
+  "strokes" : 3,
+  "pinyinText" : "gè",
+  "pinyin" : [ ],
+  "meaning" : "measure word",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

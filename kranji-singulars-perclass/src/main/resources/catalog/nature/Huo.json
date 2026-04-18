@@ -1,0 +1,12 @@
+{
+  "glyph" : "火",
+  "codepoint" : "U+706B",
+  "name" : "火",
+  "strokes" : 4,
+  "pinyinText" : "huǒ",
+  "pinyin" : [ ],
+  "meaning" : "fire",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

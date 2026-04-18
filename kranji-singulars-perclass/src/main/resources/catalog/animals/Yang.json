@@ -1,0 +1,12 @@
+{
+  "glyph" : "羊",
+  "codepoint" : "U+7F8A",
+  "name" : "羊",
+  "strokes" : 6,
+  "pinyinText" : "yáng",
+  "pinyin" : [ ],
+  "meaning" : "sheep",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

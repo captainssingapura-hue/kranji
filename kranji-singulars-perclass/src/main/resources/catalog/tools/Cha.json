@@ -1,0 +1,12 @@
+{
+  "glyph" : "叉",
+  "codepoint" : "U+53C9",
+  "name" : "叉",
+  "strokes" : 3,
+  "pinyinText" : "chā",
+  "pinyin" : [ ],
+  "meaning" : "fork/cross",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

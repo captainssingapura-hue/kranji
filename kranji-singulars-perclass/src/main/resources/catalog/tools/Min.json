@@ -1,0 +1,12 @@
+{
+  "glyph" : "皿",
+  "codepoint" : "U+76BF",
+  "name" : "皿",
+  "strokes" : 5,
+  "pinyinText" : "mǐn",
+  "pinyin" : [ ],
+  "meaning" : "dish, vessel",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

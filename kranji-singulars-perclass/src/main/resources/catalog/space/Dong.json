@@ -1,0 +1,12 @@
+{
+  "glyph" : "东",
+  "codepoint" : "U+4E1C",
+  "name" : "东",
+  "strokes" : 5,
+  "pinyinText" : "dōng",
+  "pinyin" : [ ],
+  "meaning" : "east",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

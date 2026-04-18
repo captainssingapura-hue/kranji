@@ -1,0 +1,12 @@
+{
+  "glyph" : "十",
+  "codepoint" : "U+5341",
+  "name" : "十",
+  "strokes" : 2,
+  "pinyinText" : "shí",
+  "pinyin" : [ ],
+  "meaning" : "ten",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

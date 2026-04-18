@@ -1,0 +1,12 @@
+{
+  "glyph" : "武",
+  "codepoint" : "U+6B66",
+  "name" : "武",
+  "strokes" : 8,
+  "pinyinText" : "wǔ",
+  "pinyin" : [ ],
+  "meaning" : "martial, military",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

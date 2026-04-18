@@ -1,0 +1,12 @@
+{
+  "glyph" : "王",
+  "codepoint" : "U+738B",
+  "name" : "王",
+  "strokes" : 4,
+  "pinyinText" : "wáng",
+  "pinyin" : [ ],
+  "meaning" : "king",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

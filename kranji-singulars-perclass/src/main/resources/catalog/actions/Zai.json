@@ -1,0 +1,12 @@
+{
+  "glyph" : "再",
+  "codepoint" : "U+518D",
+  "name" : "再",
+  "strokes" : 6,
+  "pinyinText" : "zài",
+  "pinyin" : [ ],
+  "meaning" : "again",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

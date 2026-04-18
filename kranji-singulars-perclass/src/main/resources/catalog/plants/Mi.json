@@ -1,0 +1,12 @@
+{
+  "glyph" : "米",
+  "codepoint" : "U+7C73",
+  "name" : "米",
+  "strokes" : 6,
+  "pinyinText" : "mǐ",
+  "pinyin" : [ ],
+  "meaning" : "rice",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

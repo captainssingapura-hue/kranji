@@ -1,0 +1,12 @@
+{
+  "glyph" : "仓",
+  "codepoint" : "U+4ED3",
+  "name" : "仓",
+  "strokes" : 4,
+  "pinyinText" : "cāng",
+  "pinyin" : [ ],
+  "meaning" : "warehouse, granary",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "矢",
+  "codepoint" : "U+77E2",
+  "name" : "矢",
+  "strokes" : 5,
+  "pinyinText" : "shǐ",
+  "pinyin" : [ ],
+  "meaning" : "arrow",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

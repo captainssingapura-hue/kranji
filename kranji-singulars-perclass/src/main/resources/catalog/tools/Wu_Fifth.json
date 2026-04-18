@@ -1,0 +1,12 @@
+{
+  "glyph" : "戊",
+  "codepoint" : "U+620A",
+  "name" : "戊",
+  "strokes" : 5,
+  "pinyinText" : "wù",
+  "pinyin" : [ ],
+  "meaning" : "fifth Heavenly Stem",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

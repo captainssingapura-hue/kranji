@@ -1,0 +1,12 @@
+{
+  "glyph" : "士",
+  "codepoint" : "U+58EB",
+  "name" : "士",
+  "strokes" : 3,
+  "pinyinText" : "shì",
+  "pinyin" : [ ],
+  "meaning" : "scholar",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

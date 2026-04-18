@@ -1,0 +1,12 @@
+{
+  "glyph" : "食",
+  "codepoint" : "U+98DF",
+  "name" : "食",
+  "strokes" : 9,
+  "pinyinText" : "shí",
+  "pinyin" : [ ],
+  "meaning" : "eat, food",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

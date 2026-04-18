@@ -1,0 +1,12 @@
+{
+  "glyph" : "今",
+  "codepoint" : "U+4ECA",
+  "name" : "今",
+  "strokes" : 4,
+  "pinyinText" : "jīn",
+  "pinyin" : [ ],
+  "meaning" : "today, now",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

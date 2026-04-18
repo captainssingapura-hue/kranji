@@ -1,0 +1,12 @@
+{
+  "glyph" : "弟",
+  "codepoint" : "U+5F1F",
+  "name" : "弟",
+  "strokes" : 7,
+  "pinyinText" : "dì",
+  "pinyin" : [ ],
+  "meaning" : "younger brother",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

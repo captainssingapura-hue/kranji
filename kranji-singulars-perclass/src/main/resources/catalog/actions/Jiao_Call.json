@@ -1,0 +1,12 @@
+{
+  "glyph" : "叫",
+  "codepoint" : "U+53EB",
+  "name" : "叫",
+  "strokes" : 5,
+  "pinyinText" : "jiào",
+  "pinyin" : [ ],
+  "meaning" : "call, shout",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

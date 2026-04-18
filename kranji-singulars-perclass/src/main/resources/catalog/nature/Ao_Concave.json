@@ -1,0 +1,12 @@
+{
+  "glyph" : "凹",
+  "codepoint" : "U+51F9",
+  "name" : "凹",
+  "strokes" : 5,
+  "pinyinText" : "āo",
+  "pinyin" : [ ],
+  "meaning" : "concave, hollow",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "勿",
+  "codepoint" : "U+52FF",
+  "name" : "勿",
+  "strokes" : 4,
+  "pinyinText" : "wù",
+  "pinyin" : [ ],
+  "meaning" : "do not",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

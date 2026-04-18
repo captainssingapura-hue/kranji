@@ -1,0 +1,12 @@
+{
+  "glyph" : "豆",
+  "codepoint" : "U+8C46",
+  "name" : "豆",
+  "strokes" : 7,
+  "pinyinText" : "dòu",
+  "pinyin" : [ ],
+  "meaning" : "bean",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

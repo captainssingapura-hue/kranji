@@ -1,0 +1,12 @@
+{
+  "glyph" : "龟",
+  "codepoint" : "U+9F9F",
+  "name" : "龟",
+  "strokes" : 7,
+  "pinyinText" : "guī",
+  "pinyin" : [ ],
+  "meaning" : "turtle",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}
