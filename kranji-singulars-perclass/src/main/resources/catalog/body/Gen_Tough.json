@@ -4,7 +4,7 @@
   "name" : "艮",
   "strokes" : 6,
   "pinyinText" : "gèn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "tough/blunt (trigram)",
   "etymology" : {
     "kind" : "pictograph"

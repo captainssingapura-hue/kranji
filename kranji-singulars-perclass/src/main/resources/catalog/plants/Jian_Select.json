@@ -4,7 +4,7 @@
   "name" : "柬",
   "strokes" : 9,
   "pinyinText" : "jiǎn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "select, letter",
   "etymology" : {
     "kind" : "pictograph"

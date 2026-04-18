@@ -4,7 +4,7 @@
   "name" : "山",
   "strokes" : 3,
   "pinyinText" : "shān",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "mountain",
   "etymology" : {
     "kind" : "pictograph"

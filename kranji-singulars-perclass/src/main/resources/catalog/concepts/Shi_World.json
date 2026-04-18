@@ -4,7 +4,7 @@
   "name" : "世",
   "strokes" : 5,
   "pinyinText" : "shì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "world, generation",
   "etymology" : {
     "kind" : "pictograph"

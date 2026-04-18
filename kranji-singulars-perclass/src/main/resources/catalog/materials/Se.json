@@ -4,7 +4,7 @@
   "name" : "色",
   "strokes" : 6,
   "pinyinText" : "sè",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "color",
   "etymology" : {
     "kind" : "pictograph"

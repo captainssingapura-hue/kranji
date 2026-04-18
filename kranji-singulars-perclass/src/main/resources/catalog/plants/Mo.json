@@ -4,7 +4,7 @@
   "name" : "末",
   "strokes" : 5,
   "pinyinText" : "mò",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "end, tip",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "册",
   "strokes" : 5,
   "pinyinText" : "cè",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "book/volume",
   "etymology" : {
     "kind" : "pictograph"

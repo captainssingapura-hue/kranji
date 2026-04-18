@@ -4,7 +4,7 @@
   "name" : "汇",
   "strokes" : 5,
   "pinyinText" : "huì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "converge, collect",
   "etymology" : {
     "kind" : "pictograph"

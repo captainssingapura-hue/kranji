@@ -4,7 +4,7 @@
   "name" : "肉",
   "strokes" : 6,
   "pinyinText" : "ròu",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "meat, flesh",
   "etymology" : {
     "kind" : "pictograph"

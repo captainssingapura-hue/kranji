@@ -4,7 +4,7 @@
   "name" : "飞",
   "strokes" : 3,
   "pinyinText" : "fēi",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "fly",
   "etymology" : {
     "kind" : "pictograph"

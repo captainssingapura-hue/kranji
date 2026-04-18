@@ -4,7 +4,7 @@
   "name" : "斗",
   "strokes" : 4,
   "pinyinText" : "dǒu",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "dipper, measure",
   "etymology" : {
     "kind" : "pictograph"

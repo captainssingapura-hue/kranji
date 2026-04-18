@@ -4,7 +4,7 @@
   "name" : "豸",
   "strokes" : 7,
   "pinyinText" : "zhì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "legless insect/beast",
   "etymology" : {
     "kind" : "pictograph"

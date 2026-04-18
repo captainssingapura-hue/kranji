@@ -4,7 +4,7 @@
   "name" : "术",
   "strokes" : 5,
   "pinyinText" : "shù",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "art, technique",
   "etymology" : {
     "kind" : "pictograph"

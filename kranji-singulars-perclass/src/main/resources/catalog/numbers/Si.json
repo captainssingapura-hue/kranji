@@ -4,7 +4,7 @@
   "name" : "四",
   "strokes" : 5,
   "pinyinText" : "sì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "four",
   "etymology" : {
     "kind" : "pictograph"

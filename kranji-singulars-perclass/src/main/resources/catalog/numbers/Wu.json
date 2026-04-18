@@ -4,7 +4,7 @@
   "name" : "五",
   "strokes" : 4,
   "pinyinText" : "wǔ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "five",
   "etymology" : {
     "kind" : "pictograph"

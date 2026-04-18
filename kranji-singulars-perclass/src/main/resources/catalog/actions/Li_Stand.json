@@ -4,7 +4,7 @@
   "name" : "立",
   "strokes" : 5,
   "pinyinText" : "lì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "stand",
   "etymology" : {
     "kind" : "pictograph"

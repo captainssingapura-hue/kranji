@@ -4,7 +4,7 @@
   "name" : "身",
   "strokes" : 7,
   "pinyinText" : "shēn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "body",
   "etymology" : {
     "kind" : "pictograph"

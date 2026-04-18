@@ -4,7 +4,7 @@
   "name" : "母",
   "strokes" : 5,
   "pinyinText" : "mǔ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "mother",
   "etymology" : {
     "kind" : "pictograph"

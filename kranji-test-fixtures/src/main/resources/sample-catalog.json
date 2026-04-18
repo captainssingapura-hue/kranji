@@ -7,7 +7,7 @@
       "strokes": 4,
       "radicalNo": 72,
       "pinyinText": "rì",
-      "pinyin": [{"initial":"r","final":"i","tone":4}],
+      "pinyin": {"initial":"r","final":"i","tone":4},
       "meaning": "sun",
       "etymology": {"kind":"pictograph"}
     },
@@ -17,7 +17,7 @@
       "strokes": 4,
       "radicalNo": 74,
       "pinyinText": "yuè",
-      "pinyin": [{"initial":"","final":"üe","tone":4}],
+      "pinyin": {"initial":"","final":"üe","tone":4},
       "meaning": "moon",
       "etymology": {"kind":"pictograph"}
     },
@@ -27,7 +27,7 @@
       "strokes": 4,
       "radicalNo": 75,
       "pinyinText": "mù",
-      "pinyin": [{"initial":"m","final":"u","tone":4}],
+      "pinyin": {"initial":"m","final":"u","tone":4},
       "meaning": "wood",
       "etymology": {"kind":"pictograph"}
     },
@@ -37,7 +37,7 @@
       "strokes": 4,
       "radicalNo": 85,
       "pinyinText": "shuǐ",
-      "pinyin": [{"initial":"sh","final":"uei","tone":3}],
+      "pinyin": {"initial":"sh","final":"uei","tone":3},
       "meaning": "water",
       "etymology": {"kind":"pictograph"}
     },
@@ -47,7 +47,7 @@
       "strokes": 8,
       "radicalNo": 174,
       "pinyinText": "qīng",
-      "pinyin": [{"initial":"q","final":"ing","tone":1}],
+      "pinyin": {"initial":"q","final":"ing","tone":1},
       "meaning": "green/blue",
       "etymology": {"kind":"pictograph"}
     }
@@ -68,7 +68,7 @@
       "ziCharForm": "literal",
       "strokes": 8,
       "radicalNo": 72,
-      "pinyin": [{"initial":"m","final":"ing","tone":2}],
+      "pinyin": {"initial":"m","final":"ing","tone":2},
       "meaning": "bright",
       "composition": {
         "style": "left_right",
@@ -81,7 +81,7 @@
       "ziCharForm": "literal",
       "strokes": 11,
       "radicalNo": 85,
-      "pinyin": [{"initial":"q","final":"ing","tone":1}],
+      "pinyin": {"initial":"q","final":"ing","tone":1},
       "meaning": "clear",
       "composition": {
         "style": "left_right",
@@ -94,7 +94,7 @@
       "ziCharForm": "literal",
       "strokes": 8,
       "radicalNo": 75,
-      "pinyin": [{"initial":"l","final":"in","tone":2}],
+      "pinyin": {"initial":"l","final":"in","tone":2},
       "meaning": "forest",
       "composition": {
         "style": "left_right",
@@ -107,7 +107,7 @@
       "ziCharForm": "literal",
       "strokes": 12,
       "radicalNo": 75,
-      "pinyin": [{"initial":"s","final":"en","tone":1}],
+      "pinyin": {"initial":"s","final":"en","tone":1},
       "meaning": "dense forest",
       "composition": {
         "style": "top_bottom",
@@ -126,7 +126,7 @@
       "ziCharForm": "literal",
       "strokes": 12,
       "radicalNo": 72,
-      "pinyin": [{"initial":"q","final":"ing","tone":2}],
+      "pinyin": {"initial":"q","final":"ing","tone":2},
       "meaning": "sunny",
       "composition": {
         "style": "left_right",

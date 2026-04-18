@@ -4,7 +4,7 @@
   "name" : "与",
   "strokes" : 3,
   "pinyinText" : "yǔ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "give/participate",
   "etymology" : {
     "kind" : "pictograph"

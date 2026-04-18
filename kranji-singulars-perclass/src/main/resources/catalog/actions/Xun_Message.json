@@ -4,7 +4,7 @@
   "name" : "讯",
   "strokes" : 5,
   "pinyinText" : "xùn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "message, interrogate",
   "etymology" : {
     "kind" : "pictograph"

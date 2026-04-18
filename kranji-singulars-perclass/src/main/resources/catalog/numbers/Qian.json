@@ -4,7 +4,7 @@
   "name" : "千",
   "strokes" : 3,
   "pinyinText" : "qiān",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "thousand",
   "etymology" : {
     "kind" : "pictograph"

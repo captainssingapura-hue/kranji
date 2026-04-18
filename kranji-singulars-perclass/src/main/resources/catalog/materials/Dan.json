@@ -4,7 +4,7 @@
   "name" : "丹",
   "strokes" : 4,
   "pinyinText" : "dān",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "vermillion, cinnabar",
   "etymology" : {
     "kind" : "pictograph"

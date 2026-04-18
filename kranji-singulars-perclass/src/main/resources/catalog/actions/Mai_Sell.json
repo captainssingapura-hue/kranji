@@ -4,7 +4,7 @@
   "name" : "卖",
   "strokes" : 8,
   "pinyinText" : "mài",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "sell",
   "etymology" : {
     "kind" : "pictograph"

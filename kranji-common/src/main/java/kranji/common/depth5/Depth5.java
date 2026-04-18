@@ -56,7 +56,7 @@ public final class Depth5 {
      */
     public static final ComposedZi BIANG = new ComposedZi(
             lit("𰻝"),
-            List.of(py(Initial.B, Head.I, Body.A, Tail.NG, Tone.SECOND)),
+            py(Initial.B, Head.I, Body.A, Tail.NG, Tone.SECOND),
             58, 162, "",
             new SemiEnclosureBottomLeft(
                     ZOU_ZHI_DI,                                     // 辶 — walk radical

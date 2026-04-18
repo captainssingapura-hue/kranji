@@ -4,7 +4,7 @@
   "name" : "丧",
   "strokes" : 8,
   "pinyinText" : "sàng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "mourn, funeral",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "屯",
   "strokes" : 4,
   "pinyinText" : "tún",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "village, station",
   "etymology" : {
     "kind" : "pictograph"

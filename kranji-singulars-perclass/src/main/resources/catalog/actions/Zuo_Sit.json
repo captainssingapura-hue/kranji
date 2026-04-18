@@ -4,7 +4,7 @@
   "name" : "坐",
   "strokes" : 7,
   "pinyinText" : "zuò",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "sit",
   "etymology" : {
     "kind" : "pictograph"

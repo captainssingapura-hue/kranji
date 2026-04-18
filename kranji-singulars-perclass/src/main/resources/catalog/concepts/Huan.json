@@ -4,7 +4,7 @@
   "name" : "幻",
   "strokes" : 4,
   "pinyinText" : "huàn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "illusion, fantasy",
   "etymology" : {
     "kind" : "pictograph"

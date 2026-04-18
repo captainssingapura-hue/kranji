@@ -4,7 +4,7 @@
   "name" : "天",
   "strokes" : 4,
   "pinyinText" : "tiān",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "sky, heaven",
   "etymology" : {
     "kind" : "pictograph"

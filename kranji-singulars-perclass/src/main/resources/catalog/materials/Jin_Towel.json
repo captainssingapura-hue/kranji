@@ -4,7 +4,7 @@
   "name" : "巾",
   "strokes" : 3,
   "pinyinText" : "jīn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "towel, cloth",
   "etymology" : {
     "kind" : "pictograph"

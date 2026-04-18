@@ -4,7 +4,7 @@
   "name" : "定",
   "strokes" : 8,
   "pinyinText" : "dìng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "decide, fixed",
   "etymology" : {
     "kind" : "pictograph"

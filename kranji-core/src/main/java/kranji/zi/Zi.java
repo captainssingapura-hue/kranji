@@ -3,8 +3,6 @@ package kranji.zi;
 import kranji.classification.EtymologicalCategory;
 import kranji.pinyin.PinyinSyllable;
 
-import java.util.List;
-
 /**
  * 字 — The semantic identity of a Chinese character.
  *
@@ -30,8 +28,16 @@ public interface Zi {
         return "U+" + String.format("%04X", character().codePointAt(0));
     }
 
-    /** Mandarin reading(s). */
-    List<PinyinSyllable> pinyin();
+    /**
+     * The Mandarin reading — a single fully-decomposed syllable.
+     *
+     * <p>One Chinese character carries exactly one syllable, so the typed
+     * form here is a single {@link PinyinSyllable} rather than a list.
+     * Round-trip conversion with the display-form string lives on that
+     * type via {@link PinyinSyllable#parse(String)} and
+     * {@link PinyinSyllable#toDiacritic()}.</p>
+     */
+    PinyinSyllable pinyin();
 
     /** Total stroke count. */
     int strokes();

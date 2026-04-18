@@ -4,7 +4,7 @@
   "name" : "少",
   "strokes" : 4,
   "pinyinText" : "shǎo",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "few, young",
   "etymology" : {
     "kind" : "pictograph"

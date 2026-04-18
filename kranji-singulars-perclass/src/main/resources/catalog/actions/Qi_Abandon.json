@@ -4,7 +4,7 @@
   "name" : "弃",
   "strokes" : 7,
   "pinyinText" : "qì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "abandon",
   "etymology" : {
     "kind" : "pictograph"

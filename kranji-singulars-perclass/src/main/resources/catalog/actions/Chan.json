@@ -4,7 +4,7 @@
   "name" : "产",
   "strokes" : 6,
   "pinyinText" : "chǎn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "produce/give birth",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "犬",
   "strokes" : 4,
   "pinyinText" : "quǎn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "dog",
   "etymology" : {
     "kind" : "pictograph"

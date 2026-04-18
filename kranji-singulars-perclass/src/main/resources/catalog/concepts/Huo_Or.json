@@ -4,7 +4,7 @@
   "name" : "或",
   "strokes" : 8,
   "pinyinText" : "huò",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "or, perhaps",
   "etymology" : {
     "kind" : "pictograph"

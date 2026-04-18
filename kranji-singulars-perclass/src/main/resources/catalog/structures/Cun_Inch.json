@@ -4,7 +4,7 @@
   "name" : "寸",
   "strokes" : 3,
   "pinyinText" : "cùn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "inch",
   "etymology" : {
     "kind" : "pictograph"

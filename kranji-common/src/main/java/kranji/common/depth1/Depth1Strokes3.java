@@ -39,7 +39,7 @@ public final class Depth1Strokes3 {
     /** 亿 (yì) — hundred million. LeftRight: 亻(semantic) + 乙(phonetic). */
     public static final ComposedZi YI_HUNDRED_MILLION = new ComposedZi(
             uni("\u4EBF"),
-            List.of(py(Initial.ZERO, Head.OPEN, Body.I, Tail.NONE, Tone.FOURTH)),
+            py(Initial.ZERO, Head.OPEN, Body.I, Tail.NONE, Tone.FOURTH),
             3, 9, "",
             new LeftRight(DAN_REN_PANG, AbstractConcepts.YI_SECOND),
             new PhonoSemantic(DAN_REN_PANG, AbstractConcepts.YI_SECOND)

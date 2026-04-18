@@ -4,7 +4,7 @@
   "name" : "匹",
   "strokes" : 4,
   "pinyinText" : "pǐ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "bolt of cloth, measure word",
   "etymology" : {
     "kind" : "pictograph"

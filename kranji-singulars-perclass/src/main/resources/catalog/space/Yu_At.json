@@ -4,7 +4,7 @@
   "name" : "于",
   "strokes" : 3,
   "pinyinText" : "yú",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "at/in",
   "etymology" : {
     "kind" : "pictograph"

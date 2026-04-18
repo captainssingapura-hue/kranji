@@ -39,7 +39,7 @@ public final class Depth1Strokes6 {
     /** 休 (xiū) — rest. LeftRight: 亻 + 木. */
     public static final ComposedZi XIU = new ComposedZi(
             lit("休"),
-            List.of(py(Initial.X, Head.I, Body.O, Tail.VOWEL_U, Tone.FIRST)),
+            py(Initial.X, Head.I, Body.O, Tail.VOWEL_U, Tone.FIRST),
             6, 9, "",
             new LeftRight(DAN_REN_PANG, WoodFamily.MU),
             new CompoundIndicative("亻(person) + 木(tree) → person leaning on tree → rest")
@@ -48,7 +48,7 @@ public final class Depth1Strokes6 {
     /** 字 (zì) — character/word. TopBottom: 宀(semantic) + 子(phonetic). */
     public static final ComposedZi ZI = new ComposedZi(
             lit("字"),
-            List.of(py(Initial.Z, Head.OPEN, Body.NULL, Tail.NONE, Tone.FOURTH)),
+            py(Initial.Z, Head.OPEN, Body.NULL, Tail.NONE, Tone.FOURTH),
             6, 39, "",
             new TopBottom(BAO_GAI_TOU, PeopleAndRoles.ZI),
             new PhonoSemantic(BAO_GAI_TOU, PeopleAndRoles.ZI)
@@ -57,7 +57,7 @@ public final class Depth1Strokes6 {
     /** 刑 (xíng) — punishment. LeftRight: 开(phonetic) + 刂(semantic). */
     public static final ComposedZi XING_PUNISH = new ComposedZi(
             lit("刑"),
-            List.of(py(Initial.X, Head.OPEN, Body.I, Tail.NG, Tone.SECOND)),
+            py(Initial.X, Head.OPEN, Body.I, Tail.NG, Tone.SECOND),
             6, 18, "",
             new LeftRight(ActionsAndStates.KAI, LI_DAO_PANG),
             new PhonoSemantic(LI_DAO_PANG, ActionsAndStates.KAI)
@@ -66,7 +66,7 @@ public final class Depth1Strokes6 {
     /** 动 (dòng) — move. LeftRight: 云(phonetic) + 力(semantic). */
     public static final ComposedZi DONG = new ComposedZi(
             lit("动"),
-            List.of(py(Initial.D, Head.OPEN, Body.O, Tail.NG, Tone.FOURTH)),
+            py(Initial.D, Head.OPEN, Body.O, Tail.NG, Tone.FOURTH),
             6, 19, "",
             new LeftRight(NatureElements.YUN, ToolsAndVessels.LI_PLOW),
             new PhonoSemantic(ToolsAndVessels.LI_PLOW, NatureElements.YUN)
@@ -75,7 +75,7 @@ public final class Depth1Strokes6 {
     /** 扛 (káng) — carry on shoulder. LeftRight: 扌(semantic) + 工(phonetic). */
     public static final ComposedZi KANG = new ComposedZi(
             lit("扛"),
-            List.of(py(Initial.K, Head.OPEN, Body.A, Tail.NG, Tone.SECOND)),
+            py(Initial.K, Head.OPEN, Body.A, Tail.NG, Tone.SECOND),
             6, 64, "",
             new LeftRight(TI_SHOU_PANG, ActionsAndStates.GONG_WORK),
             new PhonoSemantic(TI_SHOU_PANG, ActionsAndStates.GONG_WORK)
@@ -84,7 +84,7 @@ public final class Depth1Strokes6 {
     /** 寺 (sì) — temple. TopBottom: 土(phonetic) + 寸(semantic). */
     public static final ComposedZi SI_TEMPLE = new ComposedZi(
             lit("寺"),
-            List.of(py(Initial.S, Head.OPEN, Body.NULL, Tail.NONE, Tone.FOURTH)),
+            py(Initial.S, Head.OPEN, Body.NULL, Tail.NONE, Tone.FOURTH),
             6, 41, "",
             new TopBottom(NatureElements.TU, Structures.CUN_INCH),
             new PhonoSemantic(Structures.CUN_INCH, NatureElements.TU)
@@ -93,7 +93,7 @@ public final class Depth1Strokes6 {
     /** 吉 (jí) — auspicious. TopBottom: 士 + 口. */
     public static final ComposedZi JI_LUCKY = new ComposedZi(
             lit("吉"),
-            List.of(py(Initial.J, Head.OPEN, Body.I, Tail.NONE, Tone.SECOND)),
+            py(Initial.J, Head.OPEN, Body.I, Tail.NONE, Tone.SECOND),
             6, 30, "",
             new TopBottom(PeopleAndRoles.SHI, BodyParts.KOU),
             new CompoundIndicative("士(scholar/jade tablet) + 口(mouth) → auspicious proclamation")

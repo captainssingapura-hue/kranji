@@ -4,7 +4,7 @@
   "name" : "专",
   "strokes" : 4,
   "pinyinText" : "zhuān",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "exclusive/special",
   "etymology" : {
     "kind" : "pictograph"

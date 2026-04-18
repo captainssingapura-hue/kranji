@@ -4,7 +4,7 @@
   "name" : "羌",
   "strokes" : 7,
   "pinyinText" : "qiāng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "Qiang people/shepherd",
   "etymology" : {
     "kind" : "pictograph"

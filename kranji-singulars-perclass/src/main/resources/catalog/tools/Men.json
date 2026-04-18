@@ -4,7 +4,7 @@
   "name" : "门",
   "strokes" : 3,
   "pinyinText" : "mén",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "gate, door",
   "etymology" : {
     "kind" : "pictograph"

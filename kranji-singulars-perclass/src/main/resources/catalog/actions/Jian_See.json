@@ -4,7 +4,7 @@
   "name" : "见",
   "strokes" : 4,
   "pinyinText" : "jiàn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "see",
   "etymology" : {
     "kind" : "pictograph"

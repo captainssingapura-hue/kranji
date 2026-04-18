@@ -1,23 +1,46 @@
-package kranji.demos;
+package kranji.pinyin;
 
-import kranji.pinyin.*;
-
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * Parses standard pinyin strings (e.g. "qing1") into the phonemic decomposition
- * used by the Kranji pinyin model (Initial, Head, Body, Tail, Tone).
+ * Parses standard pinyin strings into the phonemic decomposition used by the
+ * Kranji pinyin model ({@link Initial}, {@link Head}, {@link Body},
+ * {@link Tail}, {@link Tone}).
+ *
+ * <p>Accepts two input forms:</p>
+ * <ul>
+ *   <li><b>Numbered tone</b> — ASCII, with a trailing tone digit 1–5
+ *       (e.g. {@code "ma3"}, {@code "lv4"}, {@code "ning5"}). This is the
+ *       form every syllable can be unambiguously round-tripped through.</li>
+ *   <li><b>Diacritic tone</b> — the Unicode display form with combining
+ *       marks (e.g. {@code "mǎ"}, {@code "lǜ"}, {@code "níng"}). Recognised
+ *       by this parser as a convenience so catalog entries keep their
+ *       human-readable {@code pinyinText} form.</li>
+ * </ul>
  *
  * <p>Handles all standard Mandarin orthographic conventions: y/w zero-initial
  * spelling, abbreviated finals (ui=uei, iu=iou, un=uen), ü→u after j/q/x,
  * and syllabic consonants (zi, ci, si, zhi, chi, shi, ri).</p>
+ *
+ * <p>This class was originally a demo utility under {@code kranji-core-demos};
+ * it was promoted into the core library when {@code PinyinSyllable} grew
+ * typed read/write facilities ({@link PinyinSyllable#parse(String)} and
+ * {@link PinyinSyllable#toDiacritic()}).</p>
  */
 public final class PinyinParser {
 
     private PinyinParser() {}
 
-    /** Parsed result. */
-    public record Decomposition(Initial initial, Head head, Body body, Tail tail, Tone tone) {}
+    /** Parsed result — every field required. */
+    public record Decomposition(Initial initial, Head head, Body body, Tail tail, Tone tone) {
+
+        /** Wrap as a {@link PinyinSyllable}. */
+        public PinyinSyllable toSyllable() {
+            return new PinyinSyllable(initial, new Final(head, body, tail), tone);
+        }
+    }
 
     // Consonantal initials sorted longest-first for greedy matching
     private static final String[] INITIALS = {
@@ -39,14 +62,32 @@ public final class PinyinParser {
     private static final Set<Initial> JQX = Set.of(Initial.J, Initial.Q, Initial.X);
 
     /**
-     * Parse a numbered-tone pinyin string (e.g. "qing1", "lv4") into its
-     * phonemic decomposition.
+     * Parse a pinyin string — accepts either numbered-tone ("ma3") or
+     * diacritic ("mǎ") form.
      *
-     * @param numbered standard pinyin with tone number suffix (1-5)
+     * @param pinyin the input string
      * @return the full decomposition
      * @throws IllegalArgumentException if the pinyin cannot be parsed
      */
-    public static Decomposition parse(String numbered) {
+    public static Decomposition parse(String pinyin) {
+        if (pinyin == null) throw new IllegalArgumentException("Null pinyin");
+        String trimmed = pinyin.trim();
+        if (trimmed.isEmpty()) throw new IllegalArgumentException("Empty pinyin");
+
+        // Detect diacritic form by checking for any of the tonal-marked letters.
+        // If present, convert to numbered form before the core parse.
+        if (hasDiacritic(trimmed)) {
+            trimmed = diacriticToNumbered(trimmed);
+        }
+        return parseNumbered(trimmed);
+    }
+
+    /**
+     * Parse a numbered-tone pinyin string (e.g. "qing1", "lv4") into its
+     * phonemic decomposition. Exposed separately for callers that never
+     * produce diacritic form and want to skip the detection pass.
+     */
+    public static Decomposition parseNumbered(String numbered) {
         numbered = numbered.trim().toLowerCase();
         if (numbered.isEmpty()) throw new IllegalArgumentException("Empty pinyin");
 
@@ -67,7 +108,7 @@ public final class PinyinParser {
         base = base.replace("v", "ü");
 
         // Parse initial
-        Initial initial = null;
+        Initial initial;
         String finalStr;
         for (String ini : INITIALS) {
             if (base.startsWith(ini)) {
@@ -81,6 +122,54 @@ public final class PinyinParser {
         initial = Initial.ZERO;
         finalStr = handleZeroInitial(base);
         return resolve(initial, finalStr, tone);
+    }
+
+    // ── Diacritic → numbered ─────────────────────────────────────────────
+
+    /** Every tone-bearing diacritic vowel used in pinyin display form. */
+    private static final Map<Character, int[]> DIACRITIC_TO_PLAIN_TONE = new HashMap<>();
+    static {
+        // {replacement-char, tone-number}
+        putDia('ā', 'a', 1); putDia('á', 'a', 2); putDia('ǎ', 'a', 3); putDia('à', 'a', 4);
+        putDia('ō', 'o', 1); putDia('ó', 'o', 2); putDia('ǒ', 'o', 3); putDia('ò', 'o', 4);
+        putDia('ē', 'e', 1); putDia('é', 'e', 2); putDia('ě', 'e', 3); putDia('è', 'e', 4);
+        putDia('ī', 'i', 1); putDia('í', 'i', 2); putDia('ǐ', 'i', 3); putDia('ì', 'i', 4);
+        putDia('ū', 'u', 1); putDia('ú', 'u', 2); putDia('ǔ', 'u', 3); putDia('ù', 'u', 4);
+        putDia('ǖ', 'ü', 1); putDia('ǘ', 'ü', 2); putDia('ǚ', 'ü', 3); putDia('ǜ', 'ü', 4);
+    }
+
+    private static void putDia(char diacritic, char plain, int tone) {
+        DIACRITIC_TO_PLAIN_TONE.put(diacritic, new int[]{plain, tone});
+    }
+
+    private static boolean hasDiacritic(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            if (DIACRITIC_TO_PLAIN_TONE.containsKey(s.charAt(i))) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Strip the tone-bearing diacritic from a display-form syllable and
+     * append the tone as a trailing digit. Neutral tone (no diacritic on
+     * any vowel) becomes tone 5 and the string is returned as-is with a
+     * trailing 5.
+     */
+    static String diacriticToNumbered(String diacritic) {
+        StringBuilder plain = new StringBuilder(diacritic.length());
+        int tone = 5; // neutral until proven otherwise
+        for (int i = 0; i < diacritic.length(); i++) {
+            char c = diacritic.charAt(i);
+            int[] mapping = DIACRITIC_TO_PLAIN_TONE.get(c);
+            if (mapping == null) {
+                plain.append(c);
+            } else {
+                plain.append((char) mapping[0]);
+                tone = mapping[1];
+            }
+        }
+        plain.append(tone);
+        return plain.toString();
     }
 
     /**
@@ -217,88 +306,5 @@ public final class PinyinParser {
             throw new IllegalArgumentException("Unknown final: '" + fin + "'");
         }
         return result;
-    }
-
-    // ── Self-test ──────────────────────────────────────────────────────
-
-    /**
-     * Verify the parser against all ExampleCharacters pinyin decompositions.
-     * Run: mvn -pl kranji-core-demos exec:java -Dexec.mainClass=kranji.demos.PinyinParser
-     */
-    public static void main(String[] args) {
-        // Test cases from ExampleCharacters
-        verify("ren2",   Initial.R,    Head.OPEN, Body.E,       Tail.N,       Tone.SECOND);
-        verify("shan1",  Initial.SH,   Head.OPEN, Body.A,       Tail.N,       Tone.FIRST);
-        verify("ri4",    Initial.R,    Head.OPEN, Body.NULL,    Tail.NONE,    Tone.FOURTH);
-        verify("yue4",   Initial.ZERO, Head.V,    Body.E_CARON, Tail.NONE,    Tone.FOURTH);
-        verify("shui3",  Initial.SH,   Head.U,    Body.E,       Tail.VOWEL_I, Tone.THIRD);
-        verify("mu4",    Initial.M,    Head.U,    Body.U,       Tail.NONE,    Tone.FOURTH);
-        verify("kou3",   Initial.K,    Head.OPEN, Body.O,       Tail.VOWEL_U, Tone.THIRD);
-        verify("huo3",   Initial.H,    Head.U,    Body.O,       Tail.NONE,    Tone.THIRD);
-        verify("shang4", Initial.SH,   Head.OPEN, Body.A,       Tail.NG,      Tone.FOURTH);
-        verify("xia4",   Initial.X,    Head.I,    Body.A,       Tail.NONE,    Tone.FOURTH);
-        verify("yi3",    Initial.ZERO, Head.OPEN, Body.I,       Tail.NONE,    Tone.THIRD);
-        verify("ji3",    Initial.J,    Head.OPEN, Body.I,       Tail.NONE,    Tone.THIRD);
-        verify("ming2",  Initial.M,    Head.OPEN, Body.I,       Tail.NG,      Tone.SECOND);
-        verify("xiu1",   Initial.X,    Head.I,    Body.O,       Tail.VOWEL_U, Tone.FIRST);
-        verify("kong3",  Initial.K,    Head.OPEN, Body.O,       Tail.NG,      Tone.THIRD);
-        verify("lin2",   Initial.L,    Head.OPEN, Body.I,       Tail.N,       Tone.SECOND);
-        verify("qing1",  Initial.Q,    Head.OPEN, Body.I,       Tail.NG,      Tone.FIRST);
-        verify("qing3",  Initial.Q,    Head.OPEN, Body.I,       Tail.NG,      Tone.THIRD);
-        verify("qing2",  Initial.Q,    Head.OPEN, Body.I,       Tail.NG,      Tone.SECOND);
-        verify("zi4",    Initial.Z,    Head.OPEN, Body.NULL,    Tail.NONE,    Tone.FOURTH);
-        verify("hua1",   Initial.H,    Head.U,    Body.A,       Tail.NONE,    Tone.FIRST);
-        verify("guo2",   Initial.G,    Head.U,    Body.O,       Tail.NONE,    Tone.SECOND);
-        verify("pin3",   Initial.P,    Head.OPEN, Body.I,       Tail.N,       Tone.THIRD);
-        verify("sen1",   Initial.S,    Head.OPEN, Body.E,       Tail.N,       Tone.FIRST);
-        verify("ao2",    Initial.ZERO, Head.OPEN, Body.A,       Tail.VOWEL_U, Tone.SECOND);
-        verify("biang2", Initial.B,    Head.I,    Body.A,       Tail.NG,      Tone.SECOND);
-
-        // Additional coverage
-        verify("zhi1",   Initial.ZH,   Head.OPEN, Body.NULL,    Tail.NONE,    Tone.FIRST);
-        verify("chi1",   Initial.CH,   Head.OPEN, Body.NULL,    Tail.NONE,    Tone.FIRST);
-        verify("shi4",   Initial.SH,   Head.OPEN, Body.NULL,    Tail.NONE,    Tone.FOURTH);
-        verify("si1",    Initial.S,    Head.OPEN, Body.NULL,    Tail.NONE,    Tone.FIRST);
-        verify("wu3",    Initial.ZERO, Head.U,    Body.U,       Tail.NONE,    Tone.THIRD);
-        verify("wang2",  Initial.ZERO, Head.U,    Body.A,       Tail.NG,      Tone.SECOND);
-        verify("wei4",   Initial.ZERO, Head.U,    Body.E,       Tail.VOWEL_I, Tone.FOURTH);
-        verify("wen2",   Initial.ZERO, Head.U,    Body.E,       Tail.N,       Tone.SECOND);
-        verify("you3",   Initial.ZERO, Head.I,    Body.O,       Tail.VOWEL_U, Tone.THIRD);
-        verify("yan2",   Initial.ZERO, Head.I,    Body.A,       Tail.N,       Tone.SECOND);
-        verify("yin1",   Initial.ZERO, Head.OPEN, Body.I,       Tail.N,       Tone.FIRST);
-        verify("ying2",  Initial.ZERO, Head.OPEN, Body.I,       Tail.NG,      Tone.SECOND);
-        verify("yong3",  Initial.ZERO, Head.I,    Body.O,       Tail.NG,      Tone.THIRD);
-        verify("lv4",    Initial.L,    Head.V,    Body.V,       Tail.NONE,    Tone.FOURTH);
-        verify("nv3",    Initial.N,    Head.V,    Body.V,       Tail.NONE,    Tone.THIRD);
-        verify("jue2",   Initial.J,    Head.V,    Body.E_CARON, Tail.NONE,    Tone.SECOND);
-        verify("quan2",  Initial.Q,    Head.V,    Body.A,       Tail.N,       Tone.SECOND);
-        verify("xun2",   Initial.X,    Head.V,    Body.E,       Tail.N,       Tone.SECOND);
-        verify("gui4",   Initial.G,    Head.U,    Body.E,       Tail.VOWEL_I, Tone.FOURTH);
-        verify("dui4",   Initial.D,    Head.U,    Body.E,       Tail.VOWEL_I, Tone.FOURTH);
-        verify("liu2",   Initial.L,    Head.I,    Body.O,       Tail.VOWEL_U, Tone.SECOND);
-        verify("jiu3",   Initial.J,    Head.I,    Body.O,       Tail.VOWEL_U, Tone.THIRD);
-        verify("duan4",  Initial.D,    Head.U,    Body.A,       Tail.N,       Tone.FOURTH);
-        verify("lun2",   Initial.L,    Head.U,    Body.E,       Tail.N,       Tone.SECOND);
-        verify("guang1", Initial.G,    Head.U,    Body.A,       Tail.NG,      Tone.FIRST);
-        verify("er2",    Initial.ZERO, Head.OPEN, Body.ER,      Tail.NONE,    Tone.SECOND);
-        verify("ye4",    Initial.ZERO, Head.I,    Body.E_CARON, Tail.NONE,    Tone.FOURTH);
-        verify("yue4",   Initial.ZERO, Head.V,    Body.E_CARON, Tail.NONE,    Tone.FOURTH);
-        verify("yuan2",  Initial.ZERO, Head.V,    Body.A,       Tail.N,       Tone.SECOND);
-        verify("yun2",   Initial.ZERO, Head.V,    Body.E,       Tail.N,       Tone.SECOND);
-
-        System.out.println("\nAll " + testCount + " pinyin parse tests passed!");
-    }
-
-    private static int testCount = 0;
-
-    private static void verify(String pinyin, Initial ini, Head h, Body b, Tail t, Tone tone) {
-        testCount++;
-        var d = parse(pinyin);
-        if (d.initial != ini || d.head != h || d.body != b || d.tail != t || d.tone != tone) {
-            System.err.printf("FAIL: %s%n  expected: %s, %s, %s, %s, %s%n  got:      %s, %s, %s, %s, %s%n",
-                    pinyin, ini, h, b, t, tone, d.initial, d.head, d.body, d.tail, d.tone);
-            throw new AssertionError("Pinyin parse failed for: " + pinyin);
-        }
-        System.out.printf("  OK  %-10s → %s, %s, %s, %s, %s%n", pinyin, ini, h, b, t, tone);
     }
 }

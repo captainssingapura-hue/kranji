@@ -4,7 +4,7 @@
   "name" : "建",
   "strokes" : 8,
   "pinyinText" : "jiàn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "build, construct",
   "etymology" : {
     "kind" : "pictograph"

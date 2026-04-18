@@ -4,7 +4,7 @@
   "name" : "大",
   "strokes" : 3,
   "pinyinText" : "dà",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "big, great",
   "etymology" : {
     "kind" : "pictograph"

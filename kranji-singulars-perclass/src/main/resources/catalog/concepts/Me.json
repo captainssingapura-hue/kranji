@@ -4,7 +4,7 @@
   "name" : "么",
   "strokes" : 3,
   "pinyinText" : "me",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "interrogative particle",
   "etymology" : {
     "kind" : "pictograph"

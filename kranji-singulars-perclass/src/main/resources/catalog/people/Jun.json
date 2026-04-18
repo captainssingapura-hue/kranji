@@ -4,7 +4,7 @@
   "name" : "君",
   "strokes" : 7,
   "pinyinText" : "jūn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "lord",
   "etymology" : {
     "kind" : "pictograph"

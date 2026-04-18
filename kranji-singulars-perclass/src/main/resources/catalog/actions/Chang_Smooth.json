@@ -4,7 +4,7 @@
   "name" : "畅",
   "strokes" : 8,
   "pinyinText" : "chàng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "smooth, fluent",
   "etymology" : {
     "kind" : "pictograph"

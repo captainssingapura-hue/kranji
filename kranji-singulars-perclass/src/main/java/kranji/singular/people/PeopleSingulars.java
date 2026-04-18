@@ -51,8 +51,8 @@ import kranji.singular.people.zh.Zhe;
 
 import java.util.List;
 
-public final class People {
-    private People() {}
+public final class PeopleSingulars {
+    private PeopleSingulars() {}
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             Bing.INSTANCE,

@@ -4,7 +4,7 @@
   "name" : "巧",
   "strokes" : 5,
   "pinyinText" : "qiǎo",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "clever, skillful",
   "etymology" : {
     "kind" : "pictograph"

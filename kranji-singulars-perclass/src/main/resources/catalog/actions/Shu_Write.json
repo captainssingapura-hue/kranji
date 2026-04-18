@@ -4,7 +4,7 @@
   "name" : "书",
   "strokes" : 4,
   "pinyinText" : "shū",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "book/write",
   "etymology" : {
     "kind" : "pictograph"

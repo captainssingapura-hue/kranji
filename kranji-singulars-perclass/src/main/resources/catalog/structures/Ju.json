@@ -4,7 +4,7 @@
   "name" : "巨",
   "strokes" : 4,
   "pinyinText" : "jù",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "huge, enormous",
   "etymology" : {
     "kind" : "pictograph"

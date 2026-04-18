@@ -4,7 +4,7 @@
   "name" : "化",
   "strokes" : 4,
   "pinyinText" : "huà",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "change, transform",
   "etymology" : {
     "kind" : "pictograph"

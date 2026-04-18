@@ -4,7 +4,7 @@
   "name" : "夹",
   "strokes" : 6,
   "pinyinText" : "jiā",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "clamp/pinch",
   "etymology" : {
     "kind" : "pictograph"

@@ -31,8 +31,8 @@ import kranji.singular.animals.zh.Zhui;
 
 import java.util.List;
 
-public final class Animals {
-    private Animals() {}
+public final class AnimalsSingulars {
+    private AnimalsSingulars() {}
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             Ba_Dog.INSTANCE,

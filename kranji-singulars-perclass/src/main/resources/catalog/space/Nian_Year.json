@@ -4,7 +4,7 @@
   "name" : "年",
   "strokes" : 6,
   "pinyinText" : "nián",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "year",
   "etymology" : {
     "kind" : "pictograph"

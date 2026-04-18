@@ -20,8 +20,6 @@ import kranji.zi.ComposedBlock.TopMiddleBottom;
 import kranji.zi.ComposedZi;
 import kranji.zi.ZiChar;
 
-import java.util.List;
-
 /**
  * Factory helpers that compress the two most common
  * {@link ComposedZi} construction patterns into one-liners:
@@ -49,9 +47,8 @@ import java.util.List;
  *   <li>Wraps the glyph in {@link ZiChar.Unicode} — runtime identical to
  *       {@link ZiChar.Literal}, which was only a source-code readability
  *       tag and is irrelevant once the call is a one-liner.</li>
- *   <li>Wraps the single-syllable {@link PinyinSyllable} in
- *       {@code List.of(py)}. Polysyllabic Zi (rare) should construct
- *       {@link ComposedZi} directly.</li>
+ *   <li>Passes the {@link PinyinSyllable} through directly. Polysyllabic
+ *       Zi (rare) should construct {@link ComposedZi} directly.</li>
  *   <li>Uses {@code ""} for the separate English-meaning field — every
  *       current record leaves this blank and derives meaning via the
  *       Zi's {@code meaning()} override.</li>
@@ -226,7 +223,7 @@ public final class ComposedFactories {
                                     ComposedBlock composition, EtymologicalCategory etymology) {
         return new ComposedZi(
                 new ZiChar.Unicode(glyph),
-                List.of(py),
+                py,
                 strokes, radical, "",
                 composition,
                 etymology);

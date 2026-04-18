@@ -4,7 +4,7 @@
   "name" : "也",
   "strokes" : 3,
   "pinyinText" : "yě",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "also",
   "etymology" : {
     "kind" : "pictograph"

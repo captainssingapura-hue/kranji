@@ -4,7 +4,7 @@
   "name" : "言",
   "strokes" : 7,
   "pinyinText" : "yán",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "speech, word",
   "etymology" : {
     "kind" : "pictograph"

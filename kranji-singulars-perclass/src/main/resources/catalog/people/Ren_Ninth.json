@@ -4,7 +4,7 @@
   "name" : "壬",
   "strokes" : 4,
   "pinyinText" : "rén",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "ninth Heavenly Stem",
   "etymology" : {
     "kind" : "pictograph"

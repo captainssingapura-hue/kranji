@@ -4,7 +4,7 @@
   "name" : "半",
   "strokes" : 5,
   "pinyinText" : "bàn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "half",
   "etymology" : {
     "kind" : "pictograph"

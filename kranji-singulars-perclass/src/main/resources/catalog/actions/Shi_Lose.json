@@ -4,7 +4,7 @@
   "name" : "失",
   "strokes" : 5,
   "pinyinText" : "shī",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "lose",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "系",
   "strokes" : 7,
   "pinyinText" : "xì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "system, tie",
   "etymology" : {
     "kind" : "pictograph"

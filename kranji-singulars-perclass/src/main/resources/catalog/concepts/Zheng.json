@@ -4,7 +4,7 @@
   "name" : "正",
   "strokes" : 5,
   "pinyinText" : "zhèng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "correct, straight",
   "etymology" : {
     "kind" : "pictograph"

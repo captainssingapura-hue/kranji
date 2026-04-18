@@ -4,7 +4,7 @@
   "name" : "纠",
   "strokes" : 5,
   "pinyinText" : "jiū",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "entangle, correct",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "尹",
   "strokes" : 4,
   "pinyinText" : "yǐn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "governor/administer",
   "etymology" : {
     "kind" : "pictograph"

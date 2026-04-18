@@ -4,7 +4,7 @@
   "name" : "个",
   "strokes" : 3,
   "pinyinText" : "gè",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "measure word",
   "etymology" : {
     "kind" : "pictograph"

@@ -1,6 +1,7 @@
 package kranji.ui.demo;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,14 +21,13 @@ import kranji.classification.EtymologicalCategory;
 import kranji.classification.EtymologicalCategory.*;
 import kranji.zi.*;
 import kranji.zi.ComposedBlock.*;
-import kranji.common.CommonCharacters;
 import kranji.pinyin.Initial;
 import kranji.pinyin.PinyinSyllable;
 import kranji.pinyin.Tone;
 import kranji.layout.BlockSvgRenderer;
 import kranji.library.BasicSet;
 import kranji.library.ZiLibrary;
-import kranji.singular.SingularFamilies;
+import kranji.singular.SingularFamiliesPerclass;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -44,7 +44,7 @@ public class KranjiDemoApp extends Application {
      */
     private record PartAsZi(SingularPart part) implements Zi {
         @Override public String character()             { return part.glyph(); }
-        @Override public List<PinyinSyllable> pinyin()  { return List.of(); }
+        @Override public PinyinSyllable pinyin()        { return null; }
         @Override public int strokes()                  { return part.strokes(); }
         @Override public int radicalNo()                { return 0; }
         @Override public String meaning()               { return part.meaning(); }
@@ -78,7 +78,7 @@ public class KranjiDemoApp extends Application {
     @Override
     public void start(Stage stage) {
         // Load component libraries
-        SingularFamilies.registerInto(BasicSet.INSTANCE);
+        SingularFamiliesPerclass.registerInto(BasicSet.INSTANCE);
         ZiLibrary.load(BasicSet.INSTANCE);
 
         // Build categorised lists from the library
@@ -185,7 +185,10 @@ public class KranjiDemoApp extends Application {
 
         singularZiList = List.copyOf(singulars);
         partsList = List.copyOf(parts);
-        composedList = List.copyOf(CommonCharacters.ALL);
+        // ComposedZi content previously came from kranji-common; that module has
+        // been orphaned pending a per-class codegen replacement, so the composed
+        // browser is temporarily empty until the replacement pool is populated.
+        composedList = List.of();
 
         var all = new ArrayList<Zi>();
         all.addAll(singularZiList);
@@ -220,10 +223,15 @@ public class KranjiDemoApp extends Application {
         sourceFilter.setValue(SRC_ALL);
         sourceFilter.setOnAction(e -> switchSource(sourceFilter.getValue()));
 
-        var countLabel = new Label(filteredList.size() + " chars");
+        // Count tracks the live filtered size. Binding to Bindings.size(...)
+        // covers BOTH update paths: predicate changes (applyFilters) AND
+        // backing-list swaps (switchSource → backingList.setAll). A plain
+        // predicateProperty listener misses the latter, which is why the
+        // source dropdown used to leave the count stuck at its old value.
+        var countLabel = new Label();
+        countLabel.textProperty().bind(
+                Bindings.size(filteredList).asString("%d chars"));
         countLabel.setStyle("-fx-font-size: 11; -fx-text-fill: #888;");
-        filteredList.predicateProperty().addListener((obs, oldP, newP) ->
-                countLabel.setText(filteredList.size() + " chars"));
 
         var searchStyle = "-fx-font-size: 12;";
         searchField.setStyle(searchStyle);
@@ -297,19 +305,23 @@ public class KranjiDemoApp extends Application {
         // Initial filter
         var selInitial = initialFilter.getValue();
         if (selInitial != null && !selInitial.equals("All Initials")) {
-            predicate = predicate.and(e -> e.pinyin().stream().anyMatch(py -> {
+            predicate = predicate.and(e -> {
+                var py = e.pinyin();
+                if (py == null) return false;
                 if (selInitial.startsWith("\u2205")) return py.initial() == Initial.ZERO;
                 return py.initial().pinyin().equals(selInitial);
-            }));
+            });
         }
 
         // Tone filter
         var selTone = toneFilter.getValue();
         if (selTone != null && !selTone.equals("All Tones")) {
-            predicate = predicate.and(e -> e.pinyin().stream().anyMatch(py -> {
+            predicate = predicate.and(e -> {
+                var py = e.pinyin();
+                if (py == null) return false;
                 var label = py.tone().diacritic() + " " + py.tone().chinese();
                 return label.equals(selTone);
-            }));
+            });
         }
 
         // Composition filter
@@ -555,7 +567,8 @@ public class KranjiDemoApp extends Application {
 
     private VBox renderPinyinDetail(Zi e) {
         var box = new VBox(4);
-        for (var py : e.pinyin()) {
+        var py = e.pinyin();
+        if (py != null) {
             var initial = py.initial().pinyin().isEmpty() ? "\u2205 (zero)" : py.initial().pinyin();
             var fin = py.fin().spelling();
             var tone = py.tone().diacritic() + " " + py.tone().chinese() + " (tone " + py.tone().number() + ")";
@@ -670,9 +683,8 @@ public class KranjiDemoApp extends Application {
     }
 
     private static String formatPinyin(Zi e) {
-        return e.pinyin().stream()
-                .map(PinyinSyllable::numberedTone)
-                .collect(Collectors.joining(", "));
+        var py = e.pinyin();
+        return py == null ? "" : py.numberedTone();
     }
 
     // ── UI building blocks ──────────────────────────────────────────────

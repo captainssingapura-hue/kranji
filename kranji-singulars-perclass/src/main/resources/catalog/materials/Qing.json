@@ -4,7 +4,7 @@
   "name" : "青",
   "strokes" : 8,
   "pinyinText" : "qīng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "blue-green",
   "etymology" : {
     "kind" : "pictograph"

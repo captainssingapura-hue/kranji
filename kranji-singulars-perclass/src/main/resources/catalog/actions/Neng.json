@@ -4,7 +4,7 @@
   "name" : "能",
   "strokes" : 10,
   "pinyinText" : "néng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "can, able",
   "etymology" : {
     "kind" : "pictograph"

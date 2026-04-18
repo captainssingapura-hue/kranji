@@ -4,7 +4,7 @@
   "name" : "太",
   "strokes" : 4,
   "pinyinText" : "tài",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "great/supreme",
   "etymology" : {
     "kind" : "pictograph"

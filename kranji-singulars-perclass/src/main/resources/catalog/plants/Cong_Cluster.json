@@ -4,7 +4,7 @@
   "name" : "丛",
   "strokes" : 5,
   "pinyinText" : "cóng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "cluster, thicket",
   "etymology" : {
     "kind" : "pictograph"

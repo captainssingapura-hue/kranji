@@ -4,7 +4,7 @@
   "name" : "刁",
   "strokes" : 2,
   "pinyinText" : "diāo",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "cunning/tricky",
   "etymology" : {
     "kind" : "pictograph"

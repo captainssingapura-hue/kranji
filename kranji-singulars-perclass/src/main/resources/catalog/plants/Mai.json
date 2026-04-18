@@ -4,7 +4,7 @@
   "name" : "麦",
   "strokes" : 7,
   "pinyinText" : "mài",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "wheat",
   "etymology" : {
     "kind" : "pictograph"

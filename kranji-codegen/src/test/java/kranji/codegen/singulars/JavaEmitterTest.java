@@ -19,7 +19,7 @@ class JavaEmitterTest {
                 "\u738B", "U+738B", null,
                 4, null,
                 "w\u00E1ng",
-                List.of(), "king", null);
+                null, "king", null);
 
         String src = JavaEmitter.emitSingularZi(
                 "kranji.singular.people.w", "Wang_King", data);
@@ -65,7 +65,7 @@ class JavaEmitterTest {
                 "\u6C34", "U+6C34", null,
                 4, 85,
                 "shu\u01D0",
-                List.of(), "water", null);
+                null, "water", null);
 
         String src = JavaEmitter.emitSingularZi(
                 "kranji.singular.nature.sh", "Shui_Water", data);
@@ -81,7 +81,7 @@ class JavaEmitterTest {
                 "\u6C35", "U+6C35", "\u4E09\u70B9\u6C34",  // 氵, 三点水
                 3, null,
                 "shu\u01D0",
-                List.of(), "water (left form)", null);
+                null, "water (left form)", null);
 
         String src = JavaEmitter.emitSingularZi(
                 "kranji.singular.radicals.sh", "Shui_ThreeDots", data);
@@ -99,7 +99,7 @@ class JavaEmitterTest {
                 "\u6728", null, null,
                 0, null,
                 "",       // default pinyinText
-                List.of(),
+                null,
                 "",       // default meaning
                 null);
 
@@ -114,7 +114,7 @@ class JavaEmitterTest {
     @Test
     void rejects_missing_glyph() {
         SingularZiJson data = new SingularZiJson(
-                "", null, null, 1, null, null, List.of(), null, null);
+                "", null, null, 1, null, null, null, null, null);
 
         assertThrows(IllegalArgumentException.class,
                 () -> JavaEmitter.emitSingularZi("p", "X", data));

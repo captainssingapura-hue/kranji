@@ -4,7 +4,7 @@
   "name" : "氏",
   "strokes" : 4,
   "pinyinText" : "shì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "clan",
   "etymology" : {
     "kind" : "pictograph"

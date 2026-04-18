@@ -4,7 +4,7 @@
   "name" : "井",
   "strokes" : 4,
   "pinyinText" : "jǐng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "well",
   "etymology" : {
     "kind" : "pictograph"

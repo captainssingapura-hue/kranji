@@ -4,7 +4,7 @@
   "name" : "石",
   "strokes" : 5,
   "pinyinText" : "shí",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "stone",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "百",
   "strokes" : 6,
   "pinyinText" : "bǎi",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "hundred",
   "etymology" : {
     "kind" : "pictograph"

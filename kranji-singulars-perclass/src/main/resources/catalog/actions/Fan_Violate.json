@@ -4,7 +4,7 @@
   "name" : "犯",
   "strokes" : 5,
   "pinyinText" : "fàn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "violate, criminal",
   "etymology" : {
     "kind" : "pictograph"

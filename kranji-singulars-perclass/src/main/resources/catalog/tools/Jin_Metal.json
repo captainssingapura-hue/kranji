@@ -4,7 +4,7 @@
   "name" : "金",
   "strokes" : 8,
   "pinyinText" : "jīn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "gold, metal",
   "etymology" : {
     "kind" : "pictograph"

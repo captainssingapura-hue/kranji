@@ -4,7 +4,7 @@
   "name" : "卜",
   "strokes" : 2,
   "pinyinText" : "bǔ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "divination",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "豕",
   "strokes" : 7,
   "pinyinText" : "shǐ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "pig",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "辰",
   "strokes" : 7,
   "pinyinText" : "chén",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "celestial, dragon",
   "etymology" : {
     "kind" : "pictograph"

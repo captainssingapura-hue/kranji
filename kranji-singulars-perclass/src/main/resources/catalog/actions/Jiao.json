@@ -4,7 +4,7 @@
   "name" : "交",
   "strokes" : 6,
   "pinyinText" : "jiāo",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "exchange, cross",
   "etymology" : {
     "kind" : "pictograph"

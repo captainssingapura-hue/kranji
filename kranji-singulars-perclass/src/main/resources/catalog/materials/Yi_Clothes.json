@@ -4,7 +4,7 @@
   "name" : "衣",
   "strokes" : 6,
   "pinyinText" : "yī",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "clothes",
   "etymology" : {
     "kind" : "pictograph"

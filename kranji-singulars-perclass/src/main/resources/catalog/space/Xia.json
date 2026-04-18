@@ -4,7 +4,7 @@
   "name" : "下",
   "strokes" : 3,
   "pinyinText" : "xià",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "below, down",
   "etymology" : {
     "kind" : "pictograph"

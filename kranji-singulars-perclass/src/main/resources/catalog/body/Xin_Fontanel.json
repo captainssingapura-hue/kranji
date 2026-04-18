@@ -4,7 +4,7 @@
   "name" : "囟",
   "strokes" : 6,
   "pinyinText" : "xìn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "fontanel/skull",
   "etymology" : {
     "kind" : "pictograph"

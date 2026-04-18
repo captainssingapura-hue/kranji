@@ -4,7 +4,7 @@
   "name" : "弟",
   "strokes" : 7,
   "pinyinText" : "dì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "younger brother",
   "etymology" : {
     "kind" : "pictograph"

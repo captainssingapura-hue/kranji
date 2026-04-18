@@ -4,7 +4,7 @@
   "name" : "事",
   "strokes" : 8,
   "pinyinText" : "shì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "matter, affair",
   "etymology" : {
     "kind" : "pictograph"

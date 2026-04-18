@@ -4,7 +4,7 @@
   "name" : "六",
   "strokes" : 4,
   "pinyinText" : "liù",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "six",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "叔",
   "strokes" : 8,
   "pinyinText" : "shū",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "uncle",
   "etymology" : {
     "kind" : "pictograph"

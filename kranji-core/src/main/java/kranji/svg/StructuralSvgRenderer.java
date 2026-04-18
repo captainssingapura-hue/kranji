@@ -263,10 +263,7 @@ public final class StructuralSvgRenderer {
           .append(escXml(entry.character()))
           .append("</text>\n");
 
-        String pinyin = entry.pinyin().stream()
-                .map(p -> p.base() + p.tone().number())
-                .reduce((a, b) -> a + ", " + b)
-                .orElse("");
+        String pinyin = entry.pinyin() == null ? "" : entry.pinyin().numberedTone();
         String meta = pinyin + "  ·  " + entry.codepoint()
                 + "  ·  " + entry.strokes() + " strokes"
                 + "  ·  radical " + entry.radicalNo();

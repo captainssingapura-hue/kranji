@@ -4,7 +4,7 @@
   "name" : "冬",
   "strokes" : 5,
   "pinyinText" : "dōng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "winter",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "必",
   "strokes" : 5,
   "pinyinText" : "bì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "must, surely",
   "etymology" : {
     "kind" : "pictograph"

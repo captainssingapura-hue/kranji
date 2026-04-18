@@ -4,7 +4,7 @@
   "name" : "叉",
   "strokes" : 3,
   "pinyinText" : "chā",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "fork/cross",
   "etymology" : {
     "kind" : "pictograph"

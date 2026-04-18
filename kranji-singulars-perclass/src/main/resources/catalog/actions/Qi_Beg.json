@@ -4,7 +4,7 @@
   "name" : "乞",
   "strokes" : 3,
   "pinyinText" : "qǐ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "beg, plead",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "黄",
   "strokes" : 11,
   "pinyinText" : "huáng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "yellow",
   "etymology" : {
     "kind" : "pictograph"

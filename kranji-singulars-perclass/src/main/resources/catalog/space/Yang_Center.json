@@ -4,7 +4,7 @@
   "name" : "央",
   "strokes" : 5,
   "pinyinText" : "yāng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "center/middle",
   "etymology" : {
     "kind" : "pictograph"

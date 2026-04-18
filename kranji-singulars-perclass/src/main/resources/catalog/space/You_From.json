@@ -4,7 +4,7 @@
   "name" : "由",
   "strokes" : 5,
   "pinyinText" : "yóu",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "from/cause",
   "etymology" : {
     "kind" : "pictograph"

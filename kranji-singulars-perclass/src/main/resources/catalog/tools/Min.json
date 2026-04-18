@@ -4,7 +4,7 @@
   "name" : "皿",
   "strokes" : 5,
   "pinyinText" : "mǐn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "dish, vessel",
   "etymology" : {
     "kind" : "pictograph"

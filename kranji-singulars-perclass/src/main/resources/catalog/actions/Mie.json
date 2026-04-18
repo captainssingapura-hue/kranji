@@ -4,7 +4,7 @@
   "name" : "乜",
   "strokes" : 2,
   "pinyinText" : "miē",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "squint",
   "etymology" : {
     "kind" : "pictograph"

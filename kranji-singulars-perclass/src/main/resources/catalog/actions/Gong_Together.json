@@ -4,7 +4,7 @@
   "name" : "共",
   "strokes" : 6,
   "pinyinText" : "gòng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "together, common",
   "etymology" : {
     "kind" : "pictograph"

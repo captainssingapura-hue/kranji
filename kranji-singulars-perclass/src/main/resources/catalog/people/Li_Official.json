@@ -4,7 +4,7 @@
   "name" : "吏",
   "strokes" : 6,
   "pinyinText" : "lì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "official/clerk",
   "etymology" : {
     "kind" : "pictograph"

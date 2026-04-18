@@ -4,7 +4,7 @@
   "name" : "受",
   "strokes" : 8,
   "pinyinText" : "shòu",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "receive, accept",
   "etymology" : {
     "kind" : "pictograph"

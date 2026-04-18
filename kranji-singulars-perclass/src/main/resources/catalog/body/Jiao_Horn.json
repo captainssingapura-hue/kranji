@@ -4,7 +4,7 @@
   "name" : "角",
   "strokes" : 7,
   "pinyinText" : "jiǎo",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "horn, angle",
   "etymology" : {
     "kind" : "pictograph"

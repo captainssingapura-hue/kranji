@@ -14,11 +14,11 @@
 
     <name>kranji-codegen</name>
     <description>
-        JSON-pipeline code generator for Kranji singulars.
-        SnapshotMain reads the existing kranji-singulars family records and
-        writes one SingularZiJson file per record. GenerateMain reads those
-        JSON files and emits one Java record class per entry into
-        kranji-singulars-perclass.
+        JSON-pipeline code generator for Kranji singulars. GenerateMain reads
+        the committed JSON catalog in kranji-singulars-perclass and emits one
+        Java record class per entry, plus per-family aggregators and a
+        registrar. The JSON catalog is the source of truth; the legacy
+        bootstrap tool (SnapshotMain) has been retired.
     </description>
 
     <properties>
@@ -31,17 +31,12 @@
     <dependencies>
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-singulars</artifactId>
+            <artifactId>kranji-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-json</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-json-bridge</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 

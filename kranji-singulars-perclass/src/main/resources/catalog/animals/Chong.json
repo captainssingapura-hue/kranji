@@ -4,7 +4,7 @@
   "name" : "虫",
   "strokes" : 6,
   "pinyinText" : "chóng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "insect",
   "etymology" : {
     "kind" : "pictograph"

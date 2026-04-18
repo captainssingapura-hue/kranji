@@ -16,16 +16,16 @@
     </properties>
 
     <dependencies>
+        <!-- kranji-common and kranji-singulars have been orphaned pending
+             the per-class codegen replacement for composed Zi. The remaining
+             demo (ZiLookup) registers its singular catalog through the
+             per-class sibling and reports composed glyphs as missing until
+             the replacement pool lands. -->
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common</artifactId>
+            <artifactId>kranji-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
-
-        <!-- Per-class singulars: coexists with kranji-singulars (brought in
-             transitively via kranji-common). ZiLookup registers via this
-             sibling so the per-class path gets exercised; BlockLookup's
-             reflective scanning still uses the legacy flat families. -->
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-singulars-perclass</artifactId>

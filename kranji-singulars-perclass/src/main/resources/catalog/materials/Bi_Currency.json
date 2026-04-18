@@ -4,7 +4,7 @@
   "name" : "币",
   "strokes" : 4,
   "pinyinText" : "bì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "currency, money",
   "etymology" : {
     "kind" : "pictograph"

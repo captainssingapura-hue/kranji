@@ -4,7 +4,7 @@
   "name" : "目",
   "strokes" : 5,
   "pinyinText" : "mù",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "eye",
   "etymology" : {
     "kind" : "pictograph"

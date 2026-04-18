@@ -4,7 +4,7 @@
   "name" : "印",
   "strokes" : 5,
   "pinyinText" : "yìn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "seal, stamp",
   "etymology" : {
     "kind" : "pictograph"

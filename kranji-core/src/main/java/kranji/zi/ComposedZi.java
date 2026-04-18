@@ -3,8 +3,6 @@ package kranji.zi;
 import kranji.classification.EtymologicalCategory;
 import kranji.pinyin.PinyinSyllable;
 
-import java.util.List;
-
 /**
  * A composed Chinese character — both a {@link Zi} (semantic identity)
  * and a composition of sub-components.
@@ -13,7 +11,7 @@ import java.util.List;
  * delegates its structural decomposition to an inner {@link ComposedBlock}.</p>
  *
  * @param ziChar      the glyph wrapped as {@link ZiChar} for source readability
- * @param pinyin      Mandarin reading(s)
+ * @param pinyin      the Mandarin reading — one syllable per character
  * @param strokes     total stroke count
  * @param radicalNo   Kangxi radical number (1–214)
  * @param meaning     English semantic meaning
@@ -22,7 +20,7 @@ import java.util.List;
  */
 public record ComposedZi(
         ZiChar ziChar,
-        List<PinyinSyllable> pinyin,
+        PinyinSyllable pinyin,
         int strokes,
         int radicalNo,
         String meaning,

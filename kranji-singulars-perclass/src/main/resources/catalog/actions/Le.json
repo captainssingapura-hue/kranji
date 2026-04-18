@@ -4,7 +4,7 @@
   "name" : "了",
   "strokes" : 2,
   "pinyinText" : "le",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "finish/complete",
   "etymology" : {
     "kind" : "pictograph"

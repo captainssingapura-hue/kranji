@@ -4,7 +4,7 @@
   "name" : "前",
   "strokes" : 9,
   "pinyinText" : "qián",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "front, before",
   "etymology" : {
     "kind" : "pictograph"

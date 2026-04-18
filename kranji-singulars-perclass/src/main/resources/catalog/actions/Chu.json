@@ -4,7 +4,7 @@
   "name" : "出",
   "strokes" : 5,
   "pinyinText" : "chū",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "go out",
   "etymology" : {
     "kind" : "pictograph"

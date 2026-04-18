@@ -4,7 +4,7 @@
   "name" : "口",
   "strokes" : 3,
   "pinyinText" : "kǒu",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "mouth",
   "etymology" : {
     "kind" : "pictograph"

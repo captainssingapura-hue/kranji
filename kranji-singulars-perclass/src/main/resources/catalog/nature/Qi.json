@@ -4,7 +4,7 @@
   "name" : "气",
   "strokes" : 4,
   "pinyinText" : "qì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "air, gas",
   "etymology" : {
     "kind" : "pictograph"

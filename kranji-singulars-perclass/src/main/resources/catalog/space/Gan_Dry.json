@@ -4,7 +4,7 @@
   "name" : "干",
   "strokes" : 3,
   "pinyinText" : "gān",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "dry/trunk/stem",
   "etymology" : {
     "kind" : "pictograph"

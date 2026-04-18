@@ -4,7 +4,7 @@
   "name" : "戈",
   "strokes" : 4,
   "pinyinText" : "gē",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "halberd",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "乏",
   "strokes" : 4,
   "pinyinText" : "fá",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "lack, deficient",
   "etymology" : {
     "kind" : "pictograph"

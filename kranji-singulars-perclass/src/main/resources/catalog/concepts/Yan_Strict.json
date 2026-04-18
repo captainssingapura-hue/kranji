@@ -4,7 +4,7 @@
   "name" : "严",
   "strokes" : 7,
   "pinyinText" : "yán",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "strict, severe",
   "etymology" : {
     "kind" : "pictograph"

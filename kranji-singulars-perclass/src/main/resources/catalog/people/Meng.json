@@ -4,7 +4,7 @@
   "name" : "孟",
   "strokes" : 8,
   "pinyinText" : "mèng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "eldest, first",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "周",
   "strokes" : 8,
   "pinyinText" : "zhōu",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "cycle, week",
   "etymology" : {
     "kind" : "pictograph"

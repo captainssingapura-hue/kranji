@@ -4,7 +4,7 @@
   "name" : "兼",
   "strokes" : 10,
   "pinyinText" : "jiān",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "combine/simultaneously",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "刃",
   "strokes" : 3,
   "pinyinText" : "rèn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "blade",
   "etymology" : {
     "kind" : "pictograph"

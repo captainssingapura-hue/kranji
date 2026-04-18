@@ -4,7 +4,7 @@
   "name" : "求",
   "strokes" : 7,
   "pinyinText" : "qiú",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "seek/request",
   "etymology" : {
     "kind" : "pictograph"

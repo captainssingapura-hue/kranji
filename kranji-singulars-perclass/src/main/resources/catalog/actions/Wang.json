@@ -4,7 +4,7 @@
   "name" : "亡",
   "strokes" : 3,
   "pinyinText" : "wáng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "perish, flee",
   "etymology" : {
     "kind" : "pictograph"

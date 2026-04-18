@@ -4,7 +4,7 @@
   "name" : "壳",
   "strokes" : 7,
   "pinyinText" : "ké",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "shell",
   "etymology" : {
     "kind" : "pictograph"

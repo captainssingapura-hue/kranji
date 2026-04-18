@@ -4,7 +4,7 @@
   "name" : "七",
   "strokes" : 2,
   "pinyinText" : "qī",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "seven",
   "etymology" : {
     "kind" : "pictograph"

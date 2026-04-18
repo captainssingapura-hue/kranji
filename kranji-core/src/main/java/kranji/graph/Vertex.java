@@ -8,8 +8,6 @@ import kranji.pinyin.Final;
 import kranji.pinyin.Initial;
 import kranji.pinyin.PinyinSyllable;
 
-import java.util.List;
-
 /**
  * A vertex in the character navigation graph.
  *
@@ -49,7 +47,7 @@ public sealed interface Vertex {
     record CharVertex(
             VertexId id,
             String glyph,
-            List<PinyinSyllable> pinyin,
+            PinyinSyllable pinyin,
             int strokes,
             int radicalNo,
             BlockStructure structure,

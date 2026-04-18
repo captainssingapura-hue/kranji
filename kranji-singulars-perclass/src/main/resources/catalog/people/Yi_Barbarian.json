@@ -4,7 +4,7 @@
   "name" : "夷",
   "strokes" : 6,
   "pinyinText" : "yí",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "foreigner/barbarian",
   "etymology" : {
     "kind" : "pictograph"

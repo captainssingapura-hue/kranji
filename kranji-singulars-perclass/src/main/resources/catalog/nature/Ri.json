@@ -4,7 +4,7 @@
   "name" : "日",
   "strokes" : 4,
   "pinyinText" : "rì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "sun, day",
   "etymology" : {
     "kind" : "pictograph"

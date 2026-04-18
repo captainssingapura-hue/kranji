@@ -24,8 +24,8 @@ import kranji.singular.materials.zero.Yu_Jade;
 
 import java.util.List;
 
-public final class Materials {
-    private Materials() {}
+public final class MaterialsSingulars {
+    private MaterialsSingulars() {}
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             Bai_White.INSTANCE,

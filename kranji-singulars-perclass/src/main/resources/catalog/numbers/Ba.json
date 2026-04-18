@@ -4,7 +4,7 @@
   "name" : "八",
   "strokes" : 2,
   "pinyinText" : "bā",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "eight",
   "etymology" : {
     "kind" : "pictograph"

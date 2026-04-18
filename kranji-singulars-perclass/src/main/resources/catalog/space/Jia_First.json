@@ -4,7 +4,7 @@
   "name" : "甲",
   "strokes" : 5,
   "pinyinText" : "jiǎ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "first/armor",
   "etymology" : {
     "kind" : "pictograph"

@@ -29,8 +29,8 @@ import kranji.singular.numbers.zh.Zhang;
 
 import java.util.List;
 
-public final class Numbers {
-    private Numbers() {}
+public final class NumbersSingulars {
+    private NumbersSingulars() {}
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             Ba.INSTANCE,

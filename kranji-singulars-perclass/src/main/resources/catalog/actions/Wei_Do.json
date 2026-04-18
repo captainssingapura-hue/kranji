@@ -4,7 +4,7 @@
   "name" : "为",
   "strokes" : 4,
   "pinyinText" : "wéi",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "do/act/for",
   "etymology" : {
     "kind" : "pictograph"

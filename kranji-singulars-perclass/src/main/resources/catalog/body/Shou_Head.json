@@ -4,7 +4,7 @@
   "name" : "首",
   "strokes" : 9,
   "pinyinText" : "shǒu",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "head (formal)",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "舟",
   "strokes" : 6,
   "pinyinText" : "zhōu",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "boat",
   "etymology" : {
     "kind" : "pictograph"

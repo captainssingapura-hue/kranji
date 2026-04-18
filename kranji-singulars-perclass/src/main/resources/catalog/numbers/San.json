@@ -4,7 +4,7 @@
   "name" : "三",
   "strokes" : 3,
   "pinyinText" : "sān",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "three",
   "etymology" : {
     "kind" : "pictograph"

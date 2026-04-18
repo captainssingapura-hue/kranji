@@ -4,7 +4,7 @@
   "name" : "春",
   "strokes" : 9,
   "pinyinText" : "chūn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "spring",
   "etymology" : {
     "kind" : "pictograph"

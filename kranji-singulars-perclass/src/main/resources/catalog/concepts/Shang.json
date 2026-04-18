@@ -4,7 +4,7 @@
   "name" : "尚",
   "strokes" : 8,
   "pinyinText" : "shàng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "esteem, still",
   "etymology" : {
     "kind" : "pictograph"

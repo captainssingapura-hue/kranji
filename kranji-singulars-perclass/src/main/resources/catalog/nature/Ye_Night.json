@@ -4,7 +4,7 @@
   "name" : "夜",
   "strokes" : 8,
   "pinyinText" : "yè",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "night",
   "etymology" : {
     "kind" : "pictograph"

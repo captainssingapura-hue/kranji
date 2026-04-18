@@ -4,7 +4,7 @@
   "name" : "足",
   "strokes" : 7,
   "pinyinText" : "zú",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "foot",
   "etymology" : {
     "kind" : "pictograph"

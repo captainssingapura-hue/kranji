@@ -4,7 +4,7 @@
   "name" : "斥",
   "strokes" : 5,
   "pinyinText" : "chì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "repel/denounce",
   "etymology" : {
     "kind" : "pictograph"

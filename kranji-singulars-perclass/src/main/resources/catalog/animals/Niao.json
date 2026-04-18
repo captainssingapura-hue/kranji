@@ -4,7 +4,7 @@
   "name" : "鸟",
   "strokes" : 5,
   "pinyinText" : "niǎo",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "bird",
   "etymology" : {
     "kind" : "pictograph"

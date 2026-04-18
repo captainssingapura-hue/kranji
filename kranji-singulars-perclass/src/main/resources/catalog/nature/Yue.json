@@ -4,7 +4,7 @@
   "name" : "月",
   "strokes" : 4,
   "pinyinText" : "yuè",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "moon, month",
   "etymology" : {
     "kind" : "pictograph"

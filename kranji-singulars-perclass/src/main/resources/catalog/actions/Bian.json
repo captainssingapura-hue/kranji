@@ -4,7 +4,7 @@
   "name" : "变",
   "strokes" : 8,
   "pinyinText" : "biàn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "change, transform",
   "etymology" : {
     "kind" : "pictograph"

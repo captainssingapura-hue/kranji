@@ -4,7 +4,7 @@
   "name" : "象",
   "strokes" : 11,
   "pinyinText" : "xiàng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "elephant/image",
   "etymology" : {
     "kind" : "pictograph"

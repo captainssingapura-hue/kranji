@@ -1,9 +1,8 @@
 package kranji.util.existence;
 
-import kranji.common.CommonCharacters;
 import kranji.library.BasicSet;
 import kranji.library.LibraryMember;
-import kranji.singular.SingularFamilies;
+import kranji.singular.SingularFamiliesPerclass;
 import kranji.zi.ComposedZi;
 import kranji.zi.SingularBlock;
 import kranji.zi.SingularPart;
@@ -23,19 +22,25 @@ import java.util.Set;
  *
  * <p>Three pools, indexed by glyph:</p>
  * <ul>
- *   <li><b>Singular Zi</b> — {@code kranji-core} and {@code kranji-singulars}
- *       families that are both {@link LibraryMember} and {@link SingularZi}
- *       (e.g. {@code NatureElements.Ri}).</li>
+ *   <li><b>Singular Zi</b> — {@code kranji-core} and
+ *       {@code kranji-singulars-perclass} families that are both
+ *       {@link LibraryMember} and {@link SingularZi}
+ *       (e.g. {@code kranji.singular.nature.r.Ri}).</li>
  *   <li><b>Singular Part</b> — families that are {@link LibraryMember} and
  *       {@link SingularPart} (e.g. {@code WaterFamily.SanDianShui}).</li>
- *   <li><b>Composed Zi</b> — {@link ComposedZi} records in
- *       {@link CommonCharacters#ALL}.</li>
+ *   <li><b>Composed Zi</b> — {@link ComposedZi} records. Currently empty:
+ *       the former {@code kranji-common} provider has been orphaned
+ *       pending a per-class codegen replacement, so the composed pool
+ *       has no source until that work lands. The API surface
+ *       ({@link #composedZi}, {@link #hasComposedZi}, {@link #composedZiCount})
+ *       is preserved so callers compile and the existence checker keeps
+ *       reporting composed-feed entries as "missing" rather than crashing.</li>
  * </ul>
  *
  * <p>The registry is a <em>singleton snapshot</em>: built exactly once on
  * first access by registering {@link BasicSet#register()} and
- * {@link SingularFamilies#registerInto(BasicSet)}, then indexing the
- * resulting members. Both register calls are idempotent, so accessing
+ * {@link SingularFamiliesPerclass#registerInto(BasicSet)}, then indexing
+ * the resulting members. Both register calls are idempotent, so accessing
  * the registry is safe regardless of what the rest of the application
  * has already done.</p>
  */
@@ -78,8 +83,8 @@ public final class StrongTypedRegistry {
 
     private static StrongTypedRegistry build() {
         BasicSet basicSet = BasicSet.INSTANCE;
-        basicSet.register();                         // idempotent
-        SingularFamilies.registerInto(basicSet);     // idempotent
+        basicSet.register();                                  // idempotent
+        SingularFamiliesPerclass.registerInto(basicSet);      // idempotent
 
         // Index every glyph → list of definers. Same glyph appearing more
         // than once (within a pool or across pools) is a bug: lookups and
@@ -104,12 +109,10 @@ public final class StrongTypedRegistry {
             // SingularPart are ignored — not relevant to existence checks.
         }
 
+        // Composed pool is intentionally empty: the legacy kranji-common
+        // provider is no longer on the classpath. Keep the map to preserve
+        // the API surface; the codegen'd replacement will repopulate here.
         Map<String, ComposedZi> composedByGlyph = new LinkedHashMap<>();
-        for (ComposedZi cz : CommonCharacters.ALL) {
-            composedByGlyph.put(cz.character(), cz);
-            recordDefiner(allDefiners, cz.character(),
-                    "ComposedZi(" + cz.character() + ")");
-        }
 
         List<String> offenders = new ArrayList<>();
         for (Map.Entry<String, List<String>> e : allDefiners.entrySet()) {

@@ -4,7 +4,7 @@
   "name" : "上",
   "strokes" : 3,
   "pinyinText" : "shàng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "above, up",
   "etymology" : {
     "kind" : "pictograph"

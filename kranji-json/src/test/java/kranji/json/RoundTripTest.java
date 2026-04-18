@@ -25,7 +25,7 @@ final class RoundTripTest {
     void composedZi_glyphRefSlots() throws Exception {
         var qing = new ComposedZiJson(
                 "清", ZiCharForm.LITERAL, 11, 85,
-                List.of(new PinyinJson("q", "ing", 1)),
+                new PinyinJson("q", "ing", 1),
                 "clear",
                 new ComposedBlockJson("left_right", Map.of(
                         "left",  new BlockRefJson.GlyphRef("氵"),
@@ -36,7 +36,7 @@ final class RoundTripTest {
 
         var ming = new ComposedZiJson(
                 "明", ZiCharForm.LITERAL, 8, 72,
-                List.of(new PinyinJson("m", "ing", 2)),
+                new PinyinJson("m", "ing", 2),
                 "bright",
                 new ComposedBlockJson("left_right", Map.of(
                         "left",  new BlockRefJson.GlyphRef("日"),
@@ -67,7 +67,7 @@ final class RoundTripTest {
                 "bottom", new BlockRefJson.GlyphRef("厶")));
 
         var song = new ComposedZiJson(
-                "松", ZiCharForm.LITERAL, 8, 75, List.of(),
+                "松", ZiCharForm.LITERAL, 8, 75, null,
                 "pine",
                 new ComposedBlockJson("left_right", Map.of(
                         "left",  new BlockRefJson.GlyphRef("木"),
@@ -90,7 +90,7 @@ final class RoundTripTest {
 
         var qing = new ComposedZiJson(
                 "清", ZiCharForm.LITERAL, 11, 85,
-                List.of(new PinyinJson("q", "ing", 1)),
+                new PinyinJson("q", "ing", 1),
                 "clear",
                 new ComposedBlockJson("left_right", Map.of(
                         "left",  new BlockRefJson.InlineSingular(inlineSan),
@@ -112,7 +112,7 @@ final class RoundTripTest {
     void singularZi_roundTripEtymology() throws Exception {
         var shui = new SingularZiJson(
                 "水", "U+6C34", "shui", 4, 85, "shuǐ",
-                List.of(new PinyinJson("sh", "uei", 3)),
+                new PinyinJson("sh", "uei", 3),
                 "water",
                 new EtymologyJson.Pictograph());
 

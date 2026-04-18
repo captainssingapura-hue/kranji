@@ -4,7 +4,7 @@
   "name" : "田",
   "strokes" : 5,
   "pinyinText" : "tián",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "field",
   "etymology" : {
     "kind" : "pictograph"

@@ -28,8 +28,8 @@ import kranji.singular.plants.zh.Zhu_Trunk;
 
 import java.util.List;
 
-public final class Plants {
-    private Plants() {}
+public final class PlantsSingulars {
+    private PlantsSingulars() {}
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             Ben.INSTANCE,

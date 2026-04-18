@@ -1,7 +1,5 @@
 package kranji.json.dto;
 
-import java.util.List;
-
 /**
  * Wire shape for a 独体字 — a standalone Chinese character that is both a Zi
  * (semantic identity) and a singular structural block.
@@ -12,7 +10,7 @@ import java.util.List;
  * @param strokes    total stroke count; nullable
  * @param radicalNo  Kangxi radical number (1–214); nullable
  * @param pinyinText display-form pinyin (e.g. {@code "shuǐ"}); nullable
- * @param pinyin     structured syllables; defensively copied, never null
+ * @param pinyin     structured syllable; nullable
  * @param meaning    English gloss; nullable
  * @param etymology  etymological category (六书); nullable
  */
@@ -23,11 +21,7 @@ public record SingularZiJson(
         Integer strokes,
         Integer radicalNo,
         String pinyinText,
-        List<PinyinJson> pinyin,
+        PinyinJson pinyin,
         String meaning,
         EtymologyJson etymology
-) {
-    public SingularZiJson {
-        pinyin = pinyin == null ? List.of() : List.copyOf(pinyin);
-    }
-}
+) {}

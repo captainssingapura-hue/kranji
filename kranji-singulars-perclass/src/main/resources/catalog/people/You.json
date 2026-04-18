@@ -4,7 +4,7 @@
   "name" : "友",
   "strokes" : 4,
   "pinyinText" : "yǒu",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "friend",
   "etymology" : {
     "kind" : "pictograph"

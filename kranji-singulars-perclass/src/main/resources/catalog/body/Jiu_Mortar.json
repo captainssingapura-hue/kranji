@@ -4,7 +4,7 @@
   "name" : "臼",
   "strokes" : 6,
   "pinyinText" : "jiù",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "mortar/joint socket",
   "etymology" : {
     "kind" : "pictograph"

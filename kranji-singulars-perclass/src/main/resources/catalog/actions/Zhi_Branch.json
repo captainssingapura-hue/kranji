@@ -4,7 +4,7 @@
   "name" : "支",
   "strokes" : 4,
   "pinyinText" : "zhī",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "branch, support",
   "etymology" : {
     "kind" : "pictograph"

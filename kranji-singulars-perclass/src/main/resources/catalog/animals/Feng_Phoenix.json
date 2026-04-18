@@ -4,7 +4,7 @@
   "name" : "凤",
   "strokes" : 4,
   "pinyinText" : "fèng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "phoenix",
   "etymology" : {
     "kind" : "pictograph"

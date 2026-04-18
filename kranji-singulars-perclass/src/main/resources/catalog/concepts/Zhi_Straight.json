@@ -4,7 +4,7 @@
   "name" : "直",
   "strokes" : 8,
   "pinyinText" : "zhí",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "straight",
   "etymology" : {
     "kind" : "pictograph"

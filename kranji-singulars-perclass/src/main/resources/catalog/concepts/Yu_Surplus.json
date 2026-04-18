@@ -4,7 +4,7 @@
   "name" : "余",
   "strokes" : 7,
   "pinyinText" : "yú",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "surplus, I",
   "etymology" : {
     "kind" : "pictograph"

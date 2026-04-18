@@ -48,7 +48,7 @@ public final class Depth3 {
      */
     public static final ComposedZi MO_DEMON = new ComposedZi(
             lit("魔"),
-            List.of(py(Initial.M, Head.OPEN, Body.O, Tail.NONE, Tone.SECOND)),
+            py(Initial.M, Head.OPEN, Body.O, Tail.NONE, Tone.SECOND),
             20, 194, "",
             new SemiEnclosureUpperLeft(Structures.GUANG, CommonBlocks.LIN_GUI),
             new PhonoSemantic(Animals.GUI_GHOST, CommonBlocks.GUANG_LIN)

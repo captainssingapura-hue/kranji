@@ -4,7 +4,7 @@
   "name" : "里",
   "strokes" : 7,
   "pinyinText" : "lǐ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "inside, mile",
   "etymology" : {
     "kind" : "pictograph"

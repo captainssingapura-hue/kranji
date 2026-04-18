@@ -73,8 +73,8 @@ import kranji.singular.concepts.zh.Zhu_Lord;
 
 import java.util.List;
 
-public final class Concepts {
-    private Concepts() {}
+public final class ConceptsSingulars {
+    private ConceptsSingulars() {}
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             Bi_Must.INSTANCE,

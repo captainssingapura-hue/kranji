@@ -4,7 +4,7 @@
   "name" : "昂",
   "strokes" : 8,
   "pinyinText" : "áng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "raise, hold high",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "万",
   "strokes" : 3,
   "pinyinText" : "wàn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "ten thousand",
   "etymology" : {
     "kind" : "pictograph"

@@ -38,7 +38,9 @@ final class UniquenessTest {
         // of duplicates above is meaningful.
         org.junit.jupiter.api.Assertions.assertTrue(registry.singularZiCount()   > 0,
                 "expected populated SingularZi pool");
-        org.junit.jupiter.api.Assertions.assertTrue(registry.composedZiCount()   > 0,
-                "expected populated ComposedZi pool");
+        // Composed pool is intentionally unpopulated until the kranji-common
+        // replacement (per-class codegen) is built; see StrongTypedRegistry.
+        org.junit.jupiter.api.Assertions.assertEquals(0, registry.composedZiCount(),
+                "composed pool should be empty while kranji-common is orphaned");
     }
 }

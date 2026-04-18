@@ -4,7 +4,7 @@
   "name" : "白",
   "strokes" : 5,
   "pinyinText" : "bái",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "white",
   "etymology" : {
     "kind" : "pictograph"

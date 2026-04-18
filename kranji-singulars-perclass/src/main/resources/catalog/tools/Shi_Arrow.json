@@ -4,7 +4,7 @@
   "name" : "矢",
   "strokes" : 5,
   "pinyinText" : "shǐ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "arrow",
   "etymology" : {
     "kind" : "pictograph"

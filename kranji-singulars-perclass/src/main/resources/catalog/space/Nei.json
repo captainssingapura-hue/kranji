@@ -4,7 +4,7 @@
   "name" : "内",
   "strokes" : 4,
   "pinyinText" : "nèi",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "inside",
   "etymology" : {
     "kind" : "pictograph"

@@ -36,8 +36,8 @@ import kranji.singular.space.zh.Zhong;
 
 import java.util.List;
 
-public final class Space {
-    private Space() {}
+public final class SpaceSingulars {
+    private SpaceSingulars() {}
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             Bei_North.INSTANCE,

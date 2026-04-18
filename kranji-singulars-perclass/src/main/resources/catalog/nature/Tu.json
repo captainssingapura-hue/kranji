@@ -4,7 +4,7 @@
   "name" : "土",
   "strokes" : 3,
   "pinyinText" : "tǔ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "earth, soil",
   "etymology" : {
     "kind" : "pictograph"

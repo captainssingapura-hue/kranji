@@ -88,8 +88,8 @@ import kranji.singular.radicals.zh.Zhu_Top;
 
 import java.util.List;
 
-public final class Radicals {
-    private Radicals() {}
+public final class RadicalsSingulars {
+    private RadicalsSingulars() {}
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             Ang.INSTANCE,

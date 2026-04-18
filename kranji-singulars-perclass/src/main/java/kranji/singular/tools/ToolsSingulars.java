@@ -48,8 +48,8 @@ import kranji.singular.tools.zh.Zhou;
 
 import java.util.List;
 
-public final class Tools {
-    private Tools() {}
+public final class ToolsSingulars {
+    private ToolsSingulars() {}
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             Bi_Spoon.INSTANCE,

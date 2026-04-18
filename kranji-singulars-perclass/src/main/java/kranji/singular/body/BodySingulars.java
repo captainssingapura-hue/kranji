@@ -33,8 +33,8 @@ import kranji.singular.body.zh.Zhua;
 
 import java.util.List;
 
-public final class Body {
-    private Body() {}
+public final class BodySingulars {
+    private BodySingulars() {}
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             Chi_Tooth.INSTANCE,

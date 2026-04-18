@@ -4,7 +4,7 @@
   "name" : "彳",
   "strokes" : 3,
   "pinyinText" : "chì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "step (left foot)",
   "etymology" : {
     "kind" : "pictograph"

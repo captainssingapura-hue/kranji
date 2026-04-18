@@ -4,7 +4,7 @@
   "name" : "丰",
   "strokes" : 4,
   "pinyinText" : "fēng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "abundant, lush",
   "etymology" : {
     "kind" : "pictograph"

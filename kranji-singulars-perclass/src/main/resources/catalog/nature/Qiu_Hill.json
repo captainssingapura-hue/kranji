@@ -4,7 +4,7 @@
   "name" : "丘",
   "strokes" : 5,
   "pinyinText" : "qiū",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "hill, mound",
   "etymology" : {
     "kind" : "pictograph"

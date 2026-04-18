@@ -4,7 +4,7 @@
   "name" : "其",
   "strokes" : 8,
   "pinyinText" : "qí",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "its, that",
   "etymology" : {
     "kind" : "pictograph"

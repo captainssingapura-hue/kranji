@@ -4,7 +4,7 @@
   "name" : "雨",
   "strokes" : 8,
   "pinyinText" : "yǔ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "rain",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "勺",
   "strokes" : 3,
   "pinyinText" : "sháo",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "spoon, ladle",
   "etymology" : {
     "kind" : "pictograph"

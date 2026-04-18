@@ -4,7 +4,7 @@
   "name" : "弋",
   "strokes" : 3,
   "pinyinText" : "yì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "shoot/stake",
   "etymology" : {
     "kind" : "pictograph"

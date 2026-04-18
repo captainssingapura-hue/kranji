@@ -4,7 +4,7 @@
   "name" : "甘",
   "strokes" : 5,
   "pinyinText" : "gān",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "sweet",
   "etymology" : {
     "kind" : "pictograph"

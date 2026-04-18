@@ -4,7 +4,7 @@
   "name" : "午",
   "strokes" : 4,
   "pinyinText" : "wǔ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "noon/7th Earthly Branch",
   "etymology" : {
     "kind" : "pictograph"

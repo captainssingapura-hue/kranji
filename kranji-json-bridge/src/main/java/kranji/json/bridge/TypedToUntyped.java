@@ -19,7 +19,6 @@ import kranji.zi.SingularZi;
 import kranji.zi.ZiChar;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -59,7 +58,7 @@ public final class TypedToUntyped {
                 sz.strokes(),
                 sz.radicalNo() == 0 ? null : sz.radicalNo(),
                 emptyToNull(sz.pinyinText()),
-                pinyinList(sz.pinyin()),
+                sz.pinyin() == null ? null : pinyin(sz.pinyin()),
                 emptyToNull(sz.meaning()),
                 etymology(sz.etymology())
         );
@@ -135,7 +134,7 @@ public final class TypedToUntyped {
                 form,
                 cz.strokes() == 0 ? null : cz.strokes(),
                 cz.radicalNo() == 0 ? null : cz.radicalNo(),
-                pinyinList(cz.pinyin()),
+                cz.pinyin() == null ? null : pinyin(cz.pinyin()),
                 emptyToNull(cz.meaning()),
                 composedBlock(cz.composition()),
                 etymology(cz.etymology())
@@ -191,11 +190,6 @@ public final class TypedToUntyped {
         Map<String, BlockRefJson> m = new LinkedHashMap<>();
         m.put(k1, v1); m.put(k2, v2); m.put(k3, v3);
         return m;
-    }
-
-    private static List<PinyinJson> pinyinList(List<PinyinSyllable> typed) {
-        if (typed == null || typed.isEmpty()) return List.of();
-        return typed.stream().map(TypedToUntyped::pinyin).toList();
     }
 
     private static String emptyToNull(String s) {

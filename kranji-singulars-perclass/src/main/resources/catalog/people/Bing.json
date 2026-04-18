@@ -4,7 +4,7 @@
   "name" : "兵",
   "strokes" : 7,
   "pinyinText" : "bīng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "soldier",
   "etymology" : {
     "kind" : "pictograph"

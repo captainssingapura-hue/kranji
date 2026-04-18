@@ -4,7 +4,7 @@
   "name" : "民",
   "strokes" : 5,
   "pinyinText" : "mín",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "people",
   "etymology" : {
     "kind" : "pictograph"

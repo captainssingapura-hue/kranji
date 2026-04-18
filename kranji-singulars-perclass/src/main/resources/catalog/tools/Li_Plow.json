@@ -4,7 +4,7 @@
   "name" : "力",
   "strokes" : 2,
   "pinyinText" : "lì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "strength, plow",
   "etymology" : {
     "kind" : "pictograph"

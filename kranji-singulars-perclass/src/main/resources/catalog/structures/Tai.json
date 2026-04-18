@@ -4,7 +4,7 @@
   "name" : "台",
   "strokes" : 5,
   "pinyinText" : "tái",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "platform",
   "etymology" : {
     "kind" : "pictograph"

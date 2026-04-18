@@ -4,7 +4,7 @@
   "name" : "处",
   "strokes" : 5,
   "pinyinText" : "chǔ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "place, deal with",
   "etymology" : {
     "kind" : "pictograph"

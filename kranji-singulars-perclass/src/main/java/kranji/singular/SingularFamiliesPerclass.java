@@ -2,19 +2,19 @@
 package kranji.singular;
 
 import kranji.library.BasicSet;
-import kranji.singular.actions.Actions;
-import kranji.singular.animals.Animals;
-import kranji.singular.body.Body;
-import kranji.singular.concepts.Concepts;
-import kranji.singular.materials.Materials;
-import kranji.singular.nature.Nature;
-import kranji.singular.numbers.Numbers;
-import kranji.singular.people.People;
-import kranji.singular.plants.Plants;
-import kranji.singular.radicals.Radicals;
-import kranji.singular.space.Space;
-import kranji.singular.structures.Structures;
-import kranji.singular.tools.Tools;
+import kranji.singular.actions.ActionsSingulars;
+import kranji.singular.animals.AnimalsSingulars;
+import kranji.singular.body.BodySingulars;
+import kranji.singular.concepts.ConceptsSingulars;
+import kranji.singular.materials.MaterialsSingulars;
+import kranji.singular.nature.NatureSingulars;
+import kranji.singular.numbers.NumbersSingulars;
+import kranji.singular.people.PeopleSingulars;
+import kranji.singular.plants.PlantsSingulars;
+import kranji.singular.radicals.RadicalsSingulars;
+import kranji.singular.space.SpaceSingulars;
+import kranji.singular.structures.StructuresSingulars;
+import kranji.singular.tools.ToolsSingulars;
 
 /**
  * Registers every per-class singular family into a {@link BasicSet}.
@@ -31,18 +31,18 @@ public final class SingularFamiliesPerclass {
         if (loaded) return;
         loaded = true;
 
-        basicSet.addAll(Actions.ALL);
-        basicSet.addAll(Animals.ALL);
-        basicSet.addAll(Body.ALL);
-        basicSet.addAll(Concepts.ALL);
-        basicSet.addAll(Materials.ALL);
-        basicSet.addAll(Nature.ALL);
-        basicSet.addAll(Numbers.ALL);
-        basicSet.addAll(People.ALL);
-        basicSet.addAll(Plants.ALL);
-        basicSet.addAll(Radicals.ALL);
-        basicSet.addAll(Space.ALL);
-        basicSet.addAll(Structures.ALL);
-        basicSet.addAll(Tools.ALL);
+        basicSet.addAll(ActionsSingulars.ALL);
+        basicSet.addAll(AnimalsSingulars.ALL);
+        basicSet.addAll(BodySingulars.ALL);
+        basicSet.addAll(ConceptsSingulars.ALL);
+        basicSet.addAll(MaterialsSingulars.ALL);
+        basicSet.addAll(NatureSingulars.ALL);
+        basicSet.addAll(NumbersSingulars.ALL);
+        basicSet.addAll(PeopleSingulars.ALL);
+        basicSet.addAll(PlantsSingulars.ALL);
+        basicSet.addAll(RadicalsSingulars.ALL);
+        basicSet.addAll(SpaceSingulars.ALL);
+        basicSet.addAll(StructuresSingulars.ALL);
+        basicSet.addAll(ToolsSingulars.ALL);
     }
 }

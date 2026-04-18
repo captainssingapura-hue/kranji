@@ -4,7 +4,7 @@
   "name" : "北",
   "strokes" : 5,
   "pinyinText" : "běi",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "north",
   "etymology" : {
     "kind" : "pictograph"

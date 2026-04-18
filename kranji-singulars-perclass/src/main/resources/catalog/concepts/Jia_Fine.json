@@ -4,7 +4,7 @@
   "name" : "佳",
   "strokes" : 8,
   "pinyinText" : "jiā",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "fine, good",
   "etymology" : {
     "kind" : "pictograph"

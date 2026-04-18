@@ -4,7 +4,7 @@
   "name" : "奉",
   "strokes" : 8,
   "pinyinText" : "fèng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "offer, serve",
   "etymology" : {
     "kind" : "pictograph"

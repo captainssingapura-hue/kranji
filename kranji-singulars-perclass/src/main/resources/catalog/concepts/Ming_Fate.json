@@ -4,7 +4,7 @@
   "name" : "命",
   "strokes" : 8,
   "pinyinText" : "mìng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "fate, life, command",
   "etymology" : {
     "kind" : "pictograph"

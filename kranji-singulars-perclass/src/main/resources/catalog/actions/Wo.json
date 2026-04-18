@@ -4,7 +4,7 @@
   "name" : "我",
   "strokes" : 7,
   "pinyinText" : "wǒ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "I/me",
   "etymology" : {
     "kind" : "pictograph"

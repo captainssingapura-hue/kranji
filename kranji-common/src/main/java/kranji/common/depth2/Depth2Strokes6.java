@@ -41,7 +41,7 @@ public final class Depth2Strokes6 {
     /** 式 (shì) — style/formula. LeftRight: TopBottom(一, 工) on left + 弋 on right. */
     public static final ComposedZi SHI_STYLE = new ComposedZi(
             lit("式"),
-            List.of(py(Initial.SH, Head.OPEN, Body.NULL, Tail.NONE, Tone.FOURTH)),
+            py(Initial.SH, Head.OPEN, Body.NULL, Tail.NONE, Tone.FOURTH),
             6, 56, "",
             new LeftRight(CommonBlocks.YI_GONG, ToolsAndVessels.YI_SHOOT),
             new PhonoSemantic(ActionsAndStates.GONG_WORK, ToolsAndVessels.YI_SHOOT)

@@ -4,7 +4,7 @@
   "name" : "史",
   "strokes" : 5,
   "pinyinText" : "shǐ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "history/historian",
   "etymology" : {
     "kind" : "pictograph"

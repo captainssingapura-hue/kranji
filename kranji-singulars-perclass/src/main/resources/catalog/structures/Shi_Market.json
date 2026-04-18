@@ -4,7 +4,7 @@
   "name" : "市",
   "strokes" : 5,
   "pinyinText" : "shì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "market, city",
   "etymology" : {
     "kind" : "pictograph"

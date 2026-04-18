@@ -4,7 +4,7 @@
   "name" : "乱",
   "strokes" : 7,
   "pinyinText" : "luàn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "chaos, disorder",
   "etymology" : {
     "kind" : "pictograph"

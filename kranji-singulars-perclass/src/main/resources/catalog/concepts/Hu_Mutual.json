@@ -4,7 +4,7 @@
   "name" : "互",
   "strokes" : 4,
   "pinyinText" : "hù",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "mutual, each other",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "录",
   "strokes" : 8,
   "pinyinText" : "lù",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "record, copy",
   "etymology" : {
     "kind" : "pictograph"

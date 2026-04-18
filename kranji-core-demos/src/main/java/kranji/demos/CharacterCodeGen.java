@@ -1,7 +1,7 @@
 package kranji.demos;
 
-import kranji.demos.PinyinParser.Decomposition;
 import kranji.pinyin.*;
+import kranji.pinyin.PinyinParser.Decomposition;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

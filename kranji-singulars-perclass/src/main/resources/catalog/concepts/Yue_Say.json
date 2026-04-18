@@ -4,7 +4,7 @@
   "name" : "曰",
   "strokes" : 4,
   "pinyinText" : "yuē",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "say, speak",
   "etymology" : {
     "kind" : "pictograph"

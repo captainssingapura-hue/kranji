@@ -4,7 +4,7 @@
   "name" : "羊",
   "strokes" : 6,
   "pinyinText" : "yáng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "sheep",
   "etymology" : {
     "kind" : "pictograph"

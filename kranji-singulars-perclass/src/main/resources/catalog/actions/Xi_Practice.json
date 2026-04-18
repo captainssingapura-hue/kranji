@@ -4,7 +4,7 @@
   "name" : "习",
   "strokes" : 3,
   "pinyinText" : "xí",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "practice/study",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "心",
   "strokes" : 4,
   "pinyinText" : "xīn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "heart",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "州",
   "strokes" : 6,
   "pinyinText" : "zhōu",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "state, prefecture",
   "etymology" : {
     "kind" : "pictograph"

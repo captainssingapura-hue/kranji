@@ -4,7 +4,7 @@
   "name" : "乌",
   "strokes" : 4,
   "pinyinText" : "wū",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "crow/black",
   "etymology" : {
     "kind" : "pictograph"

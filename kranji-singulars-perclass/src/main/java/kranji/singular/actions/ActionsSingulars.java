@@ -114,8 +114,8 @@ import kranji.singular.actions.zh.Zhuan;
 
 import java.util.List;
 
-public final class Actions {
-    private Actions() {}
+public final class ActionsSingulars {
+    private ActionsSingulars() {}
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             Ang.INSTANCE,

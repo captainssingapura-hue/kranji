@@ -4,7 +4,7 @@
   "name" : "允",
   "strokes" : 4,
   "pinyinText" : "yǔn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "allow, permit",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "叫",
   "strokes" : 5,
   "pinyinText" : "jiào",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "call, shout",
   "etymology" : {
     "kind" : "pictograph"

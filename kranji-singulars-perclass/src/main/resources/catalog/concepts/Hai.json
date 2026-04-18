@@ -4,7 +4,7 @@
   "name" : "亥",
   "strokes" : 6,
   "pinyinText" : "hài",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "12th Earthly Branch",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "子",
   "strokes" : 3,
   "pinyinText" : "zǐ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "child, son",
   "etymology" : {
     "kind" : "pictograph"

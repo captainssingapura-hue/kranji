@@ -4,7 +4,7 @@
   "name" : "更",
   "strokes" : 7,
   "pinyinText" : "gēng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "change/more",
   "etymology" : {
     "kind" : "pictograph"

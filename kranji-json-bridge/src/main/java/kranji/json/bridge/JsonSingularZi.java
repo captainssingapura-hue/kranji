@@ -4,7 +4,6 @@ import kranji.classification.EtymologicalCategory;
 import kranji.pinyin.PinyinSyllable;
 import kranji.zi.SingularZi;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -16,10 +15,9 @@ import java.util.Objects;
  * data and do not have a concrete singleton record available (e.g. the
  * glyph is not present in {@code kranji-common} / {@code kranji-singulars}).</p>
  *
- * <p>Structured {@code pinyin} is not reconstructed from the DTO's flat
- * string form — the list is accepted as-is. Callers that want
- * {@link PinyinSyllable} reconstruction should supply it explicitly. The
- * human-readable {@code pinyinText} is available via {@link #pinyinText()}.</p>
+ * <p>Structured pinyin is derived on demand from {@code pinyinText} via
+ * {@link PinyinSyllable#parse(String)} (the default implementation on
+ * {@link SingularZi}).</p>
  */
 public record JsonSingularZi(
         String glyph,
@@ -27,7 +25,6 @@ public record JsonSingularZi(
         int strokes,
         int radicalNo,
         String meaning,
-        List<PinyinSyllable> pinyin,
         EtymologicalCategory etymology
 ) implements SingularZi {
 
@@ -35,7 +32,6 @@ public record JsonSingularZi(
         Objects.requireNonNull(glyph, "glyph");
         pinyinText = pinyinText == null ? "" : pinyinText;
         meaning    = meaning    == null ? "" : meaning;
-        pinyin     = pinyin     == null ? List.of() : List.copyOf(pinyin);
         etymology  = etymology  == null ? new EtymologicalCategory.Pictograph() : etymology;
     }
 }

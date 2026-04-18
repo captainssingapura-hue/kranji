@@ -3,8 +3,6 @@ package kranji.zi;
 import kranji.classification.EtymologicalCategory;
 import kranji.pinyin.PinyinSyllable;
 
-import java.util.List;
-
 /**
  * A standalone Chinese character that is both a {@link Zi} (semantic identity)
  * and a {@link SingularBlock} (atomic structural block).
@@ -41,10 +39,30 @@ public interface SingularZi extends SingularBlock, Zi {
     }
 
     /**
-     * Structured pinyin readings.
-     * Defaults to an empty list — override to provide parsed syllables.
+     * Structured pinyin reading, derived from {@link #pinyinText()}.
+     *
+     * <p>Default: parse the display-form string using
+     * {@link PinyinSyllable#parse(String)}. Concrete records have two
+     * equally valid options:</p>
+     * <ul>
+     *   <li>Override {@link #pinyinText()} with the diacritic string
+     *       ({@code "shuǐ"}) and let this default produce the structured
+     *       form. Suited to hand-written code where the string is the
+     *       natural source.</li>
+     *   <li>Override this method directly with a constructed
+     *       {@link PinyinSyllable} literal. Suited to code-generation,
+     *       where the structured form is what the generator has in hand
+     *       and {@link #pinyinText()} can itself be derived on the fly.</li>
+     * </ul>
+     *
+     * <p>The old {@code List.of()} default is gone — an empty pinyin list
+     * was never a meaningful answer for a real character; now the absence
+     * of both overrides fails loudly at parse time instead of silently
+     * returning nothing.</p>
      */
-    @Override default List<PinyinSyllable> pinyin() { return List.of(); }
+    @Override default PinyinSyllable pinyin() {
+        return PinyinSyllable.parse(pinyinText());
+    }
 
     /**
      * Total stroke count.

@@ -4,7 +4,7 @@
   "name" : "毋",
   "strokes" : 4,
   "pinyinText" : "wú",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "do not",
   "etymology" : {
     "kind" : "pictograph"

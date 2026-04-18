@@ -4,7 +4,7 @@
   "name" : "丸",
   "strokes" : 3,
   "pinyinText" : "wán",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "pill/pellet",
   "etymology" : {
     "kind" : "pictograph"

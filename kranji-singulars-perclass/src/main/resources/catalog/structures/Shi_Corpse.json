@@ -4,7 +4,7 @@
   "name" : "尸",
   "strokes" : 3,
   "pinyinText" : "shī",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "body, corpse",
   "etymology" : {
     "kind" : "pictograph"

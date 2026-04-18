@@ -4,7 +4,7 @@
   "name" : "禺",
   "strokes" : 9,
   "pinyinText" : "yú",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "area (archaic)",
   "etymology" : {
     "kind" : "pictograph"

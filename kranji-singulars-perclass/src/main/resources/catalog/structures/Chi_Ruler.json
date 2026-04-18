@@ -4,7 +4,7 @@
   "name" : "尺",
   "strokes" : 4,
   "pinyinText" : "chǐ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "ruler, foot",
   "etymology" : {
     "kind" : "pictograph"

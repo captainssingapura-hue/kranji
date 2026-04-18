@@ -4,7 +4,7 @@
   "name" : "号",
   "strokes" : 5,
   "pinyinText" : "hào",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "number, sign",
   "etymology" : {
     "kind" : "pictograph"

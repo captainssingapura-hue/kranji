@@ -4,7 +4,7 @@
   "name" : "步",
   "strokes" : 7,
   "pinyinText" : "bù",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "step, walk",
   "etymology" : {
     "kind" : "pictograph"

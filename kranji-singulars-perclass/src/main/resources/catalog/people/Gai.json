@@ -4,7 +4,7 @@
   "name" : "丐",
   "strokes" : 4,
   "pinyinText" : "gài",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "beggar",
   "etymology" : {
     "kind" : "pictograph"

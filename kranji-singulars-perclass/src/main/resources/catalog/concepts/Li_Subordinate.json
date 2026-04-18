@@ -4,7 +4,7 @@
   "name" : "隶",
   "strokes" : 8,
   "pinyinText" : "lì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "subordinate, slave",
   "etymology" : {
     "kind" : "pictograph"

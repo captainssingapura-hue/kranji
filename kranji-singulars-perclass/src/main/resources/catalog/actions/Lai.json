@@ -4,7 +4,7 @@
   "name" : "来",
   "strokes" : 7,
   "pinyinText" : "lái",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "come",
   "etymology" : {
     "kind" : "pictograph"

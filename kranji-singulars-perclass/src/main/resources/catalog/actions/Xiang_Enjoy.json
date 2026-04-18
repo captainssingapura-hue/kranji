@@ -4,7 +4,7 @@
   "name" : "享",
   "strokes" : 8,
   "pinyinText" : "xiǎng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "enjoy",
   "etymology" : {
     "kind" : "pictograph"

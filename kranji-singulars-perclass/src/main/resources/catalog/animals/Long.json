@@ -4,7 +4,7 @@
   "name" : "龙",
   "strokes" : 5,
   "pinyinText" : "lóng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "dragon",
   "etymology" : {
     "kind" : "pictograph"

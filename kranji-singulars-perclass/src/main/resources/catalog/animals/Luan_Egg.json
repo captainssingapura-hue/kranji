@@ -4,7 +4,7 @@
   "name" : "卵",
   "strokes" : 7,
   "pinyinText" : "luǎn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "egg",
   "etymology" : {
     "kind" : "pictograph"

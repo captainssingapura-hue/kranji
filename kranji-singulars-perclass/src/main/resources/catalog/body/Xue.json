@@ -4,7 +4,7 @@
   "name" : "血",
   "strokes" : 6,
   "pinyinText" : "xuè",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "blood",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "声",
   "strokes" : 7,
   "pinyinText" : "shēng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "sound, voice",
   "etymology" : {
     "kind" : "pictograph"

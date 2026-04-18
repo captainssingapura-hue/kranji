@@ -4,7 +4,7 @@
   "name" : "又",
   "strokes" : 2,
   "pinyinText" : "yòu",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "again, also",
   "etymology" : {
     "kind" : "pictograph"

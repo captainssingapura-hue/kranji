@@ -4,7 +4,7 @@
   "name" : "果",
   "strokes" : 8,
   "pinyinText" : "guǒ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "fruit",
   "etymology" : {
     "kind" : "pictograph"

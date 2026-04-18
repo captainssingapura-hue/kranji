@@ -4,7 +4,7 @@
   "name" : "东",
   "strokes" : 5,
   "pinyinText" : "dōng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "east",
   "etymology" : {
     "kind" : "pictograph"

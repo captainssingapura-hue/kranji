@@ -4,7 +4,7 @@
   "name" : "卤",
   "strokes" : 7,
   "pinyinText" : "lǔ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "brine/halogen",
   "etymology" : {
     "kind" : "pictograph"

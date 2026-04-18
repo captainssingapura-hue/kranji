@@ -4,7 +4,7 @@
   "name" : "用",
   "strokes" : 5,
   "pinyinText" : "yòng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "use",
   "etymology" : {
     "kind" : "pictograph"

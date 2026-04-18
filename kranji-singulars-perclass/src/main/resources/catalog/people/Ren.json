@@ -4,7 +4,7 @@
   "name" : "人",
   "strokes" : 2,
   "pinyinText" : "rén",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "person",
   "etymology" : {
     "kind" : "pictograph"

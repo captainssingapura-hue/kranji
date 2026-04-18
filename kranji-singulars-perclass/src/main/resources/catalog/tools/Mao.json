@@ -4,7 +4,7 @@
   "name" : "矛",
   "strokes" : 5,
   "pinyinText" : "máo",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "spear",
   "etymology" : {
     "kind" : "pictograph"

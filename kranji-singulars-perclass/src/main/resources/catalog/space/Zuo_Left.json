@@ -4,7 +4,7 @@
   "name" : "左",
   "strokes" : 5,
   "pinyinText" : "zuǒ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "left",
   "etymology" : {
     "kind" : "pictograph"

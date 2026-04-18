@@ -1,10 +1,7 @@
 package kranji.demos;
 
-import kranji.common.CommonCharacters;
 import kranji.library.BasicSet;
-import kranji.library.LibraryMember;
 import kranji.singular.SingularFamiliesPerclass;
-import kranji.zi.ComposedZi;
 import kranji.zi.SingularBlock;
 import kranji.zi.SingularPart;
 import kranji.zi.SingularZi;
@@ -135,7 +132,11 @@ public final class ZiLookup {
     private static Map<String, String> buildIndex() {
         Map<String, String> found = new LinkedHashMap<>();
 
-        // Singular blocks (SingularZi + SingularPart + component parts)
+        // Singular blocks (SingularZi + SingularPart + component parts).
+        // ComposedZi content used to come from kranji-common; that module
+        // is being retired ahead of its per-class replacement, so composed
+        // characters are not indexed here for now — every composed char
+        // will report as Missing until the replacement lands.
         for (var member : BasicSet.INSTANCE.components()) {
             if (member instanceof SingularBlock sb) {
                 String glyph = sb.glyph();
@@ -146,23 +147,7 @@ public final class ZiLookup {
             }
         }
 
-        // Composed characters from kranji-common
-        for (ComposedZi zi : CommonCharacters.ALL) {
-            found.put(zi.character(), "ComposedZi (depth " + depthOf(zi) + ")");
-        }
-
         return found;
-    }
-
-    /** Rough depth estimate by checking which depth list contains the character. */
-    private static String depthOf(ComposedZi zi) {
-        String ch = zi.character();
-        for (var d1 : kranji.common.depth1.Depth1.ALL) if (d1.character().equals(ch)) return "1";
-        for (var d2 : kranji.common.depth2.Depth2.ALL) if (d2.character().equals(ch)) return "2";
-        for (var d3 : kranji.common.depth3.Depth3.ALL) if (d3.character().equals(ch)) return "3";
-        for (var d4 : kranji.common.depth4.Depth4.ALL) if (d4.character().equals(ch)) return "4";
-        for (var d5 : kranji.common.depth5.Depth5.ALL) if (d5.character().equals(ch)) return "5";
-        return "?";
     }
 
     /** True if the string looks like a file path rather than inline Chinese characters. */

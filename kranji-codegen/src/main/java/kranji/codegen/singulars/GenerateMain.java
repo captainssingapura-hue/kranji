@@ -160,13 +160,24 @@ public final class GenerateMain {
     }
 
     /**
-     * {@code materials} → {@code Materials}, {@code radicals} → {@code Radicals}.
-     * Simple capitalisation; the family directory names from
-     * {@link SnapshotMain} are already single lowercase words.
+     * {@code materials} → {@code MaterialsSingulars},
+     * {@code radicals} → {@code RadicalsSingulars}.
+     *
+     * <p>The {@code Singulars} suffix is deliberate: it prevents FQN
+     * collisions with legacy {@code kranji-singulars} classes that happen
+     * to already own the capitalised name (e.g. the legacy
+     * {@code kranji.singular.structures.Structures} is a grouping class
+     * with 100+ constants, while this module's aggregator for the same
+     * directory holds only {@code ALL}). Calling the per-class aggregator
+     * {@code Structures} would shadow that legacy class on the classpath
+     * and break every caller compiled against its fields.</p>
+     *
+     * <p>The family directory names from {@link SnapshotMain} are already
+     * single lowercase words.</p>
      */
     static String aggregatorSimpleName(String family) {
         if (family.isEmpty()) return family;
-        return Character.toUpperCase(family.charAt(0)) + family.substring(1);
+        return Character.toUpperCase(family.charAt(0)) + family.substring(1) + "Singulars";
     }
 
     /** Resolve {@code javaRoot / (pkg as path) / (className).java}. */

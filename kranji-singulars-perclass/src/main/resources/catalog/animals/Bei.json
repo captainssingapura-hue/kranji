@@ -4,7 +4,7 @@
   "name" : "贝",
   "strokes" : 4,
   "pinyinText" : "bèi",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "shell, cowrie",
   "etymology" : {
     "kind" : "pictograph"

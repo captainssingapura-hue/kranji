@@ -4,7 +4,7 @@
   "name" : "面",
   "strokes" : 9,
   "pinyinText" : "miàn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "face",
   "etymology" : {
     "kind" : "pictograph"

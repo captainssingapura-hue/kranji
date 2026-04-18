@@ -4,7 +4,7 @@
   "name" : "瓦",
   "strokes" : 4,
   "pinyinText" : "wǎ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "tile",
   "etymology" : {
     "kind" : "pictograph"

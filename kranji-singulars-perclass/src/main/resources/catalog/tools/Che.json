@@ -4,7 +4,7 @@
   "name" : "车",
   "strokes" : 4,
   "pinyinText" : "chē",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "vehicle",
   "etymology" : {
     "kind" : "pictograph"

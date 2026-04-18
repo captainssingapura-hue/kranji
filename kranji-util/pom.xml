@@ -14,8 +14,10 @@
         Developer utilities for the Kranji project. The first utility
         (existence-check) takes a JSON feed of Parts or Zi and reports
         which glyphs already have a strong-typed record implementation
-        in kranji-core / kranji-singulars / kranji-common, and which are
-        still missing — the starting point for adding new characters.
+        in kranji-core / kranji-singulars-perclass, and which are still
+        missing — the starting point for adding new characters. The
+        composed-Zi pool is empty pending a per-class replacement for
+        kranji-common, so every composed entry currently reports as missing.
     </description>
 
     <properties>
@@ -39,14 +41,12 @@
             <artifactId>kranji-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <!-- kranji-singulars no longer needed: the registry now loads via
+             kranji-singulars-perclass. Kept out of the dependency graph
+             entirely so nobody reaches for the legacy flat families. -->
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-singulars</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common</artifactId>
+            <artifactId>kranji-singulars-perclass</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

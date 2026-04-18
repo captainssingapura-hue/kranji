@@ -4,7 +4,7 @@
   "name" : "皮",
   "strokes" : 5,
   "pinyinText" : "pí",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "skin",
   "etymology" : {
     "kind" : "pictograph"

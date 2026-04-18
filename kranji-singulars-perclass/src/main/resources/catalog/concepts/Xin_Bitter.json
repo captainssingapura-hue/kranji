@@ -4,7 +4,7 @@
   "name" : "辛",
   "strokes" : 7,
   "pinyinText" : "xīn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "bitter, laborious",
   "etymology" : {
     "kind" : "pictograph"

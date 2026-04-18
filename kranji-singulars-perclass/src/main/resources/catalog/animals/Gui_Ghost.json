@@ -4,7 +4,7 @@
   "name" : "鬼",
   "strokes" : 9,
   "pinyinText" : "guǐ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "ghost/spirit",
   "etymology" : {
     "kind" : "pictograph"

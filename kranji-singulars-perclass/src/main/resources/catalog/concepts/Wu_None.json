@@ -4,7 +4,7 @@
   "name" : "无",
   "strokes" : 4,
   "pinyinText" : "wú",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "none, without",
   "etymology" : {
     "kind" : "pictograph"

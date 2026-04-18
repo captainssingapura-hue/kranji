@@ -4,7 +4,7 @@
   "name" : "且",
   "strokes" : 5,
   "pinyinText" : "qiě",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "moreover, and",
   "etymology" : {
     "kind" : "pictograph"

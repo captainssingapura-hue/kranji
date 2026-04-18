@@ -4,7 +4,7 @@
   "name" : "冉",
   "strokes" : 5,
   "pinyinText" : "rǎn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "slowly, gradually",
   "etymology" : {
     "kind" : "pictograph"

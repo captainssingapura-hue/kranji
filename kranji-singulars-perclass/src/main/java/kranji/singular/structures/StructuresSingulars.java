@@ -23,8 +23,8 @@ import kranji.singular.structures.x.Xue;
 
 import java.util.List;
 
-public final class Structures {
-    private Structures() {}
+public final class StructuresSingulars {
+    private StructuresSingulars() {}
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             Ba_Cling.INSTANCE,

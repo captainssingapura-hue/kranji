@@ -4,7 +4,7 @@
   "name" : "去",
   "strokes" : 5,
   "pinyinText" : "qù",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "go, leave",
   "etymology" : {
     "kind" : "pictograph"

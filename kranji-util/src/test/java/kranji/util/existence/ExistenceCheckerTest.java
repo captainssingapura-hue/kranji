@@ -12,8 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Runs the existence checker against the shared JSON fixtures and verifies
  * the report correctly partitions existing vs missing glyphs against the
- * real {@link StrongTypedRegistry} populated from {@code kranji-core},
- * {@code kranji-singulars}, and {@code kranji-common}.
+ * real {@link StrongTypedRegistry} populated from {@code kranji-core} and
+ * {@code kranji-singulars-perclass}.
+ *
+ * <p>The composed-Zi pool is intentionally empty in this configuration
+ * (the legacy {@code kranji-common} provider has been retired pending a
+ * per-class codegen replacement), so composed feed entries always report
+ * as missing — the tests here are tuned for that.</p>
  */
 final class ExistenceCheckerTest {
 
@@ -29,13 +34,15 @@ final class ExistenceCheckerTest {
     void registryExposesStrongTypedPools() {
         StrongTypedRegistry reg = StrongTypedRegistry.instance();
 
-        // All three pools populated from the real registries.
+        // Singular pools populated from the real registries.
         assertTrue(reg.singularZiCount()   > 0, "expected populated Zi pool");
         assertTrue(reg.singularPartCount() > 0, "expected populated Part pool");
-        assertTrue(reg.composedZiCount()   > 0, "expected populated Composed pool");
+        // Composed pool intentionally empty; see class javadoc.
+        assertEquals(0, reg.composedZiCount(), "composed pool should be empty");
 
-        // Known singletons — 日 is in kranji-singulars (NatureElements.Ri),
-        // 氵 is in kranji-core (WaterFamily.SanDianShui).
+        // Known singletons — 日 is in kranji-singulars-perclass
+        // (kranji.singular.nature.r.Ri), 氵 is in kranji-core
+        // (WaterFamily.SanDianShui).
         assertTrue(reg.hasSingularZi("日"),   "日 should be a typed SingularZi");
         assertTrue(reg.hasSingularPart("氵"), "氵 should be a typed SingularPart");
 

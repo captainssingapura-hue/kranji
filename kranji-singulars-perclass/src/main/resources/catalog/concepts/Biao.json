@@ -4,7 +4,7 @@
   "name" : "表",
   "strokes" : 8,
   "pinyinText" : "biǎo",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "surface, express",
   "etymology" : {
     "kind" : "pictograph"

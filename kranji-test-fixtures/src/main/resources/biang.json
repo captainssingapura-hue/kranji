@@ -7,7 +7,7 @@
       "strokes": 5,
       "radicalNo": 116,
       "pinyinText": "xué",
-      "pinyin": [{"initial":"x","final":"ue","tone":2}],
+      "pinyin": {"initial":"x","final":"ue","tone":2},
       "meaning": "cave",
       "etymology": {"kind":"pictograph"}
     },
@@ -17,7 +17,7 @@
       "strokes": 7,
       "radicalNo": 149,
       "pinyinText": "yán",
-      "pinyin": [{"initial":"y","final":"an","tone":2}],
+      "pinyin": {"initial":"y","final":"an","tone":2},
       "meaning": "speech",
       "etymology": {"kind":"pictograph"}
     },
@@ -27,7 +27,7 @@
       "strokes": 8,
       "radicalNo": 168,
       "pinyinText": "cháng",
-      "pinyin": [{"initial":"ch","final":"ang","tone":2}],
+      "pinyin": {"initial":"ch","final":"ang","tone":2},
       "meaning": "long",
       "etymology": {"kind":"pictograph"}
     },
@@ -37,7 +37,7 @@
       "strokes": 10,
       "radicalNo": 187,
       "pinyinText": "mǎ",
-      "pinyin": [{"initial":"m","final":"a","tone":3}],
+      "pinyin": {"initial":"m","final":"a","tone":3},
       "meaning": "horse",
       "etymology": {"kind":"pictograph"}
     },
@@ -47,7 +47,7 @@
       "strokes": 4,
       "radicalNo": 74,
       "pinyinText": "yuè",
-      "pinyin": [{"initial":"","final":"üe","tone":4}],
+      "pinyin": {"initial":"","final":"üe","tone":4},
       "meaning": "moon",
       "etymology": {"kind":"pictograph"}
     },
@@ -57,7 +57,7 @@
       "strokes": 4,
       "radicalNo": 61,
       "pinyinText": "xīn",
-      "pinyin": [{"initial":"x","final":"in","tone":1}],
+      "pinyin": {"initial":"x","final":"in","tone":1},
       "meaning": "heart",
       "etymology": {"kind":"pictograph"}
     },
@@ -67,7 +67,7 @@
       "strokes": 3,
       "radicalNo": 52,
       "pinyinText": "yāo",
-      "pinyin": [{"initial":"y","final":"ao","tone":1}],
+      "pinyin": {"initial":"y","final":"ao","tone":1},
       "meaning": "tiny",
       "etymology": {"kind":"pictograph"}
     }
@@ -96,7 +96,7 @@
       "ziCharForm": "unicode",
       "strokes": 58,
       "radicalNo": 162,
-      "pinyin": [{"initial":"b","final":"iang","tone":2}],
+      "pinyin": {"initial":"b","final":"iang","tone":2},
       "meaning": "biáng (a Shaanxi noodle)",
       "composition": {
         "style": "semi_enclosure_bottom_left",

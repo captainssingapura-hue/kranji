@@ -4,7 +4,7 @@
   "name" : "自",
   "strokes" : 6,
   "pinyinText" : "zì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "self/from",
   "etymology" : {
     "kind" : "pictograph"

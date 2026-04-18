@@ -28,7 +28,7 @@ final class CatalogLookupTest {
     void sameGlyphAcrossPools_allAndAny_returnsAll() {
         var shuiZi = new SingularZiJson(
                 "水", "U+6C34", "shui", 4, 85, "shuǐ",
-                List.of(new PinyinJson("sh", "uei", 3)),
+                new PinyinJson("sh", "uei", 3),
                 "water", new EtymologyJson.Pictograph());
         var shuiPart = new SingularPartJson("水", "水部首", 4, "shuǐ", "water (radical form)", null);
 
@@ -51,12 +51,12 @@ final class CatalogLookupTest {
 
     @Test
     void samePoolDuplicate_surfacesWarning_lastWins() throws Exception {
-        var v1 = new ComposedZiJson("清", ZiCharForm.LITERAL, 11, 85, List.of(), "clear (v1)",
+        var v1 = new ComposedZiJson("清", ZiCharForm.LITERAL, 11, 85, null, "clear (v1)",
                 new ComposedBlockJson("left_right", Map.of(
                         "left",  new BlockRefJson.GlyphRef("氵"),
                         "right", new BlockRefJson.GlyphRef("青"))),
                 new EtymologyJson.Pictograph());
-        var v2 = new ComposedZiJson("清", ZiCharForm.LITERAL, 11, 85, List.of(), "clear (v2)",
+        var v2 = new ComposedZiJson("清", ZiCharForm.LITERAL, 11, 85, null, "clear (v2)",
                 new ComposedBlockJson("left_right", Map.of(
                         "left",  new BlockRefJson.GlyphRef("氵"),
                         "right", new BlockRefJson.GlyphRef("青"))),
@@ -75,7 +75,7 @@ final class CatalogLookupTest {
 
     @Test
     void slotKeysMismatch_emitsWarning() throws Exception {
-        var bogus = new ComposedZiJson("X", ZiCharForm.LITERAL, 0, 0, List.of(), "",
+        var bogus = new ComposedZiJson("X", ZiCharForm.LITERAL, 0, 0, null, "",
                 new ComposedBlockJson("left_right", Map.of(
                         "top", new BlockRefJson.GlyphRef("Y"))),  // wrong key for left_right
                 new EtymologyJson.Pictograph());
@@ -90,7 +90,7 @@ final class CatalogLookupTest {
 
     @Test
     void unknownStyle_emitsWarning() throws Exception {
-        var bogus = new ComposedZiJson("X", ZiCharForm.LITERAL, 0, 0, List.of(), "",
+        var bogus = new ComposedZiJson("X", ZiCharForm.LITERAL, 0, 0, null, "",
                 new ComposedBlockJson("wraparound_spiral", Map.of(
                         "a", new BlockRefJson.GlyphRef("Y"))),
                 new EtymologyJson.Pictograph());
@@ -105,12 +105,12 @@ final class CatalogLookupTest {
 
     @Test
     void byStrokeCount_and_byRadical() {
-        var eightRadical72 = new ComposedZiJson("明", ZiCharForm.LITERAL, 8, 72, List.of(), "bright",
+        var eightRadical72 = new ComposedZiJson("明", ZiCharForm.LITERAL, 8, 72, null, "bright",
                 new ComposedBlockJson("left_right", Map.of(
                         "left",  new BlockRefJson.GlyphRef("日"),
                         "right", new BlockRefJson.GlyphRef("月"))),
                 new EtymologyJson.CompoundIndicative("sun + moon"));
-        var elevenRadical85 = new ComposedZiJson("清", ZiCharForm.LITERAL, 11, 85, List.of(), "clear",
+        var elevenRadical85 = new ComposedZiJson("清", ZiCharForm.LITERAL, 11, 85, null, "clear",
                 new ComposedBlockJson("left_right", Map.of(
                         "left",  new BlockRefJson.GlyphRef("氵"),
                         "right", new BlockRefJson.GlyphRef("青"))),

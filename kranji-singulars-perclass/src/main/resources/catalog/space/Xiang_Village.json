@@ -4,7 +4,7 @@
   "name" : "乡",
   "strokes" : 3,
   "pinyinText" : "xiāng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "village/countryside",
   "etymology" : {
     "kind" : "pictograph"

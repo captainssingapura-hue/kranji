@@ -4,7 +4,7 @@
   "name" : "些",
   "strokes" : 8,
   "pinyinText" : "xiē",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "some, a few",
   "etymology" : {
     "kind" : "pictograph"

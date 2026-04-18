@@ -4,7 +4,7 @@
   "name" : "古",
   "strokes" : 5,
   "pinyinText" : "gǔ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "ancient, old",
   "etymology" : {
     "kind" : "pictograph"

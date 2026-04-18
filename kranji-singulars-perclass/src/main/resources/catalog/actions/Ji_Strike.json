@@ -4,7 +4,7 @@
   "name" : "击",
   "strokes" : 5,
   "pinyinText" : "jī",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "strike/hit",
   "etymology" : {
     "kind" : "pictograph"

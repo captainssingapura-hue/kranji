@@ -4,7 +4,7 @@
   "name" : "丑",
   "strokes" : 4,
   "pinyinText" : "chǒu",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "ugly, clown",
   "etymology" : {
     "kind" : "pictograph"

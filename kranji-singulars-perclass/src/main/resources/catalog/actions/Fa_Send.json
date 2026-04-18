@@ -4,7 +4,7 @@
   "name" : "发",
   "strokes" : 5,
   "pinyinText" : "fā",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "send, emit",
   "etymology" : {
     "kind" : "pictograph"

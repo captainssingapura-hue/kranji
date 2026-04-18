@@ -4,7 +4,7 @@
   "name" : "玉",
   "strokes" : 5,
   "pinyinText" : "yù",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "jade",
   "etymology" : {
     "kind" : "pictograph"

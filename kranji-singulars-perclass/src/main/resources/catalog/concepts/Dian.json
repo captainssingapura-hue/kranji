@@ -4,7 +4,7 @@
   "name" : "典",
   "strokes" : 8,
   "pinyinText" : "diǎn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "classic, canon",
   "etymology" : {
     "kind" : "pictograph"

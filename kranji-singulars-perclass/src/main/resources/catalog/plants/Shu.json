@@ -4,7 +4,7 @@
   "name" : "束",
   "strokes" : 7,
   "pinyinText" : "shù",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "bundle, to bind",
   "etymology" : {
     "kind" : "pictograph"

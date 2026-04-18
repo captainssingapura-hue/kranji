@@ -4,7 +4,7 @@
   "name" : "券",
   "strokes" : 8,
   "pinyinText" : "quàn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "ticket, voucher",
   "etymology" : {
     "kind" : "pictograph"

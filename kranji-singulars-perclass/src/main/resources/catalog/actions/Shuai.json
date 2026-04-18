@@ -4,7 +4,7 @@
   "name" : "甩",
   "strokes" : 5,
   "pinyinText" : "shuǎi",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "fling/throw",
   "etymology" : {
     "kind" : "pictograph"

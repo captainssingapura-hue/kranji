@@ -10,7 +10,12 @@ public enum Body {
     @JsonProperty("a")   A("a"),
     @JsonProperty("o")   O("o"),
     @JsonProperty("e")   E("e"),
-    @JsonProperty("eh")  E_CARON("ê"),
+    // E_CARON is the phonemically-distinct "ê" nucleus used in "ie" / "üe".
+    // Its orthographic symbol is "e" — pinyin writes "ie", "üe", "jue", not
+    // "iê", "üê". The ê distinction is preserved in the enum value so
+    // graph-level grouping and phonetic analysis can still tell (I,E) from
+    // (I,E_CARON), but the display spelling is plain "e".
+    @JsonProperty("eh")  E_CARON("e"),
     @JsonProperty("i")   I("i"),
     @JsonProperty("u")   U("u"),
     @JsonProperty("v")   V("ü"),

@@ -4,7 +4,7 @@
   "name" : "丙",
   "strokes" : 5,
   "pinyinText" : "bǐng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "third Heavenly Stem",
   "etymology" : {
     "kind" : "pictograph"

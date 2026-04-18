@@ -4,7 +4,7 @@
   "name" : "广",
   "strokes" : 3,
   "pinyinText" : "guǎng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "wide, shelter",
   "etymology" : {
     "kind" : "pictograph"

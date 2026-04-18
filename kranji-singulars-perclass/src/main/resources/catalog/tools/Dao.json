@@ -4,7 +4,7 @@
   "name" : "刀",
   "strokes" : 2,
   "pinyinText" : "dāo",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "knife",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "仓",
   "strokes" : 4,
   "pinyinText" : "cāng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "warehouse, granary",
   "etymology" : {
     "kind" : "pictograph"

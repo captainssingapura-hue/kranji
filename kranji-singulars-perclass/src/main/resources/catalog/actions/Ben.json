@@ -4,7 +4,7 @@
   "name" : "奔",
   "strokes" : 8,
   "pinyinText" : "bēn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "rush, run",
   "etymology" : {
     "kind" : "pictograph"

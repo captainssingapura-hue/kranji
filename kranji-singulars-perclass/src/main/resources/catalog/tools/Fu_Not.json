@@ -4,7 +4,7 @@
   "name" : "弗",
   "strokes" : 5,
   "pinyinText" : "fú",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "not (archaic)",
   "etymology" : {
     "kind" : "pictograph"

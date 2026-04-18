@@ -4,7 +4,7 @@
   "name" : "申",
   "strokes" : 5,
   "pinyinText" : "shēn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "extend/state",
   "etymology" : {
     "kind" : "pictograph"

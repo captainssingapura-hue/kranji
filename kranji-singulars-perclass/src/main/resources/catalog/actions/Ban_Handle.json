@@ -4,7 +4,7 @@
   "name" : "办",
   "strokes" : 4,
   "pinyinText" : "bàn",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "handle/manage",
   "etymology" : {
     "kind" : "pictograph"

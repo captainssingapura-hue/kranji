@@ -38,8 +38,8 @@ import kranji.singular.nature.zh.Zhou_State;
 
 import java.util.List;
 
-public final class Nature {
-    private Nature() {}
+public final class NatureSingulars {
+    private NatureSingulars() {}
 
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             Ao_Concave.INSTANCE,

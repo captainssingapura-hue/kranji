@@ -17,7 +17,6 @@ import kranji.zi.SingularPart;
 import kranji.zi.SingularZi;
 import kranji.zi.ZiChar;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -31,12 +30,11 @@ import java.util.Objects;
  * The JSON wire format stores pinyin as flat strings ({@code initial},
  * {@code final}, {@code tone}) while the core hierarchy uses structured
  * {@link PinyinSyllable} with {@code Initial} / {@code Final} / {@code Tone}.
- * Parsing a {@code Final} spelling back into head/body/tail is non-trivial
- * and not attempted here: the JSON-sourced typed Zi/Part carry an empty
- * {@code List<PinyinSyllable>}. The display-form {@code pinyinText} is
- * preserved on the typed adapter and is usable for most downstream needs.
- * Full-fidelity round-trip is available in the reverse direction via
- * {@link TypedToUntyped}.
+ * For {@link SingularZi}, the typed adapter derives structured pinyin
+ * on demand from {@code pinyinText} via
+ * {@link PinyinSyllable#parse(String)}. For {@link ComposedZi}, the
+ * structured {@code PinyinJson} (if present) is reconstructed into a
+ * {@link PinyinSyllable} via numbered-form concatenation + parse.
  */
 public final class UntypedToTyped {
 
@@ -56,7 +54,6 @@ public final class UntypedToTyped {
                 json.strokes() == null ? 0 : json.strokes(),
                 json.radicalNo() == null ? 0 : json.radicalNo(),
                 json.meaning(),
-                List.<PinyinSyllable>of(),
                 etymology(json.etymology(), null)
         );
     }
@@ -169,13 +166,27 @@ public final class UntypedToTyped {
         ComposedBlock composition = composedBlock(json.composition(), resolver);
         return new ComposedZi(
                 ziChar(json.glyph(), json.ziCharForm()),
-                List.<PinyinSyllable>of(),
+                pinyinFrom(json.pinyin()),
                 json.strokes()   == null ? 0 : json.strokes(),
                 json.radicalNo() == null ? 0 : json.radicalNo(),
                 json.meaning() == null ? "" : json.meaning(),
                 composition,
                 etymology(json.etymology(), resolver)
         );
+    }
+
+    /**
+     * Reconstruct a {@link PinyinSyllable} from the flat JSON form. Returns
+     * {@code null} if no pinyin is supplied; otherwise concatenates the
+     * {@code initial}, {@code final}, and {@code tone} into the numbered
+     * display form and delegates to {@link PinyinSyllable#parse}.
+     */
+    public static PinyinSyllable pinyinFrom(kranji.json.dto.PinyinJson py) {
+        if (py == null) return null;
+        String initial = py.initial() == null ? "" : py.initial();
+        String fin     = py.fin()     == null ? "" : py.fin();
+        int    tone    = py.tone()    == null ? 5  : py.tone();
+        return PinyinSyllable.parse(initial + fin + tone);
     }
 
     // ── Etymology ─────────────────────────────────────────────────────

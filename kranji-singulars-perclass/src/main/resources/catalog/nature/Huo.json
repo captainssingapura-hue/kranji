@@ -4,7 +4,7 @@
   "name" : "火",
   "strokes" : 4,
   "pinyinText" : "huǒ",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "fire",
   "etymology" : {
     "kind" : "pictograph"

@@ -4,7 +4,7 @@
   "name" : "十",
   "strokes" : 2,
   "pinyinText" : "shí",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "ten",
   "etymology" : {
     "kind" : "pictograph"

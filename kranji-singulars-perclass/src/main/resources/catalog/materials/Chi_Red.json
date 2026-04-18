@@ -4,7 +4,7 @@
   "name" : "赤",
   "strokes" : 7,
   "pinyinText" : "chì",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "red, bare",
   "etymology" : {
     "kind" : "pictograph"

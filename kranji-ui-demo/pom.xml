@@ -19,9 +19,19 @@
     </properties>
 
     <dependencies>
+        <!-- kranji-common and kranji-singulars have been orphaned pending
+             the per-class codegen replacement for composed Zi. The UI now
+             pulls its block hierarchy from kranji-core and its singular
+             catalog from kranji-singulars-perclass; the composed browser
+             is temporarily empty until the replacement pool is populated. -->
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common</artifactId>
+            <artifactId>kranji-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-singulars-perclass</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

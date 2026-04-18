@@ -4,7 +4,7 @@
   "name" : "归",
   "strokes" : 5,
   "pinyinText" : "guī",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "return",
   "etymology" : {
     "kind" : "pictograph"

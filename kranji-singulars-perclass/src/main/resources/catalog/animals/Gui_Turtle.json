@@ -4,7 +4,7 @@
   "name" : "龟",
   "strokes" : 7,
   "pinyinText" : "guī",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "turtle",
   "etymology" : {
     "kind" : "pictograph"

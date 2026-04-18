@@ -4,7 +4,7 @@
   "name" : "中",
   "strokes" : 4,
   "pinyinText" : "zhōng",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "middle, center",
   "etymology" : {
     "kind" : "pictograph"

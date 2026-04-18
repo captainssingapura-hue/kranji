@@ -4,7 +4,7 @@
   "name" : "朱",
   "strokes" : 6,
   "pinyinText" : "zhū",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "vermillion (trunk of tree)",
   "etymology" : {
     "kind" : "pictograph"

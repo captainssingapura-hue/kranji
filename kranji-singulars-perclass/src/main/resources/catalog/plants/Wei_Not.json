@@ -4,7 +4,7 @@
   "name" : "未",
   "strokes" : 5,
   "pinyinText" : "wèi",
-  "pinyin" : [ ],
+  "pinyin" : null,
   "meaning" : "not yet",
   "etymology" : {
     "kind" : "pictograph"
