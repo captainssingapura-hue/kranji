@@ -1,8 +1,12 @@
 package kranji.codegen.singulars;
 
+import kranji.json.dto.SingularPartJson;
 import kranji.json.dto.SingularZiJson;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.TreeSet;
 
 /**
  * Stateless builder for the Java source text of a per-class singular Zi
@@ -86,6 +90,151 @@ public final class JavaEmitter {
         }
         sb.append(override("BasicSet", "library",   "BasicSet.INSTANCE"));
 
+        sb.append("}\n");
+        return sb.toString();
+    }
+
+    /**
+     * Emit a complete Java source file body for one {@link SingularPartJson}.
+     *
+     * <p>Parts that carry a non-null {@code derivedFrom} glyph (i.e. a
+     * linked {@link kranji.zi.SingularZi}) are emitted without the
+     * override and flagged with a {@code TODO} comment — resolving the
+     * linked class requires a typed reference that the JSON catalog does
+     * not currently carry. Today no part sets {@code derivedFrom}, so
+     * this path is rarely exercised.</p>
+     */
+    public static String emitSingularPart(String packageName,
+                                          String className,
+                                          SingularPartJson data) {
+        Objects.requireNonNull(packageName, "packageName");
+        Objects.requireNonNull(className, "className");
+        Objects.requireNonNull(data, "data");
+        if (data.glyph() == null || data.glyph().isEmpty()) {
+            throw new IllegalArgumentException("glyph is required");
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(AUTO_BANNER).append('\n');
+        sb.append("package ").append(packageName).append(";\n\n");
+        sb.append("import kranji.library.BasicSet;\n");
+        sb.append("import kranji.library.LibraryMember;\n");
+        sb.append("import kranji.zi.SingularPart;\n\n");
+        sb.append("public record ").append(className)
+                .append("() implements LibraryMember<BasicSet>, SingularPart {\n");
+        sb.append("    public static final ").append(className)
+                .append(" INSTANCE = new ").append(className).append("();\n\n");
+
+        sb.append(override("String", "glyph", quoteUnicode(data.glyph())));
+        if (data.name() != null && !data.name().equals(data.glyph())) {
+            sb.append(override("String", "name", quoteUnicode(data.name())));
+        }
+        if (data.meaning() != null && !data.meaning().isEmpty()) {
+            sb.append(override("String", "meaning", quoteJava(data.meaning())));
+        }
+        if (data.pinyinText() != null && !data.pinyinText().isEmpty()) {
+            sb.append(override("String", "pinyinText", quoteUnicode(data.pinyinText())));
+        }
+        if (data.strokes() != null && data.strokes() != 0) {
+            sb.append(override("int", "strokes", String.valueOf(data.strokes())));
+        }
+        if (data.derivedFrom() != null && !data.derivedFrom().isEmpty()) {
+            // No typed link exists in the JSON — a hand-port step is needed
+            // before this record can resolve the linked SingularZi.
+            sb.append("    // TODO hand-port: derivedFrom glyph ")
+                    .append(quoteUnicode(data.derivedFrom()))
+                    .append(" (requires SingularZi typed reference)\n");
+        }
+        sb.append(override("BasicSet", "library", "BasicSet.INSTANCE"));
+
+        sb.append("}\n");
+        return sb.toString();
+    }
+
+    /**
+     * Emit the per-family aggregator class (e.g. {@code Materials.java})
+     * that exposes an alphabetical {@code ALL} list of singleton
+     * references.
+     *
+     * @param packageName        the family package, e.g. {@code "kranji.singular.materials"}
+     * @param familyClassName    PascalCase name of the aggregator class, e.g. {@code "Materials"}
+     * @param memberFullyQualifiedNames fully-qualified names of each
+     *        member class ({@code "kranji.singular.materials.y.Yi_Clothes"}),
+     *        in the desired {@code ALL} order (caller sorts by class
+     *        simple name for determinism)
+     */
+    public static String emitFamilyAggregator(String packageName,
+                                              String familyClassName,
+                                              List<String> memberFullyQualifiedNames) {
+        Objects.requireNonNull(packageName, "packageName");
+        Objects.requireNonNull(familyClassName, "familyClassName");
+        Objects.requireNonNull(memberFullyQualifiedNames, "memberFullyQualifiedNames");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(AUTO_BANNER).append('\n');
+        sb.append("package ").append(packageName).append(";\n\n");
+        sb.append("import kranji.library.BasicSet;\n");
+        sb.append("import kranji.library.LibraryMember;\n\n");
+        // Deterministic imports: alphabetical by FQN.
+        List<String> imports = new ArrayList<>(new TreeSet<>(memberFullyQualifiedNames));
+        for (String fqn : imports) {
+            sb.append("import ").append(fqn).append(";\n");
+        }
+        sb.append("\nimport java.util.List;\n\n");
+        sb.append("public final class ").append(familyClassName).append(" {\n");
+        sb.append("    private ").append(familyClassName).append("() {}\n\n");
+        sb.append("    public static final List<LibraryMember<BasicSet>> ALL = List.of(\n");
+        for (int i = 0; i < memberFullyQualifiedNames.size(); i++) {
+            String fqn = memberFullyQualifiedNames.get(i);
+            String simple = fqn.substring(fqn.lastIndexOf('.') + 1);
+            sb.append("            ").append(simple).append(".INSTANCE");
+            sb.append(i == memberFullyQualifiedNames.size() - 1 ? ");\n" : ",\n");
+        }
+        sb.append("}\n");
+        return sb.toString();
+    }
+
+    /**
+     * Emit the top-level {@code SingularFamiliesPerclass} registrar —
+     * the sibling of {@code kranji.singular.SingularFamilies} whose role
+     * is to contribute every per-class family's {@code ALL} into a
+     * {@code BasicSet}.
+     *
+     * @param packageName       the registrar's package, e.g. {@code "kranji.singular"}
+     * @param aggregatorFQNs    fully-qualified names of each per-family
+     *                          aggregator class (e.g. {@code "kranji.singular.materials.Materials"})
+     */
+    public static String emitRegistrar(String packageName,
+                                       List<String> aggregatorFQNs) {
+        Objects.requireNonNull(packageName, "packageName");
+        Objects.requireNonNull(aggregatorFQNs, "aggregatorFQNs");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(AUTO_BANNER).append('\n');
+        sb.append("package ").append(packageName).append(";\n\n");
+        sb.append("import kranji.library.BasicSet;\n");
+        List<String> imports = new ArrayList<>(new TreeSet<>(aggregatorFQNs));
+        for (String fqn : imports) {
+            sb.append("import ").append(fqn).append(";\n");
+        }
+        sb.append("\n");
+        sb.append("/**\n");
+        sb.append(" * Registers every per-class singular family into a {@link BasicSet}.\n");
+        sb.append(" *\n");
+        sb.append(" * <p>Sibling of {@link SingularFamilies}; only one of the two may be\n");
+        sb.append(" * active at a time per JVM to avoid duplicate registration.</p>\n");
+        sb.append(" */\n");
+        sb.append("public final class SingularFamiliesPerclass {\n");
+        sb.append("    private static volatile boolean loaded = false;\n\n");
+        sb.append("    private SingularFamiliesPerclass() {}\n\n");
+        sb.append("    public static void registerInto(BasicSet basicSet) {\n");
+        sb.append("        if (loaded) return;\n");
+        sb.append("        loaded = true;\n\n");
+        for (String fqn : imports) {
+            String simple = fqn.substring(fqn.lastIndexOf('.') + 1);
+            sb.append("        basicSet.addAll(").append(simple).append(".ALL);\n");
+        }
+        sb.append("    }\n");
         sb.append("}\n");
         return sb.toString();
     }
