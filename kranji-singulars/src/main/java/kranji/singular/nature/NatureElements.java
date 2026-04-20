@@ -1,10 +1,10 @@
 package kranji.singular.nature;
 
 import kranji.classification.BlockRole;
-import kranji.zi.ComposedBlock.FullEnclosure;
-import kranji.zi.ComposedBlock.LeftRight;
-import kranji.zi.ComposedBlock.TopBottom;
-import kranji.zi.ComposedBlock.TopMiddleBottom;
+import kranji.zi.CompositionLayout.FullEnclosure;
+import kranji.zi.CompositionLayout.LeftRight;
+import kranji.zi.CompositionLayout.TopBottom;
+import kranji.zi.CompositionLayout.TopMiddleBottom;
 import kranji.library.LibraryMember;
 import kranji.layout.LayoutHint;
 import kranji.layout.LayoutHint.SvgShape;

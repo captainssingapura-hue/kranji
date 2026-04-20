@@ -1,0 +1,23 @@
+{
+  "glyph" : "疗",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 104,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "iao",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "疒",
+      "content" : "了"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "疒",
+    "phoneticPart" : "了"
+  }
+}

@@ -6,10 +6,10 @@ import kranji.layout.LayoutHint;
 import kranji.layout.Politeness;
 import kranji.library.BasicSet;
 import kranji.library.LibraryMember;
-import kranji.zi.ComposedBlock.FullEnclosure;
-import kranji.zi.ComposedBlock.LeftRight;
-import kranji.zi.ComposedBlock.TopBottom;
-import kranji.zi.ComposedBlock.TopMiddleBottom;
+import kranji.zi.CompositionLayout.FullEnclosure;
+import kranji.zi.CompositionLayout.LeftRight;
+import kranji.zi.CompositionLayout.TopBottom;
+import kranji.zi.CompositionLayout.TopMiddleBottom;
 import kranji.zi.SingularZi;
 
 /** \u53E3 — mouth. Yielding in side/bottom/middle positions, inner-scaled as bottom/enclosure. */

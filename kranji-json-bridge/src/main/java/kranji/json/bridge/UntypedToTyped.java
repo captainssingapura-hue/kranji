@@ -11,7 +11,9 @@ import kranji.json.dto.ZiCharForm;
 import kranji.pinyin.PinyinSyllable;
 import kranji.zi.BlockStructure;
 import kranji.zi.ComposedBlock;
+import kranji.zi.ComposedPart;
 import kranji.zi.ComposedZi;
+import kranji.zi.CompositionLayout;
 import kranji.zi.SingularBlock;
 import kranji.zi.SingularPart;
 import kranji.zi.SingularZi;
@@ -109,49 +111,49 @@ public final class UntypedToTyped {
             case BlockRefJson.InlineSingular(SingularPartJson part) ->
                     singularPart(part);
             case BlockRefJson.InlineComposed(ComposedBlockJson block) ->
-                    composedBlock(block, resolver);
+                    new ComposedPart(composedBlock(block, resolver));
         };
     }
 
-    /** Convert a {@link ComposedBlockJson} into a typed {@link ComposedBlock}. */
-    public static ComposedBlock composedBlock(ComposedBlockJson json, BlockResolver resolver) {
+    /** Convert a {@link ComposedBlockJson} into a typed {@link CompositionLayout}. */
+    public static CompositionLayout composedBlock(ComposedBlockJson json, BlockResolver resolver) {
         Objects.requireNonNull(json, "json");
         Map<String, BlockRefJson> slots = json.slots();
         String style = json.style();
         return switch (style) {
-            case "left_right" -> new ComposedBlock.LeftRight(
+            case "left_right" -> new CompositionLayout.LeftRight(
                     block(slots, "left",  resolver),
                     block(slots, "right", resolver));
-            case "top_bottom" -> new ComposedBlock.TopBottom(
+            case "top_bottom" -> new CompositionLayout.TopBottom(
                     block(slots, "top",    resolver),
                     block(slots, "bottom", resolver));
-            case "left_middle_right" -> new ComposedBlock.LeftMiddleRight(
+            case "left_middle_right" -> new CompositionLayout.LeftMiddleRight(
                     block(slots, "left",   resolver),
                     block(slots, "middle", resolver),
                     block(slots, "right",  resolver));
-            case "top_middle_bottom" -> new ComposedBlock.TopMiddleBottom(
+            case "top_middle_bottom" -> new CompositionLayout.TopMiddleBottom(
                     block(slots, "top",    resolver),
                     block(slots, "middle", resolver),
                     block(slots, "bottom", resolver));
-            case "full_enclosure" -> new ComposedBlock.FullEnclosure(
+            case "full_enclosure" -> new CompositionLayout.FullEnclosure(
                     block(slots, "outer", resolver),
                     block(slots, "inner", resolver));
-            case "semi_enclosure_upper_left" -> new ComposedBlock.SemiEnclosureUpperLeft(
+            case "semi_enclosure_upper_left" -> new CompositionLayout.SemiEnclosureUpperLeft(
                     block(slots, "wrapper", resolver),
                     block(slots, "content", resolver));
-            case "semi_enclosure_upper_right" -> new ComposedBlock.SemiEnclosureUpperRight(
+            case "semi_enclosure_upper_right" -> new CompositionLayout.SemiEnclosureUpperRight(
                     block(slots, "wrapper", resolver),
                     block(slots, "content", resolver));
-            case "semi_enclosure_bottom_left" -> new ComposedBlock.SemiEnclosureBottomLeft(
+            case "semi_enclosure_bottom_left" -> new CompositionLayout.SemiEnclosureBottomLeft(
                     block(slots, "wrapper", resolver),
                     block(slots, "content", resolver));
-            case "semi_enclosure_top_three" -> new ComposedBlock.SemiEnclosureTopThree(
+            case "semi_enclosure_top_three" -> new CompositionLayout.SemiEnclosureTopThree(
                     block(slots, "wrapper", resolver),
                     block(slots, "content", resolver));
-            case "semi_enclosure_bottom_three" -> new ComposedBlock.SemiEnclosureBottomThree(
+            case "semi_enclosure_bottom_three" -> new CompositionLayout.SemiEnclosureBottomThree(
                     block(slots, "wrapper", resolver),
                     block(slots, "content", resolver));
-            case "semi_enclosure_left_three" -> new ComposedBlock.SemiEnclosureLeftThree(
+            case "semi_enclosure_left_three" -> new CompositionLayout.SemiEnclosureLeftThree(
                     block(slots, "wrapper", resolver),
                     block(slots, "content", resolver));
             default -> throw new IllegalArgumentException(
@@ -163,7 +165,7 @@ public final class UntypedToTyped {
     public static ComposedZi composedZi(ComposedZiJson json, BlockResolver resolver) {
         Objects.requireNonNull(json, "json");
         Objects.requireNonNull(resolver, "resolver");
-        ComposedBlock composition = composedBlock(json.composition(), resolver);
+        CompositionLayout composition = composedBlock(json.composition(), resolver);
         return new ComposedZi(
                 ziChar(json.glyph(), json.ziCharForm()),
                 pinyinFrom(json.pinyin()),

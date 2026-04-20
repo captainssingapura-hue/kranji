@@ -1,0 +1,29 @@
+{
+  "glyph" : "式",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 56,
+  "pinyin" : {
+    "initial" : "sh",
+    "final" : "",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "一",
+          "bottom" : "工"
+        }
+      },
+      "right" : "弋"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "工",
+    "phoneticPart" : "弋"
+  }
+}

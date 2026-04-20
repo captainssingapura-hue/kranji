@@ -1,0 +1,23 @@
+{
+  "glyph" : "仗",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "ang",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "丈"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "丈"
+  }
+}

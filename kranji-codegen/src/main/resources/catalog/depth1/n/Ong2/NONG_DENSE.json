@@ -1,0 +1,23 @@
+{
+  "glyph" : "浓",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 85,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "ong",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "氵",
+      "right" : "农"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "氵",
+    "phoneticPart" : "农"
+  }
+}

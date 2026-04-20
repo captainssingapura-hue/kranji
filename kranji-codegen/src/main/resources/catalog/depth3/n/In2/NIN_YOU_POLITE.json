@@ -1,0 +1,22 @@
+{
+  "glyph" : "您",
+  "ziCharForm" : "unicode",
+  "strokes" : 11,
+  "radicalNo" : 61,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "in",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "你",
+      "bottom" : "心"
+    }
+  },
+  "etymology" : {
+    "kind" : "derivative_cognate",
+    "cognateGlyph" : "你"
+  }
+}

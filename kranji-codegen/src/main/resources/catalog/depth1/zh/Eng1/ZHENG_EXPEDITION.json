@@ -1,0 +1,23 @@
+{
+  "glyph" : "征",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 60,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "eng",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "彳",
+      "right" : "正"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "彳",
+    "phoneticPart" : "正"
+  }
+}

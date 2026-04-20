@@ -5,7 +5,7 @@ import kranji.classification.BlockRole;
 import kranji.layout.Politeness;
 import kranji.library.BasicSet;
 import kranji.library.LibraryMember;
-import kranji.zi.ComposedBlock.LeftRight;
+import kranji.zi.CompositionLayout.LeftRight;
 import kranji.zi.SingularZi;
 
 /** \u77F3 — stone. Yielding as left. */

@@ -1,0 +1,23 @@
+{
+  "glyph" : "若",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 140,
+  "pinyin" : {
+    "initial" : "r",
+    "final" : "uo",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "艹",
+      "bottom" : "右"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "艹",
+    "phoneticPart" : "右"
+  }
+}

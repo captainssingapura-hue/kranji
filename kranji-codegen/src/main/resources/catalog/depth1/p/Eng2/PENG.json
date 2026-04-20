@@ -1,0 +1,22 @@
+{
+  "glyph" : "朋",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 74,
+  "pinyin" : {
+    "initial" : "p",
+    "final" : "eng",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "月",
+      "right" : "月"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "月(moon) + 月(moon) → friends"
+  }
+}

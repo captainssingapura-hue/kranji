@@ -1,0 +1,23 @@
+{
+  "glyph" : "运",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 162,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "uen",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_left",
+    "slots" : {
+      "wrapper" : "辶",
+      "content" : "云"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "辶",
+    "phoneticPart" : "云"
+  }
+}

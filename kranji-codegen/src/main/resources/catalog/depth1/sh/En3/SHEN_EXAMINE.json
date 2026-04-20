@@ -1,0 +1,23 @@
+{
+  "glyph" : "审",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 40,
+  "pinyin" : {
+    "initial" : "sh",
+    "final" : "en",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "宀",
+      "bottom" : "申"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "宀",
+    "phoneticPart" : "申"
+  }
+}

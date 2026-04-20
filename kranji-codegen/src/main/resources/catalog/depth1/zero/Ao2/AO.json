@@ -1,0 +1,23 @@
+{
+  "glyph" : "遨",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 162,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "ao",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_left",
+    "slots" : {
+      "wrapper" : "辶",
+      "content" : "敖"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "辶",
+    "phoneticPart" : "敖"
+  }
+}

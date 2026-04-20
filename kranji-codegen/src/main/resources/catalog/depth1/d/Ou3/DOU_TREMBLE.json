@@ -1,0 +1,23 @@
+{
+  "glyph" : "抖",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "ou",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : "斗"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "斗"
+  }
+}

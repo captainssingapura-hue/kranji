@@ -1,0 +1,23 @@
+{
+  "glyph" : "饭",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 184,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "an",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "饣",
+      "right" : "反"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "饣",
+    "phoneticPart" : "反"
+  }
+}

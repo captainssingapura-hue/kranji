@@ -1,0 +1,22 @@
+{
+  "glyph" : "写",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 14,
+  "pinyin" : {
+    "initial" : "x",
+    "final" : "ie",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "冖",
+      "bottom" : "与"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "冖(cover) + 与(give) → write"
+  }
+}

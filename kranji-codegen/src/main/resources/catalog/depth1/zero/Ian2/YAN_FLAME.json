@@ -1,0 +1,22 @@
+{
+  "glyph" : "炎",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 86,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "ian",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "火",
+      "bottom" : "火"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "火(fire) + 火(fire) → flame"
+  }
+}

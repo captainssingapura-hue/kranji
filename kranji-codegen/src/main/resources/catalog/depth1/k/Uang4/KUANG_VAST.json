@@ -1,0 +1,23 @@
+{
+  "glyph" : "旷",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 72,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "uang",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "日",
+      "right" : "广"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "日",
+    "phoneticPart" : "广"
+  }
+}

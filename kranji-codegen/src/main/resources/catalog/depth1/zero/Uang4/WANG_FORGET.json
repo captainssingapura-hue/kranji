@@ -1,0 +1,23 @@
+{
+  "glyph" : "忘",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 61,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "uang",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "亡",
+      "bottom" : "心"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "心",
+    "phoneticPart" : "亡"
+  }
+}

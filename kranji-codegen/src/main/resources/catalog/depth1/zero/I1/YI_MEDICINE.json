@@ -1,0 +1,22 @@
+{
+  "glyph" : "医",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 22,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "i",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "semi_enclosure_left_three",
+    "slots" : {
+      "wrapper" : "匚",
+      "content" : "矢"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "匚(box) + 矢(arrow) → remove arrow → medicine"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "glyph" : "孔",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 39,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "ong",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "子",
+      "right" : "乚"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "子(child) + 乚(opening) → hole"
+  }
+}

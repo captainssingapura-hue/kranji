@@ -28,6 +28,12 @@
             <artifactId>kranji-singulars</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <!-- Depth-5 pulls in depth-4 → depth-3 → depth-2 → depth-1 → base transitively. -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-depth5</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

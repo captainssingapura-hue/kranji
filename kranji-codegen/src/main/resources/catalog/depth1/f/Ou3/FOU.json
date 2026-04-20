@@ -1,0 +1,22 @@
+{
+  "glyph" : "否",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "ou",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "不",
+      "bottom" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "不(not) + 口(mouth) → deny"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "连",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 162,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "ian",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_left",
+    "slots" : {
+      "wrapper" : "辶",
+      "content" : "车"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "辶",
+    "phoneticPart" : "车"
+  }
+}

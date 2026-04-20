@@ -1,0 +1,23 @@
+{
+  "glyph" : "脚",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 130,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "iao",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "月",
+      "right" : "却"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "月",
+    "phoneticPart" : "却"
+  }
+}

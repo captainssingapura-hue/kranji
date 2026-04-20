@@ -1,0 +1,23 @@
+{
+  "glyph" : "态",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 61,
+  "pinyin" : {
+    "initial" : "t",
+    "final" : "ai",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "太",
+      "bottom" : "心"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "心",
+    "phoneticPart" : "太"
+  }
+}

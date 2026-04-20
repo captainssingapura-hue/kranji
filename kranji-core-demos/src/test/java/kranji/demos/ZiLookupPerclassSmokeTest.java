@@ -6,7 +6,7 @@ import kranji.layout.Politeness;
 import kranji.library.BasicSet;
 import kranji.library.LibraryMember;
 import kranji.singular.SingularFamiliesPerclass;
-import kranji.zi.ComposedBlock.LeftRight;
+import kranji.zi.CompositionLayout.LeftRight;
 import kranji.zi.SingularBlock;
 import kranji.zi.SingularZi;
 import org.junit.jupiter.api.BeforeAll;

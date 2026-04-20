@@ -1,0 +1,23 @@
+{
+  "glyph" : "仇",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "ch",
+    "final" : "ou",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "九"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "九"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "glyph" : "器",
+  "ziCharForm" : "unicode",
+  "strokes" : 16,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "i",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_middle_bottom",
+    "slots" : {
+      "top" : {
+        "style" : "left_right",
+        "slots" : {
+          "left" : "口",
+          "right" : "口"
+        }
+      },
+      "middle" : "犬",
+      "bottom" : {
+        "style" : "left_right",
+        "slots" : {
+          "left" : "口",
+          "right" : "口"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "四口(four mouths/openings) + 犬(dog as guard) → vessel, instrument"
+  }
+}

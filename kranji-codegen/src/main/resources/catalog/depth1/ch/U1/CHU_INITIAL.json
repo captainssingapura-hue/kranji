@@ -1,0 +1,22 @@
+{
+  "glyph" : "初",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 18,
+  "pinyin" : {
+    "initial" : "ch",
+    "final" : "u",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "衤",
+      "right" : "刀"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "衤(clothes) + 刀(knife) → cut cloth → begin"
+  }
+}

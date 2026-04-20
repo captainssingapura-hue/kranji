@@ -1,0 +1,23 @@
+{
+  "glyph" : "怒",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 61,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "奴",
+      "bottom" : "心"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "心",
+    "phoneticPart" : "奴"
+  }
+}

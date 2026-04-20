@@ -1,0 +1,23 @@
+{
+  "glyph" : "删",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 18,
+  "pinyin" : {
+    "initial" : "sh",
+    "final" : "an",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "册",
+      "right" : "刂"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "刂",
+    "phoneticPart" : "册"
+  }
+}

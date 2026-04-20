@@ -1,0 +1,23 @@
+{
+  "glyph" : "始",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 38,
+  "pinyin" : {
+    "initial" : "sh",
+    "final" : "",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "女",
+      "right" : "台"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "女",
+    "phoneticPart" : "台"
+  }
+}

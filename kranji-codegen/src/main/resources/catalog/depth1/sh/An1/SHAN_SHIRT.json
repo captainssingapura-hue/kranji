@@ -1,0 +1,23 @@
+{
+  "glyph" : "衫",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 145,
+  "pinyin" : {
+    "initial" : "sh",
+    "final" : "an",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "衤",
+      "right" : "彡"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "衤",
+    "phoneticPart" : "彡"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "glyph" : "凶",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 17,
+  "pinyin" : {
+    "initial" : "x",
+    "final" : "iong",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_three",
+    "slots" : {
+      "wrapper" : "凵",
+      "content" : "㐅"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "凵(pit) + 㐅(cross/wound) → fierce, ominous"
+  }
+}

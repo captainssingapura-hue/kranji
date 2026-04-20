@@ -1,0 +1,23 @@
+{
+  "glyph" : "佣",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "iong",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "用"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "用"
+  }
+}

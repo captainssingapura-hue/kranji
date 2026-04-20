@@ -1,0 +1,22 @@
+{
+  "glyph" : "所",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 63,
+  "pinyin" : {
+    "initial" : "s",
+    "final" : "uo",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "户",
+      "right" : "斤"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "户(door) + 斤(axe) → place"
+  }
+}

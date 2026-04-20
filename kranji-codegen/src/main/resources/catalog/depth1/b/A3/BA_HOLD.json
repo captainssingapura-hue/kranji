@@ -1,0 +1,23 @@
+{
+  "glyph" : "把",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "b",
+    "final" : "a",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : "巴"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "巴"
+  }
+}

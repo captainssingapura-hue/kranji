@@ -1,0 +1,22 @@
+{
+  "glyph" : "析",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "x",
+    "final" : "i",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "木",
+      "right" : "斤"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "木(wood) + 斤(axe) → split/analyze"
+  }
+}

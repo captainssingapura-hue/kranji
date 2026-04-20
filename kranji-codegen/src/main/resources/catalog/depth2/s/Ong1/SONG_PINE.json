@@ -1,0 +1,23 @@
+{
+  "glyph" : "松",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "s",
+    "final" : "ong",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "木",
+      "right" : "公"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "木",
+    "phoneticPart" : "公"
+  }
+}

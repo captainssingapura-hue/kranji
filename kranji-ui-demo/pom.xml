@@ -19,11 +19,11 @@
     </properties>
 
     <dependencies>
-        <!-- kranji-common and kranji-singulars have been orphaned pending
-             the per-class codegen replacement for composed Zi. The UI now
-             pulls its block hierarchy from kranji-core and its singular
-             catalog from kranji-singulars-perclass; the composed browser
-             is temporarily empty until the replacement pool is populated. -->
+        <!-- Composed records are pulled directly from the per-pinyin
+             codegen modules kranji-common-depth{1..5}; the singular
+             catalog comes from kranji-singulars-perclass. Depth-4 is
+             empty today but pulled in for shape-consistency (its ALL
+             list is just empty). -->
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-core</artifactId>
@@ -32,6 +32,31 @@
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-singulars-perclass</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-depth1</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-depth2</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-depth3</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-depth4</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-depth5</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

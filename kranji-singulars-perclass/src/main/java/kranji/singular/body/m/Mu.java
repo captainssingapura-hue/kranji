@@ -6,8 +6,8 @@ import kranji.layout.LayoutHint;
 import kranji.layout.Politeness;
 import kranji.library.BasicSet;
 import kranji.library.LibraryMember;
-import kranji.zi.ComposedBlock.LeftRight;
-import kranji.zi.ComposedBlock.TopBottom;
+import kranji.zi.CompositionLayout.LeftRight;
+import kranji.zi.CompositionLayout.TopBottom;
 import kranji.zi.SingularZi;
 
 /** \u76EE — eye. Yielding as left/bottom, inner-scaled as bottom. */

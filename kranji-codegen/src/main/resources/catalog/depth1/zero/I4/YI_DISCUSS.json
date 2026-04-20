@@ -1,0 +1,23 @@
+{
+  "glyph" : "议",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 149,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "i",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "讠",
+      "right" : "义"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "讠",
+    "phoneticPart" : "义"
+  }
+}

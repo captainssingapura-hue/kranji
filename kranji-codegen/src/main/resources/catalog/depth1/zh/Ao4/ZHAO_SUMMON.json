@@ -1,0 +1,23 @@
+{
+  "glyph" : "召",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "ao",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "刀",
+      "bottom" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "口",
+    "phoneticPart" : "刀"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "依",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "i",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "衣"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "衣"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "彻",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 60,
+  "pinyin" : {
+    "initial" : "ch",
+    "final" : "e",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "彳",
+      "right" : "切"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "彳",
+    "phoneticPart" : "切"
+  }
+}

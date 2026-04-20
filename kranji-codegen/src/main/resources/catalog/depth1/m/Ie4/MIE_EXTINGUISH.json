@@ -1,0 +1,22 @@
+{
+  "glyph" : "灭",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 86,
+  "pinyin" : {
+    "initial" : "m",
+    "final" : "ie",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "一",
+      "bottom" : "火"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "一(cover) + 火(fire) → extinguish"
+  }
+}

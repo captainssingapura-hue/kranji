@@ -1,0 +1,22 @@
+{
+  "glyph" : "弄",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 55,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "ong",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "王",
+      "bottom" : "廾"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "王(jade) + 廾(two hands) → handle jade → play with"
+  }
+}

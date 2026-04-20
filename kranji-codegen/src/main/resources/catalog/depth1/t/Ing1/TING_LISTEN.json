@@ -1,0 +1,23 @@
+{
+  "glyph" : "听",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "t",
+    "final" : "ing",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "口",
+      "right" : "斤"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "口",
+    "phoneticPart" : "斤"
+  }
+}

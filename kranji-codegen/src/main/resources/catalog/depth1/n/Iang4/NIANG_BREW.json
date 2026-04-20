@@ -1,0 +1,23 @@
+{
+  "glyph" : "酿",
+  "ziCharForm" : "unicode",
+  "strokes" : 14,
+  "radicalNo" : 164,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "iang",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "酉",
+      "right" : "良"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "酉",
+    "phoneticPart" : "良"
+  }
+}

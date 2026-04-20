@@ -1,0 +1,23 @@
+{
+  "glyph" : "坛",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 32,
+  "pinyin" : {
+    "initial" : "t",
+    "final" : "an",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "土",
+      "right" : "云"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "土",
+    "phoneticPart" : "云"
+  }
+}

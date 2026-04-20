@@ -1,0 +1,23 @@
+{
+  "glyph" : "忌",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 61,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "i",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "己",
+      "bottom" : "心"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "心",
+    "phoneticPart" : "己"
+  }
+}

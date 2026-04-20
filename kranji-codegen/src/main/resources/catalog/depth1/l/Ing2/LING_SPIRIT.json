@@ -1,0 +1,23 @@
+{
+  "glyph" : "灵",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 86,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "ing",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "彐",
+      "bottom" : "火"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "火",
+    "phoneticPart" : "彐"
+  }
+}

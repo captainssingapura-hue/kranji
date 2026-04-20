@@ -1,0 +1,28 @@
+{
+  "glyph" : "别",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 18,
+  "pinyin" : {
+    "initial" : "b",
+    "final" : "ie",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "口",
+          "bottom" : "力"
+        }
+      },
+      "right" : "刂"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "口(mouth) + 力(force) + 刂(knife) → separate"
+  }
+}

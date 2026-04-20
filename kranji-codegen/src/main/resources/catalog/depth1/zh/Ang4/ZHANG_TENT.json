@@ -1,0 +1,23 @@
+{
+  "glyph" : "帐",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 50,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "ang",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "巾",
+      "right" : "长"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "巾",
+    "phoneticPart" : "长"
+  }
+}

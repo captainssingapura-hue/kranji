@@ -1,0 +1,23 @@
+{
+  "glyph" : "饥",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 184,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "i",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "饣",
+      "right" : "几"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "饣",
+    "phoneticPart" : "几"
+  }
+}

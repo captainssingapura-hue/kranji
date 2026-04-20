@@ -1,0 +1,23 @@
+{
+  "glyph" : "图",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 31,
+  "pinyin" : {
+    "initial" : "t",
+    "final" : "u",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "full_enclosure",
+    "slots" : {
+      "outer" : "囗",
+      "inner" : "冬"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "囗",
+    "phoneticPart" : "冬"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "泥",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 85,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "i",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "氵",
+      "right" : "尼"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "氵",
+    "phoneticPart" : "尼"
+  }
+}

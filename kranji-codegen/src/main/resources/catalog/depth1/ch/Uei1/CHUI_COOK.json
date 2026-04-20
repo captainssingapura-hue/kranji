@@ -1,0 +1,23 @@
+{
+  "glyph" : "炔",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 86,
+  "pinyin" : {
+    "initial" : "ch",
+    "final" : "uei",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "火",
+      "right" : "欠"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "火",
+    "phoneticPart" : "欠"
+  }
+}

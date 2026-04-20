@@ -1,0 +1,22 @@
+{
+  "glyph" : "包",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 20,
+  "pinyin" : {
+    "initial" : "b",
+    "final" : "ao",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_right",
+    "slots" : {
+      "wrapper" : "勹",
+      "content" : "巳"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "勹(wrap) + 巳(contents) → package, wrap"
+  }
+}

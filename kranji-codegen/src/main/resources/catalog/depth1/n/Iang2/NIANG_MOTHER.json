@@ -1,0 +1,23 @@
+{
+  "glyph" : "娘",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 38,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "iang",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "女",
+      "right" : "良"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "女",
+    "phoneticPart" : "良"
+  }
+}

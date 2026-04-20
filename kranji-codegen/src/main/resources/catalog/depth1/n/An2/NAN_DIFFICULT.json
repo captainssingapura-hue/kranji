@@ -1,0 +1,22 @@
+{
+  "glyph" : "难",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 172,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "an",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "又",
+      "right" : "隹"
+    }
+  },
+  "etymology" : {
+    "kind" : "derivative_cognate",
+    "cognateGlyph" : "難"
+  }
+}

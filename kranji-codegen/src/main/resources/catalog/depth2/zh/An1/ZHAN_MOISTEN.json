@@ -1,0 +1,23 @@
+{
+  "glyph" : "沾",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 85,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "an",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "氵",
+      "right" : "占"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "氵",
+    "phoneticPart" : "占"
+  }
+}

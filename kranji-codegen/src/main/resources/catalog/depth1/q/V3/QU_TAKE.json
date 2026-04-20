@@ -1,0 +1,22 @@
+{
+  "glyph" : "取",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 29,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "ü",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "耳",
+      "right" : "又"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "耳(ear) + 又(hand) → take"
+  }
+}

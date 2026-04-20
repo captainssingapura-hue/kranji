@@ -1,0 +1,29 @@
+{
+  "glyph" : "你",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "i",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "⺈",
+          "bottom" : "小"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "小"
+  }
+}

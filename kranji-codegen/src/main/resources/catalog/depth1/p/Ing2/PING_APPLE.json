@@ -1,0 +1,23 @@
+{
+  "glyph" : "苹",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 140,
+  "pinyin" : {
+    "initial" : "p",
+    "final" : "ing",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "艹",
+      "bottom" : "平"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "艹",
+    "phoneticPart" : "平"
+  }
+}

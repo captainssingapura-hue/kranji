@@ -1,0 +1,23 @@
+{
+  "glyph" : "闹",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 169,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "ao",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "full_enclosure",
+    "slots" : {
+      "outer" : "门",
+      "inner" : "市"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "门",
+    "phoneticPart" : "市"
+  }
+}

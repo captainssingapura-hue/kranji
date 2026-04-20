@@ -1,0 +1,23 @@
+{
+  "glyph" : "芬",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 140,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "en",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "艹",
+      "bottom" : "分"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "艹",
+    "phoneticPart" : "分"
+  }
+}

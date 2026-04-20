@@ -1,0 +1,29 @@
+{
+  "glyph" : "报",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "b",
+    "final" : "ao",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "⺈",
+          "bottom" : "又"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "又"
+  }
+}

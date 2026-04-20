@@ -1,0 +1,23 @@
+{
+  "glyph" : "空",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 116,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "ong",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "穴",
+      "bottom" : "工"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "穴",
+    "phoneticPart" : "工"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "阻",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 170,
+  "pinyin" : {
+    "initial" : "z",
+    "final" : "u",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "阝",
+      "right" : "且"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "阝",
+    "phoneticPart" : "且"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "纽",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 120,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "iou",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "纟",
+      "right" : "丑"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "纟",
+    "phoneticPart" : "丑"
+  }
+}

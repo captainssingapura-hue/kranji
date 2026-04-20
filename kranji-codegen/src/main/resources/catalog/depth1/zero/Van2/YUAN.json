@@ -1,0 +1,22 @@
+{
+  "glyph" : "元",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 10,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "üan",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "二",
+      "bottom" : "儿"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "二(two) + 儿(person) → origin, first"
+  }
+}

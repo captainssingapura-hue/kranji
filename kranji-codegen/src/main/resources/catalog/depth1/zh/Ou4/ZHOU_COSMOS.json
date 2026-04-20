@@ -1,0 +1,23 @@
+{
+  "glyph" : "宙",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 40,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "ou",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "宀",
+      "bottom" : "由"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "宀",
+    "phoneticPart" : "由"
+  }
+}

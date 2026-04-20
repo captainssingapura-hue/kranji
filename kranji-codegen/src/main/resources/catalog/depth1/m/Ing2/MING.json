@@ -1,0 +1,22 @@
+{
+  "glyph" : "明",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 72,
+  "pinyin" : {
+    "initial" : "m",
+    "final" : "ing",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "日",
+      "right" : "月"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "日(sun) + 月(moon) → bright"
+  }
+}

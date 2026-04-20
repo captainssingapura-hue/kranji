@@ -1,0 +1,23 @@
+{
+  "glyph" : "秀",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 115,
+  "pinyin" : {
+    "initial" : "x",
+    "final" : "iou",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "禾",
+      "bottom" : "乃"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "禾",
+    "phoneticPart" : "乃"
+  }
+}

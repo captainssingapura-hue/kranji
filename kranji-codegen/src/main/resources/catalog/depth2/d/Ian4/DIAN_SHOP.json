@@ -1,0 +1,23 @@
+{
+  "glyph" : "店",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 53,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "ian",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "广",
+      "content" : "占"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "广",
+    "phoneticPart" : "占"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "呢",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "e",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "口",
+      "right" : "尼"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "口",
+    "phoneticPart" : "尼"
+  }
+}

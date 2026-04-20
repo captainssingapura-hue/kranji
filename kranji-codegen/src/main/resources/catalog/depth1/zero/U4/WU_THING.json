@@ -1,0 +1,23 @@
+{
+  "glyph" : "物",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 93,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "牛",
+      "right" : "毋"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "牛",
+    "phoneticPart" : "毋"
+  }
+}

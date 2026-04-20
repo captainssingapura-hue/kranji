@@ -5,7 +5,7 @@ import kranji.classification.BlockRole;
 import kranji.layout.Politeness;
 import kranji.library.BasicSet;
 import kranji.library.LibraryMember;
-import kranji.zi.ComposedBlock.LeftRight;
+import kranji.zi.CompositionLayout.LeftRight;
 import kranji.zi.SingularZi;
 
 /** \u6708 — moon/month. Yielding as left. */

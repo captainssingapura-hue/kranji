@@ -1,0 +1,23 @@
+{
+  "glyph" : "扛",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "ang",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : "工"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "工"
+  }
+}

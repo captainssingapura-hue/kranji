@@ -1,0 +1,22 @@
+{
+  "glyph" : "昌",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 72,
+  "pinyin" : {
+    "initial" : "ch",
+    "final" : "ang",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "日",
+      "bottom" : "日"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "日(sun) + 日(sun) → prosperous"
+  }
+}

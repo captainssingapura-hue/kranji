@@ -1,0 +1,23 @@
+{
+  "glyph" : "证",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 149,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "eng",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "讠",
+      "right" : "正"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "讠",
+    "phoneticPart" : "正"
+  }
+}

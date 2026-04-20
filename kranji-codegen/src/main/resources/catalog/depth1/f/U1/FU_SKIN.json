@@ -1,0 +1,23 @@
+{
+  "glyph" : "肤",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 130,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "月",
+      "right" : "夫"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "月",
+    "phoneticPart" : "夫"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "寺",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 41,
+  "pinyin" : {
+    "initial" : "s",
+    "final" : "",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "土",
+      "bottom" : "寸"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "寸",
+    "phoneticPart" : "土"
+  }
+}

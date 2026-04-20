@@ -25,10 +25,17 @@ The same data model scales from single-stroke pictographs like 一 all the way t
 | Module | Purpose |
 |---|---|
 | **kranji-core** | Type system, layout engine, SVG renderer, pinyin model |
-| **kranji-singulars** | Curated families of standalone characters (独体字) with semantic metadata |
-| **kranji-characters** | Generated registry of ~2,000 fully classified `ChineseCharacterEntry` records |
-| **kranji-core-demos** | SVG export, code generation, and debugging utilities |
+| **kranji-singulars** | Curated families of standalone characters (独体字) with semantic metadata (manual families + `SingularFamilies` aggregator) |
+| **kranji-singulars-perclass** | Per-class JSON catalog + codegen for the singulars |
+| **kranji-common-base** | Shared bootstrapping for the depth modules |
+| **kranji-common-depth1..5** | Composed characters (合体字) partitioned by nesting depth; Java is generated from the JSON catalog |
+| **kranji-common** | Legacy/staging aggregator — now empty of records; retained for transitional wiring |
+| **kranji-codegen** | Per-depth JSON catalog (source of truth) + generator mains (`Depth<N>GenerateMain`, `Depth<N>SnapshotMain`) |
+| **kranji-json** | `ComposedZiJson` DTOs and catalog loader |
+| **kranji-json-bridge** | `TypedToUntyped` / `UntypedToTyped` converters powering the round-trip |
+| **kranji-core-demos** | SVG export, ZiLookup, BlockLookup, and debugging utilities |
 | **kranji-ui-demo** | Interactive JavaFX explorer with filtering and live SVG preview |
+| **kranji-test-fixtures**, **kranji-util** | Cross-module test helpers and shared plumbing |
 
 ## Core concepts
 
@@ -144,15 +151,24 @@ Kranji/
 │       └── graph/            # Structural graph (Vertex, Edge)
 ├── kranji-singulars/
 │   └── src/main/java/kranji/singular/
-│       ├── SingularRegistry.java     # ServiceLoader-based auto-registration
+│       ├── SingularFamilies.java     # Aggregator registering every family
 │       ├── nature/NatureElements.java
 │       ├── body/BodyParts.java
 │       ├── plants/PlantsAndAgriculture.java
 │       └── ...                       # 13 semantic families
-├── kranji-characters/
-│   └── src/main/java/kranji/characters/
-│       ├── Characters.java           # Master registry (Characters.ALL)
-│       └── [A1..Zuo4].java           # 100+ generated pinyin classes
+├── kranji-singulars-perclass/        # Per-class JSON catalog + generated Java
+├── kranji-common-depth1/             # 441 depth-1 ComposedZi (per-pinyin layout)
+│   └── src/main/java/kranji/common/depth1/
+│       ├── Depth1.java               # Top-level aggregator (Depth1.ALL)
+│       ├── Depth1<Initial>.java      # 22 per-initial aggregators
+│       └── <initial>/<Final><Tone>.java   # One class per pinyin triple
+├── kranji-common-depth2/             # same shape, depth-2 records
+├── kranji-common-depth3/             # same shape, depth-3 records
+├── kranji-common-depth4/             # empty today; Depth4.ALL = List.of()
+├── kranji-common-depth5/             # depth-5 records (currently just 𰻝)
+├── kranji-codegen/
+│   ├── src/main/java/kranji/codegen/depth{1,2,3,5}/   # Generators
+│   └── src/main/resources/catalog/depth{1,2,3,5}/     # JSON source of truth
 ├── kranji-core-demos/
 │   └── src/main/java/kranji/demos/
 │       ├── ExampleCharacters.java    # 21 curated showcase entries

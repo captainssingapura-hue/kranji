@@ -1,0 +1,22 @@
+{
+  "glyph" : "奋",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 37,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "en",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "大",
+      "bottom" : "田"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "大(big) + 田(field) → exert effort"
+  }
+}

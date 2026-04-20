@@ -1,0 +1,22 @@
+{
+  "glyph" : "劝",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 19,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "üan",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "又",
+      "right" : "力"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "又(hand) + 力(strength) → urge, advise"
+  }
+}

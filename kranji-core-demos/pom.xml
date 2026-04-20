@@ -16,11 +16,10 @@
     </properties>
 
     <dependencies>
-        <!-- kranji-common and kranji-singulars have been orphaned pending
-             the per-class codegen replacement for composed Zi. The remaining
-             demo (ZiLookup) registers its singular catalog through the
-             per-class sibling and reports composed glyphs as missing until
-             the replacement pool lands. -->
+        <!-- Singular catalog + every per-pinyin composed depth module, so
+             ZiLookup / BlockLookup can index the full composed pool
+             (Depth1..Depth5). Depth4 is empty today but pulled in for
+             shape-consistency. -->
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-core</artifactId>
@@ -29,6 +28,31 @@
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-singulars-perclass</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-depth1</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-depth2</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-depth3</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-depth4</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-depth5</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 

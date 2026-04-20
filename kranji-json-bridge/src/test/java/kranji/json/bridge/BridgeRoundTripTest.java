@@ -7,6 +7,8 @@ import kranji.json.catalog.ZiCatalogLoader;
 import kranji.json.dto.ComposedBlockJson;
 import kranji.json.dto.ComposedZiJson;
 import kranji.zi.ComposedBlock;
+import kranji.zi.ComposedPart;
+import kranji.zi.CompositionLayout;
 import kranji.zi.ComposedZi;
 import kranji.zi.SingularBlock;
 import kranji.zi.SingularPart;
@@ -52,22 +54,25 @@ final class BridgeRoundTripTest {
         assertEquals(biangGlyph, biang.character());
 
         // Root composition: semi-enclosure bottom-left wrapping a top_middle_bottom.
-        assertInstanceOf(ComposedBlock.SemiEnclosureBottomLeft.class, biang.composition());
-        ComposedBlock.SemiEnclosureBottomLeft outer =
-                (ComposedBlock.SemiEnclosureBottomLeft) biang.composition();
+        assertInstanceOf(CompositionLayout.SemiEnclosureBottomLeft.class, biang.composition());
+        CompositionLayout.SemiEnclosureBottomLeft outer =
+                (CompositionLayout.SemiEnclosureBottomLeft) biang.composition();
 
         // Wrapper is 辶 — a SingularPart resolved from the catalog's part pool.
         assertInstanceOf(SingularPart.class, outer.wrapper());
         assertEquals("辶", outer.wrapper().glyph());
 
-        // Content is a nested TopMiddleBottom.
-        assertInstanceOf(ComposedBlock.TopMiddleBottom.class, outer.content());
+        // Content is a nested TopMiddleBottom wrapped in a ComposedPart.
+        assertInstanceOf(ComposedPart.class, outer.content());
+        CompositionLayout contentLayout = ((ComposedPart) outer.content()).composition();
+        assertInstanceOf(CompositionLayout.TopMiddleBottom.class, contentLayout);
 
         // Spot-check a deep leaf: the 心 under content.bottom.bottom.
-        ComposedBlock.TopMiddleBottom content =
-                (ComposedBlock.TopMiddleBottom) outer.content();
-        ComposedBlock.TopMiddleBottom contentBottom =
-                (ComposedBlock.TopMiddleBottom) content.bottom();
+        CompositionLayout.TopMiddleBottom content =
+                (CompositionLayout.TopMiddleBottom) contentLayout;
+        CompositionLayout.TopMiddleBottom contentBottom =
+                (CompositionLayout.TopMiddleBottom)
+                        ((ComposedPart) content.bottom()).composition();
         assertInstanceOf(SingularZi.class, contentBottom.bottom());
         assertEquals("心", contentBottom.bottom().glyph());
     }
@@ -111,8 +116,8 @@ final class BridgeRoundTripTest {
 
         // 吅 = 口 left_right 口 — both slots must resolve to the same SingularZi.
         ComposedZi xuan = typed.composedZi("吅").orElseThrow();
-        assertInstanceOf(ComposedBlock.LeftRight.class, xuan.composition());
-        ComposedBlock.LeftRight lr = (ComposedBlock.LeftRight) xuan.composition();
+        assertInstanceOf(CompositionLayout.LeftRight.class, xuan.composition());
+        CompositionLayout.LeftRight lr = (CompositionLayout.LeftRight) xuan.composition();
 
         assertInstanceOf(SingularZi.class, lr.left());
         assertInstanceOf(SingularZi.class, lr.right());
@@ -128,14 +133,15 @@ final class BridgeRoundTripTest {
         TypedZiCatalog typed = load("/reduplicated.json");
 
         // 品 = top_bottom { 口, left_right{ 口, 口 } } — the nested slot must
-        // also be a typed ComposedBlock.LeftRight.
+        // also be a typed CompositionLayout.LeftRight.
         ComposedZi pin = typed.composedZi("品").orElseThrow();
-        assertInstanceOf(ComposedBlock.TopBottom.class, pin.composition());
-        ComposedBlock.TopBottom outer = (ComposedBlock.TopBottom) pin.composition();
+        assertInstanceOf(CompositionLayout.TopBottom.class, pin.composition());
+        CompositionLayout.TopBottom outer = (CompositionLayout.TopBottom) pin.composition();
 
         assertEquals("口", outer.top().glyph());
-        assertInstanceOf(ComposedBlock.LeftRight.class, outer.bottom());
-        ComposedBlock.LeftRight bottom = (ComposedBlock.LeftRight) outer.bottom();
+        assertInstanceOf(ComposedPart.class, outer.bottom());
+        CompositionLayout.LeftRight bottom =
+                (CompositionLayout.LeftRight) ((ComposedPart) outer.bottom()).composition();
         assertEquals("口", bottom.left().glyph());
         assertEquals("口", bottom.right().glyph());
     }

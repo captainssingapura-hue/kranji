@@ -1,0 +1,23 @@
+{
+  "glyph" : "杏",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "x",
+    "final" : "ing",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "木",
+      "bottom" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "木",
+    "phoneticPart" : "口"
+  }
+}

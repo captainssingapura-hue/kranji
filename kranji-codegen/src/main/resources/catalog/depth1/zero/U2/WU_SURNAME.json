@@ -1,0 +1,22 @@
+{
+  "glyph" : "吴",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "u",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "口",
+      "bottom" : "天"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "口(mouth) + 天(heaven) → cry out loud"
+  }
+}

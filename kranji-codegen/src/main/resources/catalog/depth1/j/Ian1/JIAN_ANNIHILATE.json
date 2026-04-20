@@ -1,0 +1,23 @@
+{
+  "glyph" : "歼",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 78,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "ian",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "歹",
+      "right" : "千"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "歹",
+    "phoneticPart" : "千"
+  }
+}

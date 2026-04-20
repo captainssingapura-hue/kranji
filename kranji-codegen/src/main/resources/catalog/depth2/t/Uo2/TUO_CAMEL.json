@@ -1,0 +1,23 @@
+{
+  "glyph" : "驼",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 187,
+  "pinyin" : {
+    "initial" : "t",
+    "final" : "uo",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "马",
+      "right" : "它"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "马",
+    "phoneticPart" : "它"
+  }
+}

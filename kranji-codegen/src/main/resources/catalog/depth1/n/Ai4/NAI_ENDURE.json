@@ -1,0 +1,22 @@
+{
+  "glyph" : "耐",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 126,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "ai",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "而",
+      "right" : "寸"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "而(beard) + 寸(rule/measure) → to endure punishment, bear"
+  }
+}

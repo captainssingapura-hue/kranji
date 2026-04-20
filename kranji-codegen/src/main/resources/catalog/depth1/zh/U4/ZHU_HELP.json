@@ -1,0 +1,23 @@
+{
+  "glyph" : "助",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 19,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "且",
+      "right" : "力"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "力",
+    "phoneticPart" : "且"
+  }
+}

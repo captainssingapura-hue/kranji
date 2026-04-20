@@ -1,0 +1,23 @@
+{
+  "glyph" : "纲",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 120,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ang",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "纟",
+      "right" : "冈"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "纟",
+    "phoneticPart" : "冈"
+  }
+}

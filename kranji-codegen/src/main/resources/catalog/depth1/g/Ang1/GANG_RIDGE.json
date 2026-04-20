@@ -1,0 +1,22 @@
+{
+  "glyph" : "冈",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 13,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ang",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "semi_enclosure_top_three",
+    "slots" : {
+      "wrapper" : "冂",
+      "content" : "㐅"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "冂(border) + 㐅(cross marks) → ridge"
+  }
+}

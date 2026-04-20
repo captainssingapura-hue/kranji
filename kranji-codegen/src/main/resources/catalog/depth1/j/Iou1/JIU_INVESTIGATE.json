@@ -1,0 +1,23 @@
+{
+  "glyph" : "究",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 116,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "iou",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "穴",
+      "bottom" : "九"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "穴",
+    "phoneticPart" : "九"
+  }
+}

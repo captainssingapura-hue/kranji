@@ -1,0 +1,23 @@
+{
+  "glyph" : "狗",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 94,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ou",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "犭",
+      "right" : "句"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "犭",
+    "phoneticPart" : "句"
+  }
+}

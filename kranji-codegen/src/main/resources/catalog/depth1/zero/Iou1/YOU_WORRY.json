@@ -1,0 +1,23 @@
+{
+  "glyph" : "忧",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 61,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "iou",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "忄",
+      "right" : "尤"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "忄",
+    "phoneticPart" : "尤"
+  }
+}

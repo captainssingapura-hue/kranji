@@ -1,0 +1,23 @@
+{
+  "glyph" : "供",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ong",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "共"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "共"
+  }
+}

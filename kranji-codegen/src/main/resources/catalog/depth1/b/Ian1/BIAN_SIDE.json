@@ -1,0 +1,23 @@
+{
+  "glyph" : "边",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 162,
+  "pinyin" : {
+    "initial" : "b",
+    "final" : "ian",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_left",
+    "slots" : {
+      "wrapper" : "辶",
+      "content" : "力"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "辶",
+    "phoneticPart" : "力"
+  }
+}

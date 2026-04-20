@@ -1,0 +1,23 @@
+{
+  "glyph" : "爬",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 87,
+  "pinyin" : {
+    "initial" : "p",
+    "final" : "a",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "爪",
+      "right" : "巴"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "爪",
+    "phoneticPart" : "巴"
+  }
+}

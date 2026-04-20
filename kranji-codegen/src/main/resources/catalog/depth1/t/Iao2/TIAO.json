@@ -1,0 +1,23 @@
+{
+  "glyph" : "条",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "t",
+    "final" : "iao",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "夂",
+      "bottom" : "木"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "木",
+    "phoneticPart" : "夂"
+  }
+}

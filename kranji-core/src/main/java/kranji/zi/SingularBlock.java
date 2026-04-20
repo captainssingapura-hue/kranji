@@ -19,7 +19,7 @@ import kranji.layout.Politeness;
  * component knows its own calligraphic behavior via {@link #hintFor}
  * and {@link #politeness}.</p>
  */
-public interface SingularBlock extends BlockStructure {
+public non-sealed interface SingularBlock extends BlockStructure {
 
     // ── Identity ──────────────────────────────────────────────────────
 

@@ -1,0 +1,23 @@
+{
+  "glyph" : "迎",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 162,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "ing",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_left",
+    "slots" : {
+      "wrapper" : "辶",
+      "content" : "卬"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "辶",
+    "phoneticPart" : "卬"
+  }
+}

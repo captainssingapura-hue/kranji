@@ -1,0 +1,23 @@
+{
+  "glyph" : "没",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 85,
+  "pinyin" : {
+    "initial" : "m",
+    "final" : "ei",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "氵",
+      "right" : "殳"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "氵",
+    "phoneticPart" : "殳"
+  }
+}

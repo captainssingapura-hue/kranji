@@ -1,7 +1,7 @@
 package kranji.singular.plants;
 
 import kranji.classification.BlockRole;
-import kranji.zi.ComposedBlock.LeftRight;
+import kranji.zi.CompositionLayout.LeftRight;
 import kranji.library.LibraryMember;
 import kranji.layout.Politeness;
 import kranji.library.BasicSet;

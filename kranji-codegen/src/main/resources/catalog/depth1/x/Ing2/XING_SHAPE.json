@@ -1,0 +1,23 @@
+{
+  "glyph" : "形",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 59,
+  "pinyin" : {
+    "initial" : "x",
+    "final" : "ing",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "开",
+      "right" : "彡"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "开",
+    "phoneticPart" : "彡"
+  }
+}

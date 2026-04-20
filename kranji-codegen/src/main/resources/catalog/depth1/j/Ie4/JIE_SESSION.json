@@ -1,0 +1,23 @@
+{
+  "glyph" : "届",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 44,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "ie",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "尸",
+      "content" : "由"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "尸",
+    "phoneticPart" : "由"
+  }
+}

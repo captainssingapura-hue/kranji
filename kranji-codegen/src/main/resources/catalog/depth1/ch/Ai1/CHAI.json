@@ -1,0 +1,23 @@
+{
+  "glyph" : "拆",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "ch",
+    "final" : "ai",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : "斥"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "斥"
+  }
+}

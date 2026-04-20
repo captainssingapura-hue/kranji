@@ -1,0 +1,22 @@
+{
+  "glyph" : "休",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "x",
+    "final" : "iou",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "木"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "亻(person) + 木(tree) → person leaning on tree → rest"
+  }
+}

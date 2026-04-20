@@ -1,0 +1,22 @@
+{
+  "glyph" : "引",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 57,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "in",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "弓",
+      "right" : "丨"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "弓(bow) + 丨(string) → draw, pull"
+  }
+}

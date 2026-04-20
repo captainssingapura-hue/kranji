@@ -1,0 +1,23 @@
+{
+  "glyph" : "彼",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 60,
+  "pinyin" : {
+    "initial" : "b",
+    "final" : "i",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "彳",
+      "right" : "皮"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "彳",
+    "phoneticPart" : "皮"
+  }
+}

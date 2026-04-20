@@ -1,0 +1,23 @@
+{
+  "glyph" : "驴",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 187,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "ü",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "马",
+      "right" : "户"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "马",
+    "phoneticPart" : "户"
+  }
+}

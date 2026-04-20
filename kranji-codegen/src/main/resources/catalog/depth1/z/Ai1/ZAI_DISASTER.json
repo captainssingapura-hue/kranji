@@ -1,0 +1,22 @@
+{
+  "glyph" : "灾",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 86,
+  "pinyin" : {
+    "initial" : "z",
+    "final" : "ai",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "宀",
+      "bottom" : "火"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "宀(roof) + 火(fire) → disaster"
+  }
+}

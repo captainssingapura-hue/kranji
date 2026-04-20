@@ -1,0 +1,23 @@
+{
+  "glyph" : "垃",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 32,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "a",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "土",
+      "right" : "立"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "土",
+    "phoneticPart" : "立"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "glyph" : "𰻝",
+  "ziCharForm" : "unicode",
+  "strokes" : 58,
+  "radicalNo" : 162,
+  "pinyin" : {
+    "initial" : "b",
+    "final" : "iang",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_left",
+    "slots" : {
+      "wrapper" : "辶",
+      "content" : {
+        "style" : "top_middle_bottom",
+        "slots" : {
+          "top" : "穴",
+          "middle" : {
+            "style" : "left_middle_right",
+            "slots" : {
+              "left" : "月",
+              "middle" : {
+                "style" : "top_bottom",
+                "slots" : {
+                  "top" : {
+                    "style" : "left_middle_right",
+                    "slots" : {
+                      "left" : "幺",
+                      "middle" : "言",
+                      "right" : "幺"
+                    }
+                  },
+                  "bottom" : {
+                    "style" : "left_middle_right",
+                    "slots" : {
+                      "left" : "长",
+                      "middle" : "马",
+                      "right" : "长"
+                    }
+                  }
+                }
+              },
+              "right" : "刂"
+            }
+          },
+          "bottom" : "心"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "folk-coined character for the sound biáng — the slapping noise of noodle dough pulled and struck against a board"
+  }
+}

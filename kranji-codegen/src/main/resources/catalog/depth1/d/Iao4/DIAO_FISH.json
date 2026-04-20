@@ -1,0 +1,23 @@
+{
+  "glyph" : "钓",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 167,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "iao",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "钅",
+      "right" : "勺"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "钅",
+    "phoneticPart" : "勺"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "坟",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 32,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "en",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "土",
+      "right" : "文"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "土",
+    "phoneticPart" : "文"
+  }
+}

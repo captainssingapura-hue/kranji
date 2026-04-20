@@ -1,0 +1,23 @@
+{
+  "glyph" : "码",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 112,
+  "pinyin" : {
+    "initial" : "m",
+    "final" : "a",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "石",
+      "right" : "马"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "石",
+    "phoneticPart" : "马"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "glyph" : "抛",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "p",
+    "final" : "ao",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "⺈",
+          "bottom" : "力"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "力"
+  }
+}

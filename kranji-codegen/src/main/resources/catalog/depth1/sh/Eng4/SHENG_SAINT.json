@@ -1,0 +1,22 @@
+{
+  "glyph" : "圣",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 32,
+  "pinyin" : {
+    "initial" : "sh",
+    "final" : "eng",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "又",
+      "bottom" : "土"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "又(hand) + 土(earth) → sage, saint"
+  }
+}

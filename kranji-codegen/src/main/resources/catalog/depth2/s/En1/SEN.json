@@ -1,0 +1,22 @@
+{
+  "glyph" : "森",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "s",
+    "final" : "en",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "木",
+      "bottom" : "林"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "木(tree) × 3 → dense forest"
+  }
+}

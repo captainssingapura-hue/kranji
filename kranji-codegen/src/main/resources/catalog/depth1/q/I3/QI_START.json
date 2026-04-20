@@ -1,0 +1,22 @@
+{
+  "glyph" : "启",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "i",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "户",
+      "content" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "户(door) + 口(mouth) → open/start"
+  }
+}

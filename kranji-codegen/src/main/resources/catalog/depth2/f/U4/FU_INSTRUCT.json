@@ -1,0 +1,23 @@
+{
+  "glyph" : "咐",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "口",
+      "right" : "付"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "口",
+    "phoneticPart" : "付"
+  }
+}

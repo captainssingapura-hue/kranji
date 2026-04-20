@@ -1,0 +1,23 @@
+{
+  "glyph" : "怕",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 61,
+  "pinyin" : {
+    "initial" : "p",
+    "final" : "a",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "忄",
+      "right" : "白"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "忄",
+    "phoneticPart" : "白"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "glyph" : "闪",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 169,
+  "pinyin" : {
+    "initial" : "sh",
+    "final" : "an",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "semi_enclosure_top_three",
+    "slots" : {
+      "wrapper" : "门",
+      "content" : "人"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "门(door) + 人(person) → flash, dodge"
+  }
+}

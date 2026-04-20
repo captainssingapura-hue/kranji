@@ -1,0 +1,23 @@
+{
+  "glyph" : "坦",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 32,
+  "pinyin" : {
+    "initial" : "t",
+    "final" : "an",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "土",
+      "right" : "旦"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "土",
+    "phoneticPart" : "旦"
+  }
+}

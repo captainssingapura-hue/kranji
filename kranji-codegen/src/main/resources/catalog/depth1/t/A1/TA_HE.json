@@ -1,0 +1,23 @@
+{
+  "glyph" : "他",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "t",
+    "final" : "a",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "也"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "也"
+  }
+}

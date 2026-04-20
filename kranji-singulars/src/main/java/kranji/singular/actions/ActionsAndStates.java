@@ -2,8 +2,8 @@ package kranji.singular.actions;
 
 import kranji.classification.BlockRole;
 import kranji.layout.Politeness;
-import kranji.zi.ComposedBlock.TopBottom;
-import kranji.zi.ComposedBlock.TopMiddleBottom;
+import kranji.zi.CompositionLayout.TopBottom;
+import kranji.zi.CompositionLayout.TopMiddleBottom;
 import kranji.library.LibraryMember;
 import kranji.library.BasicSet;
 import java.util.List;

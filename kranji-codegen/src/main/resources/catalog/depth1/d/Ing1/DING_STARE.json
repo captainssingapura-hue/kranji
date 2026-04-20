@@ -1,0 +1,23 @@
+{
+  "glyph" : "盯",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 109,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "ing",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "目",
+      "right" : "丁"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "目",
+    "phoneticPart" : "丁"
+  }
+}

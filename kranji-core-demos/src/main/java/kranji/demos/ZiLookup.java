@@ -1,7 +1,13 @@
 package kranji.demos;
 
+import kranji.common.depth1.Depth1;
+import kranji.common.depth2.Depth2;
+import kranji.common.depth3.Depth3;
+import kranji.common.depth4.Depth4;
+import kranji.common.depth5.Depth5;
 import kranji.library.BasicSet;
 import kranji.singular.SingularFamiliesPerclass;
+import kranji.zi.ComposedZi;
 import kranji.zi.SingularBlock;
 import kranji.zi.SingularPart;
 import kranji.zi.SingularZi;
@@ -132,11 +138,7 @@ public final class ZiLookup {
     private static Map<String, String> buildIndex() {
         Map<String, String> found = new LinkedHashMap<>();
 
-        // Singular blocks (SingularZi + SingularPart + component parts).
-        // ComposedZi content used to come from kranji-common; that module
-        // is being retired ahead of its per-class replacement, so composed
-        // characters are not indexed here for now — every composed char
-        // will report as Missing until the replacement lands.
+        // Singular catalog — SingularZi + SingularPart + component parts.
         for (var member : BasicSet.INSTANCE.components()) {
             if (member instanceof SingularBlock sb) {
                 String glyph = sb.glyph();
@@ -147,7 +149,24 @@ public final class ZiLookup {
             }
         }
 
+        // Composed catalog — one contribution per depth. First writer wins so
+        // a singular entry is preferred over a composed one if they collide,
+        // which is what callers want to see in the report.
+        indexComposed(found, Depth1.ALL, 1);
+        indexComposed(found, Depth2.ALL, 2);
+        indexComposed(found, Depth3.ALL, 3);
+        indexComposed(found, Depth4.ALL, 4);
+        indexComposed(found, Depth5.ALL, 5);
+
         return found;
+    }
+
+    private static void indexComposed(Map<String, String> found,
+                                      List<ComposedZi> pool, int depth) {
+        for (ComposedZi z : pool) {
+            found.putIfAbsent(z.character(),
+                    "ComposedZi (depth " + depth + ")");
+        }
     }
 
     /** True if the string looks like a file path rather than inline Chinese characters. */

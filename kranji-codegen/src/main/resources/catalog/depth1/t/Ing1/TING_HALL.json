@@ -1,0 +1,23 @@
+{
+  "glyph" : "厅",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 27,
+  "pinyin" : {
+    "initial" : "t",
+    "final" : "ing",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "厂",
+      "content" : "丁"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "厂",
+    "phoneticPart" : "丁"
+  }
+}

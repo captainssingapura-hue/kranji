@@ -1,0 +1,23 @@
+{
+  "glyph" : "改",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 66,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ai",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "己",
+      "right" : "攵"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "攵",
+    "phoneticPart" : "己"
+  }
+}

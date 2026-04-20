@@ -1,0 +1,23 @@
+{
+  "glyph" : "含",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "h",
+    "final" : "an",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "今",
+      "bottom" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "口",
+    "phoneticPart" : "今"
+  }
+}

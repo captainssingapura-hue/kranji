@@ -1,0 +1,22 @@
+{
+  "glyph" : "对",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 41,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "uei",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "又",
+      "right" : "寸"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "又(hand) + 寸(inch/measure) → correct, pair"
+  }
+}
