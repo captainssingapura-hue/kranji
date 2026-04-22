@@ -1,0 +1,12 @@
+{
+  "glyph" : "万",
+  "codepoint" : "U+4E07",
+  "name" : "万",
+  "strokes" : 3,
+  "pinyinText" : "wàn",
+  "pinyin" : null,
+  "meaning" : "ten thousand",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

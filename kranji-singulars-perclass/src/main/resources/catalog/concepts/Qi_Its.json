@@ -1,0 +1,12 @@
+{
+  "glyph" : "其",
+  "codepoint" : "U+5176",
+  "name" : "其",
+  "strokes" : 8,
+  "pinyinText" : "qí",
+  "pinyin" : null,
+  "meaning" : "its, that",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

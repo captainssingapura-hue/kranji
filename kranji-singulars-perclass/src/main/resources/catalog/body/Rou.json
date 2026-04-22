@@ -1,0 +1,12 @@
+{
+  "glyph" : "肉",
+  "codepoint" : "U+8089",
+  "name" : "肉",
+  "strokes" : 6,
+  "pinyinText" : "ròu",
+  "pinyin" : null,
+  "meaning" : "meat, flesh",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

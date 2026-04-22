@@ -1,0 +1,12 @@
+{
+  "glyph" : "卤",
+  "codepoint" : "U+5364",
+  "name" : "卤",
+  "strokes" : 7,
+  "pinyinText" : "lǔ",
+  "pinyin" : null,
+  "meaning" : "brine/halogen",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

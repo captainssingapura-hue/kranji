@@ -1,0 +1,12 @@
+{
+  "glyph" : "垂",
+  "codepoint" : "U+5782",
+  "name" : "垂",
+  "strokes" : 8,
+  "pinyinText" : "chuí",
+  "pinyin" : null,
+  "meaning" : "droop, hang down",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "卡",
+  "codepoint" : "U+5361",
+  "name" : "卡",
+  "strokes" : 5,
+  "pinyinText" : "kǎ",
+  "pinyin" : null,
+  "meaning" : "card/clip",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

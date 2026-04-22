@@ -1,0 +1,23 @@
+{
+  "glyph" : "私",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 115,
+  "pinyin" : {
+    "initial" : "s",
+    "final" : "",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "禾",
+      "right" : "厶"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "禾",
+    "phoneticPart" : "厶"
+  }
+}

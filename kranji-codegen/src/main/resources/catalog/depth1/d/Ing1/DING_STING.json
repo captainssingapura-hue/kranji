@@ -1,0 +1,23 @@
+{
+  "glyph" : "叮",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "ing",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "口",
+      "right" : "丁"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "口",
+    "phoneticPart" : "丁"
+  }
+}

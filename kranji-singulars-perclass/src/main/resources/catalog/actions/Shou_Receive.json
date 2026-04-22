@@ -1,0 +1,12 @@
+{
+  "glyph" : "受",
+  "codepoint" : "U+53D7",
+  "name" : "受",
+  "strokes" : 8,
+  "pinyinText" : "shòu",
+  "pinyin" : null,
+  "meaning" : "receive, accept",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

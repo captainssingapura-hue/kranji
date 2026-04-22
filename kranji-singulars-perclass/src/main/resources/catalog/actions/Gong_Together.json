@@ -1,0 +1,12 @@
+{
+  "glyph" : "共",
+  "codepoint" : "U+5171",
+  "name" : "共",
+  "strokes" : 6,
+  "pinyinText" : "gòng",
+  "pinyin" : null,
+  "meaning" : "together, common",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

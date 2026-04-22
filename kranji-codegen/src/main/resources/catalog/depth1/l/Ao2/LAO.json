@@ -1,0 +1,23 @@
+{
+  "glyph" : "劳",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 19,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "ao",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_middle_bottom",
+    "slots" : {
+      "top" : "艹",
+      "middle" : "勹",
+      "bottom" : "力"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "艹(plants) + 冖(cover) + 力(strength) → toil"
+  }
+}

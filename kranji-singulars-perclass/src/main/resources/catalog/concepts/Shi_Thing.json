@@ -1,0 +1,12 @@
+{
+  "glyph" : "事",
+  "codepoint" : "U+4E8B",
+  "name" : "事",
+  "strokes" : 8,
+  "pinyinText" : "shì",
+  "pinyin" : null,
+  "meaning" : "matter, affair",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

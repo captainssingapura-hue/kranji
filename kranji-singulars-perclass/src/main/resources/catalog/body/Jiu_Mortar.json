@@ -1,0 +1,12 @@
+{
+  "glyph" : "臼",
+  "codepoint" : "U+81FC",
+  "name" : "臼",
+  "strokes" : 6,
+  "pinyinText" : "jiù",
+  "pinyin" : null,
+  "meaning" : "mortar/joint socket",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "齿",
+  "codepoint" : "U+9F7F",
+  "name" : "齿",
+  "strokes" : 8,
+  "pinyinText" : "chǐ",
+  "pinyin" : null,
+  "meaning" : "tooth, teeth",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

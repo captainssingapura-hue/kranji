@@ -1,0 +1,23 @@
+{
+  "glyph" : "礼",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 113,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "i",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "礻",
+      "right" : "乚"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "礻",
+    "phoneticPart" : "乚"
+  }
+}

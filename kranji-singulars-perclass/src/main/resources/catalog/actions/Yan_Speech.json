@@ -1,0 +1,12 @@
+{
+  "glyph" : "言",
+  "codepoint" : "U+8A00",
+  "name" : "言",
+  "strokes" : 7,
+  "pinyinText" : "yán",
+  "pinyin" : null,
+  "meaning" : "speech, word",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

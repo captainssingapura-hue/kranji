@@ -1,0 +1,12 @@
+{
+  "glyph" : "干",
+  "codepoint" : "U+5E72",
+  "name" : "干",
+  "strokes" : 3,
+  "pinyinText" : "gān",
+  "pinyin" : null,
+  "meaning" : "dry/trunk/stem",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

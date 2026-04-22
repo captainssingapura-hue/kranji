@@ -1,0 +1,12 @@
+{
+  "glyph" : "是",
+  "codepoint" : "U+662F",
+  "name" : "是",
+  "strokes" : 9,
+  "pinyinText" : "shì",
+  "pinyin" : null,
+  "meaning" : "is, yes",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

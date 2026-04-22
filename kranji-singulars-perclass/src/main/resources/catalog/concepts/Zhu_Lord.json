@@ -1,0 +1,12 @@
+{
+  "glyph" : "主",
+  "codepoint" : "U+4E3B",
+  "name" : "主",
+  "strokes" : 5,
+  "pinyinText" : "zhǔ",
+  "pinyin" : null,
+  "meaning" : "lord, main",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

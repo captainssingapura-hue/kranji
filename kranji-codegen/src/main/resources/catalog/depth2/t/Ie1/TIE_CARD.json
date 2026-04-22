@@ -1,0 +1,23 @@
+{
+  "glyph" : "帖",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 50,
+  "pinyin" : {
+    "initial" : "t",
+    "final" : "ie",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "巾",
+      "right" : "占"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "巾",
+    "phoneticPart" : "占"
+  }
+}

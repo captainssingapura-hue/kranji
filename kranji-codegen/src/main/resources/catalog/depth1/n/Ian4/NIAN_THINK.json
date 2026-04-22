@@ -1,0 +1,23 @@
+{
+  "glyph" : "念",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 61,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "ian",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "今",
+      "bottom" : "心"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "心",
+    "phoneticPart" : "今"
+  }
+}

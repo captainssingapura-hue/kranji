@@ -1,0 +1,23 @@
+{
+  "glyph" : "励",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 19,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "i",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "厉",
+      "right" : "力"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "厉",
+    "phoneticPart" : "力"
+  }
+}

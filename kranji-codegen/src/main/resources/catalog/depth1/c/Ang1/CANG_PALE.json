@@ -1,0 +1,23 @@
+{
+  "glyph" : "苍",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 140,
+  "pinyin" : {
+    "initial" : "c",
+    "final" : "ang",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "艹",
+      "bottom" : "仓"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "艹",
+    "phoneticPart" : "仓"
+  }
+}

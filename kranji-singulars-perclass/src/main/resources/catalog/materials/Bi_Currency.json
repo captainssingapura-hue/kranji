@@ -1,0 +1,12 @@
+{
+  "glyph" : "币",
+  "codepoint" : "U+5E01",
+  "name" : "币",
+  "strokes" : 4,
+  "pinyinText" : "bì",
+  "pinyin" : null,
+  "meaning" : "currency, money",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

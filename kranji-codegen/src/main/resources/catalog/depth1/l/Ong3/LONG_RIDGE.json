@@ -1,0 +1,23 @@
+{
+  "glyph" : "垄",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 32,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "ong",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "龙",
+      "bottom" : "土"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "土",
+    "phoneticPart" : "龙"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "委",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 38,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "uei",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "禾",
+      "bottom" : "女"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "禾",
+    "phoneticPart" : "女"
+  }
+}

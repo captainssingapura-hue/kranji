@@ -1,10 +1,10 @@
 package kranji.singular.nature;
 
 import kranji.classification.BlockRole;
-import kranji.zi.ComposedBlock.FullEnclosure;
-import kranji.zi.ComposedBlock.LeftRight;
-import kranji.zi.ComposedBlock.TopBottom;
-import kranji.zi.ComposedBlock.TopMiddleBottom;
+import kranji.zi.CompositionLayout.FullEnclosure;
+import kranji.zi.CompositionLayout.LeftRight;
+import kranji.zi.CompositionLayout.TopBottom;
+import kranji.zi.CompositionLayout.TopMiddleBottom;
 import kranji.library.LibraryMember;
 import kranji.layout.LayoutHint;
 import kranji.layout.LayoutHint.SvgShape;
@@ -386,11 +386,31 @@ public final class NatureElements {
     }
     public static final Ke_Shell KE_SHELL = new Ke_Shell();
 
+    /** \u591C — night. */
+    public record Ye_Night() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u591C"; }
+        @Override public String meaning() { return "night"; }
+        @Override public String pinyinText()  { return "y\u00E8"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ye_Night YE_NIGHT = new Ye_Night();
+
+    /** \u5468 — cycle, week, around. */
+    public record Zhou() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5468"; }
+        @Override public String meaning() { return "cycle, week"; }
+        @Override public String pinyinText()  { return "zh\u014Du"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Zhou ZHOU = new Zhou();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             RI, YUE, TIAN, SHAN, SHUI, HUO, TU, SHI, YU, YUN, TIAN_SKY,
             DIAN, QI, GU, CHUAN, JING, CHUN_SPRING,
             QIU_HILL, YONG_ETERNAL, DI_FOUNDATION, XI_EVENING, TU_CONVEX,
             AO_CONCAVE, CHUI, ZHOU_STATE, WU_LOFTY, FENG_WIND,
-            DONG_WINTER,
-            KE_SHELL);
+            DONG_WINTER, KE_SHELL,
+            YE_NIGHT, ZHOU);
 }

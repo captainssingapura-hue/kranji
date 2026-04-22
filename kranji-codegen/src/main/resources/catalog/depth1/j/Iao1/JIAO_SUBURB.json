@@ -1,0 +1,23 @@
+{
+  "glyph" : "郊",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 163,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "iao",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "交",
+      "right" : "阝"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "阝",
+    "phoneticPart" : "交"
+  }
+}

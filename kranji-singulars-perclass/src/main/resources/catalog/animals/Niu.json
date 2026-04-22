@@ -1,0 +1,12 @@
+{
+  "glyph" : "牛",
+  "codepoint" : "U+725B",
+  "name" : "牛",
+  "strokes" : 4,
+  "pinyinText" : "niú",
+  "pinyin" : null,
+  "meaning" : "ox, cow",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

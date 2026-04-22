@@ -1,0 +1,22 @@
+{
+  "glyph" : "灶",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 86,
+  "pinyin" : {
+    "initial" : "z",
+    "final" : "ao",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "火",
+      "right" : "土"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "火(fire) + 土(earth) → stove"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "炒",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 86,
+  "pinyin" : {
+    "initial" : "ch",
+    "final" : "ao",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "火",
+      "right" : "少"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "火",
+    "phoneticPart" : "少"
+  }
+}

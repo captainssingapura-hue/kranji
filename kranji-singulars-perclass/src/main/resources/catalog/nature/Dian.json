@@ -1,0 +1,12 @@
+{
+  "glyph" : "电",
+  "codepoint" : "U+7535",
+  "name" : "电",
+  "strokes" : 5,
+  "pinyinText" : "diàn",
+  "pinyin" : null,
+  "meaning" : "lightning, electricity",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

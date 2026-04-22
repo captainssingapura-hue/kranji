@@ -1,0 +1,12 @@
+{
+  "glyph" : "又",
+  "codepoint" : "U+53C8",
+  "name" : "又",
+  "strokes" : 2,
+  "pinyinText" : "yòu",
+  "pinyin" : null,
+  "meaning" : "again, also",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

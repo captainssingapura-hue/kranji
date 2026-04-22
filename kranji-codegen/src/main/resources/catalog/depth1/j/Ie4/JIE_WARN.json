@@ -1,0 +1,22 @@
+{
+  "glyph" : "戒",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 62,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "ie",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "戈",
+      "bottom" : "廾"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "戈(weapon) + 廾(two hands) → guard/warn"
+  }
+}

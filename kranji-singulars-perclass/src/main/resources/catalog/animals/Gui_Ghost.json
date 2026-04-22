@@ -1,0 +1,12 @@
+{
+  "glyph" : "鬼",
+  "codepoint" : "U+9B3C",
+  "name" : "鬼",
+  "strokes" : 9,
+  "pinyinText" : "guǐ",
+  "pinyin" : null,
+  "meaning" : "ghost/spirit",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "炉",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 86,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "u",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "火",
+      "right" : "户"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "火",
+    "phoneticPart" : "户"
+  }
+}

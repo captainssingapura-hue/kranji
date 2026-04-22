@@ -1,0 +1,23 @@
+{
+  "glyph" : "纳",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 120,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "a",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "纟",
+      "right" : "内"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "纟",
+    "phoneticPart" : "内"
+  }
+}

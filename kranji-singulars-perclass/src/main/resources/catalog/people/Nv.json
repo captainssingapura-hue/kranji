@@ -1,0 +1,12 @@
+{
+  "glyph" : "女",
+  "codepoint" : "U+5973",
+  "name" : "女",
+  "strokes" : 3,
+  "pinyinText" : "nǚ",
+  "pinyin" : null,
+  "meaning" : "woman",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

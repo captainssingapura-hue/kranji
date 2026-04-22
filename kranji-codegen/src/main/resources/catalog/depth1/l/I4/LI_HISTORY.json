@@ -1,0 +1,23 @@
+{
+  "glyph" : "历",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 27,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "i",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "厂",
+      "content" : "力"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "厂",
+    "phoneticPart" : "力"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "互",
+  "codepoint" : "U+4E92",
+  "name" : "互",
+  "strokes" : 4,
+  "pinyinText" : "hù",
+  "pinyin" : null,
+  "meaning" : "mutual, each other",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

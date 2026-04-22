@@ -1,0 +1,23 @@
+{
+  "glyph" : "扎",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "a",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : "乚"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "乚"
+  }
+}

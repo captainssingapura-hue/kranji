@@ -1,0 +1,12 @@
+{
+  "glyph" : "入",
+  "codepoint" : "U+5165",
+  "name" : "入",
+  "strokes" : 2,
+  "pinyinText" : "rù",
+  "pinyin" : null,
+  "meaning" : "enter",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

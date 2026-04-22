@@ -1,0 +1,12 @@
+{
+  "glyph" : "壳",
+  "codepoint" : "U+58F3",
+  "name" : "壳",
+  "strokes" : 7,
+  "pinyinText" : "ké",
+  "pinyin" : null,
+  "meaning" : "shell",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

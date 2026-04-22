@@ -1,0 +1,23 @@
+{
+  "glyph" : "扒",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "b",
+    "final" : "a",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : "八"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "八"
+  }
+}

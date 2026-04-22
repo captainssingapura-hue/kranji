@@ -1,0 +1,23 @@
+{
+  "glyph" : "轧",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 159,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "ia",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "车",
+      "right" : "乚"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "车",
+    "phoneticPart" : "乚"
+  }
+}

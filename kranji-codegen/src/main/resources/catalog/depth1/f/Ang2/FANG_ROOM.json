@@ -1,0 +1,23 @@
+{
+  "glyph" : "房",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 63,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "ang",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "户",
+      "content" : "方"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "户",
+    "phoneticPart" : "方"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "工",
+  "codepoint" : "U+5DE5",
+  "name" : "工",
+  "strokes" : 3,
+  "pinyinText" : "gōng",
+  "pinyin" : null,
+  "meaning" : "work",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

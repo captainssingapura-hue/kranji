@@ -1,0 +1,22 @@
+{
+  "glyph" : "反",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 29,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "an",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "厂",
+      "content" : "又"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "厂(cliff) + 又(hand) → turn over, oppose"
+  }
+}

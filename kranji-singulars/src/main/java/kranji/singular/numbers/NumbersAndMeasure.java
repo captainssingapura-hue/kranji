@@ -203,8 +203,19 @@ public final class NumbersAndMeasure {
     }
     public static final Pi PI = new Pi();
 
+    /** \u5355 — single, simple. */
+    public record Dan() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5355"; }
+        @Override public String meaning() { return "single, simple"; }
+        @Override public String pinyinText()  { return "d\u0101n"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Dan DAN = new Dan();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             YI, ER, SAN, SI, WU, LIU, QI, BA, JIU, SHI,
             BAI, QIAN, WAN, BAN, ZHANG, LIANG, FENG_ABUNDANT,
-            SA, NIAN_TWENTY, YAO_TINY, PI);
+            SA, NIAN_TWENTY, YAO_TINY, PI,
+            DAN);
 }

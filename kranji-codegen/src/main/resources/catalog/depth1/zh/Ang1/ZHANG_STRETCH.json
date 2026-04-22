@@ -1,0 +1,23 @@
+{
+  "glyph" : "张",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 57,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "ang",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "弓",
+      "right" : "长"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "弓",
+    "phoneticPart" : "长"
+  }
+}

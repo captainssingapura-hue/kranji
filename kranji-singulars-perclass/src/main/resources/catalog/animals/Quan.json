@@ -1,0 +1,12 @@
+{
+  "glyph" : "犬",
+  "codepoint" : "U+72AC",
+  "name" : "犬",
+  "strokes" : 4,
+  "pinyinText" : "quǎn",
+  "pinyin" : null,
+  "meaning" : "dog",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

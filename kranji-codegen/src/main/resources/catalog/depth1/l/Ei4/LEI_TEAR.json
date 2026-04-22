@@ -1,0 +1,23 @@
+{
+  "glyph" : "泪",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 85,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "ei",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "氵",
+      "right" : "目"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "氵",
+    "phoneticPart" : "目"
+  }
+}

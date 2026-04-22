@@ -1,0 +1,12 @@
+{
+  "glyph" : "刁",
+  "codepoint" : "U+5201",
+  "name" : "刁",
+  "strokes" : 2,
+  "pinyinText" : "diāo",
+  "pinyin" : null,
+  "meaning" : "cunning/tricky",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

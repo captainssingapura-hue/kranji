@@ -1,0 +1,12 @@
+{
+  "glyph" : "前",
+  "codepoint" : "U+524D",
+  "name" : "前",
+  "strokes" : 9,
+  "pinyinText" : "qián",
+  "pinyin" : null,
+  "meaning" : "front, before",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

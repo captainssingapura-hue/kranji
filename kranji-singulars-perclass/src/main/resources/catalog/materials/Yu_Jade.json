@@ -1,0 +1,12 @@
+{
+  "glyph" : "玉",
+  "codepoint" : "U+7389",
+  "name" : "玉",
+  "strokes" : 5,
+  "pinyinText" : "yù",
+  "pinyin" : null,
+  "meaning" : "jade",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

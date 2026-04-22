@@ -1,0 +1,22 @@
+{
+  "glyph" : "牧",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 93,
+  "pinyin" : {
+    "initial" : "m",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "牛",
+      "right" : "攵"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "牛(cattle) + 攵(strike) → herd"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "子",
+  "codepoint" : "U+5B50",
+  "name" : "子",
+  "strokes" : 3,
+  "pinyinText" : "zǐ",
+  "pinyin" : null,
+  "meaning" : "child, son",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

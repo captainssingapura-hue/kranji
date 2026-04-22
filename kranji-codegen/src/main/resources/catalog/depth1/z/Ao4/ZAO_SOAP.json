@@ -1,0 +1,22 @@
+{
+  "glyph" : "皂",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 106,
+  "pinyin" : {
+    "initial" : "z",
+    "final" : "ao",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "白",
+      "bottom" : "七"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "白(white) + 七(seven) → soap"
+  }
+}

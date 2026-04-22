@@ -1,0 +1,12 @@
+{
+  "glyph" : "卜",
+  "codepoint" : "U+535C",
+  "name" : "卜",
+  "strokes" : 2,
+  "pinyinText" : "bǔ",
+  "pinyin" : null,
+  "meaning" : "divination",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

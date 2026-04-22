@@ -1,0 +1,23 @@
+{
+  "glyph" : "动",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 19,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "ong",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "云",
+      "right" : "力"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "力",
+    "phoneticPart" : "云"
+  }
+}

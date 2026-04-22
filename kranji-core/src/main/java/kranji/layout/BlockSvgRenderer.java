@@ -117,10 +117,7 @@ public final class BlockSvgRenderer {
         sb.append(String.format(
                 "<text x=\"%.1f\" y=\"24\" font-size=\"28\" font-weight=\"bold\" text-anchor=\"middle\" fill=\"#1a1a1a\">%s</text>\n",
                 cx, entry.character()));
-        String pinyin = entry.pinyin().stream()
-                .map(p -> p.numberedTone())
-                .reduce((a, b) -> a + ", " + b)
-                .orElse("");
+        String pinyin = entry.pinyin() == null ? "" : entry.pinyin().numberedTone();
         sb.append(String.format(
                 "<text x=\"%.1f\" y=\"48\" font-size=\"13\" text-anchor=\"middle\" fill=\"#888\">%s  ·  %s  ·  %d strokes</text>\n",
                 cx, pinyin, entry.codepoint(), entry.strokes()));

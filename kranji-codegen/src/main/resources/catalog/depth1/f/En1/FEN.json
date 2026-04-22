@@ -1,0 +1,22 @@
+{
+  "glyph" : "分",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 18,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "en",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "八",
+      "bottom" : "刀"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "八(divide) + 刀(knife) → divide, separate"
+  }
+}

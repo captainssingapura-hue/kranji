@@ -1,0 +1,12 @@
+{
+  "glyph" : "区",
+  "codepoint" : "U+533A",
+  "name" : "区",
+  "strokes" : 4,
+  "pinyinText" : "qū",
+  "pinyin" : null,
+  "meaning" : "area, district",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

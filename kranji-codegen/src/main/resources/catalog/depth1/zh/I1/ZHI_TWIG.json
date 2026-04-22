@@ -1,0 +1,23 @@
+{
+  "glyph" : "枝",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "木",
+      "right" : "支"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "木",
+    "phoneticPart" : "支"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "招",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "ao",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : "召"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "召"
+  }
+}

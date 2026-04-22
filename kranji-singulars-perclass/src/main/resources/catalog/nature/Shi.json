@@ -1,0 +1,12 @@
+{
+  "glyph" : "石",
+  "codepoint" : "U+77F3",
+  "name" : "石",
+  "strokes" : 5,
+  "pinyinText" : "shí",
+  "pinyin" : null,
+  "meaning" : "stone",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

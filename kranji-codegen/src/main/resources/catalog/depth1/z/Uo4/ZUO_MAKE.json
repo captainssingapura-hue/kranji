@@ -1,0 +1,23 @@
+{
+  "glyph" : "作",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "z",
+    "final" : "uo",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "乍"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "乍"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "芦",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 140,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "u",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "艹",
+      "bottom" : "户"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "艹",
+    "phoneticPart" : "户"
+  }
+}

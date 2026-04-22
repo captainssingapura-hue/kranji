@@ -1,0 +1,23 @@
+{
+  "glyph" : "怀",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 61,
+  "pinyin" : {
+    "initial" : "h",
+    "final" : "uai",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "忄",
+      "right" : "不"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "忄",
+    "phoneticPart" : "不"
+  }
+}

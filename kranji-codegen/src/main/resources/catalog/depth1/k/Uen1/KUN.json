@@ -1,0 +1,22 @@
+{
+  "glyph" : "昆",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 72,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "uen",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "日",
+      "bottom" : "比"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "日(sun) + 比(together) → all together"
+  }
+}

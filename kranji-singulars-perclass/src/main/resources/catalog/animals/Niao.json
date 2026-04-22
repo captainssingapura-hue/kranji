@@ -1,0 +1,12 @@
+{
+  "glyph" : "鸟",
+  "codepoint" : "U+9E1F",
+  "name" : "鸟",
+  "strokes" : 5,
+  "pinyinText" : "niǎo",
+  "pinyin" : null,
+  "meaning" : "bird",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

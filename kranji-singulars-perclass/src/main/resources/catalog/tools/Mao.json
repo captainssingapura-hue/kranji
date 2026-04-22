@@ -1,0 +1,12 @@
+{
+  "glyph" : "矛",
+  "codepoint" : "U+77DB",
+  "name" : "矛",
+  "strokes" : 5,
+  "pinyinText" : "máo",
+  "pinyin" : null,
+  "meaning" : "spear",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

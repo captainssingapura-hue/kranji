@@ -1,0 +1,12 @@
+{
+  "glyph" : "必",
+  "codepoint" : "U+5FC5",
+  "name" : "必",
+  "strokes" : 5,
+  "pinyinText" : "bì",
+  "pinyin" : null,
+  "meaning" : "must, surely",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

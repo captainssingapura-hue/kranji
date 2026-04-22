@@ -1,0 +1,12 @@
+{
+  "glyph" : "斥",
+  "codepoint" : "U+65A5",
+  "name" : "斥",
+  "strokes" : 5,
+  "pinyinText" : "chì",
+  "pinyin" : null,
+  "meaning" : "repel/denounce",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

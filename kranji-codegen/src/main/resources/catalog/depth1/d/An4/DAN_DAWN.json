@@ -1,0 +1,22 @@
+{
+  "glyph" : "旦",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 72,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "an",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "日",
+      "bottom" : "一"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "日(sun) + 一(horizon) → dawn"
+  }
+}

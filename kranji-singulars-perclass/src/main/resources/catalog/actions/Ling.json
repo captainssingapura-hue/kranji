@@ -1,0 +1,12 @@
+{
+  "glyph" : "令",
+  "codepoint" : "U+4EE4",
+  "name" : "令",
+  "strokes" : 5,
+  "pinyinText" : "lìng",
+  "pinyin" : null,
+  "meaning" : "command, order",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

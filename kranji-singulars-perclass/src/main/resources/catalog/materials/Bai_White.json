@@ -1,0 +1,12 @@
+{
+  "glyph" : "白",
+  "codepoint" : "U+767D",
+  "name" : "白",
+  "strokes" : 5,
+  "pinyinText" : "bái",
+  "pinyin" : null,
+  "meaning" : "white",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

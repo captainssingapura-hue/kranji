@@ -1,0 +1,23 @@
+{
+  "glyph" : "怽",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 61,
+  "pinyin" : {
+    "initial" : "h",
+    "final" : "u",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "毋",
+      "bottom" : "心"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "心",
+    "phoneticPart" : "毋"
+  }
+}

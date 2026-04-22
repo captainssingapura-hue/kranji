@@ -1,0 +1,23 @@
+{
+  "glyph" : "杠",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ang",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "木",
+      "right" : "工"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "木",
+    "phoneticPart" : "工"
+  }
+}

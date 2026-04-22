@@ -1,0 +1,12 @@
+{
+  "glyph" : "乐",
+  "codepoint" : "U+4E50",
+  "name" : "乐",
+  "strokes" : 5,
+  "pinyinText" : "lè",
+  "pinyin" : null,
+  "meaning" : "joy/music",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

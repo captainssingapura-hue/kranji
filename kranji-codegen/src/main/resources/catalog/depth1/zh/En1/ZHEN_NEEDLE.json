@@ -1,0 +1,23 @@
+{
+  "glyph" : "针",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 167,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "en",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "钅",
+      "right" : "十"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "钅",
+    "phoneticPart" : "十"
+  }
+}

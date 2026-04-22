@@ -1,0 +1,12 @@
+{
+  "glyph" : "山",
+  "codepoint" : "U+5C71",
+  "name" : "山",
+  "strokes" : 3,
+  "pinyinText" : "shān",
+  "pinyin" : null,
+  "meaning" : "mountain",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "秆",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 115,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "an",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "禾",
+      "right" : "干"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "禾",
+    "phoneticPart" : "干"
+  }
+}

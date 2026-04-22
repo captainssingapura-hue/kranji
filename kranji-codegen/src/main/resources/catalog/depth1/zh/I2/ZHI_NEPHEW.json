@@ -1,0 +1,23 @@
+{
+  "glyph" : "侄",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "至"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "至"
+  }
+}

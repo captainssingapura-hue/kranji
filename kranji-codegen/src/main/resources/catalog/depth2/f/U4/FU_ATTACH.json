@@ -1,0 +1,23 @@
+{
+  "glyph" : "附",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 170,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "阝",
+      "right" : "付"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "阝",
+    "phoneticPart" : "付"
+  }
+}

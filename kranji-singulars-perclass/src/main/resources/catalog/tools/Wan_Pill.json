@@ -1,0 +1,12 @@
+{
+  "glyph" : "丸",
+  "codepoint" : "U+4E38",
+  "name" : "丸",
+  "strokes" : 3,
+  "pinyinText" : "wán",
+  "pinyin" : null,
+  "meaning" : "pill/pellet",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

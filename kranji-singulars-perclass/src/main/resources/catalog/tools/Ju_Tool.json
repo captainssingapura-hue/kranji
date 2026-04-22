@@ -1,0 +1,12 @@
+{
+  "glyph" : "具",
+  "codepoint" : "U+5177",
+  "name" : "具",
+  "strokes" : 8,
+  "pinyinText" : "jù",
+  "pinyin" : null,
+  "meaning" : "tool, utensil",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "话",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 149,
+  "pinyin" : {
+    "initial" : "h",
+    "final" : "ua",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "讠",
+      "right" : "舌"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "讠",
+    "phoneticPart" : "舌"
+  }
+}

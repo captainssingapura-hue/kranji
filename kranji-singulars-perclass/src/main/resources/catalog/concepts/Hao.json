@@ -1,0 +1,12 @@
+{
+  "glyph" : "号",
+  "codepoint" : "U+53F7",
+  "name" : "号",
+  "strokes" : 5,
+  "pinyinText" : "hào",
+  "pinyin" : null,
+  "meaning" : "number, sign",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

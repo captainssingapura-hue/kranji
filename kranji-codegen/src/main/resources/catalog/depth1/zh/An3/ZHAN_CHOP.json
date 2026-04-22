@@ -1,0 +1,22 @@
+{
+  "glyph" : "斩",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 69,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "an",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "车",
+      "right" : "斤"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "车(vehicle) + 斤(axe) → chop"
+  }
+}

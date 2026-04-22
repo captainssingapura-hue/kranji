@@ -1,0 +1,12 @@
+{
+  "glyph" : "凡",
+  "codepoint" : "U+51E1",
+  "name" : "凡",
+  "strokes" : 3,
+  "pinyinText" : "fán",
+  "pinyin" : null,
+  "meaning" : "ordinary/all",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

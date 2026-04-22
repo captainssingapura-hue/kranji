@@ -1,0 +1,12 @@
+{
+  "glyph" : "印",
+  "codepoint" : "U+5370",
+  "name" : "印",
+  "strokes" : 5,
+  "pinyinText" : "yìn",
+  "pinyin" : null,
+  "meaning" : "seal, stamp",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

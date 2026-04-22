@@ -1,0 +1,22 @@
+{
+  "glyph" : "仙",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "x",
+    "final" : "ian",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "山"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "亻(person) + 山(mountain) → immortal"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "色",
+  "codepoint" : "U+8272",
+  "name" : "色",
+  "strokes" : 6,
+  "pinyinText" : "sè",
+  "pinyin" : null,
+  "meaning" : "color",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

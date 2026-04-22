@@ -1,0 +1,12 @@
+{
+  "glyph" : "龙",
+  "codepoint" : "U+9F99",
+  "name" : "龙",
+  "strokes" : 5,
+  "pinyinText" : "lóng",
+  "pinyin" : null,
+  "meaning" : "dragon",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

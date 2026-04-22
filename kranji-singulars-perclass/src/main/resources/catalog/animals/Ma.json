@@ -1,0 +1,12 @@
+{
+  "glyph" : "马",
+  "codepoint" : "U+9A6C",
+  "name" : "马",
+  "strokes" : 3,
+  "pinyinText" : "mǎ",
+  "pinyin" : null,
+  "meaning" : "horse",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

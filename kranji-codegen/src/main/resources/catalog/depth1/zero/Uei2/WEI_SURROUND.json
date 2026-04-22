@@ -1,0 +1,23 @@
+{
+  "glyph" : "围",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 31,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "uei",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "full_enclosure",
+    "slots" : {
+      "outer" : "囗",
+      "inner" : "韦"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "囗",
+    "phoneticPart" : "韦"
+  }
+}

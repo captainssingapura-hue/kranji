@@ -1,0 +1,12 @@
+{
+  "glyph" : "用",
+  "codepoint" : "U+7528",
+  "name" : "用",
+  "strokes" : 5,
+  "pinyinText" : "yòng",
+  "pinyin" : null,
+  "meaning" : "use",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

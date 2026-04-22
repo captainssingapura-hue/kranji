@@ -1,0 +1,23 @@
+{
+  "glyph" : "役",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 60,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "i",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "廴",
+      "right" : "殳"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "廴",
+    "phoneticPart" : "殳"
+  }
+}

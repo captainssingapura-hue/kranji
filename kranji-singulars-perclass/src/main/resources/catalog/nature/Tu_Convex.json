@@ -1,0 +1,12 @@
+{
+  "glyph" : "凸",
+  "codepoint" : "U+51F8",
+  "name" : "凸",
+  "strokes" : 5,
+  "pinyinText" : "tū",
+  "pinyin" : null,
+  "meaning" : "convex, protruding",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "鼠",
+  "codepoint" : "U+9F20",
+  "name" : "鼠",
+  "strokes" : 13,
+  "pinyinText" : "shǔ",
+  "pinyin" : null,
+  "meaning" : "mouse, rat",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

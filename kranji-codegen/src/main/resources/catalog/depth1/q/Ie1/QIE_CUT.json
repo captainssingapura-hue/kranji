@@ -1,0 +1,23 @@
+{
+  "glyph" : "切",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 18,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "ie",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "七",
+      "right" : "刀"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "刀",
+    "phoneticPart" : "七"
+  }
+}

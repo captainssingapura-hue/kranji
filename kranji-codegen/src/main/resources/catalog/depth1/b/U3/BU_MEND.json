@@ -1,0 +1,23 @@
+{
+  "glyph" : "补",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 145,
+  "pinyin" : {
+    "initial" : "b",
+    "final" : "u",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "衤",
+      "right" : "卜"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "衤",
+    "phoneticPart" : "卜"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "兔",
+  "codepoint" : "U+5154",
+  "name" : "兔",
+  "strokes" : 8,
+  "pinyinText" : "tù",
+  "pinyin" : null,
+  "meaning" : "rabbit",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

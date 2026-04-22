@@ -1,0 +1,12 @@
+{
+  "glyph" : "首",
+  "codepoint" : "U+9996",
+  "name" : "首",
+  "strokes" : 9,
+  "pinyinText" : "shǒu",
+  "pinyin" : null,
+  "meaning" : "head (formal)",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

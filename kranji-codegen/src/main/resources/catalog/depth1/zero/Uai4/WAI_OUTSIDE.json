@@ -1,0 +1,23 @@
+{
+  "glyph" : "外",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 36,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "uai",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "夕",
+      "right" : "卜"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "夕",
+    "phoneticPart" : "卜"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "glyph" : "知",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 111,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "矢",
+      "right" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "矢(arrow) + 口(mouth) → know"
+  }
+}

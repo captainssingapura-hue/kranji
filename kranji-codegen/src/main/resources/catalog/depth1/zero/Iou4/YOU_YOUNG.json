@@ -1,0 +1,22 @@
+{
+  "glyph" : "幼",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 52,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "iou",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "幺",
+      "right" : "力"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "幺(tiny) + 力(strength) → young, immature"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "五",
+  "codepoint" : "U+4E94",
+  "name" : "五",
+  "strokes" : 4,
+  "pinyinText" : "wǔ",
+  "pinyin" : null,
+  "meaning" : "five",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

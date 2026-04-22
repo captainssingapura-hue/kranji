@@ -11,7 +11,11 @@
     <modules>
         <module>kranji-core</module>
         <module>kranji-singulars</module>
-        <module>kranji-common</module>
+        <module>kranji-json</module>
+        <module>kranji-json-bridge</module>
+        <module>kranji-singulars-perclass</module>
+        <module>kranji-common-perclass</module>
+        <module>kranji-codegen</module>
         <module>kranji-core-demos</module>
         <module>kranji-ui-demo</module>
     </modules>
@@ -21,6 +25,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jackson.version>2.18.2</jackson.version>
+        <jacoco.version>0.8.12</jacoco.version>
     </properties>
 
     <dependencyManagement>
@@ -34,5 +39,41 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <!-- JaCoCo runs on every module: attaches the agent to the
+                 surefire JVM (prepare-agent), then writes
+                 target/site/jacoco/index.html during the test phase. -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>jacoco-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

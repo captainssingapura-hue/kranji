@@ -1,0 +1,22 @@
+{
+  "glyph" : "放",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 66,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "ang",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "方",
+      "right" : "攵"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "方(direction) + 攵(strike) → release"
+  }
+}

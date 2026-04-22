@@ -1,0 +1,12 @@
+{
+  "glyph" : "里",
+  "codepoint" : "U+91CC",
+  "name" : "里",
+  "strokes" : 7,
+  "pinyinText" : "lǐ",
+  "pinyin" : null,
+  "meaning" : "inside, mile",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

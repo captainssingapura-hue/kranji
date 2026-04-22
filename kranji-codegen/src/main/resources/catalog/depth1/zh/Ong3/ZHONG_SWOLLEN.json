@@ -1,0 +1,23 @@
+{
+  "glyph" : "肿",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 130,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "ong",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "月",
+      "right" : "中"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "月",
+    "phoneticPart" : "中"
+  }
+}

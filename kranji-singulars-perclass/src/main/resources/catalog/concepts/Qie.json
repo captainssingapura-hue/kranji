@@ -1,0 +1,12 @@
+{
+  "glyph" : "且",
+  "codepoint" : "U+4E14",
+  "name" : "且",
+  "strokes" : 5,
+  "pinyinText" : "qiě",
+  "pinyin" : null,
+  "meaning" : "moreover, and",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

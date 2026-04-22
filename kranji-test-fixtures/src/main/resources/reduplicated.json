@@ -1,0 +1,196 @@
+{
+  "version": "1",
+  "singularZi": [
+    {
+      "glyph": "口",
+      "codepoint": "U+53E3",
+      "strokes": 3,
+      "radicalNo": 30,
+      "pinyinText": "kǒu",
+      "pinyin": {"initial":"k","final":"ou","tone":3},
+      "meaning": "mouth",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "火",
+      "codepoint": "U+706B",
+      "strokes": 4,
+      "radicalNo": 86,
+      "pinyinText": "huǒ",
+      "pinyin": {"initial":"h","final":"uo","tone":3},
+      "meaning": "fire",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "月",
+      "codepoint": "U+6708",
+      "strokes": 4,
+      "radicalNo": 74,
+      "pinyinText": "yuè",
+      "pinyin": {"initial":"","final":"üe","tone":4},
+      "meaning": "moon",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "人",
+      "codepoint": "U+4EBA",
+      "strokes": 2,
+      "radicalNo": 9,
+      "pinyinText": "rén",
+      "pinyin": {"initial":"r","final":"en","tone":2},
+      "meaning": "person",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "日",
+      "codepoint": "U+65E5",
+      "strokes": 4,
+      "radicalNo": 72,
+      "pinyinText": "rì",
+      "pinyin": {"initial":"r","final":"i","tone":4},
+      "meaning": "sun",
+      "etymology": {"kind":"pictograph"}
+    },
+    {
+      "glyph": "土",
+      "codepoint": "U+571F",
+      "strokes": 3,
+      "radicalNo": 32,
+      "pinyinText": "tǔ",
+      "pinyin": {"initial":"t","final":"u","tone":3},
+      "meaning": "earth",
+      "etymology": {"kind":"pictograph"}
+    }
+  ],
+  "singularParts": [],
+  "composedZi": [
+    {
+      "glyph": "吅",
+      "ziCharForm": "literal",
+      "strokes": 6,
+      "radicalNo": 30,
+      "pinyin": {"initial":"x","final":"uan","tone":1},
+      "meaning": "clamour (double mouth)",
+      "composition": {
+        "style": "left_right",
+        "slots": { "left": "口", "right": "口" }
+      },
+      "etymology": { "kind": "compound_indicative", "meaningHint": "two mouths = clamour" }
+    },
+    {
+      "glyph": "炎",
+      "ziCharForm": "literal",
+      "strokes": 8,
+      "radicalNo": 86,
+      "pinyin": {"initial":"y","final":"an","tone":2},
+      "meaning": "flame",
+      "composition": {
+        "style": "top_bottom",
+        "slots": { "top": "火", "bottom": "火" }
+      },
+      "etymology": { "kind": "compound_indicative", "meaningHint": "fire above fire = blazing flame" }
+    },
+    {
+      "glyph": "朋",
+      "ziCharForm": "literal",
+      "strokes": 8,
+      "radicalNo": 74,
+      "pinyin": {"initial":"p","final":"eng","tone":2},
+      "meaning": "friend",
+      "composition": {
+        "style": "left_right",
+        "slots": { "left": "月", "right": "月" }
+      },
+      "etymology": { "kind": "compound_indicative", "meaningHint": "paired strings of shells = companions" }
+    },
+    {
+      "glyph": "从",
+      "ziCharForm": "literal",
+      "strokes": 4,
+      "radicalNo": 9,
+      "pinyin": {"initial":"c","final":"ong","tone":2},
+      "meaning": "follow (simplified)",
+      "composition": {
+        "style": "left_right",
+        "slots": { "left": "人", "right": "人" }
+      },
+      "etymology": { "kind": "compound_indicative", "meaningHint": "one person following another" }
+    },
+    {
+      "glyph": "品",
+      "ziCharForm": "literal",
+      "strokes": 9,
+      "radicalNo": 30,
+      "pinyin": {"initial":"p","final":"in","tone":3},
+      "meaning": "article / grade",
+      "composition": {
+        "style": "top_bottom",
+        "slots": {
+          "top": "口",
+          "bottom": {
+            "style": "left_right",
+            "slots": { "left": "口", "right": "口" }
+          }
+        }
+      },
+      "etymology": { "kind": "compound_indicative", "meaningHint": "three mouths = many voices / goods" }
+    },
+    {
+      "glyph": "晶",
+      "ziCharForm": "literal",
+      "strokes": 12,
+      "radicalNo": 72,
+      "pinyin": {"initial":"j","final":"ing","tone":1},
+      "meaning": "crystal / bright",
+      "composition": {
+        "style": "top_bottom",
+        "slots": {
+          "top": "日",
+          "bottom": {
+            "style": "left_right",
+            "slots": { "left": "日", "right": "日" }
+          }
+        }
+      },
+      "etymology": { "kind": "compound_indicative", "meaningHint": "three suns = sparkling brightness" }
+    },
+    {
+      "glyph": "焱",
+      "ziCharForm": "literal",
+      "strokes": 12,
+      "radicalNo": 86,
+      "pinyin": {"initial":"y","final":"an","tone":4},
+      "meaning": "flames / sparks",
+      "composition": {
+        "style": "top_bottom",
+        "slots": {
+          "top": "火",
+          "bottom": {
+            "style": "left_right",
+            "slots": { "left": "火", "right": "火" }
+          }
+        }
+      },
+      "etymology": { "kind": "compound_indicative", "meaningHint": "three fires = roaring flames" }
+    },
+    {
+      "glyph": "垚",
+      "ziCharForm": "literal",
+      "strokes": 9,
+      "radicalNo": 32,
+      "pinyin": {"initial":"y","final":"ao","tone":2},
+      "meaning": "mound of earth",
+      "composition": {
+        "style": "top_bottom",
+        "slots": {
+          "top": "土",
+          "bottom": {
+            "style": "left_right",
+            "slots": { "left": "土", "right": "土" }
+          }
+        }
+      },
+      "etymology": { "kind": "compound_indicative", "meaningHint": "three earths = tall mound" }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "坐",
+  "codepoint" : "U+5750",
+  "name" : "坐",
+  "strokes" : 7,
+  "pinyinText" : "zuò",
+  "pinyin" : null,
+  "meaning" : "sit",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

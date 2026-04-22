@@ -1,0 +1,23 @@
+{
+  "glyph" : "刊",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 18,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "an",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "干",
+      "right" : "刂"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "刂",
+    "phoneticPart" : "干"
+  }
+}

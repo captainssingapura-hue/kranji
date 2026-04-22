@@ -1,0 +1,12 @@
+{
+  "glyph" : "气",
+  "codepoint" : "U+6C14",
+  "name" : "气",
+  "strokes" : 4,
+  "pinyinText" : "qì",
+  "pinyin" : null,
+  "meaning" : "air, gas",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

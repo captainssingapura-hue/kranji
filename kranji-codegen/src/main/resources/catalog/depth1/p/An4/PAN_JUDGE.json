@@ -1,0 +1,23 @@
+{
+  "glyph" : "判",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 18,
+  "pinyin" : {
+    "initial" : "p",
+    "final" : "an",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "半",
+      "right" : "刂"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "刂",
+    "phoneticPart" : "半"
+  }
+}

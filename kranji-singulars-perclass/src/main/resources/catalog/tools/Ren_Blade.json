@@ -1,0 +1,12 @@
+{
+  "glyph" : "刃",
+  "codepoint" : "U+5203",
+  "name" : "刃",
+  "strokes" : 3,
+  "pinyinText" : "rèn",
+  "pinyin" : null,
+  "meaning" : "blade",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

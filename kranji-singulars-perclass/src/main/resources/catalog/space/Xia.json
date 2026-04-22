@@ -1,0 +1,12 @@
+{
+  "glyph" : "下",
+  "codepoint" : "U+4E0B",
+  "name" : "下",
+  "strokes" : 3,
+  "pinyinText" : "xià",
+  "pinyin" : null,
+  "meaning" : "below, down",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

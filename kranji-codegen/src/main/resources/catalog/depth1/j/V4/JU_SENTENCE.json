@@ -1,0 +1,22 @@
+{
+  "glyph" : "句",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 20,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "ü",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_right",
+    "slots" : {
+      "wrapper" : "勹",
+      "content" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "勹(wrap) + 口(mouth) → sentence"
+  }
+}

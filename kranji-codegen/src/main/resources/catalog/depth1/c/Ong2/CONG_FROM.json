@@ -1,0 +1,22 @@
+{
+  "glyph" : "从",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "c",
+    "final" : "ong",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "人",
+      "right" : "人"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "人(person) + 人(person) → follow, from"
+  }
+}

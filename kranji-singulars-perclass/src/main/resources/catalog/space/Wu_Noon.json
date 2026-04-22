@@ -1,0 +1,12 @@
+{
+  "glyph" : "午",
+  "codepoint" : "U+5348",
+  "name" : "午",
+  "strokes" : 4,
+  "pinyinText" : "wǔ",
+  "pinyin" : null,
+  "meaning" : "noon/7th Earthly Branch",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

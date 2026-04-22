@@ -1,0 +1,12 @@
+{
+  "glyph" : "由",
+  "codepoint" : "U+7531",
+  "name" : "由",
+  "strokes" : 5,
+  "pinyinText" : "yóu",
+  "pinyin" : null,
+  "meaning" : "from/cause",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

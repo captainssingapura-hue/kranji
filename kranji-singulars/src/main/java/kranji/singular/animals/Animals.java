@@ -97,6 +97,17 @@ public final class Animals {
     }
     public static final Long LONG = new Long();
 
+    /** 犮 (bá) — a dog pulling (at its leash); archaic pictograph, appears as
+     *  phonetic component in 拔, 跋, 钹, etc. Kangxi radical 94 (犬). */
+    public record Ba_Dog() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "犮"; }
+        @Override public String meaning() { return "dog pulling"; }
+        @Override public String pinyinText()  { return "bá"; }
+        @Override public int strokes()    { return 5; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Ba_Dog BA_DOG = new Ba_Dog();
+
     public record Shu() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
         @Override public String glyph()   { return "鼠"; }
         @Override public String meaning() { return "mouse, rat"; }
@@ -199,9 +210,30 @@ public final class Animals {
     }
     public static final Luan_Egg LUAN_EGG = new Luan_Egg();
 
+    /** \u864E — tiger. */
+    public record Hu_Tiger() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u864E"; }
+        @Override public String meaning() { return "tiger"; }
+        @Override public String pinyinText()  { return "h\u01D4"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Hu_Tiger HU_TIGER = new Hu_Tiger();
+
+    /** \u5154 — rabbit. */
+    public record Tu_Rabbit() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5154"; }
+        @Override public String meaning() { return "rabbit"; }
+        @Override public String pinyinText()  { return "t\u00F9"; }
+        @Override public int strokes()    { return 8; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Tu_Rabbit TU_RABBIT = new Tu_Rabbit();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             MA, NIU, YANG, NIAO, YU, CHONG, QUAN, SHI_PIG,
-            ZHUI, LONG, SHU, BEI, WU_CROW, XIANG, ZHI_BEAST,
+            ZHUI, LONG, BA_DOG, SHU, BEI, WU_CROW, XIANG, ZHI_BEAST,
             GUI_GHOST, QIANG, HE_CRANE, FENG_PHOENIX,
-            GUI_TURTLE, LUAN_EGG);
+            GUI_TURTLE, LUAN_EGG,
+            HU_TIGER, TU_RABBIT);
 }

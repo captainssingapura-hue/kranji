@@ -1,0 +1,22 @@
+{
+  "glyph" : "吉",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "i",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "士",
+      "bottom" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "士(scholar/jade tablet) + 口(mouth) → auspicious proclamation"
+  }
+}

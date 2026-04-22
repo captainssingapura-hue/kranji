@@ -1,0 +1,22 @@
+{
+  "glyph" : "李",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "i",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "木",
+      "bottom" : "子"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "木(tree) + 子(seed) → plum tree"
+  }
+}

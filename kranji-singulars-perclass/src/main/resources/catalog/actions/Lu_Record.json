@@ -1,0 +1,12 @@
+{
+  "glyph" : "录",
+  "codepoint" : "U+5F55",
+  "name" : "录",
+  "strokes" : 8,
+  "pinyinText" : "lù",
+  "pinyin" : null,
+  "meaning" : "record, copy",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

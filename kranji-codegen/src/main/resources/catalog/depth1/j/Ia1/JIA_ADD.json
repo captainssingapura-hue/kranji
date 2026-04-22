@@ -1,0 +1,22 @@
+{
+  "glyph" : "加",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 19,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "ia",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "力",
+      "right" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "力(strength) + 口(mouth) → add, increase"
+  }
+}

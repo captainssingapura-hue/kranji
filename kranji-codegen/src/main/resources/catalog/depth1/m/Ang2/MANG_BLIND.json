@@ -1,0 +1,22 @@
+{
+  "glyph" : "盲",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 109,
+  "pinyin" : {
+    "initial" : "m",
+    "final" : "ang",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "亡",
+      "bottom" : "目"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "亡(perish) + 目(eye) → blind"
+  }
+}

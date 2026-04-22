@@ -1,0 +1,23 @@
+{
+  "glyph" : "底",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 53,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "i",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "广",
+      "content" : "氐"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "广",
+    "phoneticPart" : "氐"
+  }
+}

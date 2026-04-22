@@ -1,0 +1,23 @@
+{
+  "glyph" : "枪",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "iang",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "木",
+      "right" : "仓"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "木",
+    "phoneticPart" : "仓"
+  }
+}

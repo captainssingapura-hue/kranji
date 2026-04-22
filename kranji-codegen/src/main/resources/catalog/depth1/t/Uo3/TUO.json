@@ -1,0 +1,22 @@
+{
+  "glyph" : "妥",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 38,
+  "pinyin" : {
+    "initial" : "t",
+    "final" : "uo",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "爫",
+      "bottom" : "女"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "爫(hand/claw) + 女(woman) → suitable, proper"
+  }
+}

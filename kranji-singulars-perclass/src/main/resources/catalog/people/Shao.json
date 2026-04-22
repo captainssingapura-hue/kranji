@@ -1,0 +1,12 @@
+{
+  "glyph" : "少",
+  "codepoint" : "U+5C11",
+  "name" : "少",
+  "strokes" : 4,
+  "pinyinText" : "shǎo",
+  "pinyin" : null,
+  "meaning" : "few, young",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

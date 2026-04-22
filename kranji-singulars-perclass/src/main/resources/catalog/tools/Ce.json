@@ -1,0 +1,12 @@
+{
+  "glyph" : "册",
+  "codepoint" : "U+518C",
+  "name" : "册",
+  "strokes" : 5,
+  "pinyinText" : "cè",
+  "pinyin" : null,
+  "meaning" : "book/volume",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

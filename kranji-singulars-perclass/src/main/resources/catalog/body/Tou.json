@@ -1,0 +1,12 @@
+{
+  "glyph" : "头",
+  "codepoint" : "U+5934",
+  "name" : "头",
+  "strokes" : 5,
+  "pinyinText" : "tóu",
+  "pinyin" : null,
+  "meaning" : "head",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

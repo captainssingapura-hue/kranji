@@ -1,0 +1,12 @@
+{
+  "glyph" : "月",
+  "codepoint" : "U+6708",
+  "name" : "月",
+  "strokes" : 4,
+  "pinyinText" : "yuè",
+  "pinyin" : null,
+  "meaning" : "moon, month",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

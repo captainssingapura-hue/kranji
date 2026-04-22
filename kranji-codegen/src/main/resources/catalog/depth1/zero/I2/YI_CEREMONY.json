@@ -1,0 +1,23 @@
+{
+  "glyph" : "仪",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "i",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "义"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "义"
+  }
+}

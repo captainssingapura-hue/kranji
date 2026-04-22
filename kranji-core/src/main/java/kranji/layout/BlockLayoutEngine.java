@@ -2,7 +2,7 @@ package kranji.layout;
 
 import kranji.classification.BlockRole;
 import kranji.zi.*;
-import kranji.zi.ComposedBlock.*;
+import kranji.zi.CompositionLayout.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public final class BlockLayoutEngine {
             return 1;
         }
         if (node instanceof ComposedBlock comp) {
-            return switch (comp) {
+            return switch (comp.composition()) {
                 case LeftRight(var l, var r) -> countBlocks(l) + countBlocks(r);
                 case TopBottom(var t, var b) -> countBlocks(t) + countBlocks(b);
                 case LeftMiddleRight(var l, var m, var r) ->
@@ -145,7 +145,7 @@ public final class BlockLayoutEngine {
             return List.of(new Block(glyph, x, y, w, h, depth, new SingularRole()));
         }
         if (node instanceof ComposedBlock comp) {
-            return layoutComposition(comp, x, y, w, h, depth, fallbackGlyph);
+            return layoutComposition(comp.composition(), x, y, w, h, depth, fallbackGlyph);
         }
         return List.of();
     }
@@ -156,7 +156,7 @@ public final class BlockLayoutEngine {
     }
 
     private static List<Block> layoutComposition(
-            ComposedBlock comp,
+            CompositionLayout comp,
             double x, double y, double w, double h,
             int depth, String fallbackGlyph
     ) {

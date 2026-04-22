@@ -1,0 +1,23 @@
+{
+  "glyph" : "屈",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 44,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "ü",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "尸",
+      "content" : "出"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "尸",
+    "phoneticPart" : "出"
+  }
+}

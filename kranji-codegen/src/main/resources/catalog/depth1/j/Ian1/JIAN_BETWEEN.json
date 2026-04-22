@@ -1,0 +1,23 @@
+{
+  "glyph" : "间",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 169,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "ian",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "semi_enclosure_top_three",
+    "slots" : {
+      "wrapper" : "门",
+      "content" : "日"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "门",
+    "phoneticPart" : "日"
+  }
+}

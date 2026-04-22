@@ -1,0 +1,12 @@
+{
+  "glyph" : "或",
+  "codepoint" : "U+6216",
+  "name" : "或",
+  "strokes" : 8,
+  "pinyinText" : "huò",
+  "pinyin" : null,
+  "meaning" : "or, perhaps",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

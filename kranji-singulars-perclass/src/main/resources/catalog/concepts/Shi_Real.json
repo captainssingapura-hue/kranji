@@ -1,0 +1,12 @@
+{
+  "glyph" : "实",
+  "codepoint" : "U+5B9E",
+  "name" : "实",
+  "strokes" : 8,
+  "pinyinText" : "shí",
+  "pinyin" : null,
+  "meaning" : "real, solid",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

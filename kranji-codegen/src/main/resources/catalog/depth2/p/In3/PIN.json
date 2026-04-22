@@ -1,0 +1,28 @@
+{
+  "glyph" : "品",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "p",
+    "final" : "in",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "口",
+      "bottom" : {
+        "style" : "left_right",
+        "slots" : {
+          "left" : "口",
+          "right" : "口"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "口(mouth) × 3 → many mouths → tasting, judging quality"
+  }
+}

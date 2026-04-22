@@ -1,0 +1,12 @@
+{
+  "glyph" : "亭",
+  "codepoint" : "U+4EAD",
+  "name" : "亭",
+  "strokes" : 9,
+  "pinyinText" : "tíng",
+  "pinyin" : null,
+  "meaning" : "pavilion",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

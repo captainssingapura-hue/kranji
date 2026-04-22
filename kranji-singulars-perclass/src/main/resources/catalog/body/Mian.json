@@ -1,0 +1,12 @@
+{
+  "glyph" : "面",
+  "codepoint" : "U+9762",
+  "name" : "面",
+  "strokes" : 9,
+  "pinyinText" : "miàn",
+  "pinyin" : null,
+  "meaning" : "face",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

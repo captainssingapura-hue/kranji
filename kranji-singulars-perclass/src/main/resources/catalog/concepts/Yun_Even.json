@@ -1,0 +1,12 @@
+{
+  "glyph" : "匀",
+  "codepoint" : "U+5300",
+  "name" : "匀",
+  "strokes" : 4,
+  "pinyinText" : "yún",
+  "pinyin" : null,
+  "meaning" : "even, uniform",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

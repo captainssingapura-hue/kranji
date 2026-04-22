@@ -1,0 +1,12 @@
+{
+  "glyph" : "系",
+  "codepoint" : "U+7CFB",
+  "name" : "系",
+  "strokes" : 7,
+  "pinyinText" : "xì",
+  "pinyin" : null,
+  "meaning" : "system, tie",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

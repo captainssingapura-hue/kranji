@@ -1,0 +1,23 @@
+{
+  "glyph" : "规",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 147,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "uei",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "夫",
+      "right" : "见"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "见",
+    "phoneticPart" : "夫"
+  }
+}

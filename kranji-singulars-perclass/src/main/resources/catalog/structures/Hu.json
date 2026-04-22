@@ -1,0 +1,12 @@
+{
+  "glyph" : "户",
+  "codepoint" : "U+6237",
+  "name" : "户",
+  "strokes" : 4,
+  "pinyinText" : "hù",
+  "pinyin" : null,
+  "meaning" : "door, household",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

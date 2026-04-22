@@ -1,0 +1,12 @@
+{
+  "glyph" : "隶",
+  "codepoint" : "U+96B6",
+  "name" : "隶",
+  "strokes" : 8,
+  "pinyinText" : "lì",
+  "pinyin" : null,
+  "meaning" : "subordinate, slave",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

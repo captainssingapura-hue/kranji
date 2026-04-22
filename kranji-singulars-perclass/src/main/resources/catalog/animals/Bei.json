@@ -1,0 +1,12 @@
+{
+  "glyph" : "贝",
+  "codepoint" : "U+8D1D",
+  "name" : "贝",
+  "strokes" : 4,
+  "pinyinText" : "bèi",
+  "pinyin" : null,
+  "meaning" : "shell, cowrie",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

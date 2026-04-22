@@ -1,0 +1,12 @@
+{
+  "glyph" : "卖",
+  "codepoint" : "U+5356",
+  "name" : "卖",
+  "strokes" : 8,
+  "pinyinText" : "mài",
+  "pinyin" : null,
+  "meaning" : "sell",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

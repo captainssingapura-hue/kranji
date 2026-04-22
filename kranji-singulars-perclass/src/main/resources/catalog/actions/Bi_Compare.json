@@ -1,0 +1,12 @@
+{
+  "glyph" : "比",
+  "codepoint" : "U+6BD4",
+  "name" : "比",
+  "strokes" : 4,
+  "pinyinText" : "bǐ",
+  "pinyin" : null,
+  "meaning" : "compare, contrast",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

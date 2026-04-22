@@ -1,0 +1,22 @@
+{
+  "glyph" : "仁",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "r",
+    "final" : "en",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "二"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "亻(person) + 二(two) → benevolence between people"
+  }
+}

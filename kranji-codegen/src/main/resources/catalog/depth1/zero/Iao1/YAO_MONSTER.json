@@ -1,0 +1,23 @@
+{
+  "glyph" : "妖",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 38,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "iao",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "女",
+      "right" : "夭"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "女",
+    "phoneticPart" : "夭"
+  }
+}

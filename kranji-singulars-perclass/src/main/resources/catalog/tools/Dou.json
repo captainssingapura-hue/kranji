@@ -1,0 +1,12 @@
+{
+  "glyph" : "斗",
+  "codepoint" : "U+6597",
+  "name" : "斗",
+  "strokes" : 4,
+  "pinyinText" : "dǒu",
+  "pinyin" : null,
+  "meaning" : "dipper, measure",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

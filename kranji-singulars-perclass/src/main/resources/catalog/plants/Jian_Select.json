@@ -1,0 +1,12 @@
+{
+  "glyph" : "柬",
+  "codepoint" : "U+67EC",
+  "name" : "柬",
+  "strokes" : 9,
+  "pinyinText" : "jiǎn",
+  "pinyin" : null,
+  "meaning" : "select, letter",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

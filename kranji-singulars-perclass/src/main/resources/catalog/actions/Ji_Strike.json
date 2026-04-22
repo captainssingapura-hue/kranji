@@ -1,0 +1,12 @@
+{
+  "glyph" : "击",
+  "codepoint" : "U+51FB",
+  "name" : "击",
+  "strokes" : 5,
+  "pinyinText" : "jī",
+  "pinyin" : null,
+  "meaning" : "strike/hit",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

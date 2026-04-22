@@ -1,0 +1,22 @@
+{
+  "glyph" : "男",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 102,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "an",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "田",
+      "bottom" : "力"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "田(field) + 力(strength) → man"
+  }
+}

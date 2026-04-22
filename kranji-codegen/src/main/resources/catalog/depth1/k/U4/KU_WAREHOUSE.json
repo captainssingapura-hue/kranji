@@ -1,0 +1,23 @@
+{
+  "glyph" : "库",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 53,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "广",
+      "content" : "车"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "广",
+    "phoneticPart" : "车"
+  }
+}

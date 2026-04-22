@@ -1,0 +1,23 @@
+{
+  "glyph" : "队",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 170,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "uei",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "阝",
+      "right" : "人"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "阝",
+    "phoneticPart" : "人"
+  }
+}

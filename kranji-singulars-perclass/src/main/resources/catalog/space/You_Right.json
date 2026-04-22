@@ -1,0 +1,12 @@
+{
+  "glyph" : "右",
+  "codepoint" : "U+53F3",
+  "name" : "右",
+  "strokes" : 5,
+  "pinyinText" : "yòu",
+  "pinyin" : null,
+  "meaning" : "right",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

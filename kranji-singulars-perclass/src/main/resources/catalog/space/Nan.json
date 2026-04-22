@@ -1,0 +1,12 @@
+{
+  "glyph" : "南",
+  "codepoint" : "U+5357",
+  "name" : "南",
+  "strokes" : 9,
+  "pinyinText" : "nán",
+  "pinyin" : null,
+  "meaning" : "south",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

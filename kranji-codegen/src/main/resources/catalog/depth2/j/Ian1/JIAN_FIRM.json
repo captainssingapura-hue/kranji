@@ -1,0 +1,28 @@
+{
+  "glyph" : "坚",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 32,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "ian",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : {
+        "style" : "left_right",
+        "slots" : {
+          "left" : "又",
+          "right" : "刂"
+        }
+      },
+      "bottom" : "土"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "又(again) + 刂(knife) + 土(earth) → firm ground"
+  }
+}

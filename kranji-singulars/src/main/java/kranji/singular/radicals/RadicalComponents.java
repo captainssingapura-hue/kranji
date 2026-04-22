@@ -754,23 +754,10 @@ public final class RadicalComponents {
     }
     public static final Liu_Flow LIU_FLOW = new Liu_Flow();
 
-    public record San_Piao() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
-        @Override public String glyph()   { return "\u5F61"; }
-        @Override public String meaning() { return "three strokes radical"; }
-        @Override public String pinyinText()  { return "sh\u0101n"; }
-        @Override public int strokes()    { return 3; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final San_Piao SAN_PIAO = new San_Piao();
-
-    public record Shu_Weapon() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
-        @Override public String glyph()   { return "\u6BB3"; }
-        @Override public String meaning() { return "weapon, lance"; }
-        @Override public String pinyinText()  { return "sh\u016B"; }
-        @Override public int strokes()    { return 4; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Shu_Weapon SHU_WEAPON = new Shu_Weapon();
+    // San_Piao (彡) was a duplicate of Shan_Hair — removed; callers should
+    // use SHAN_HAIR.
+    // Shu_Weapon (殳) was a duplicate of Shu_Lance — removed; callers should
+    // use SHU_LANCE.
 
     public record Kang() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
         @Override public String glyph()   { return "\u4EA2"; }
@@ -781,32 +768,16 @@ public final class RadicalComponents {
     }
     public static final Kang KANG = new Kang();
 
-    public record Guai() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
-        @Override public String glyph()   { return "\u592C"; }
-        @Override public String meaning() { return "decisive, break through"; }
-        @Override public String pinyinText()  { return "gu\u00E0i"; }
-        @Override public int strokes()    { return 4; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Guai GUAI = new Guai();
+    // Guai (夬, U+592C) was a SingularPart duplicate of the SingularZi
+    // AbstractConcepts.GUAI — removed; callers should use
+    // AbstractConcepts.GUAI. 夬 is a semantically valid standalone Zi so the
+    // atomic SingularZi form is canonical per the "Zi over Part when a
+    // valid Zi exists" rule.
 
-    public record Ne_Zi_Pang() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
-        @Override public String glyph()   { return "\u7592"; }
-        @Override public String meaning() { return "illness radical"; }
-        @Override public String pinyinText()  { return "n\u00E8"; }
-        @Override public int strokes()    { return 5; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Ne_Zi_Pang NE_ZI_PANG = new Ne_Zi_Pang();
-
-    public record Tou_Zi_Tou() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
-        @Override public String glyph()   { return "\u4EA0"; }
-        @Override public String meaning() { return "lid radical"; }
-        @Override public String pinyinText()  { return "t\u00F3u"; }
-        @Override public int strokes()    { return 2; }
-        @Override public BasicSet library() { return BasicSet.INSTANCE; }
-    }
-    public static final Tou_Zi_Tou TOU_ZI_TOU = new Tou_Zi_Tou();
+    // Ne_Zi_Pang (疒) was a duplicate of EnclosureFamily.BingZiPang —
+    // removed; callers should use BasicComponents.BING_ZI_PANG.
+    // Tou_Zi_Tou (亠) was a duplicate of ShelterFamily.WenZiTou —
+    // removed; callers should use BasicComponents.WEN_ZI_TOU.
 
     public record Yao_Lines() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
         @Override public String glyph()   { return "\u723B"; }
@@ -854,5 +825,5 @@ public final class RadicalComponents {
             NIU_TOP, DIAN, YI_TURN, SHUI_VARIANT, WANG_NET, JI_NOT,
             XUAN_DARK, LIU_FLOW,
             // 7-stroke batch components
-            SAN_PIAO, SHU_WEAPON, KANG, GUAI, NE_ZI_PANG, TOU_ZI_TOU, YAO_LINES, ANG);
+            KANG, YAO_LINES, ANG);
 }

@@ -1,0 +1,12 @@
+{
+  "glyph" : "甩",
+  "codepoint" : "U+7529",
+  "name" : "甩",
+  "strokes" : 5,
+  "pinyinText" : "shuǎi",
+  "pinyin" : null,
+  "meaning" : "fling/throw",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

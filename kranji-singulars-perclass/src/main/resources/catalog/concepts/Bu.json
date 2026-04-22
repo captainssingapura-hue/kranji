@@ -1,0 +1,12 @@
+{
+  "glyph" : "不",
+  "codepoint" : "U+4E0D",
+  "name" : "不",
+  "strokes" : 4,
+  "pinyinText" : "bù",
+  "pinyin" : null,
+  "meaning" : "not",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "glyph" : "吞",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "t",
+    "final" : "uen",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "天",
+      "bottom" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "天(heaven) + 口(mouth) → swallow"
+  }
+}

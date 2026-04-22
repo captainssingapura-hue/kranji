@@ -1,0 +1,23 @@
+{
+  "glyph" : "帘",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 50,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "ian",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "穴",
+      "bottom" : "巾"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "穴",
+    "phoneticPart" : "巾"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "毛",
+  "codepoint" : "U+6BDB",
+  "name" : "毛",
+  "strokes" : 4,
+  "pinyinText" : "máo",
+  "pinyin" : null,
+  "meaning" : "hair, fur",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

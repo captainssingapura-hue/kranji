@@ -1,0 +1,23 @@
+{
+  "glyph" : "担",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "an",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : "旦"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "旦"
+  }
+}

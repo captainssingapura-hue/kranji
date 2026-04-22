@@ -1,0 +1,12 @@
+{
+  "glyph" : "史",
+  "codepoint" : "U+53F2",
+  "name" : "史",
+  "strokes" : 5,
+  "pinyinText" : "shǐ",
+  "pinyin" : null,
+  "meaning" : "history/historian",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

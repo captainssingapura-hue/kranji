@@ -1,0 +1,22 @@
+{
+  "glyph" : "宜",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 40,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "i",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "宀",
+      "bottom" : "且"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "宀(roof) + 且(moreover) → fitting"
+  }
+}

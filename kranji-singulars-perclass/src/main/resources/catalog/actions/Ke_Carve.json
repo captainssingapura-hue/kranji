@@ -1,0 +1,12 @@
+{
+  "glyph" : "刻",
+  "codepoint" : "U+523B",
+  "name" : "刻",
+  "strokes" : 8,
+  "pinyinText" : "kè",
+  "pinyin" : null,
+  "meaning" : "carve, moment",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

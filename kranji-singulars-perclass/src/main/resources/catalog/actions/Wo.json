@@ -1,0 +1,12 @@
+{
+  "glyph" : "我",
+  "codepoint" : "U+6211",
+  "name" : "我",
+  "strokes" : 7,
+  "pinyinText" : "wǒ",
+  "pinyin" : null,
+  "meaning" : "I/me",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

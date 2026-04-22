@@ -1,0 +1,12 @@
+{
+  "glyph" : "丑",
+  "codepoint" : "U+4E11",
+  "name" : "丑",
+  "strokes" : 4,
+  "pinyinText" : "chǒu",
+  "pinyin" : null,
+  "meaning" : "ugly, clown",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

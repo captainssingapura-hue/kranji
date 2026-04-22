@@ -1,0 +1,22 @@
+{
+  "glyph" : "另",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "ing",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "口",
+      "bottom" : "力"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "口(mouth) + 力(power) → separate, other"
+  }
+}

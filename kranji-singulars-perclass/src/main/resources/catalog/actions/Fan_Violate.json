@@ -1,0 +1,12 @@
+{
+  "glyph" : "犯",
+  "codepoint" : "U+72AF",
+  "name" : "犯",
+  "strokes" : 5,
+  "pinyinText" : "fàn",
+  "pinyin" : null,
+  "meaning" : "violate, criminal",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

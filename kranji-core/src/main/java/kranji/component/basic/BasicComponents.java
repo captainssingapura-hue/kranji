@@ -16,7 +16,8 @@ public final class BasicComponents {
 
     // ── Person ──────────────────────────────────────────────────────────
     public static final PersonFamily.DanRenPang      DAN_REN_PANG      = PersonFamily.DAN_REN_PANG;
-    public static final PersonFamily.ShuangRenPang   SHUANG_REN_PANG   = PersonFamily.SHUANG_REN_PANG;
+    // 彳 (SHUANG_REN_PANG) removed — canonical is
+    // kranji.singular.tools.ToolsAndVessels.CHI_STEP (SingularZi).
 
     // ── Water ───────────────────────────────────────────────────────────
     public static final WaterFamily.SanDianShui      SAN_DIAN_SHUI     = WaterFamily.SAN_DIAN_SHUI;
@@ -54,8 +55,11 @@ public final class BasicComponents {
     public static final StrikeFamily.FanWenPang      FAN_WEN_PANG      = StrikeFamily.FAN_WEN_PANG;
 
     // ── Ear ─────────────────────────────────────────────────────────────
-    public static final EarFamily.ZuoErPang          ZUO_ER_PANG       = EarFamily.ZUO_ER_PANG;
-    public static final EarFamily.YouErPang          YOU_ER_PANG       = EarFamily.YOU_ER_PANG;
+    public static final EarFamily.ErPang             ER_PANG           = EarFamily.ER_PANG;
+    /** @deprecated Alias of {@link #ER_PANG}; role is carried by slot position. */
+    @Deprecated public static final EarFamily.ErPang ZUO_ER_PANG       = EarFamily.ER_PANG;
+    /** @deprecated Alias of {@link #ER_PANG}; role is carried by slot position. */
+    @Deprecated public static final EarFamily.ErPang YOU_ER_PANG       = EarFamily.ER_PANG;
 
     // ── Plant ───────────────────────────────────────────────────────────
     public static final PlantFamily.CaoZiTou         CAO_ZI_TOU        = PlantFamily.CAO_ZI_TOU;

@@ -1,0 +1,23 @@
+{
+  "glyph" : "俗",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "s",
+    "final" : "u",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "谷"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "谷"
+  }
+}

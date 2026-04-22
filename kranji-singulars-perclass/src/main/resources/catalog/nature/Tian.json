@@ -1,0 +1,12 @@
+{
+  "glyph" : "田",
+  "codepoint" : "U+7530",
+  "name" : "田",
+  "strokes" : 5,
+  "pinyinText" : "tián",
+  "pinyin" : null,
+  "meaning" : "field",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

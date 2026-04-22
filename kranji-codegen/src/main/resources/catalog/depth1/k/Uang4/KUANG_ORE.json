@@ -1,0 +1,23 @@
+{
+  "glyph" : "矿",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 112,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "uang",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "石",
+      "right" : "广"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "石",
+    "phoneticPart" : "广"
+  }
+}

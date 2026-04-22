@@ -1,0 +1,12 @@
+{
+  "glyph" : "民",
+  "codepoint" : "U+6C11",
+  "name" : "民",
+  "strokes" : 5,
+  "pinyinText" : "mín",
+  "pinyin" : null,
+  "meaning" : "people",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

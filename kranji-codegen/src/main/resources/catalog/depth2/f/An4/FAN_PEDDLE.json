@@ -1,0 +1,23 @@
+{
+  "glyph" : "贩",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 154,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "an",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "贝",
+      "right" : "反"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "贝",
+    "phoneticPart" : "反"
+  }
+}

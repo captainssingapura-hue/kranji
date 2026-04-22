@@ -1,0 +1,12 @@
+{
+  "glyph" : "足",
+  "codepoint" : "U+8DB3",
+  "name" : "足",
+  "strokes" : 7,
+  "pinyinText" : "zú",
+  "pinyin" : null,
+  "meaning" : "foot",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

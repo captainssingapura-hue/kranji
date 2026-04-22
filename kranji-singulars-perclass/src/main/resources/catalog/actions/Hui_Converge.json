@@ -1,0 +1,12 @@
+{
+  "glyph" : "汇",
+  "codepoint" : "U+6C47",
+  "name" : "汇",
+  "strokes" : 5,
+  "pinyinText" : "huì",
+  "pinyin" : null,
+  "meaning" : "converge, collect",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

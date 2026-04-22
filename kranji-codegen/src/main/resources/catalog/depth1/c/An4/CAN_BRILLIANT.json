@@ -1,0 +1,23 @@
+{
+  "glyph" : "灿",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 86,
+  "pinyin" : {
+    "initial" : "c",
+    "final" : "an",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "火",
+      "right" : "山"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "火",
+    "phoneticPart" : "山"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "日",
+  "codepoint" : "U+65E5",
+  "name" : "日",
+  "strokes" : 4,
+  "pinyinText" : "rì",
+  "pinyin" : null,
+  "meaning" : "sun, day",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "氏",
+  "codepoint" : "U+6C0F",
+  "name" : "氏",
+  "strokes" : 4,
+  "pinyinText" : "shì",
+  "pinyin" : null,
+  "meaning" : "clan",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "何",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "h",
+    "final" : "e",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "可"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "可"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "丘",
+  "codepoint" : "U+4E18",
+  "name" : "丘",
+  "strokes" : 5,
+  "pinyinText" : "qiū",
+  "pinyin" : null,
+  "meaning" : "hill, mound",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

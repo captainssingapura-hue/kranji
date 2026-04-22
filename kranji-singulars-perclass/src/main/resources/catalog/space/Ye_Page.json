@@ -1,0 +1,12 @@
+{
+  "glyph" : "页",
+  "codepoint" : "U+9875",
+  "name" : "页",
+  "strokes" : 6,
+  "pinyinText" : "yè",
+  "pinyin" : null,
+  "meaning" : "page/head",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

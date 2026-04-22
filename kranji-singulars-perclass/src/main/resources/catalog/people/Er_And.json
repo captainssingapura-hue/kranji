@@ -1,0 +1,12 @@
+{
+  "glyph" : "而",
+  "codepoint" : "U+800C",
+  "name" : "而",
+  "strokes" : 6,
+  "pinyinText" : "ér",
+  "pinyin" : null,
+  "meaning" : "and/but",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

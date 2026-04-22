@@ -1,0 +1,23 @@
+{
+  "glyph" : "住",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "主"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "主"
+  }
+}

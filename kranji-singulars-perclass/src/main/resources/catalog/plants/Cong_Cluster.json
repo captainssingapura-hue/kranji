@@ -1,0 +1,12 @@
+{
+  "glyph" : "丛",
+  "codepoint" : "U+4E1B",
+  "name" : "丛",
+  "strokes" : 5,
+  "pinyinText" : "cóng",
+  "pinyin" : null,
+  "meaning" : "cluster, thicket",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

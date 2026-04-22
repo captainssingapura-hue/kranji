@@ -1,0 +1,28 @@
+{
+  "glyph" : "蠢",
+  "ziCharForm" : "unicode",
+  "strokes" : 21,
+  "radicalNo" : 142,
+  "pinyin" : {
+    "initial" : "ch",
+    "final" : "uen",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "春",
+      "bottom" : {
+        "style" : "left_right",
+        "slots" : {
+          "left" : "虫",
+          "right" : "虫"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "春(spring, insects stir) + 虫虫(insects) → wriggling → stupid"
+  }
+}

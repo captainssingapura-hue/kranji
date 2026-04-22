@@ -1,0 +1,12 @@
+{
+  "glyph" : "者",
+  "codepoint" : "U+8005",
+  "name" : "者",
+  "strokes" : 8,
+  "pinyinText" : "zhě",
+  "pinyin" : null,
+  "meaning" : "one who, -er",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

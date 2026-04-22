@@ -1,0 +1,12 @@
+{
+  "glyph" : "平",
+  "codepoint" : "U+5E73",
+  "name" : "平",
+  "strokes" : 5,
+  "pinyinText" : "píng",
+  "pinyin" : null,
+  "meaning" : "flat, level",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "饱",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 184,
+  "pinyin" : {
+    "initial" : "b",
+    "final" : "ao",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "饣",
+      "right" : "包"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "饣",
+    "phoneticPart" : "包"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "让",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 149,
+  "pinyin" : {
+    "initial" : "r",
+    "final" : "ang",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "讠",
+      "right" : "上"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "讠",
+    "phoneticPart" : "上"
+  }
+}

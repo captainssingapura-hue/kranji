@@ -1,0 +1,23 @@
+{
+  "glyph" : "订",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 149,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "ing",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "讠",
+      "right" : "丁"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "讠",
+    "phoneticPart" : "丁"
+  }
+}

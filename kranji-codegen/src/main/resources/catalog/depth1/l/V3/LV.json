@@ -1,0 +1,22 @@
+{
+  "glyph" : "吕",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "ü",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "口",
+      "bottom" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "口(mouth) + 口(mouth) → musical pitch, tune"
+  }
+}

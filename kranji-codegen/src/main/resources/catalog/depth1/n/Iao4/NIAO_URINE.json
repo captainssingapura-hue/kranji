@@ -1,0 +1,23 @@
+{
+  "glyph" : "尿",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 44,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "iao",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "尸",
+      "content" : "水"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "尸",
+    "phoneticPart" : "水"
+  }
+}

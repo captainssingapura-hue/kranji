@@ -1,0 +1,12 @@
+{
+  "glyph" : "夹",
+  "codepoint" : "U+5939",
+  "name" : "夹",
+  "strokes" : 6,
+  "pinyinText" : "jiā",
+  "pinyin" : null,
+  "meaning" : "clamp/pinch",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

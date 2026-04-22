@@ -1,0 +1,22 @@
+{
+  "glyph" : "利",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 18,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "i",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "禾",
+      "right" : "刂"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "禾(grain) + 刂(knife) → harvest → profit"
+  }
+}

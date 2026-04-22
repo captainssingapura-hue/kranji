@@ -75,10 +75,7 @@ public final class StrokeSvgRenderer {
                 "<text x=\"%.1f\" y=\"22\" font-size=\"28\" text-anchor=\"middle\" dominant-baseline=\"central\" fill=\"#1a1a1a\">%s</text>\n",
                 cx, entry.character()));
         // Metadata line
-        String pinyinStr = entry.pinyin().stream()
-                .map(p -> p.numberedTone())
-                .reduce((a, b) -> a + ", " + b)
-                .orElse("");
+        String pinyinStr = entry.pinyin() == null ? "" : entry.pinyin().numberedTone();
         sb.append(String.format(
                 "<text x=\"%.1f\" y=\"47\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"central\" fill=\"#666\">%s  ·  %s  ·  %d strokes</text>\n",
                 cx, pinyinStr, entry.codepoint(), entry.strokes()));

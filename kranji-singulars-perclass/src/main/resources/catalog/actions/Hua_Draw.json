@@ -1,0 +1,12 @@
+{
+  "glyph" : "画",
+  "codepoint" : "U+753B",
+  "name" : "画",
+  "strokes" : 8,
+  "pinyinText" : "huà",
+  "pinyin" : null,
+  "meaning" : "draw, painting",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

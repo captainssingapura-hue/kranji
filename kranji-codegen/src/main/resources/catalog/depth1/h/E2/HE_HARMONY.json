@@ -1,0 +1,22 @@
+{
+  "glyph" : "和",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 115,
+  "pinyin" : {
+    "initial" : "h",
+    "final" : "e",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "禾",
+      "right" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "禾(grain) + 口(mouth) → harmony"
+  }
+}

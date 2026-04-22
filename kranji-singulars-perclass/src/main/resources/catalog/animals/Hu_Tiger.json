@@ -1,0 +1,12 @@
+{
+  "glyph" : "虎",
+  "codepoint" : "U+864E",
+  "name" : "虎",
+  "strokes" : 8,
+  "pinyinText" : "hǔ",
+  "pinyin" : null,
+  "meaning" : "tiger",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

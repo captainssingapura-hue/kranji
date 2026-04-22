@@ -1,0 +1,23 @@
+{
+  "glyph" : "鸡",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 196,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "i",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "又",
+      "right" : "鸟"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "鸟",
+    "phoneticPart" : "又"
+  }
+}

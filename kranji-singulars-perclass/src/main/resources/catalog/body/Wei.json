@@ -1,0 +1,12 @@
+{
+  "glyph" : "胃",
+  "codepoint" : "U+80C3",
+  "name" : "胃",
+  "strokes" : 9,
+  "pinyinText" : "wèi",
+  "pinyin" : null,
+  "meaning" : "stomach",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "glyph" : "林",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "in",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "木",
+      "right" : "木"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "木(tree) + 木(tree) → forest"
+  }
+}

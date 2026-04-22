@@ -1,0 +1,23 @@
+{
+  "glyph" : "址",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 32,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "土",
+      "right" : "止"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "土",
+    "phoneticPart" : "止"
+  }
+}

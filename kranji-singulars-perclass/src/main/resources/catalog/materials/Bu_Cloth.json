@@ -1,0 +1,12 @@
+{
+  "glyph" : "布",
+  "codepoint" : "U+5E03",
+  "name" : "布",
+  "strokes" : 5,
+  "pinyinText" : "bù",
+  "pinyin" : null,
+  "meaning" : "cloth, spread",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

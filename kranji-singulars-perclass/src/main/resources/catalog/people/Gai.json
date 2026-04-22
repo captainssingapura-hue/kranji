@@ -1,0 +1,12 @@
+{
+  "glyph" : "丐",
+  "codepoint" : "U+4E10",
+  "name" : "丐",
+  "strokes" : 4,
+  "pinyinText" : "gài",
+  "pinyin" : null,
+  "meaning" : "beggar",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "远",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 162,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "uan",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_left",
+    "slots" : {
+      "wrapper" : "辶",
+      "content" : "元"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "辶",
+    "phoneticPart" : "元"
+  }
+}

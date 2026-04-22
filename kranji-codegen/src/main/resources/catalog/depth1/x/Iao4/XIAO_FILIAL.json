@@ -1,0 +1,22 @@
+{
+  "glyph" : "孝",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 39,
+  "pinyin" : {
+    "initial" : "x",
+    "final" : "iao",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "耂",
+      "bottom" : "子"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "耂(old) + 子(child) → filial piety"
+  }
+}

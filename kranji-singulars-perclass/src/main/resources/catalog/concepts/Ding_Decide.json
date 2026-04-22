@@ -1,0 +1,12 @@
+{
+  "glyph" : "定",
+  "codepoint" : "U+5B9A",
+  "name" : "定",
+  "strokes" : 8,
+  "pinyinText" : "dìng",
+  "pinyin" : null,
+  "meaning" : "decide, fixed",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "谷",
+  "codepoint" : "U+8C37",
+  "name" : "谷",
+  "strokes" : 7,
+  "pinyinText" : "gǔ",
+  "pinyin" : null,
+  "meaning" : "valley",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

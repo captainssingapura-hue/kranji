@@ -1,0 +1,12 @@
+{
+  "glyph" : "千",
+  "codepoint" : "U+5343",
+  "name" : "千",
+  "strokes" : 3,
+  "pinyinText" : "qiān",
+  "pinyin" : null,
+  "meaning" : "thousand",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

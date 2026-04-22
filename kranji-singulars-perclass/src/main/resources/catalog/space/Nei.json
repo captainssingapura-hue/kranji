@@ -1,0 +1,12 @@
+{
+  "glyph" : "内",
+  "codepoint" : "U+5185",
+  "name" : "内",
+  "strokes" : 4,
+  "pinyinText" : "nèi",
+  "pinyin" : null,
+  "meaning" : "inside",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

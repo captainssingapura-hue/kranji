@@ -1,0 +1,22 @@
+{
+  "glyph" : "牢",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 40,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "ao",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "宀",
+      "bottom" : "牛"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "宀(roof) + 牛(ox) → pen/prison"
+  }
+}

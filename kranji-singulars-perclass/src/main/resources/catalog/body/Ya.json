@@ -1,0 +1,12 @@
+{
+  "glyph" : "牙",
+  "codepoint" : "U+7259",
+  "name" : "牙",
+  "strokes" : 4,
+  "pinyinText" : "yá",
+  "pinyin" : null,
+  "meaning" : "tooth",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

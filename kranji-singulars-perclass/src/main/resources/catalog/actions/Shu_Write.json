@@ -1,0 +1,12 @@
+{
+  "glyph" : "书",
+  "codepoint" : "U+4E66",
+  "name" : "书",
+  "strokes" : 4,
+  "pinyinText" : "shū",
+  "pinyin" : null,
+  "meaning" : "book/write",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

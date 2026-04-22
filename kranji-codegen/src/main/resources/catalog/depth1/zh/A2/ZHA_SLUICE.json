@@ -1,0 +1,23 @@
+{
+  "glyph" : "闸",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 169,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "a",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "full_enclosure",
+    "slots" : {
+      "outer" : "门",
+      "inner" : "甲"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "门",
+    "phoneticPart" : "甲"
+  }
+}

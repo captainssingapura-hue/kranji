@@ -1,0 +1,12 @@
+{
+  "glyph" : "友",
+  "codepoint" : "U+53CB",
+  "name" : "友",
+  "strokes" : 4,
+  "pinyinText" : "yǒu",
+  "pinyin" : null,
+  "meaning" : "friend",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

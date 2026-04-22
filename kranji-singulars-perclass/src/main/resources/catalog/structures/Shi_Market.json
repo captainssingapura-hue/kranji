@@ -1,0 +1,12 @@
+{
+  "glyph" : "市",
+  "codepoint" : "U+5E02",
+  "name" : "市",
+  "strokes" : 5,
+  "pinyinText" : "shì",
+  "pinyin" : null,
+  "meaning" : "market, city",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "固",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 31,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "full_enclosure",
+    "slots" : {
+      "outer" : "囗",
+      "inner" : "古"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "囗",
+    "phoneticPart" : "古"
+  }
+}

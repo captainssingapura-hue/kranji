@@ -1,0 +1,12 @@
+{
+  "glyph" : "古",
+  "codepoint" : "U+53E4",
+  "name" : "古",
+  "strokes" : 5,
+  "pinyinText" : "gǔ",
+  "pinyin" : null,
+  "meaning" : "ancient, old",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

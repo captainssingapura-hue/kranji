@@ -1,0 +1,23 @@
+{
+  "glyph" : "沈",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 85,
+  "pinyin" : {
+    "initial" : "sh",
+    "final" : "en",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "氵",
+      "right" : "冘"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "氵",
+    "phoneticPart" : "冘"
+  }
+}

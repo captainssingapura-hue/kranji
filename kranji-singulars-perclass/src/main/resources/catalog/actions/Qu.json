@@ -1,0 +1,12 @@
+{
+  "glyph" : "去",
+  "codepoint" : "U+53BB",
+  "name" : "去",
+  "strokes" : 5,
+  "pinyinText" : "qù",
+  "pinyin" : null,
+  "meaning" : "go, leave",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

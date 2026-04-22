@@ -1,0 +1,22 @@
+{
+  "glyph" : "岔",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 46,
+  "pinyin" : {
+    "initial" : "ch",
+    "final" : "a",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "分",
+      "bottom" : "山"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "分(divide) + 山(mountain) → forking path"
+  }
+}

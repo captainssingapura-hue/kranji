@@ -1,0 +1,12 @@
+{
+  "glyph" : "亏",
+  "codepoint" : "U+4E8F",
+  "name" : "亏",
+  "strokes" : 3,
+  "pinyinText" : "kuī",
+  "pinyin" : null,
+  "meaning" : "lose, deficit",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

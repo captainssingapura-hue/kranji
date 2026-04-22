@@ -1,0 +1,12 @@
+{
+  "glyph" : "一",
+  "codepoint" : "U+4E00",
+  "name" : "一",
+  "strokes" : 1,
+  "pinyinText" : "yī",
+  "pinyin" : null,
+  "meaning" : "one",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

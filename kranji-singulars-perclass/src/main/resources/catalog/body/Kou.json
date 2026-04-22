@@ -1,0 +1,12 @@
+{
+  "glyph" : "口",
+  "codepoint" : "U+53E3",
+  "name" : "口",
+  "strokes" : 3,
+  "pinyinText" : "kǒu",
+  "pinyin" : null,
+  "meaning" : "mouth",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

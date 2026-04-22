@@ -1,0 +1,12 @@
+{
+  "glyph" : "角",
+  "codepoint" : "U+89D2",
+  "name" : "角",
+  "strokes" : 7,
+  "pinyinText" : "jiǎo",
+  "pinyin" : null,
+  "meaning" : "horn, angle",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

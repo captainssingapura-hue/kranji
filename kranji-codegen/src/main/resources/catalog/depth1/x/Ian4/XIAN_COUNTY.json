@@ -1,0 +1,23 @@
+{
+  "glyph" : "县",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 109,
+  "pinyin" : {
+    "initial" : "x",
+    "final" : "ian",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "目",
+      "bottom" : "厶"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "目",
+    "phoneticPart" : "厶"
+  }
+}

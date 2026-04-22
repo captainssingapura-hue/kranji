@@ -1,0 +1,22 @@
+{
+  "glyph" : "昏",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 72,
+  "pinyin" : {
+    "initial" : "h",
+    "final" : "uen",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "氏",
+      "bottom" : "日"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "氏(clan/setting) + 日(sun) → dusk"
+  }
+}

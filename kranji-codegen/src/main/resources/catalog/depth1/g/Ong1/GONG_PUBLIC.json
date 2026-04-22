@@ -1,0 +1,22 @@
+{
+  "glyph" : "公",
+  "ziCharForm" : "unicode",
+  "strokes" : 4,
+  "radicalNo" : 12,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ong",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "八",
+      "bottom" : "厶"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "八(divide) + 厶(private) → public"
+  }
+}

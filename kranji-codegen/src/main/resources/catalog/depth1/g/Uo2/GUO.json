@@ -1,0 +1,23 @@
+{
+  "glyph" : "国",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 31,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "uo",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "full_enclosure",
+    "slots" : {
+      "outer" : "囗",
+      "inner" : "玉"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "囗",
+    "phoneticPart" : "玉"
+  }
+}

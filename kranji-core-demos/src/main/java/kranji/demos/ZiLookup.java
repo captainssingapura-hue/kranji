@@ -1,10 +1,10 @@
 package kranji.demos;
 
-import kranji.common.CommonCharacters;
+import kranji.common.perclass.AllPerclassRecords;
 import kranji.library.BasicSet;
-import kranji.library.LibraryMember;
-import kranji.singular.SingularFamilies;
-import kranji.zi.ComposedZi;
+import kranji.singular.SingularFamiliesPerclass;
+import kranji.zi.BlockStructures;
+import kranji.zi.ComposedZiT;
 import kranji.zi.SingularBlock;
 import kranji.zi.SingularPart;
 import kranji.zi.SingularZi;
@@ -42,7 +42,7 @@ public final class ZiLookup {
     public static void main(String[] args) throws IOException {
         // Bootstrap the library
         BasicSet.INSTANCE.register();
-        SingularFamilies.registerInto(BasicSet.INSTANCE);
+        SingularFamiliesPerclass.registerInto(BasicSet.INSTANCE);
 
         // Build glyph index
         Map<String, String> index = buildIndex();
@@ -135,7 +135,7 @@ public final class ZiLookup {
     private static Map<String, String> buildIndex() {
         Map<String, String> found = new LinkedHashMap<>();
 
-        // Singular blocks (SingularZi + SingularPart + component parts)
+        // Singular catalog — SingularZi + SingularPart + component parts.
         for (var member : BasicSet.INSTANCE.components()) {
             if (member instanceof SingularBlock sb) {
                 String glyph = sb.glyph();
@@ -146,23 +146,17 @@ public final class ZiLookup {
             }
         }
 
-        // Composed characters from kranji-common
-        for (ComposedZi zi : CommonCharacters.ALL) {
-            found.put(zi.character(), "ComposedZi (depth " + depthOf(zi) + ")");
+        // Composed catalog — typed per-class registry (kranji-common-perclass).
+        // First writer wins so a singular entry is preferred over a composed
+        // one if they collide, which is what callers want to see in the
+        // report. Depth is derived structurally from the record's block tree.
+        for (ComposedZiT z : AllPerclassRecords.ALL) {
+            int depth = BlockStructures.depthOf(z.structure());
+            found.putIfAbsent(z.character(),
+                    "ComposedZi (depth " + depth + ")");
         }
 
         return found;
-    }
-
-    /** Rough depth estimate by checking which depth list contains the character. */
-    private static String depthOf(ComposedZi zi) {
-        String ch = zi.character();
-        for (var d1 : kranji.common.depth1.Depth1.ALL) if (d1.character().equals(ch)) return "1";
-        for (var d2 : kranji.common.depth2.Depth2.ALL) if (d2.character().equals(ch)) return "2";
-        for (var d3 : kranji.common.depth3.Depth3.ALL) if (d3.character().equals(ch)) return "3";
-        for (var d4 : kranji.common.depth4.Depth4.ALL) if (d4.character().equals(ch)) return "4";
-        for (var d5 : kranji.common.depth5.Depth5.ALL) if (d5.character().equals(ch)) return "5";
-        return "?";
     }
 
     /** True if the string looks like a file path rather than inline Chinese characters. */

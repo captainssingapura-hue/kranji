@@ -1,7 +1,7 @@
 package kranji.stroke;
 
 import kranji.zi.*;
-import kranji.zi.ComposedBlock.*;
+import kranji.zi.CompositionLayout.*;
 
 import java.util.*;
 
@@ -32,12 +32,12 @@ public final class LayoutEngine {
             return LayoutBox.LEAF;
         }
         if (node instanceof ComposedBlock comp) {
-            return measureComposition(comp);
+            return measureComposition(comp.composition());
         }
         return LayoutBox.LEAF;
     }
 
-    private static LayoutBox measureComposition(ComposedBlock comp) {
+    private static LayoutBox measureComposition(CompositionLayout comp) {
         return switch (comp) {
             case LeftRight(var left, var right) -> {
                 LayoutBox lb = measure(left), rb = measure(right);
@@ -128,12 +128,12 @@ public final class LayoutEngine {
             return List.of(new PlacedGlyph(g, transform));
         }
         if (node instanceof ComposedBlock comp) {
-            return placeComposition(comp, x, y, glyph);
+            return placeComposition(comp.composition(), x, y, glyph);
         }
         return List.of();
     }
 
-    private static List<PlacedGlyph> placeComposition(ComposedBlock comp, double x, double y, String glyph) {
+    private static List<PlacedGlyph> placeComposition(CompositionLayout comp, double x, double y, String glyph) {
         List<PlacedGlyph> result = new ArrayList<>();
 
         switch (comp) {

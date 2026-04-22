@@ -1,0 +1,12 @@
+{
+  "glyph" : "丧",
+  "codepoint" : "U+4E27",
+  "name" : "丧",
+  "strokes" : 8,
+  "pinyinText" : "sàng",
+  "pinyin" : null,
+  "meaning" : "mourn, funeral",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

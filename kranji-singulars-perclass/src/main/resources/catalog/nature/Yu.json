@@ -1,0 +1,12 @@
+{
+  "glyph" : "雨",
+  "codepoint" : "U+96E8",
+  "name" : "雨",
+  "strokes" : 8,
+  "pinyinText" : "yǔ",
+  "pinyin" : null,
+  "meaning" : "rain",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

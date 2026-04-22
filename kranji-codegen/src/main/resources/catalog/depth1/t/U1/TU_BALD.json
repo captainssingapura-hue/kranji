@@ -1,0 +1,23 @@
+{
+  "glyph" : "秃",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 115,
+  "pinyin" : {
+    "initial" : "t",
+    "final" : "u",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "禾",
+      "bottom" : "儿"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "禾",
+    "phoneticPart" : "儿"
+  }
+}

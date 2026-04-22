@@ -1,0 +1,35 @@
+{
+  "glyph" : "魔",
+  "ziCharForm" : "unicode",
+  "strokes" : 20,
+  "radicalNo" : 194,
+  "pinyin" : {
+    "initial" : "m",
+    "final" : "o",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "广",
+      "content" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "林",
+          "bottom" : "鬼"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "鬼",
+    "phoneticPart" : {
+      "style" : "semi_enclosure_upper_left",
+      "slots" : {
+        "wrapper" : "广",
+        "content" : "林"
+      }
+    }
+  }
+}

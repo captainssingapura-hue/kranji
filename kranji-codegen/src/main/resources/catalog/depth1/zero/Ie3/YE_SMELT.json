@@ -1,0 +1,23 @@
+{
+  "glyph" : "冶",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 15,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "ie",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "冫",
+      "right" : "台"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "冫",
+    "phoneticPart" : "台"
+  }
+}

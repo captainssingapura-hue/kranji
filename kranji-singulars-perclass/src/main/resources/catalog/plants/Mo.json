@@ -1,0 +1,12 @@
+{
+  "glyph" : "末",
+  "codepoint" : "U+672B",
+  "name" : "末",
+  "strokes" : 5,
+  "pinyinText" : "mò",
+  "pinyin" : null,
+  "meaning" : "end, tip",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

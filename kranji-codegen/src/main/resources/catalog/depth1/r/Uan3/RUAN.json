@@ -1,0 +1,23 @@
+{
+  "glyph" : "软",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 159,
+  "pinyin" : {
+    "initial" : "r",
+    "final" : "uan",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "车",
+      "right" : "欠"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "车",
+    "phoneticPart" : "欠"
+  }
+}

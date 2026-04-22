@@ -1,0 +1,12 @@
+{
+  "glyph" : "舌",
+  "codepoint" : "U+820C",
+  "name" : "舌",
+  "strokes" : 6,
+  "pinyinText" : "shé",
+  "pinyin" : null,
+  "meaning" : "tongue",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

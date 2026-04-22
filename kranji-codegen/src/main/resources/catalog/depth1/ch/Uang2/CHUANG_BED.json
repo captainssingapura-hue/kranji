@@ -1,0 +1,23 @@
+{
+  "glyph" : "床",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 53,
+  "pinyin" : {
+    "initial" : "ch",
+    "final" : "uang",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "广",
+      "content" : "木"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "广",
+    "phoneticPart" : "木"
+  }
+}

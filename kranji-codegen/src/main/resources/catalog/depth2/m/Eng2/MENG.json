@@ -1,0 +1,23 @@
+{
+  "glyph" : "萌",
+  "ziCharForm" : "unicode",
+  "strokes" : 11,
+  "radicalNo" : 140,
+  "pinyin" : {
+    "initial" : "m",
+    "final" : "eng",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "艹",
+      "bottom" : "明"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "艹",
+    "phoneticPart" : "明"
+  }
+}

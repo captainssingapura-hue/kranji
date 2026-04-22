@@ -1,0 +1,12 @@
+{
+  "glyph" : "走",
+  "codepoint" : "U+8D70",
+  "name" : "走",
+  "strokes" : 7,
+  "pinyinText" : "zǒu",
+  "pinyin" : null,
+  "meaning" : "walk, run",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

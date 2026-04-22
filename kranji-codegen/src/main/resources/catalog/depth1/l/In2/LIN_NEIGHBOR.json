@@ -1,0 +1,23 @@
+{
+  "glyph" : "邻",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 163,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "in",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "令",
+      "right" : "阝"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "阝",
+    "phoneticPart" : "令"
+  }
+}

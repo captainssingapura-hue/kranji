@@ -1,0 +1,12 @@
+{
+  "glyph" : "曲",
+  "codepoint" : "U+66F2",
+  "name" : "曲",
+  "strokes" : 6,
+  "pinyinText" : "qū",
+  "pinyin" : null,
+  "meaning" : "bend/song",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "汪",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 85,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "uang",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "氵",
+      "right" : "王"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "氵",
+    "phoneticPart" : "王"
+  }
+}

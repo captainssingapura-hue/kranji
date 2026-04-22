@@ -1,0 +1,22 @@
+{
+  "glyph" : "占",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 25,
+  "pinyin" : {
+    "initial" : "zh",
+    "final" : "an",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "卜",
+      "bottom" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "卜(divine) + 口(mouth) → occupy, divine"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "弓",
+  "codepoint" : "U+5F13",
+  "name" : "弓",
+  "strokes" : 3,
+  "pinyinText" : "gōng",
+  "pinyin" : null,
+  "meaning" : "bow",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

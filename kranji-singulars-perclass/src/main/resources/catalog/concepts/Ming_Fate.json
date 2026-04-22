@@ -1,0 +1,12 @@
+{
+  "glyph" : "命",
+  "codepoint" : "U+547D",
+  "name" : "命",
+  "strokes" : 8,
+  "pinyinText" : "mìng",
+  "pinyin" : null,
+  "meaning" : "fate, life, command",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

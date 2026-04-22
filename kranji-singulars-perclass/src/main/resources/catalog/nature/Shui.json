@@ -1,0 +1,12 @@
+{
+  "glyph" : "水",
+  "codepoint" : "U+6C34",
+  "name" : "水",
+  "strokes" : 4,
+  "pinyinText" : "shuǐ",
+  "pinyin" : null,
+  "meaning" : "water",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "巾",
+  "codepoint" : "U+5DFE",
+  "name" : "巾",
+  "strokes" : 3,
+  "pinyinText" : "jīn",
+  "pinyin" : null,
+  "meaning" : "towel, cloth",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

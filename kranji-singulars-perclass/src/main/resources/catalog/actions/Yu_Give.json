@@ -1,0 +1,12 @@
+{
+  "glyph" : "与",
+  "codepoint" : "U+4E0E",
+  "name" : "与",
+  "strokes" : 3,
+  "pinyinText" : "yǔ",
+  "pinyin" : null,
+  "meaning" : "give/participate",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "glyph" : "肩",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 130,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "ian",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "户",
+      "bottom" : "月"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "户(door) + 月(flesh) → shoulder"
+  }
+}

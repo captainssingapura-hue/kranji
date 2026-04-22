@@ -1,0 +1,12 @@
+{
+  "glyph" : "了",
+  "codepoint" : "U+4E86",
+  "name" : "了",
+  "strokes" : 2,
+  "pinyinText" : "le",
+  "pinyin" : null,
+  "meaning" : "finish/complete",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "血",
+  "codepoint" : "U+8840",
+  "name" : "血",
+  "strokes" : 6,
+  "pinyinText" : "xuè",
+  "pinyin" : null,
+  "meaning" : "blood",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,7 +1,7 @@
 package kranji.svg;
 
 import kranji.zi.*;
-import kranji.zi.ComposedBlock.*;
+import kranji.zi.CompositionLayout.*;
 
 /**
  * Renders a {@link Zi} as an SVG diagram showing recursive structural
@@ -83,16 +83,14 @@ public final class StructuralSvgRenderer {
                                    Rect bounds, int depth, String parentGlyph) {
         switch (node) {
             case ComposedBlock comp -> {
-                emitRect(sb, bounds, depth, compositionLabel(comp), false);
-                renderComposition(sb, comp, bounds, depth, parentGlyph);
+                CompositionLayout layout = comp.composition();
+                emitRect(sb, bounds, depth, compositionLabel(layout), false);
+                renderComposition(sb, layout, bounds, depth, parentGlyph);
             }
-            default -> {
-                String glyph = node.glyph();
-                String label = glyph;
-                if (node instanceof SingularBlock sing) {
-                    String name = sing.name();
-                    if (name != null && !name.equals(glyph)) label = glyph + " " + name;
-                }
+            case SingularBlock sing -> {
+                String glyph = sing.glyph();
+                String name = sing.name();
+                String label = (name != null && !name.equals(glyph)) ? glyph + " " + name : glyph;
                 renderLeaf(sb, glyph, label, bounds, depth);
             }
         }
@@ -101,7 +99,7 @@ public final class StructuralSvgRenderer {
     // ── Composition dispatch ───────────────────────────────────────────
 
     private static void renderComposition(StringBuilder sb,
-                                          ComposedBlock comp,
+                                          CompositionLayout comp,
                                           Rect bounds, int depth,
                                           String parentGlyph) {
         int next = depth + 1;
@@ -263,10 +261,7 @@ public final class StructuralSvgRenderer {
           .append(escXml(entry.character()))
           .append("</text>\n");
 
-        String pinyin = entry.pinyin().stream()
-                .map(p -> p.base() + p.tone().number())
-                .reduce((a, b) -> a + ", " + b)
-                .orElse("");
+        String pinyin = entry.pinyin() == null ? "" : entry.pinyin().numberedTone();
         String meta = pinyin + "  ·  " + entry.codepoint()
                 + "  ·  " + entry.strokes() + " strokes"
                 + "  ·  radical " + entry.radicalNo();
@@ -288,7 +283,7 @@ public final class StructuralSvgRenderer {
         return LEVEL_COLORS[depth % LEVEL_COLORS.length];
     }
 
-    private static String compositionLabel(ComposedBlock comp) {
+    private static String compositionLabel(CompositionLayout comp) {
         return switch (comp) {
             case LeftRight lr -> "Left-Right";
             case TopBottom tb -> "Top-Bottom";

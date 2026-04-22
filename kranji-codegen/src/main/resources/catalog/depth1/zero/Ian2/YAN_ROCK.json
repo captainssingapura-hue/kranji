@@ -1,0 +1,22 @@
+{
+  "glyph" : "岩",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 46,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "ian",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "山",
+      "bottom" : "石"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "山(mountain) + 石(stone) → rock"
+  }
+}

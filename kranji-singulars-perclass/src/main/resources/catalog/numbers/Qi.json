@@ -1,0 +1,12 @@
+{
+  "glyph" : "七",
+  "codepoint" : "U+4E03",
+  "name" : "七",
+  "strokes" : 2,
+  "pinyinText" : "qī",
+  "pinyin" : null,
+  "meaning" : "seven",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

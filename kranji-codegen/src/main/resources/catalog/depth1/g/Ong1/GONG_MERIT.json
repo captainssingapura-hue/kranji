@@ -1,0 +1,23 @@
+{
+  "glyph" : "功",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 19,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ong",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "工",
+      "right" : "力"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "力",
+    "phoneticPart" : "工"
+  }
+}

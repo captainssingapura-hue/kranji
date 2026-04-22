@@ -1,0 +1,12 @@
+{
+  "glyph" : "中",
+  "codepoint" : "U+4E2D",
+  "name" : "中",
+  "strokes" : 4,
+  "pinyinText" : "zhōng",
+  "pinyin" : null,
+  "meaning" : "middle, center",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "戈",
+  "codepoint" : "U+6208",
+  "name" : "戈",
+  "strokes" : 4,
+  "pinyinText" : "gē",
+  "pinyin" : null,
+  "meaning" : "halberd",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

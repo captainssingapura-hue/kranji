@@ -1,0 +1,12 @@
+{
+  "glyph" : "卧",
+  "codepoint" : "U+5367",
+  "name" : "卧",
+  "strokes" : 8,
+  "pinyinText" : "wò",
+  "pinyin" : null,
+  "meaning" : "lie down",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

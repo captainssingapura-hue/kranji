@@ -1,0 +1,23 @@
+{
+  "glyph" : "均",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 32,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "üen",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "土",
+      "right" : "匀"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "土",
+    "phoneticPart" : "匀"
+  }
+}

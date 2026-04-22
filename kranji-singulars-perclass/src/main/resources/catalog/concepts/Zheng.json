@@ -1,0 +1,12 @@
+{
+  "glyph" : "正",
+  "codepoint" : "U+6B63",
+  "name" : "正",
+  "strokes" : 5,
+  "pinyinText" : "zhèng",
+  "pinyin" : null,
+  "meaning" : "correct, straight",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "词",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 149,
+  "pinyin" : {
+    "initial" : "c",
+    "final" : "",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "讠",
+      "right" : "司"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "讠",
+    "phoneticPart" : "司"
+  }
+}

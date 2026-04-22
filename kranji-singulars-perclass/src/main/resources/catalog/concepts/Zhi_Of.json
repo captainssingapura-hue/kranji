@@ -1,0 +1,12 @@
+{
+  "glyph" : "之",
+  "codepoint" : "U+4E4B",
+  "name" : "之",
+  "strokes" : 3,
+  "pinyinText" : "zhī",
+  "pinyin" : null,
+  "meaning" : "of, go to",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

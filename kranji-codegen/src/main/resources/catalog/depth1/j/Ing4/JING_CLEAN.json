@@ -1,0 +1,23 @@
+{
+  "glyph" : "净",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 15,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "ing",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "冫",
+      "right" : "争"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "冫",
+    "phoneticPart" : "争"
+  }
+}

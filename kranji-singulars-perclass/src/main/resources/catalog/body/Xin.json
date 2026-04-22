@@ -1,0 +1,12 @@
+{
+  "glyph" : "心",
+  "codepoint" : "U+5FC3",
+  "name" : "心",
+  "strokes" : 4,
+  "pinyinText" : "xīn",
+  "pinyin" : null,
+  "meaning" : "heart",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "glyph" : "朱",
+  "codepoint" : "U+6731",
+  "name" : "朱",
+  "strokes" : 6,
+  "pinyinText" : "zhū",
+  "pinyin" : null,
+  "meaning" : "vermillion (trunk of tree)",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

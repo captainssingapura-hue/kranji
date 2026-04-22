@@ -1,0 +1,12 @@
+{
+  "glyph" : "严",
+  "codepoint" : "U+4E25",
+  "name" : "严",
+  "strokes" : 7,
+  "pinyinText" : "yán",
+  "pinyin" : null,
+  "meaning" : "strict, severe",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

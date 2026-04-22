@@ -1,0 +1,23 @@
+{
+  "glyph" : "孤",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 39,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "u",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "子",
+      "right" : "瓜"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "子",
+    "phoneticPart" : "瓜"
+  }
+}

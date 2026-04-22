@@ -1,0 +1,12 @@
+{
+  "glyph" : "纠",
+  "codepoint" : "U+7EA0",
+  "name" : "纠",
+  "strokes" : 5,
+  "pinyinText" : "jiū",
+  "pinyin" : null,
+  "meaning" : "entangle, correct",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

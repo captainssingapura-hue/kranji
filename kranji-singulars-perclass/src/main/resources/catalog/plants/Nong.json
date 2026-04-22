@@ -1,0 +1,12 @@
+{
+  "glyph" : "农",
+  "codepoint" : "U+519C",
+  "name" : "农",
+  "strokes" : 6,
+  "pinyinText" : "nóng",
+  "pinyin" : null,
+  "meaning" : "farming",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

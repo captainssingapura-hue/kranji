@@ -1,0 +1,22 @@
+{
+  "glyph" : "困",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 31,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "uen",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "full_enclosure",
+    "slots" : {
+      "outer" : "囗",
+      "inner" : "木"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "囗(enclosure) + 木(tree) → tree confined → stuck"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "层",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 44,
+  "pinyin" : {
+    "initial" : "c",
+    "final" : "eng",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "尸",
+      "content" : "云"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "尸",
+    "phoneticPart" : "云"
+  }
+}

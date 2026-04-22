@@ -1,0 +1,23 @@
+{
+  "glyph" : "评",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 149,
+  "pinyin" : {
+    "initial" : "p",
+    "final" : "ing",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "讠",
+      "right" : "平"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "讠",
+    "phoneticPart" : "平"
+  }
+}

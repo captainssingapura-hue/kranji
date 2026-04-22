@@ -1,0 +1,23 @@
+{
+  "glyph" : "仔",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "z",
+    "final" : "ai",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "子"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "子"
+  }
+}

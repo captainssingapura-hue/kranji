@@ -1,0 +1,12 @@
+{
+  "glyph" : "失",
+  "codepoint" : "U+5931",
+  "name" : "失",
+  "strokes" : 5,
+  "pinyinText" : "shī",
+  "pinyin" : null,
+  "meaning" : "lose",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

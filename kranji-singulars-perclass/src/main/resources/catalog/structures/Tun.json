@@ -1,0 +1,12 @@
+{
+  "glyph" : "屯",
+  "codepoint" : "U+5C6F",
+  "name" : "屯",
+  "strokes" : 4,
+  "pinyinText" : "tún",
+  "pinyin" : null,
+  "meaning" : "village, station",
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "爸",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 88,
+  "pinyin" : {
+    "initial" : "b",
+    "final" : "a",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "父",
+      "bottom" : "巴"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "父",
+    "phoneticPart" : "巴"
+  }
+}

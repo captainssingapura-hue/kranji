@@ -1,0 +1,22 @@
+{
+  "glyph" : "尔",
+  "ziCharForm" : "unicode",
+  "strokes" : 5,
+  "radicalNo" : 42,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "er",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "⺈",
+      "bottom" : "小"
+    }
+  },
+  "etymology" : {
+    "kind" : "derivative_cognate",
+    "cognateGlyph" : "爾"
+  }
+}
