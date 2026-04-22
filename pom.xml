@@ -11,16 +11,10 @@
     <modules>
         <module>kranji-core</module>
         <module>kranji-singulars</module>
-        <module>kranji-common-base</module>
-        <module>kranji-common-depth1</module>
-        <module>kranji-common-depth2</module>
-        <module>kranji-common-depth3</module>
-        <module>kranji-common-depth4</module>
-        <module>kranji-common-depth5</module>
-        <module>kranji-common</module>
         <module>kranji-json</module>
         <module>kranji-json-bridge</module>
         <module>kranji-singulars-perclass</module>
+        <module>kranji-common-perclass</module>
         <module>kranji-codegen</module>
         <module>kranji-core-demos</module>
         <module>kranji-ui-demo</module>

@@ -1,0 +1,22 @@
+{
+  "glyph" : "多",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 36,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "uo",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "夕",
+      "bottom" : "夕"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "夕(evening) + 夕(evening) → many"
+  }
+}

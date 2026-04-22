@@ -1,7 +1,16 @@
 package kranji.zi;
 
+import kranji.classification.EtymologicalCategory;
+import kranji.pinyin.Body;
+import kranji.pinyin.Final;
+import kranji.pinyin.Head;
+import kranji.pinyin.Initial;
+import kranji.pinyin.PinyinSyllable;
+import kranji.pinyin.Tail;
+import kranji.pinyin.Tone;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,6 +63,56 @@ final class BlockStructuresDepthTest {
     void components_of_composed_block_delegates_to_layout() {
         ComposedPart cp = new ComposedPart(new CompositionLayout.TopMiddleBottom(A, B, C));
         assertEquals(List.<BlockStructure>of(A, B, C), cp.components());
+    }
+
+    @Test
+    void forEachComposedZiChild_skips_singulars_and_recurses_through_parts() {
+        // Build a tiny ComposedZi to use as a "registered" identity target.
+        ComposedZi fakeZi = new ComposedZi(
+                new ZiChar.Unicode("\u4E00"),
+                new PinyinSyllable(Initial.ZERO, new Final(Head.OPEN, Body.I, Tail.NONE), Tone.FIRST),
+                1, 1, "",
+                new CompositionLayout.LeftRight(A, B),
+                new EtymologicalCategory.Pictograph());
+
+        // Top: TopBottom(fakeZi, ComposedPart(LeftRight(A, fakeZi)))
+        //   - level-1 component 1: ComposedZi fakeZi → consumer once
+        //   - level-1 component 2: ComposedPart → recurse; inside:
+        //       - A (singular) → skip
+        //       - fakeZi (ComposedZi) → consumer once
+        ComposedPart inner = new ComposedPart(new CompositionLayout.LeftRight(A, fakeZi));
+        ComposedPart top = new ComposedPart(new CompositionLayout.TopBottom(fakeZi, inner));
+
+        List<ComposedZi> seen = new ArrayList<>();
+        BlockStructures.forEachComposedZiChild(top, seen::add);
+
+        assertEquals(2, seen.size(), "expected two ComposedZi visits");
+        assertEquals(fakeZi, seen.get(0));
+        assertEquals(fakeZi, seen.get(1));
+    }
+
+    @Test
+    void forEachComposedZiChild_does_not_recurse_into_a_named_zi() {
+        // If a slot is itself a ComposedZi, its OWN composition must NOT
+        // be traversed — the walker treats named Zis as terminals so
+        // callers auditing their own module's records don't accidentally
+        // inspect the internals of a depth-below record.
+        Atom inside = new Atom("inside");
+        ComposedZi child = new ComposedZi(
+                new ZiChar.Unicode("\u4E01"),
+                new PinyinSyllable(Initial.D, new Final(Head.OPEN, Body.I, Tail.NG), Tone.FIRST),
+                2, 1, "",
+                new CompositionLayout.LeftRight(inside, inside),
+                new EtymologicalCategory.Pictograph());
+
+        ComposedPart outer = new ComposedPart(new CompositionLayout.TopBottom(A, child));
+
+        List<ComposedZi> seen = new ArrayList<>();
+        BlockStructures.forEachComposedZiChild(outer, seen::add);
+
+        // Only `child` is reported — its internal `inside`/`inside` slots
+        // are not exposed to the consumer.
+        assertEquals(List.of(child), seen);
     }
 
     @Test

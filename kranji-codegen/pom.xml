@@ -14,11 +14,11 @@
 
     <name>kranji-codegen</name>
     <description>
-        JSON-pipeline code generator for Kranji singulars. GenerateMain reads
-        the committed JSON catalog in kranji-singulars-perclass and emits one
-        Java record class per entry, plus per-family aggregators and a
-        registrar. The JSON catalog is the source of truth; the legacy
-        bootstrap tool (SnapshotMain) has been retired.
+        JSON-pipeline code generator for Kranji. Reads the committed JSON
+        catalog in src/main/resources/catalog/ and emits typed per-class
+        Java records — singulars into kranji-singulars-perclass,
+        composed ComposedZiT records into kranji-common-perclass. The
+        JSON catalog is the source of truth.
     </description>
 
     <properties>
@@ -39,7 +39,8 @@
             <artifactId>kranji-json</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
-        <!-- depth1 codegen pipeline -->
+        <!-- Singulars registry for the glyph→Ref reverse-index used by
+             PerclassGenerateMain to resolve leaf slots in composition trees. -->
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-singulars</artifactId>
@@ -48,31 +49,6 @@
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-json-bridge</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth1</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth2</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth3</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth4</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth5</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 

@@ -1,0 +1,22 @@
+{
+  "glyph" : "好",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 38,
+  "pinyin" : {
+    "initial" : "h",
+    "final" : "ao",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "女",
+      "right" : "子"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "女(woman) + 子(child) → good"
+  }
+}

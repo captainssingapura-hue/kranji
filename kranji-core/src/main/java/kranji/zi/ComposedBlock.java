@@ -4,8 +4,9 @@ import java.util.List;
 
 /**
  * 合体字 — A composed structural block with identity. Either a named
- * character ({@link ComposedZi}) or an anonymous value-object wrapper
- * ({@link ComposedPart}).
+ * character ({@link ComposedZi} or {@link ComposedZiT}) or an anonymous
+ * value-object wrapper ({@link ComposedPart}, {@link LeftRightPartT},
+ * {@link TopBottomPartT}).
  *
  * <p>Narrow seal: the 11 spatial layout records that previously lived
  * directly under {@code ComposedBlock} now live under
@@ -13,9 +14,20 @@ import java.util.List;
  * This enforces the invariant that every {@link BlockStructure} slot is
  * either an atomic {@link SingularBlock} or a named composite — never a
  * raw layout record.</p>
+ *
+ * <p>The typed branch ({@link ComposedZiT}, {@link LeftRightPartT},
+ * {@link TopBottomPartT}) carries the same structural information but
+ * preserves per-slot type information at compile time — see
+ * {@link CompositionLayoutT}. Typed instances still project down to
+ * the untyped {@link CompositionLayout} via {@link #composition()}, so
+ * legacy consumers keep working unchanged.</p>
  */
 public sealed interface ComposedBlock extends BlockStructure
-        permits ComposedZi, ComposedPart {
+        permits ComposedZi, ComposedPart, ComposedZiT,
+                LeftRightPartT, TopBottomPartT, LeftMiddleRightPartT, TopMiddleBottomPartT,
+                FullEnclosurePartT, SemiEnclosureUpperLeftPartT, SemiEnclosureUpperRightPartT,
+                SemiEnclosureBottomLeftPartT, SemiEnclosureTopThreePartT,
+                SemiEnclosureBottomThreePartT, SemiEnclosureLeftThreePartT {
 
     /** The internal spatial layout — one of 11 {@link CompositionLayout} variants. */
     CompositionLayout composition();

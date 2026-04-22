@@ -39,8 +39,8 @@ import java.util.TreeMap;
  *
  * <p>Each per-initial file groups glyphs by {@code <Final><Tone>} class
  * (the same PascalCase name used as the Java classname under
- * {@code kranji-common-depth<N>/<initial>/}), sorted alphabetically
- * within the initial and by class, then by glyph.</p>
+ * {@code kranji-common-perclass/<initial>/<FinalTone>/}), sorted
+ * alphabetically within the initial and by class, then by glyph.</p>
  */
 public final class PinyinGrouper {
 

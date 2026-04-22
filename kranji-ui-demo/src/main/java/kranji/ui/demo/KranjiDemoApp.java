@@ -19,11 +19,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import kranji.classification.EtymologicalCategory;
 import kranji.classification.EtymologicalCategory.*;
-import kranji.common.depth1.Depth1;
-import kranji.common.depth2.Depth2;
-import kranji.common.depth3.Depth3;
-import kranji.common.depth4.Depth4;
-import kranji.common.depth5.Depth5;
+import kranji.common.perclass.AllPerclassRecords;
 import kranji.zi.*;
 import kranji.zi.CompositionLayout.*;
 import kranji.pinyin.Initial;
@@ -34,6 +30,8 @@ import kranji.library.BasicSet;
 import kranji.library.ZiLibrary;
 import kranji.singular.SingularFamiliesPerclass;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.IdentityHashMap;
@@ -67,6 +65,7 @@ public class KranjiDemoApp extends Application {
     private static final String SRC_SINGULAR_ZI  = "Singular Zi (\u72ec\u4f53\u5b57)";
     private static final String SRC_PARTS        = "Parts (\u504f\u65c1)";
     private static final String SRC_COMPOSED     = "Composed Examples";
+    private static final String SRC_TYPED        = "Typed Per-Class (507)";
 
     private ObservableList<Zi> backingList;
     private FilteredList<Zi> filteredList;
@@ -75,6 +74,7 @@ public class KranjiDemoApp extends Application {
     private List<Zi> singularZiList;
     private List<Zi> partsList;
     private List<Zi> composedList;
+    private List<Zi> typedList;
     private List<Zi> allList;
 
     /**
@@ -226,17 +226,20 @@ public class KranjiDemoApp extends Application {
         singularZiList = List.copyOf(singulars);
         partsList = List.copyOf(parts);
 
-        // Composed records: all five depth buckets from the per-pinyin
-        // codegen modules (depth-4 is empty today but included for
-        // shape-consistency).
-        var composed = new ArrayList<Zi>();
-        composed.addAll(Depth1.ALL);
-        composed.addAll(Depth2.ALL);
-        composed.addAll(Depth3.ALL);
-        composed.addAll(Depth4.ALL);
-        composed.addAll(Depth5.ALL);
+        // Composed records: the typed per-class registry is now the single
+        // source of truth (kranji-common-perclass). Each record is both a
+        // ComposedZiT (typed layout) and a Zi, so it plugs into the UI
+        // with no adaptation. Depth is derived structurally from the
+        // block tree via {@link BlockStructures#depthOf(BlockStructure)},
+        // which keeps the Depth → Pinyin cascade filter working without
+        // needing pre-partitioned per-depth modules.
+        var composed = new ArrayList<Zi>(AllPerclassRecords.ALL);
         composed.sort(byStrokes);
         composedList = List.copyOf(composed);
+        // "Typed" source is an alias onto the same data today — retained
+        // as a separate entry so users can still select it explicitly
+        // when they want to be sure they're seeing the typed form.
+        typedList = composedList;
 
         var all = new ArrayList<Zi>();
         all.addAll(singularZiList);
@@ -246,28 +249,24 @@ public class KranjiDemoApp extends Application {
 
         // Build the depth-routing index (used by the Depth → Pinyin filter group).
         // Each Zi carries its own PinyinSyllable, so grouping/filtering is a
-        // pure function of (Initial, Final, Tone) — no external routing table
-        // required. The cascade just partitions by those pinyin-native values.
+        // pure function of (Initial, Final, Tone). Depth is derived from the
+        // record's structure tree — no external routing table required.
         routeIndex = new IdentityHashMap<>();
         routeIndexByDepth = new TreeMap<>();
-        indexDepth(1, Depth1.ALL);
-        indexDepth(2, Depth2.ALL);
-        indexDepth(3, Depth3.ALL);
-        indexDepth(4, Depth4.ALL);
-        indexDepth(5, Depth5.ALL);
+        for (var z : composedList) {
+            indexRecord(BlockStructures.depthOf(z.structure()), z);
+        }
     }
 
-    private void indexDepth(int depth, List<? extends Zi> all) {
-        for (var z : all) {
-            var py = z.pinyin();
-            var initialLabel = initialLabel(py.initial());
-            var finalToneLabel = finalToneLabel(py);
-            routeIndex.put(z, new RouteKey(depth, initialLabel, finalToneLabel));
-            routeIndexByDepth
-                    .computeIfAbsent(depth, d -> new TreeMap<>())
-                    .computeIfAbsent(initialLabel, s -> new TreeSet<>())
-                    .add(finalToneLabel);
-        }
+    private void indexRecord(int depth, Zi z) {
+        var py = z.pinyin();
+        var initialLabel = initialLabel(py.initial());
+        var finalToneLabel = finalToneLabel(py);
+        routeIndex.put(z, new RouteKey(depth, initialLabel, finalToneLabel));
+        routeIndexByDepth
+                .computeIfAbsent(depth, d -> new TreeMap<>())
+                .computeIfAbsent(initialLabel, s -> new TreeSet<>())
+                .add(finalToneLabel);
     }
 
     /**
@@ -298,6 +297,7 @@ public class KranjiDemoApp extends Application {
             case SRC_SINGULAR_ZI -> singularZiList;
             case SRC_PARTS       -> partsList;
             case SRC_COMPOSED    -> composedList;
+            case SRC_TYPED       -> typedList;
             default              -> allList;
         };
         backingList.setAll(items);
@@ -315,7 +315,8 @@ public class KranjiDemoApp extends Application {
         HBox.setHgrow(searchField, Priority.ALWAYS);
 
         sourceFilter = new ComboBox<>();
-        sourceFilter.getItems().addAll(SRC_ALL, SRC_SINGULAR_ZI, SRC_PARTS, SRC_COMPOSED);
+        sourceFilter.getItems().addAll(
+                SRC_ALL, SRC_SINGULAR_ZI, SRC_PARTS, SRC_COMPOSED, SRC_TYPED);
         sourceFilter.setValue(SRC_ALL);
         sourceFilter.setOnAction(e -> switchSource(sourceFilter.getValue()));
 
@@ -379,11 +380,12 @@ public class KranjiDemoApp extends Application {
         bottomRow.setAlignment(Pos.CENTER_LEFT);
 
         // ── Row 3: Depth → Pinyin partition cascading filters ──────────
-        // Mirrors the source-tree partitioning in kranji-common-depth1:
-        //   Depth1 → <initial sub-package> → <Final><Tone> class
-        // Picking a depth restricts to records carried by that depth's
-        // module; picking an initial cascades the final dropdown to only
-        // the classes that actually exist for that (depth, initial) pair.
+        // Mirrors the structural depth of each record (computed via
+        // BlockStructures.depthOf) plus its pinyin initial / (final+tone).
+        // Picking a depth restricts to records with that nesting depth;
+        // picking an initial cascades the final dropdown to only the
+        // (final+tone) classes that actually exist for that (depth,
+        // initial) pair.
         depthFilter = new ComboBox<>();
         depthFilter.getItems().add(ALL_DEPTHS);
         for (var d : routeIndexByDepth.keySet()) {
@@ -711,6 +713,20 @@ public class KranjiDemoApp extends Application {
 
         box.getChildren().addAll(header, metaLabel, separator(), etymSection, pySection);
 
+        // ── Typed layout (only for ComposedZiT records) ─────────────────
+        // Shows the precise parameterized layout interface, e.g.
+        // "LeftRightT<Ri, Yue>" — the invariant the type system now
+        // enforces at compile time. Reflects on the record's generic
+        // interfaces at render time; no instance state required.
+        if (e instanceof ComposedZiT zt) {
+            var typedLabel = typedLayoutSignature(zt);
+            if (typedLabel != null) {
+                var typedSection = section("TYPED LAYOUT (compile-time verified)",
+                        renderTypedLayout(typedLabel, zt.getClass()));
+                box.getChildren().add(typedSection);
+            }
+        }
+
         // ── Right side: composition tree ────────────────────────────────
         var compTitle = new Label("COMPOSITION \u2014 " + compositionLabelChinese(e.structure()));
         compTitle.setFont(Font.font("System", FontWeight.BOLD, 13));
@@ -838,6 +854,59 @@ public class KranjiDemoApp extends Application {
                     + "  tail=" + py.fin().tail().symbol() + "]"));
             box.getChildren().add(fieldLabel("Tone:      " + tone));
         }
+        return box;
+    }
+
+    // ── Typed layout rendering ─────────────────────────────────────────
+
+    /**
+     * Returns a readable rendering of the record's typed layout interface,
+     * e.g. {@code "LeftRightT<Ri, Yue>"} or {@code "SemiEnclosureBottomLeftT<ZouZhiDi,
+     * TopMiddleBottomPartT<Xue, ...>>"}. Returns {@code null} if no typed
+     * layout interface is declared (defensive — the invariant test
+     * guarantees every ComposedZiT has one).
+     */
+    private static String typedLayoutSignature(ComposedZiT record) {
+        for (Type iface : record.getClass().getGenericInterfaces()) {
+            if (!(iface instanceof ParameterizedType pt)) continue;
+            var raw = (Class<?>) pt.getRawType();
+            // Typed layout interfaces all live in kranji.zi and extend
+            // CompositionLayoutT. Skip ComposedZiT itself (non-parameterized).
+            if (!CompositionLayoutT.class.isAssignableFrom(raw)) continue;
+            return renderTypeSignature(pt);
+        }
+        return null;
+    }
+
+    private static String renderTypeSignature(Type t) {
+        if (t instanceof Class<?> c) return c.getSimpleName();
+        if (t instanceof ParameterizedType pt) {
+            var raw = (Class<?>) pt.getRawType();
+            var sb = new StringBuilder(raw.getSimpleName()).append('<');
+            var args = pt.getActualTypeArguments();
+            for (int i = 0; i < args.length; i++) {
+                if (i > 0) sb.append(", ");
+                sb.append(renderTypeSignature(args[i]));
+            }
+            return sb.append('>').toString();
+        }
+        return t.getTypeName();
+    }
+
+    private VBox renderTypedLayout(String signature, Class<?> recordClass) {
+        var box = new VBox(4);
+        // Interface signature — monospace for readability of the nested
+        // generic arguments (can get quite deep, e.g. Biang).
+        var sigLabel = new Label(signature);
+        sigLabel.setFont(Font.font("Consolas", 13));
+        sigLabel.setWrapText(true);
+        sigLabel.setStyle("-fx-text-fill: #2563EB;");
+        box.getChildren().add(sigLabel);
+
+        // Fully-qualified record location (helps users jump to source).
+        var fqnLabel = fieldLabel("record: " + recordClass.getName());
+        fqnLabel.setStyle(fqnLabel.getStyle() + " -fx-text-fill: #888;");
+        box.getChildren().add(fqnLabel);
         return box;
     }
 

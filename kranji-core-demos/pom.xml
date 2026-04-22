@@ -16,10 +16,8 @@
     </properties>
 
     <dependencies>
-        <!-- Singular catalog + every per-pinyin composed depth module, so
-             ZiLookup / BlockLookup can index the full composed pool
-             (Depth1..Depth5). Depth4 is empty today but pulled in for
-             shape-consistency. -->
+        <!-- Singular catalog + typed composed registry (kranji-common-perclass),
+             so ZiLookup / BlockLookup can index every Zi the project knows. -->
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-core</artifactId>
@@ -32,27 +30,7 @@
         </dependency>
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth1</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth2</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth3</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth4</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth5</artifactId>
+            <artifactId>kranji-common-perclass</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 

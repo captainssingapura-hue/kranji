@@ -12,18 +12,12 @@
     "style" : "left_right",
     "slots" : {
       "left" : "亻",
-      "right" : {
-        "style" : "top_bottom",
-        "slots" : {
-          "top" : "⺈",
-          "bottom" : "小"
-        }
-      }
+      "right" : "尔"
     }
   },
   "etymology" : {
     "kind" : "phono_semantic",
     "semanticPart" : "亻",
-    "phoneticPart" : "小"
+    "phoneticPart" : "尔"
   }
 }

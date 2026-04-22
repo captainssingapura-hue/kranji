@@ -19,11 +19,9 @@
     </properties>
 
     <dependencies>
-        <!-- Composed records are pulled directly from the per-pinyin
-             codegen modules kranji-common-depth{1..5}; the singular
-             catalog comes from kranji-singulars-perclass. Depth-4 is
-             empty today but pulled in for shape-consistency (its ALL
-             list is just empty). -->
+        <!-- Singular catalog from kranji-singulars-perclass; every composed
+             Zi is a ComposedZiT from kranji-common-perclass (the typed
+             per-class registry is now the single source of truth). -->
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-core</artifactId>
@@ -36,27 +34,7 @@
         </dependency>
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth1</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth2</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth3</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth4</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-common-depth5</artifactId>
+            <artifactId>kranji-common-perclass</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
