@@ -24,18 +24,15 @@ The same data model scales from single-stroke pictographs like 一 all the way t
 
 | Module | Purpose |
 |---|---|
-| **kranji-core** | Type system, layout engine, SVG renderer, pinyin model |
+| **kranji-core** | Type system (including typed `ComposedZiT` + `*T` layout interfaces), layout engine, SVG renderer, pinyin model |
 | **kranji-singulars** | Curated families of standalone characters (独体字) with semantic metadata (manual families + `SingularFamilies` aggregator) |
 | **kranji-singulars-perclass** | Per-class JSON catalog + codegen for the singulars |
-| **kranji-common-base** | Shared bootstrapping for the depth modules |
-| **kranji-common-depth1..5** | Composed characters (合体字) partitioned by nesting depth; Java is generated from the JSON catalog |
-| **kranji-common** | Legacy/staging aggregator — now empty of records; retained for transitional wiring |
-| **kranji-codegen** | Per-depth JSON catalog (source of truth) + generator mains (`Depth<N>GenerateMain`, `Depth<N>SnapshotMain`) |
+| **kranji-common-perclass** | 507 typed per-class `ComposedZiT` records (合体字), generated from the JSON catalog; exposed as `AllPerclassRecords.ALL`. Single source of truth for composed characters |
+| **kranji-codegen** | JSON catalog (source of truth) + `PerclassGenerateMain` — emits the typed records into `kranji-common-perclass` |
 | **kranji-json** | `ComposedZiJson` DTOs and catalog loader |
 | **kranji-json-bridge** | `TypedToUntyped` / `UntypedToTyped` converters powering the round-trip |
 | **kranji-core-demos** | SVG export, ZiLookup, BlockLookup, and debugging utilities |
 | **kranji-ui-demo** | Interactive JavaFX explorer with filtering and live SVG preview |
-| **kranji-test-fixtures**, **kranji-util** | Cross-module test helpers and shared plumbing |
 
 ## Core concepts
 
@@ -157,17 +154,15 @@ Kranji/
 │       ├── plants/PlantsAndAgriculture.java
 │       └── ...                       # 13 semantic families
 ├── kranji-singulars-perclass/        # Per-class JSON catalog + generated Java
-├── kranji-common-depth1/             # 441 depth-1 ComposedZi (per-pinyin layout)
-│   └── src/main/java/kranji/common/depth1/
-│       ├── Depth1.java               # Top-level aggregator (Depth1.ALL)
-│       ├── Depth1<Initial>.java      # 22 per-initial aggregators
-│       └── <initial>/<Final><Tone>.java   # One class per pinyin triple
-├── kranji-common-depth2/             # same shape, depth-2 records
-├── kranji-common-depth3/             # same shape, depth-3 records
-├── kranji-common-depth4/             # empty today; Depth4.ALL = List.of()
-├── kranji-common-depth5/             # depth-5 records (currently just 𰻝)
+├── kranji-common-perclass/           # 507 typed ComposedZiT records (flat,
+│   └── src/main/java/kranji/common/perclass/
+│       ├── AllPerclassRecords.java   #   single source-of-truth registry
+│       └── <initial>/<FinalTone>/<ClassName>.java
+│                                     #   one typed record per character,
+│                                     #   e.g. m/Ing2/Ming.java implementing
+│                                     #   ComposedZiT, LeftRightT<Ri, Yue>
 ├── kranji-codegen/
-│   ├── src/main/java/kranji/codegen/depth{1,2,3,5}/   # Generators
+│   ├── src/main/java/kranji/codegen/perclass/         # PerclassGenerateMain
 │   └── src/main/resources/catalog/depth{1,2,3,5}/     # JSON source of truth
 ├── kranji-core-demos/
 │   └── src/main/java/kranji/demos/
@@ -184,11 +179,12 @@ Kranji/
 
 ## Key design choices
 
-- **Sealed interfaces + records** — The type system enforces exhaustive handling of all 13 composition variants and 6 etymology categories at compile time. No stringly-typed fields, no orphan enums.
-- **Recursive `StructuralNode`** — A proper algebraic data type (component | composition) enables arbitrary nesting depth without special-casing.
+- **Sealed interfaces + records** — The type system enforces exhaustive handling of all 11 composition variants and 6 etymology categories at compile time. No stringly-typed fields, no orphan enums.
+- **Typed composition slots** — Every composed character is a `ComposedZiT` that also implements its concrete layout interface (e.g. `Ming implements ComposedZiT, LeftRightT<Ri, Yue>`). Slot types are parameterized, so `LeftRightT<Yue, Ri>` is a compile error at the reference site, not a runtime surprise. The `TypedSlotInvariantTest` asserts no record ever degrades to a generic supertype.
+- **Recursive `BlockStructure`** — A proper algebraic data type (singular | composed) enables arbitrary nesting depth; `BlockStructures.depthOf` gives a structural depth that the UI's depth cascade filter reads directly, replacing the old per-depth Maven modules.
 - **Orthogonal axes** — Composition and etymology are independent concerns. A `LeftRight` character can be phono-semantic, compound-indicative, or anything else.
 - **Politeness-based layout** — Instead of hardcoded width/height weights per component, a single `Politeness` level on each component drives proportional splits through a gap formula. New components get sensible layout for free.
-- **ServiceLoader discovery** — `SingularZi` instances registered in `kranji-singulars` are discovered at runtime via `SingularZiProvider`, keeping the core module decoupled from the character database.
+- **JSON-first codegen** — Both singulars and composed records are reproducible from the JSON catalog under `kranji-codegen/src/main/resources/catalog/`; `PerclassGenerateMain` emits every Java file mechanically, so hand-edits are never necessary.
 
 ## License
 
