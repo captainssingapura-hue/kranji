@@ -1,0 +1,23 @@
+{
+  "glyph" : "蝗",
+  "ziCharForm" : "unicode",
+  "strokes" : 15,
+  "radicalNo" : 142,
+  "pinyin" : {
+    "initial" : "h",
+    "final" : "uang",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "虫",
+      "right" : "皇"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "虫",
+    "phoneticPart" : "皇"
+  }
+}

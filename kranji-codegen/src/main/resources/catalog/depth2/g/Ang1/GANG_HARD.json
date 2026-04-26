@@ -1,0 +1,23 @@
+{
+  "glyph" : "刚",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 18,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ang",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "冈",
+      "right" : "刂"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "刂",
+    "phoneticPart" : "冈"
+  }
+}

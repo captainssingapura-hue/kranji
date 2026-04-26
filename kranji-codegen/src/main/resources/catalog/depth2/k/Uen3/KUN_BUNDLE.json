@@ -1,0 +1,23 @@
+{
+  "glyph" : "捆",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "uen",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : "困"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "困"
+  }
+}

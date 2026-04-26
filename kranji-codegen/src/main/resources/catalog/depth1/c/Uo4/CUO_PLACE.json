@@ -1,0 +1,16 @@
+{
+  "glyph" : "措",
+  "ziCharForm" : "unicode",
+  "strokes" : 11,
+  "radicalNo" : 64,
+  "pinyin" : { "initial" : "c", "final" : "uo", "tone" : 4 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "扌", "right" : "昔" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "昔"
+  }
+}

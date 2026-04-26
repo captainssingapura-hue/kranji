@@ -1,0 +1,22 @@
+{
+  "glyph" : "拿",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "a",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "合",
+      "bottom" : "手"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "uniting (合) hand (手) — to take hold of, grasp"
+  }
+}

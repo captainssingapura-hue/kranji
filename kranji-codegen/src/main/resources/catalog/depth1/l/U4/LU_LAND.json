@@ -1,0 +1,16 @@
+{
+  "glyph" : "陆",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 170,
+  "pinyin" : { "initial" : "l", "final" : "u", "tone" : 4 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "阝", "right" : "坴" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "阝",
+    "phoneticPart" : "坴"
+  }
+}

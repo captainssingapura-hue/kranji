@@ -1,0 +1,22 @@
+{
+  "glyph" : "全",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 11,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "üan",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "人",
+      "bottom" : "王"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "人(gather) + 王/玉(jade) → complete, whole, intact"
+  }
+}

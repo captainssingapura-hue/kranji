@@ -1,0 +1,22 @@
+{
+  "glyph" : "垦",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 32,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "en",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "艮",
+      "bottom" : "土"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "simplified from 墾; 艮(firm) + 土(earth) → reclaim, cultivate land"
+  }
+}

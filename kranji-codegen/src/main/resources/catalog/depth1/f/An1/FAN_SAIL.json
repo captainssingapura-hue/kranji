@@ -1,0 +1,23 @@
+{
+  "glyph" : "帆",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 50,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "an",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "巾",
+      "right" : "凡"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "巾",
+    "phoneticPart" : "凡"
+  }
+}

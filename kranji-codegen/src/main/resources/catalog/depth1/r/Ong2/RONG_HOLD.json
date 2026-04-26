@@ -1,0 +1,23 @@
+{
+  "glyph" : "容",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 40,
+  "pinyin" : {
+    "initial" : "r",
+    "final" : "ong",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "宀",
+      "bottom" : "谷"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "宀",
+    "phoneticPart" : "谷"
+  }
+}

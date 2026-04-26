@@ -1,0 +1,16 @@
+{
+  "glyph" : "逃",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 162,
+  "pinyin" : { "initial" : "t", "final" : "ao", "tone" : 2 },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_left",
+    "slots" : { "wrapper" : "辶", "content" : "兆" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "辶",
+    "phoneticPart" : "兆"
+  }
+}

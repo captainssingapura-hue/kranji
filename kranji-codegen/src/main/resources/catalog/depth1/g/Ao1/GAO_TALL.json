@@ -1,0 +1,28 @@
+{
+  "glyph" : "高",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 189,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ao",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_middle_bottom",
+    "slots" : {
+      "top" : "亠",
+      "middle" : "口",
+      "bottom" : {
+        "style" : "semi_enclosure_top_three",
+        "slots" : {
+          "wrapper" : "冂",
+          "content" : "口"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "pictograph"
+  }
+}

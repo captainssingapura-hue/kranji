@@ -1,0 +1,23 @@
+{
+  "glyph" : "阀",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 169,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "a",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "门",
+      "content" : "伐"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "门",
+    "phoneticPart" : "伐"
+  }
+}

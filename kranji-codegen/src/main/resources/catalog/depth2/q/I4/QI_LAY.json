@@ -1,0 +1,23 @@
+{
+  "glyph" : "砌",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 112,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "i",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "石",
+      "right" : "切"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "石",
+    "phoneticPart" : "切"
+  }
+}

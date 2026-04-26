@@ -1,0 +1,16 @@
+{
+  "glyph" : "援",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 64,
+  "pinyin" : { "initial" : "", "final" : "uan", "tone" : 2 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "扌", "right" : "爰" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "爰"
+  }
+}

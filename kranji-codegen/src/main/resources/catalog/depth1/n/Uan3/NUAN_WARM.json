@@ -1,0 +1,16 @@
+{
+  "glyph" : "暖",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 72,
+  "pinyin" : { "initial" : "n", "final" : "uan", "tone" : 3 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "日", "right" : "爰" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "日",
+    "phoneticPart" : "爰"
+  }
+}

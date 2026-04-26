@@ -1,0 +1,22 @@
+{
+  "glyph" : "顷",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 181,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "ing",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "匕",
+      "right" : "页"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "匕(tilted person) + 页(head) → head tilting; a moment"
+  }
+}

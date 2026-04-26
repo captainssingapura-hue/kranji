@@ -1,0 +1,22 @@
+{
+  "glyph" : "烦",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 86,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "an",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "火",
+      "right" : "页"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "火(fire) + 页(head) → feverish head → vexed/annoyed"
+  }
+}

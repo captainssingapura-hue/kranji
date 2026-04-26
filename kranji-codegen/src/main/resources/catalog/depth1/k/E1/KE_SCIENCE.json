@@ -1,0 +1,22 @@
+{
+  "glyph" : "科",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 115,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "e",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "禾",
+      "right" : "斗"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "禾(grain) + 斗(measure) → classify/grade grain → category, science"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "倾",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "ing",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "顷"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "顷"
+  }
+}

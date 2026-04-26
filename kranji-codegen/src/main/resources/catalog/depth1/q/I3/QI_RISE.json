@@ -1,0 +1,22 @@
+{
+  "glyph" : "企",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "i",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "人",
+      "bottom" : "止"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "人(person) + 止(foot) → standing on tiptoes, aspire"
+  }
+}

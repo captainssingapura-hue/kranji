@@ -1,0 +1,23 @@
+{
+  "glyph" : "疯",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 104,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "eng",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "疒",
+      "content" : "风"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "疒",
+    "phoneticPart" : "风"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "蜻",
+  "ziCharForm" : "unicode",
+  "strokes" : 14,
+  "radicalNo" : 142,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "ing",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "虫",
+      "right" : "青"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "虫",
+    "phoneticPart" : "青"
+  }
+}

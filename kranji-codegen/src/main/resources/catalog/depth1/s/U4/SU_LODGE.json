@@ -1,0 +1,28 @@
+{
+  "glyph" : "宿",
+  "ziCharForm" : "unicode",
+  "strokes" : 11,
+  "radicalNo" : 40,
+  "pinyin" : {
+    "initial" : "s",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "宀",
+      "bottom" : {
+        "style" : "left_right",
+        "slots" : {
+          "left" : "亻",
+          "right" : "百"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "宀(roof) + 亻(person) + 百(hundred/many) → a place where people lodge"
+  }
+}

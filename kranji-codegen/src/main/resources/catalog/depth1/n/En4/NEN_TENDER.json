@@ -1,0 +1,24 @@
+{
+  "glyph" : "嫩",
+  "ziCharForm" : "unicode",
+  "strokes" : 14,
+  "radicalNo" : 38,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "en",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_middle_right",
+    "slots" : {
+      "left" : "女",
+      "middle" : "束",
+      "right" : "攵"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "女",
+    "phoneticPart" : "束"
+  }
+}

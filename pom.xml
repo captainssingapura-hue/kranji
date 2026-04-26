@@ -15,6 +15,8 @@
         <module>kranji-json-bridge</module>
         <module>kranji-singulars-perclass</module>
         <module>kranji-common-perclass</module>
+        <module>kranji-common-perclass-promoted</module>
+        <module>kranji-common-perclass-staging</module>
         <module>kranji-codegen</module>
         <module>kranji-core-demos</module>
         <module>kranji-ui-demo</module>

@@ -1,0 +1,16 @@
+{
+  "glyph" : "哨",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 30,
+  "pinyin" : { "initial" : "sh", "final" : "ao", "tone" : 4 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "口", "right" : "肖" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "口",
+    "phoneticPart" : "肖"
+  }
+}

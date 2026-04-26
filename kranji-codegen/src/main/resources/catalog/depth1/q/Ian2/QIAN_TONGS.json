@@ -1,0 +1,23 @@
+{
+  "glyph" : "钳",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 167,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "ian",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "钅",
+      "right" : "甘"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "钅",
+    "phoneticPart" : "甘"
+  }
+}

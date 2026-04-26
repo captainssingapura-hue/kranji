@@ -14,6 +14,7 @@ import kranji.singular.space.SpaceAndDirection;
 import kranji.singular.structures.Structures;
 import kranji.singular.radicals.RadicalComponents;
 import kranji.singular.tools.ToolsAndVessels;
+import kranji.singular.unsure.UnsureSingulars;
 
 /**
  * Registers all singular (独体字) families into {@link BasicSet}.
@@ -47,5 +48,6 @@ public final class SingularFamilies {
         basicSet.addAll(Materials.ALL);
         basicSet.addAll(AbstractConcepts.ALL);
         basicSet.addAll(RadicalComponents.ALL);
+        basicSet.addAll(UnsureSingulars.ALL);
     }
 }

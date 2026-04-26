@@ -1,0 +1,23 @@
+{
+  "glyph" : "轨",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 159,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "uei",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "车",
+      "right" : "九"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "车",
+    "phoneticPart" : "九"
+  }
+}

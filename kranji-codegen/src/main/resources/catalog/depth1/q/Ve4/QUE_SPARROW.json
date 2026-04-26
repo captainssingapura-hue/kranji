@@ -1,0 +1,22 @@
+{
+  "glyph" : "雀",
+  "ziCharForm" : "unicode",
+  "strokes" : 11,
+  "radicalNo" : 172,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "üe",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "小",
+      "bottom" : "隹"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "小(small) + 隹(short-tailed bird) → sparrow"
+  }
+}

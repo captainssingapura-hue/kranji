@@ -1,0 +1,23 @@
+{
+  "glyph" : "盟",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 108,
+  "pinyin" : {
+    "initial" : "m",
+    "final" : "eng",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "明",
+      "bottom" : "皿"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "皿",
+    "phoneticPart" : "明"
+  }
+}

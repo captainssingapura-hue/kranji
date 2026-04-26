@@ -1,0 +1,22 @@
+{
+  "glyph" : "扩",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "uo",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : "广"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "simplified from 擴; 扌(hand) + 广(wide shelter) → expand, enlarge"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "glyph" : "封",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 41,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "eng",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "土",
+          "bottom" : "土"
+        }
+      },
+      "right" : "寸"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "土(earth) stacked (圭) + 寸(hand/measure) → to bestow land → seal/enfeoff"
+  }
+}

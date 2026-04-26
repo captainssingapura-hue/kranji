@@ -1,0 +1,23 @@
+{
+  "glyph" : "购",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 154,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ou",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "贝",
+      "right" : "勾"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "贝",
+    "phoneticPart" : "勾"
+  }
+}

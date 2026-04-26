@@ -1,0 +1,22 @@
+{
+  "glyph" : "妇",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 38,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "女",
+      "right" : "彐"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "woman (女) with broom (彐) — wife, married woman"
+  }
+}

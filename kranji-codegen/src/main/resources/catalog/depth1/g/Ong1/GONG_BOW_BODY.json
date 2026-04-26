@@ -1,0 +1,22 @@
+{
+  "glyph" : "躬",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 158,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ong",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "身",
+      "right" : "弓"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "body (身) bent like a bow (弓) — bow, bend the body"
+  }
+}

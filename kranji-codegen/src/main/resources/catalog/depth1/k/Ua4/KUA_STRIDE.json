@@ -1,0 +1,16 @@
+{
+  "glyph" : "跨",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 157,
+  "pinyin" : { "initial" : "k", "final" : "ua", "tone" : 4 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "足", "right" : "夸" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "足",
+    "phoneticPart" : "夸"
+  }
+}

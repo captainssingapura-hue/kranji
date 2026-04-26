@@ -1,0 +1,23 @@
+{
+  "glyph" : "辜",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 160,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "u",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "古",
+      "bottom" : "辛"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "辛",
+    "phoneticPart" : "古"
+  }
+}

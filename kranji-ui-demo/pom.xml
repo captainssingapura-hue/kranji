@@ -37,6 +37,15 @@
             <artifactId>kranji-common-perclass</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <!-- Staging module brings in:
+               - kranji-common-perclass-promoted (transitively)
+               - the AllZiRecords aggregator combining hand-authored ∪ promoted ∪ staged
+             so the UI sees every record in the project, not just hand-authored. -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-perclass-staging</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>

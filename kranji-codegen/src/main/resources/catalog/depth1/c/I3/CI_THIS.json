@@ -1,0 +1,22 @@
+{
+  "glyph" : "此",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 77,
+  "pinyin" : {
+    "initial" : "c",
+    "final" : "i",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "止",
+      "right" : "匕"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "止(foot) + 匕(person) → standing here, this place"
+  }
+}

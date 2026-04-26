@@ -1,0 +1,23 @@
+{
+  "glyph" : "挪",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "uo",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : "那"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "那"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "glyph" : "蚕",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 142,
+  "pinyin" : {
+    "initial" : "c",
+    "final" : "an",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "天",
+      "bottom" : "虫"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "simplified from 蠶; 天(heaven/sky) + 虫(worm) → silkworm"
+  }
+}

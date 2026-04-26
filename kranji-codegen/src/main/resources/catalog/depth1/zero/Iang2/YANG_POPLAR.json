@@ -1,0 +1,23 @@
+{
+  "glyph" : "杨",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "",
+    "final" : "iang",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "木",
+      "right" : "昜"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "木",
+    "phoneticPart" : "昜"
+  }
+}

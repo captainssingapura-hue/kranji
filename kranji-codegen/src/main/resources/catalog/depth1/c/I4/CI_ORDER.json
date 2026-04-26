@@ -1,0 +1,22 @@
+{
+  "glyph" : "次",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 76,
+  "pinyin" : {
+    "initial" : "c",
+    "final" : "i",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "冫",
+      "right" : "欠"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "two (冫) breaths (欠) — next time, a repeat occurrence"
+  }
+}

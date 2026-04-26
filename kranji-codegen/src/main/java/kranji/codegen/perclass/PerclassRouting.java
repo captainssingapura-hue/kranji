@@ -24,9 +24,26 @@ public final class PerclassRouting {
     public static final Path CATALOG_ROOT =
             Path.of("kranji-codegen", "src", "main", "resources", "catalog");
 
-    /** Output root (where emitted .java files go). */
+    /**
+     * Output root for generator-emitted .java files.
+     *
+     * <p>Pointed at {@code kranji-codegen/target/...} (i.e. inside the
+     * codegen module's own build output) so the generator is physically
+     * isolated from {@code kranji-common-perclass/src/main/java/...},
+     * which is now the home of <strong>hand-authored</strong> typed
+     * records. Running {@code PerclassGenerateMain} cannot touch any
+     * file under {@code src/main/java}.</p>
+     *
+     * <p>Today the generator's output here is diagnostic — useful for
+     * migration sanity checks (diff against src/main) or as a staging
+     * ground if you want to copy regenerated records back into src/main.
+     * It is not on the build's compile classpath.</p>
+     *
+     * <p>For the current authoring discipline see
+     * {@code docs/batch-additions-workflow.md} §2A.</p>
+     */
     public static final Path OUTPUT_ROOT =
-            Path.of("kranji-common-perclass", "src", "main", "java",
+            Path.of("kranji-codegen", "target", "perclass-out",
                     "kranji", "common", "perclass");
 
     private PerclassRouting() {}

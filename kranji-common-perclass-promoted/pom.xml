@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+        <artifactId>Kranji</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>kranji-common-perclass-promoted</artifactId>
+
+    <!--
+      Cumulative-stable home for catalog-iterator records that have been
+      reviewed in staging and found acceptable. Promotion is a one-way
+      mechanical move:
+
+          kranji-common-perclass-staging  →  kranji-common-perclass-promoted
+
+      performed by kranji.codegen.catalog.PromoteMain. The promoter
+      copies a staged .java file here with its package line rewritten
+      from .staging. → .promoted., then deletes the staged copy and
+      regenerates both AllPerclassRecordsStaging.ALL and
+      AllPerclassRecordsPromoted.ALL.
+
+      Why a separate module from the hand-authored one:
+        - Promoted records remain visibly auto-generated (banner
+          preserved). Reviewers can re-run promotion idempotently
+          without touching anything in kranji-common-perclass.
+        - Failures in a promotion round only break this module's
+          compile, not the hand-authored module's.
+        - The dependency chain enforces directionality:
+              hand-authored  ←─  promoted  ←─  staging
+          A staged record can reference promoted (or hand-authored)
+          components, but not the other way around — preventing
+          regressions where a stable record suddenly depends on
+          unstable staging.
+    -->
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-singulars</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-perclass</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

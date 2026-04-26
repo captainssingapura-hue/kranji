@@ -1,0 +1,35 @@
+{
+  "glyph" : "锋",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 167,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "eng",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "钅",
+      "right" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "夂",
+          "bottom" : "丰"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "钅",
+    "phoneticPart" : {
+      "style" : "top_bottom",
+      "slots" : {
+        "top" : "夂",
+        "bottom" : "丰"
+      }
+    }
+  }
+}

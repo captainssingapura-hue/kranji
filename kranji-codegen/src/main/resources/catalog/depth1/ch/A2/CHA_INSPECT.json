@@ -1,0 +1,23 @@
+{
+  "glyph" : "察",
+  "ziCharForm" : "unicode",
+  "strokes" : 14,
+  "radicalNo" : 40,
+  "pinyin" : {
+    "initial" : "ch",
+    "final" : "a",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "semi_enclosure_top_three",
+    "slots" : {
+      "wrapper" : "宀",
+      "content" : "祭"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "宀",
+    "phoneticPart" : "祭"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "glyph" : "蜂",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 142,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "eng",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "虫",
+      "right" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "夂",
+          "bottom" : "丰"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "虫",
+    "phoneticPart" : {
+      "style" : "top_bottom",
+      "slots" : {
+        "top" : "夂",
+        "bottom" : "丰"
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "glyph" : "糕",
+  "ziCharForm" : "unicode",
+  "strokes" : 16,
+  "radicalNo" : 119,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ao",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "米",
+      "right" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "羊",
+          "bottom" : "灬"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "米",
+    "phoneticPart" : {
+      "style" : "top_bottom",
+      "slots" : {
+        "top" : "羊",
+        "bottom" : "灬"
+      }
+    }
+  }
+}

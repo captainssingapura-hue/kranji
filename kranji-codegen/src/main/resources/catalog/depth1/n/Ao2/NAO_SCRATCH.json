@@ -1,0 +1,16 @@
+{
+  "glyph" : "挠",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 64,
+  "pinyin" : { "initial" : "n", "final" : "ao", "tone" : 2 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "扌", "right" : "尧" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "尧"
+  }
+}

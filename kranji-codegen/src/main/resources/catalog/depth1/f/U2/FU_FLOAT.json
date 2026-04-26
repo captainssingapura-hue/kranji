@@ -1,0 +1,35 @@
+{
+  "glyph" : "浮",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 85,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "氵",
+      "right" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "爫",
+          "bottom" : "子"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "氵",
+    "phoneticPart" : {
+      "style" : "top_bottom",
+      "slots" : {
+        "top" : "爫",
+        "bottom" : "子"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "glyph" : "窜",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 116,
+  "pinyin" : {
+    "initial" : "c",
+    "final" : "uan",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "穴",
+      "bottom" : "鼠"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "simplified from 竄; 穴(hole) + 鼠(rat) → scurry, flee into a burrow"
+  }
+}

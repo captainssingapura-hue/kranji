@@ -1,0 +1,23 @@
+{
+  "glyph" : "赶",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 156,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "an",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_left",
+    "slots" : {
+      "wrapper" : "走",
+      "content" : "干"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "走",
+    "phoneticPart" : "干"
+  }
+}

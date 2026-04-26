@@ -1,0 +1,35 @@
+{
+  "glyph" : "捏",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "n",
+    "final" : "ie",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "日",
+          "bottom" : "土"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : {
+      "style" : "top_bottom",
+      "slots" : {
+        "top" : "日",
+        "bottom" : "土"
+      }
+    }
+  }
+}

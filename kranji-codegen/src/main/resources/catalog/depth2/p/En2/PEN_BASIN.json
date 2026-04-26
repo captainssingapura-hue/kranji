@@ -1,0 +1,23 @@
+{
+  "glyph" : "盆",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 108,
+  "pinyin" : {
+    "initial" : "p",
+    "final" : "en",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "分",
+      "bottom" : "皿"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "皿",
+    "phoneticPart" : "分"
+  }
+}

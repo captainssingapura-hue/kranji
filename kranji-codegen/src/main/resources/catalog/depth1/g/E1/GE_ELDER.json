@@ -1,0 +1,22 @@
+{
+  "glyph" : "哥",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "e",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "可",
+      "bottom" : "可"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "doubled 可 — elder brother"
+  }
+}

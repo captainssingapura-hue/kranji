@@ -1,0 +1,22 @@
+{
+  "glyph" : "负",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 154,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "⺈",
+      "bottom" : "贝"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "person (⺈) carrying shell/money (贝) on back — bear, owe, negative"
+  }
+}

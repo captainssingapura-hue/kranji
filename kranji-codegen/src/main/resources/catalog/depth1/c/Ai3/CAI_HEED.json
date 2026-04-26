@@ -1,0 +1,23 @@
+{
+  "glyph" : "睬",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 109,
+  "pinyin" : {
+    "initial" : "c",
+    "final" : "ai",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "目",
+      "right" : "采"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "目",
+    "phoneticPart" : "采"
+  }
+}

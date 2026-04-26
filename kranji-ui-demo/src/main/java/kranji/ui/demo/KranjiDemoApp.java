@@ -19,7 +19,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import kranji.classification.EtymologicalCategory;
 import kranji.classification.EtymologicalCategory.*;
-import kranji.common.perclass.AllPerclassRecords;
+import kranji.common.perclass.staging.AllZiRecords;
 import kranji.zi.*;
 import kranji.zi.CompositionLayout.*;
 import kranji.pinyin.Initial;
@@ -233,7 +233,15 @@ public class KranjiDemoApp extends Application {
         // block tree via {@link BlockStructures#depthOf(BlockStructure)},
         // which keeps the Depth → Pinyin cascade filter working without
         // needing pre-partitioned per-depth modules.
-        var composed = new ArrayList<Zi>(AllPerclassRecords.ALL);
+        // AllZiRecords.ALL = hand-authored ∪ promoted ∪ staged (every typed
+        // ComposedZi/SingularZi record in the project). Filter out the
+        // anonymous synthetic inline-composition helpers (empty glyph) —
+        // they're internal sub-blocks of an outer record, not user-facing Zi.
+        var composed = new ArrayList<Zi>();
+        for (Zi z : AllZiRecords.ALL) {
+            String g = z.character();
+            if (g != null && !g.isEmpty()) composed.add(z);
+        }
         composed.sort(byStrokes);
         composedList = List.copyOf(composed);
         // "Typed" source is an alias onto the same data today — retained

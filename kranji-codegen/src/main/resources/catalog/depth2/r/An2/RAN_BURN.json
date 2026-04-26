@@ -1,0 +1,23 @@
+{
+  "glyph" : "燃",
+  "ziCharForm" : "unicode",
+  "strokes" : 16,
+  "radicalNo" : 86,
+  "pinyin" : {
+    "initial" : "r",
+    "final" : "an",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "火",
+      "right" : "然"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "火",
+    "phoneticPart" : "然"
+  }
+}

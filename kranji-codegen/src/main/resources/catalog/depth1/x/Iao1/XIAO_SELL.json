@@ -1,0 +1,16 @@
+{
+  "glyph" : "销",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 167,
+  "pinyin" : { "initial" : "x", "final" : "iao", "tone" : 1 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "钅", "right" : "肖" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "钅",
+    "phoneticPart" : "肖"
+  }
+}

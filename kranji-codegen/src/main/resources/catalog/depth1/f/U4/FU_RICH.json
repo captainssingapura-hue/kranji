@@ -1,0 +1,37 @@
+{
+  "glyph" : "富",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 40,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "宀",
+      "bottom" : {
+        "style" : "top_middle_bottom",
+        "slots" : {
+          "top" : "一",
+          "middle" : "口",
+          "bottom" : "田"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "宀",
+    "phoneticPart" : {
+      "style" : "top_middle_bottom",
+      "slots" : {
+        "top" : "一",
+        "middle" : "口",
+        "bottom" : "田"
+      }
+    }
+  }
+}

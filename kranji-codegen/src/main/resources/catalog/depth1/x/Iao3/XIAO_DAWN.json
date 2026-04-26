@@ -1,0 +1,16 @@
+{
+  "glyph" : "晓",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 72,
+  "pinyin" : { "initial" : "x", "final" : "iao", "tone" : 3 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "日", "right" : "尧" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "日",
+    "phoneticPart" : "尧"
+  }
+}

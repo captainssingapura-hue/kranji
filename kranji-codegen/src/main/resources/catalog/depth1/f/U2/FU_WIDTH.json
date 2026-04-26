@@ -1,0 +1,37 @@
+{
+  "glyph" : "幅",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 50,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "巾",
+      "right" : {
+        "style" : "top_middle_bottom",
+        "slots" : {
+          "top" : "一",
+          "middle" : "口",
+          "bottom" : "田"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "巾",
+    "phoneticPart" : {
+      "style" : "top_middle_bottom",
+      "slots" : {
+        "top" : "一",
+        "middle" : "口",
+        "bottom" : "田"
+      }
+    }
+  }
+}

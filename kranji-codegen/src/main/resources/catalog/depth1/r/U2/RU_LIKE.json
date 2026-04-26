@@ -1,0 +1,22 @@
+{
+  "glyph" : "如",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 38,
+  "pinyin" : {
+    "initial" : "r",
+    "final" : "u",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "女",
+      "right" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "女(woman) + 口(speech) → follow, be like, accord with"
+  }
+}

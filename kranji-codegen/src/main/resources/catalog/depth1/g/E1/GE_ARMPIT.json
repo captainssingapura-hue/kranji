@@ -1,0 +1,35 @@
+{
+  "glyph" : "胳",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 130,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "e",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "月",
+      "right" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "夂",
+          "bottom" : "口"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "月",
+    "phoneticPart" : {
+      "style" : "top_bottom",
+      "slots" : {
+        "top" : "夂",
+        "bottom" : "口"
+      }
+    }
+  }
+}

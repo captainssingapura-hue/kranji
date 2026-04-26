@@ -1,0 +1,16 @@
+{
+  "glyph" : "凝",
+  "ziCharForm" : "unicode",
+  "strokes" : 16,
+  "radicalNo" : 15,
+  "pinyin" : { "initial" : "n", "final" : "ing", "tone" : 2 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "冫", "right" : "疑" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "冫",
+    "phoneticPart" : "疑"
+  }
+}

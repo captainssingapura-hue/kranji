@@ -1,0 +1,23 @@
+{
+  "glyph" : "起",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 156,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "i",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_left",
+    "slots" : {
+      "wrapper" : "走",
+      "content" : "己"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "走",
+    "phoneticPart" : "己"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "glyph" : "观",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 147,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "uan",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "又",
+      "right" : "见"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "again (又) seeing (见) — to observe, view"
+  }
+}

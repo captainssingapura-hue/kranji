@@ -51,6 +51,21 @@
             <artifactId>kranji-json-bridge</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <!-- Hand-authored ComposedZi records — used by GlyphIndex to know
+             which composed glyphs are already available as components. -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-perclass</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <!-- Promoted ComposedZi records — same role: GlyphIndex needs them so
+             the iterator skips already-promoted glyphs and can resolve them
+             as components for newly-staged records. -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-perclass-promoted</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>

@@ -1,0 +1,22 @@
+{
+  "glyph" : "伐",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "a",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "戈"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "亻(person) + 戈(dagger-axe) → to attack with a weapon"
+  }
+}

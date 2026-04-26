@@ -1,0 +1,23 @@
+{
+  "glyph" : "根",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "en",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "木",
+      "right" : "艮"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "木",
+    "phoneticPart" : "艮"
+  }
+}

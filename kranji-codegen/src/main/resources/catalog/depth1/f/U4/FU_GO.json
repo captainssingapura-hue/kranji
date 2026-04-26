@@ -1,0 +1,23 @@
+{
+  "glyph" : "赴",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 156,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_left",
+    "slots" : {
+      "wrapper" : "走",
+      "content" : "卜"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "走",
+    "phoneticPart" : "卜"
+  }
+}
