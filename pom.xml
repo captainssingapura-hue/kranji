@@ -19,7 +19,10 @@
         <module>kranji-common-perclass-staging</module>
         <module>kranji-codegen</module>
         <module>kranji-core-demos</module>
+        <module>kranji-test-fixtures</module>
+        <module>kranji-util</module>
         <module>kranji-ui-demo</module>
+        <module>kranji-ui-3d</module>
     </modules>
 
     <properties>
@@ -28,6 +31,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jackson.version>2.18.2</jackson.version>
         <jacoco.version>0.8.12</jacoco.version>
+        <junit.version>5.10.2</junit.version>
+        <javafx.version>21.0.2</javafx.version>
     </properties>
 
     <dependencyManagement>
@@ -38,6 +43,26 @@
                 <version>${jackson.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-controls</artifactId>
+                <version>${javafx.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-graphics</artifactId>
+                <version>${javafx.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-web</artifactId>
+                <version>${javafx.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -69,8 +69,13 @@ public final class SingularGenerator implements StructureGenerator {
                 .append("), Tone.").append(p.tone()).append(");\n");
         sb.append("    }\n\n");
 
-        // Generated singulars are placeholders until promotion-time review.
-        sb.append("    @Override public boolean unsure() { return true; }\n");
+        // Etym `P!` marks the singular as definite (sure). Default `P` marks
+        // as placeholder (unsure). The SingularZi interface defaults
+        // unsure() to false; we only emit the override for unsure rows.
+        boolean sure = ctx.row().etym() != null && ctx.row().etym().contains("!");
+        if (!sure) {
+            sb.append("    @Override public boolean unsure() { return true; }\n");
+        }
         sb.append("}\n");
 
         return sb.toString();

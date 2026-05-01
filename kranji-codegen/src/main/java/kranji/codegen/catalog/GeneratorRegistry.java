@@ -46,6 +46,7 @@ public final class GeneratorRegistry {
         register(m, new SemiEnclosureLeftThreeGenerator());
         register(m, new FullEnclosureGenerator());
         register(m, new SingularGenerator());
+        register(m, new SingularPartGenerator());
         return new GeneratorRegistry(m);
     }
 

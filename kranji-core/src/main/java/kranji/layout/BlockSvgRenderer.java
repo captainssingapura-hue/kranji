@@ -137,19 +137,24 @@ public final class BlockSvgRenderer {
         String fill = FILLS[colorIdx];
         String stroke = STROKES[colorIdx];
 
+        // Emit a dotted-index path that identifies which BlockStructure
+        // this block represents within the rendered root. Interactive
+        // consumers (e.g. the UI depth explorer) attach click handlers
+        // keyed on this attribute. Non-interactive consumers ignore it.
+        String pathAttr = b.path() == null ? "" : b.path();
         if (isWrapper) {
             // Wrapper/frame: dashed border, very light fill
             sb.append(String.format(
-                    "<rect class=\"block-wrapper\" x=\"%.1f\" y=\"%.1f\" width=\"%.1f\" height=\"%.1f\" " +
+                    "<rect class=\"block-wrapper\" data-block-path=\"%s\" x=\"%.1f\" y=\"%.1f\" width=\"%.1f\" height=\"%.1f\" " +
                             "fill=\"rgba(200,200,200,0.08)\" stroke=\"%s\" stroke-width=\"1.5\" " +
                             "stroke-dasharray=\"6,3\" rx=\"3\"/>\n",
-                    px, py, pw, ph, stroke));
+                    pathAttr, px, py, pw, ph, stroke));
         } else {
             // Regular block: solid fill + border
             sb.append(String.format(
-                    "<rect class=\"block\" x=\"%.1f\" y=\"%.1f\" width=\"%.1f\" height=\"%.1f\" " +
+                    "<rect class=\"block\" data-block-path=\"%s\" x=\"%.1f\" y=\"%.1f\" width=\"%.1f\" height=\"%.1f\" " +
                             "fill=\"%s\" stroke=\"%s\" stroke-width=\"1\" rx=\"3\"/>\n",
-                    px, py, pw, ph, fill, stroke));
+                    pathAttr, px, py, pw, ph, fill, stroke));
         }
 
         // Glyph rendering — scaled to fit visual bounds within block

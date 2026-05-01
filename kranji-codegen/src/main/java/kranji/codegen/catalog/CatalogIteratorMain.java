@@ -4,6 +4,7 @@ import kranji.codegen.perclass.PerclassSingularIndex;
 import kranji.common.perclass.AllPerclassRecords;
 import kranji.common.perclass.promoted.AllPerclassRecordsPromoted;
 import kranji.zi.ComposedZiT;
+import kranji.zi.SingularPart;
 import kranji.zi.SingularZi;
 
 import java.io.IOException;
@@ -79,12 +80,15 @@ public final class CatalogIteratorMain {
         composed.addAll(AllPerclassRecordsPromoted.ALL);
         List<SingularZi> generatedSingulars = new ArrayList<>(
                 AllPerclassRecordsPromoted.SINGULARS);
-        GlyphIndex index = GlyphIndex.build(singulars, composed, generatedSingulars);
+        List<SingularPart> generatedParts = new ArrayList<>(
+                AllPerclassRecordsPromoted.PARTS);
+        GlyphIndex index = GlyphIndex.build(singulars, composed, generatedSingulars, generatedParts);
         System.out.println("Glyph index size: " + index.size()
                 + " (" + singulars.size() + " hand-authored singulars + "
                 + AllPerclassRecords.ALL.size() + " hand-authored composed + "
                 + AllPerclassRecordsPromoted.ALL.size() + " promoted composed + "
-                + AllPerclassRecordsPromoted.SINGULARS.size() + " promoted singulars)");
+                + AllPerclassRecordsPromoted.SINGULARS.size() + " promoted singulars + "
+                + AllPerclassRecordsPromoted.PARTS.size() + " promoted parts)");
 
         // 3. Resolve + bucketise
         ComponentResolver resolver = new ComponentResolver(index);
@@ -242,25 +246,17 @@ public final class CatalogIteratorMain {
         // 5. Emit files (overwrite if present — deterministic output means
         //    no spurious diffs for unchanged rows). For each row, emit any
         //    synthetic inline-composition records first so the outer can
-        //    reference them.
+        //    reference them. Inline records can themselves contain nested
+        //    inline children (e.g. TB((亻+隹)+鸟) for 鹰); the recursive
+        //    walk emits depth-first so leaves are written before the
+        //    composite that references them.
         int written = 0;
         int synthWritten = 0;
         Set<Path> emittedPaths = new TreeSet<>();
         for (EmittedRow er : readyToEmit) {
             for (JavaRef ref : er.ctx.components()) {
-                if (ref instanceof JavaRef.InlineRef ir) {
-                    String body = emitInlineSynthetic(ir, er.ctx);
-                    Path target = a.stagingRoot
-                            .resolve(STAGING_PKG_ROOT.replace('.', '/'))
-                            .resolve(er.row.initial())
-                            .resolve(er.row.finalTone())
-                            .resolve(ir.simpleClassName() + ".java");
-                    Files.createDirectories(target.getParent());
-                    Files.writeString(target, body, StandardOpenOption.CREATE,
-                            StandardOpenOption.TRUNCATE_EXISTING);
-                    emittedPaths.add(target);
-                    synthWritten++;
-                }
+                synthWritten += emitInlineSyntheticTree(ref, er.ctx,
+                        a.stagingRoot, er.row, emittedPaths);
             }
 
             String body = er.generator.emit(er.ctx);
@@ -302,9 +298,40 @@ public final class CatalogIteratorMain {
     private record EmittedRow(CatalogRow row, StructureGenerator generator, EmitContext ctx) {}
 
     /**
+     * Walk an InlineRef tree depth-first, emitting a synthetic record file
+     * for each {@link JavaRef.InlineRef} encountered (children before parent
+     * so the parent's compile sees its children's classes already in place).
+     * Returns the count of synthetic files written.
+     *
+     * <p>Non-inline refs (single-glyph singulars, composed records) are
+     * already on the classpath; nothing to emit for them.</p>
+     */
+    private static int emitInlineSyntheticTree(JavaRef ref, EmitContext outerCtx,
+                                                Path stagingRoot, CatalogRow row,
+                                                Set<Path> emittedPaths) throws IOException {
+        if (!(ref instanceof JavaRef.InlineRef ir)) return 0;
+        int count = 0;
+        // Depth-first: emit children's synthetics first.
+        for (JavaRef child : ir.children()) {
+            count += emitInlineSyntheticTree(child, outerCtx, stagingRoot, row, emittedPaths);
+        }
+        String body = emitInlineSynthetic(ir, outerCtx);
+        Path target = stagingRoot
+                .resolve(STAGING_PKG_ROOT.replace('.', '/'))
+                .resolve(row.initial())
+                .resolve(row.finalTone())
+                .resolve(ir.simpleClassName() + ".java");
+        Files.createDirectories(target.getParent());
+        Files.writeString(target, body, StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING);
+        emittedPaths.add(target);
+        return count + 1;
+    }
+
+    /**
      * Emit a synthetic inline-composition record. The inner inherits the
      * outer's pinyin and package, has an empty glyph (anonymous), and uses
-     * the inline's declared layout (currently always {@code "LR"}).
+     * the inline's declared layout.
      */
     private static String emitInlineSynthetic(JavaRef.InlineRef ir, EmitContext outerCtx) {
         CatalogRow innerRow = new CatalogRow(
@@ -350,19 +377,20 @@ public final class CatalogIteratorMain {
                 StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
 
-    /** Holds the partition of staged/promoted record files into composed vs singular. */
-    record ScanResult(List<String> composedFqns, List<String> singularFqns) {}
+    /** Holds the partition of staged/promoted record files into composed / singular / part. */
+    record ScanResult(List<String> composedFqns, List<String> singularFqns, List<String> partFqns) {}
 
     /**
-     * Walk a staging/promoted package tree, classify each .java file as a
-     * {@code ComposedZiT} or {@code SingularZi} record by sniffing its
-     * source for {@code implements SingularZi} vs {@code implements ComposedZiT},
-     * and return the two FQN lists alphabetically sorted.
+     * Walk a staging/promoted package tree, classify each .java file by
+     * sniffing its source for {@code implements SingularPart},
+     * {@code implements SingularZi}, or (default) {@code ComposedZiT},
+     * and return the three FQN lists alphabetically sorted.
      */
     static ScanResult scanRecordFiles(Path pkgDir, String pkgFqn, String registryClassName) throws IOException {
         List<String> composed = new ArrayList<>();
         List<String> singular = new ArrayList<>();
-        if (!Files.isDirectory(pkgDir)) return new ScanResult(List.of(), List.of());
+        List<String> part = new ArrayList<>();
+        if (!Files.isDirectory(pkgDir)) return new ScanResult(List.of(), List.of(), List.of());
         try (var walk = Files.walk(pkgDir)) {
             for (Path p : (Iterable<Path>) walk::iterator) {
                 if (!Files.isRegularFile(p)) continue;
@@ -376,22 +404,25 @@ public final class CatalogIteratorMain {
                         relStr.substring(0, relStr.length() - ".java".length())
                                 .replace('/', '.');
                 String body = Files.readString(p, java.nio.charset.StandardCharsets.UTF_8);
-                if (body.contains("implements SingularZi")) singular.add(fqn);
+                if (body.contains("implements SingularPart")) part.add(fqn);
+                else if (body.contains("implements SingularZi")) singular.add(fqn);
                 else composed.add(fqn);
             }
         }
         Collections.sort(composed);
         Collections.sort(singular);
-        return new ScanResult(composed, singular);
+        Collections.sort(part);
+        return new ScanResult(composed, singular, part);
     }
 
-    /** Render the registry .java source with both {@code ALL} (composed) and {@code SINGULARS} fields. */
+    /** Render the registry .java source with {@code ALL}, {@code SINGULARS}, and {@code PARTS} fields. */
     static String renderRegistry(String pkgFqn, String className, String docBlock,
                                  ScanResult scan, String generatorMarker) {
         StringBuilder sb = new StringBuilder();
         sb.append("// AUTO-GENERATED by ").append(generatorMarker).append(" - do not edit by hand.\n");
         sb.append("package ").append(pkgFqn).append(";\n\n");
         sb.append("import kranji.zi.ComposedZiT;\n");
+        sb.append("import kranji.zi.SingularPart;\n");
         sb.append("import kranji.zi.SingularZi;\n\n");
         sb.append("import java.util.List;\n\n");
         sb.append("/**\n * ").append(docBlock).append("\n */\n");
@@ -401,6 +432,8 @@ public final class CatalogIteratorMain {
         appendListField(sb, "ComposedZiT", "ALL", scan.composedFqns());
         sb.append("\n    /** All staged/promoted SingularZi records, alphabetical by FQN. */\n");
         appendListField(sb, "SingularZi", "SINGULARS", scan.singularFqns());
+        sb.append("\n    /** All staged/promoted SingularPart records, alphabetical by FQN. */\n");
+        appendListField(sb, "SingularPart", "PARTS", scan.partFqns());
         sb.append("}\n");
         return sb.toString();
     }

@@ -2,6 +2,8 @@ package kranji.codegen.catalog;
 
 import kranji.codegen.perclass.PerclassSingularIndex;
 import kranji.zi.ComposedZiT;
+import kranji.zi.SingularBlock;
+import kranji.zi.SingularPart;
 import kranji.zi.SingularZi;
 
 import java.util.Collections;
@@ -71,6 +73,18 @@ public final class GlyphIndex {
     public static GlyphIndex build(PerclassSingularIndex singulars,
                                    Iterable<? extends ComposedZiT> composedRecords,
                                    Iterable<? extends SingularZi> generatedSingulars) {
+        return build(singulars, composedRecords, generatedSingulars, Collections.emptyList());
+    }
+
+    /**
+     * Build an index also covering auto-generated {@link SingularPart} records
+     * (catalog rows tagged {@code Layout=SP}). Same shape as composed/singular
+     * — top-level class with INSTANCE constant.
+     */
+    public static GlyphIndex build(PerclassSingularIndex singulars,
+                                   Iterable<? extends ComposedZiT> composedRecords,
+                                   Iterable<? extends SingularZi> generatedSingulars,
+                                   Iterable<? extends SingularPart> generatedParts) {
         Map<String, JavaRef> map = new LinkedHashMap<>();
 
         // Singulars first — radical-form parts win over syllabic aliases.
@@ -106,6 +120,15 @@ public final class GlyphIndex {
             String glyph = s.glyph();
             if (glyph == null || glyph.isEmpty()) continue;
             Class<?> clazz = s.getClass();
+            map.putIfAbsent(glyph, new JavaRef.ComposedRef(
+                    glyph, clazz.getName(), clazz.getSimpleName()));
+        }
+
+        // Auto-generated singular parts: same shape — top-level class with INSTANCE.
+        for (SingularPart sp : generatedParts) {
+            String glyph = sp.glyph();
+            if (glyph == null || glyph.isEmpty()) continue;
+            Class<?> clazz = sp.getClass();
             map.putIfAbsent(glyph, new JavaRef.ComposedRef(
                     glyph, clazz.getName(), clazz.getSimpleName()));
         }
