@@ -1,8 +1,7 @@
 .split-pane,
 .scroll-pane,
 .scroll-pane > .viewport,
-.tree-view,
-.tree-view > .virtual-flow > .clipped-container > .sheet > .tree-cell {
+.tree-view {
     -fx-background-color: white;
 }
 
@@ -10,4 +9,21 @@
     -fx-control-inner-background: white;
     -fx-font-family: 'Consolas';
     -fx-font-size: 13;
+}
+
+/*
+ * Cell background — apply white only to NON-selected cells. The
+ * previous unconditional rule painted selected rows white-on-white,
+ * making the clicked row appear to vanish. Default selection styling
+ * (from modena.css) sets -fx-text-fill: white on selected cells.
+ */
+.tree-view > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:not(:selected) {
+    -fx-background-color: white;
+}
+
+/* Selected row: light blue background, dark text — clearly visible. */
+.tree-view > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:selected,
+.tree-view > .virtual-flow > .clipped-container > .sheet > .tree-cell:filled:selected:focused {
+    -fx-background-color: #E3F2FD;
+    -fx-text-fill: #1A1A1A;
 }

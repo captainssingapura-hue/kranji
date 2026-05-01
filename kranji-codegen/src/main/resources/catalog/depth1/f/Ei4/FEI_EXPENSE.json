@@ -1,0 +1,23 @@
+{
+  "glyph" : "费",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 154,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "ei",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "弗",
+      "bottom" : "贝"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "贝",
+    "phoneticPart" : "弗"
+  }
+}

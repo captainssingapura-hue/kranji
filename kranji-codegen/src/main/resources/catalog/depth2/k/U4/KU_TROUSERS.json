@@ -1,0 +1,23 @@
+{
+  "glyph" : "裤",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 145,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "衤",
+      "right" : "库"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "衤",
+    "phoneticPart" : "库"
+  }
+}

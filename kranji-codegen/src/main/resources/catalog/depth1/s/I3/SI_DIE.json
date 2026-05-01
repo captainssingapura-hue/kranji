@@ -1,0 +1,22 @@
+{
+  "glyph" : "死",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 78,
+  "pinyin" : {
+    "initial" : "s",
+    "final" : "i",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "歹",
+      "right" : "匕"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "歹(bone fragment) + 匕(person) → a person's bones laid out → death"
+  }
+}

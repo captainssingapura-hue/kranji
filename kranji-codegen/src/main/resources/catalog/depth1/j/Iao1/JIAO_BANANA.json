@@ -1,0 +1,16 @@
+{
+  "glyph" : "蕉",
+  "ziCharForm" : "unicode",
+  "strokes" : 15,
+  "radicalNo" : 140,
+  "pinyin" : { "initial" : "j", "final" : "iao", "tone" : 1 },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : { "top" : "艹", "bottom" : "焦" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "艹",
+    "phoneticPart" : "焦"
+  }
+}

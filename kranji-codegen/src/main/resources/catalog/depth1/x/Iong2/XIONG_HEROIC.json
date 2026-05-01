@@ -1,0 +1,16 @@
+{
+  "glyph" : "雄",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 172,
+  "pinyin" : { "initial" : "x", "final" : "iong", "tone" : 2 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "厷", "right" : "隹" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "隹",
+    "phoneticPart" : "厷"
+  }
+}

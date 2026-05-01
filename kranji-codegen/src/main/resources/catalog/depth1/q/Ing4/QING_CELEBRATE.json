@@ -1,0 +1,22 @@
+{
+  "glyph" : "庆",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 53,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "ing",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "广",
+      "content" : "大"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "simplified from 慶; 广(shelter) + 大(big gathering) → celebrate"
+  }
+}

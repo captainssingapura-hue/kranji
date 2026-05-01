@@ -1,0 +1,22 @@
+{
+  "glyph" : "番",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 165,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "an",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "釆",
+      "bottom" : "田"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "釆(animal tracks) + 田(field) → a turn/time; each round/occurrence"
+  }
+}

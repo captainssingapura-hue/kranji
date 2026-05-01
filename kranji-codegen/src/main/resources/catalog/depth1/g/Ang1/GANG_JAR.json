@@ -1,0 +1,23 @@
+{
+  "glyph" : "缸",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 121,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "ang",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "缶",
+      "right" : "工"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "缶",
+    "phoneticPart" : "工"
+  }
+}

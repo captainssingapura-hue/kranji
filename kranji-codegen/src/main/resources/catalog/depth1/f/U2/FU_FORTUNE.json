@@ -1,0 +1,37 @@
+{
+  "glyph" : "福",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 113,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "礻",
+      "right" : {
+        "style" : "top_middle_bottom",
+        "slots" : {
+          "top" : "一",
+          "middle" : "口",
+          "bottom" : "田"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "礻",
+    "phoneticPart" : {
+      "style" : "top_middle_bottom",
+      "slots" : {
+        "top" : "一",
+        "middle" : "口",
+        "bottom" : "田"
+      }
+    }
+  }
+}

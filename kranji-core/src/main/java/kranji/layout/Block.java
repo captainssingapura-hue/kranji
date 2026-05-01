@@ -22,6 +22,13 @@ import kranji.classification.BlockRole;
  * @param depth nesting depth (0 = root composition's direct child)
  * @param role  the structural role this block plays in its parent
  * @param hint  layout hint for inner positioning (nullable — renderer reads scale/offset from here)
+ * @param path  dotted-index path from the rendered root identifying which
+ *              {@link kranji.zi.BlockStructure} this block represents.
+ *              "" = root entry; "0" = first slot of root; "1.0" = first
+ *              slot of second slot; etc. Used by interactive consumers
+ *              (e.g. UI depth explorer) to map clicks back to the source
+ *              record. Empty string is a safe default for non-interactive
+ *              consumers.
  */
 public record Block(
         String glyph,
@@ -29,12 +36,18 @@ public record Block(
         double w, double h,
         int depth,
         BlockRole role,
-        LayoutHint hint
+        LayoutHint hint,
+        String path
 ) {
 
-    /** Convenience constructor with no hint. */
+    /** Convenience constructor with no hint, default path "". */
     public Block(String glyph, double x, double y, double w, double h, int depth, BlockRole role) {
-        this(glyph, x, y, w, h, depth, role, null);
+        this(glyph, x, y, w, h, depth, role, null, "");
+    }
+
+    /** Convenience constructor with hint, default path "". */
+    public Block(String glyph, double x, double y, double w, double h, int depth, BlockRole role, LayoutHint hint) {
+        this(glyph, x, y, w, h, depth, role, hint, "");
     }
 
     /** Bounding-box area (useful for sorting/debugging). */

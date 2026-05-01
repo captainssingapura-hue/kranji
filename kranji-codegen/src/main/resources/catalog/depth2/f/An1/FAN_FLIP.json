@@ -1,0 +1,23 @@
+{
+  "glyph" : "翻",
+  "ziCharForm" : "unicode",
+  "strokes" : 18,
+  "radicalNo" : 124,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "an",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "番",
+      "right" : "羽"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "羽",
+    "phoneticPart" : "番"
+  }
+}

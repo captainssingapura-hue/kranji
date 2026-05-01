@@ -79,4 +79,21 @@ public interface SingularZi extends SingularBlock, Zi {
      * Defaults to empty string — override in concrete records.
      */
     @Override default String meaning() { return ""; }
+
+    /**
+     * <em>Provisional / unverified</em> marker.
+     *
+     * <p>Defaults to {@code false}. Override to {@code true} in records
+     * that are registered as singular only as a pragmatic placeholder —
+     * typically obscure phonetic components (e.g. 爰, 尧, 屰, 皀) whose
+     * internal sub-structure has not yet been authored, but which are
+     * needed <em>now</em> as building blocks for higher-depth composed
+     * characters.</p>
+     *
+     * <p>An entry with {@code unsure() == true} should be treated as
+     * "atomic for now, revisit later" — its glyph, meaning, pinyin and
+     * stroke count are best-effort, and its claim to standalone
+     * singular status may not survive future analysis.</p>
+     */
+    default boolean unsure() { return false; }
 }

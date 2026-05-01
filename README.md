@@ -32,7 +32,8 @@ The same data model scales from single-stroke pictographs like 一 all the way t
 | **kranji-json** | `ComposedZiJson` DTOs and catalog loader |
 | **kranji-json-bridge** | `TypedToUntyped` / `UntypedToTyped` converters powering the round-trip |
 | **kranji-core-demos** | SVG export, ZiLookup, BlockLookup, and debugging utilities |
-| **kranji-ui-demo** | Interactive JavaFX explorer with filtering and live SVG preview |
+| **kranji-ui-demo** | Interactive JavaFX explorer — filtering, SVG preview, recursive depth modal ([README](kranji-ui-demo/README.md)) |
+| **kranji-ui-3d** | 3D viewer (layered extrusion, component graph, interactive force simulation) and the standalone Couplet Playground ([README](kranji-ui-3d/README.md)) |
 
 ## Core concepts
 
@@ -123,13 +124,38 @@ mvn -pl kranji-core-demos exec:java \
     -Dexec.args="input.txt results/output.txt"
 ```
 
-### Interactive explorer (JavaFX)
+### Interactive explorer (JavaFX, 2D)
 
 ```bash
 mvn javafx:run -pl kranji-ui-demo
 ```
 
-Opens a GUI with a filterable character table (by initial, tone, composition type, etymology) and a live SVG panel showing structural decomposition with optional block overlay.
+Opens a GUI with a filterable character table (by initial, tone, composition
+type, etymology), a live SVG panel showing structural decomposition with
+optional block overlay, an Associated tab showing characters that use the
+selected one as a component, and a recursive depth-explorer modal.
+See [kranji-ui-demo/README.md](kranji-ui-demo/README.md).
+
+### 3D viewer (JavaFX)
+
+```bash
+mvn -pl kranji-ui-3d javafx:run
+```
+
+Same corpus as the 2D explorer, but every visualization is in 3D — layered
+glyph extrusion, focal component graph, intra-character spring network, and a
+D3-style interactive force simulation you can drag.
+
+### Couplet Playground (JavaFX, 3D)
+
+```bash
+mvn -pl kranji-ui-3d -Pcouplet javafx:run
+```
+
+Type two lines of a Chinese couplet (上联 / 下联), watch the characters
+arrange themselves under a force simulation, drag any character around, and
+tune elasticity / texture / font live.
+See [kranji-ui-3d/README.md](kranji-ui-3d/README.md).
 
 ## Project structure
 
@@ -172,9 +198,28 @@ Kranji/
 │       └── CharacterCodeGen.java     # Registry code generator
 ├── kranji-ui-demo/
 │   └── src/main/java/kranji/ui/demo/
-│       ├── KranjiDemoApp.java        # JavaFX application
+│       ├── KranjiDemoApp.java        # 2D JavaFX explorer
+│       ├── LayoutSignatureView.java  # Clickable Java-like signature view
 │       └── KranjiDemoLauncher.java   # Entry point
-└── output/                           # Generated SVG files
+├── kranji-ui-3d/
+│   └── src/main/java/kranji/ui/threed/
+│       ├── Kranji3dApp.java                # 3D viewer (4 modes)
+│       ├── BlockExtrusionRenderer.java     # Layered slab extrusion
+│       ├── CameraRig.java                  # Orbit + zoom camera controls
+│       ├── graph/                          # Reusable 3D primitives:
+│       │   ├── GlyphNode3d.java            #   stacked-Text glyph extrusion
+│       │   ├── GlyphTextures.java          #   gradient paint catalogue
+│       │   ├── GlyphFonts.java             #   CJK font probing
+│       │   ├── ForceSim.java               #   pure-array force primitives
+│       │   ├── ForceLayout3d.java          #   one-shot static layout
+│       │   ├── LiveSpringMode.java         #   D3-style live drag sim
+│       │   ├── ComponentGraph.java/...     #   focal component graph
+│       │   └── StructureGraph.java/...     #   intra-character spring net
+│       └── couplet/                        # Couplet Playground:
+│           ├── CoupletApp.java             #   text → graph → 3D scene
+│           ├── CoupletGraph.java           #   string → Position graph
+│           └── CoupletLauncher.java        #   entry (-Pcouplet profile)
+└── output/                                 # Generated SVG files
 ```
 
 ## Key design choices

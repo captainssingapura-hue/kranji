@@ -1,0 +1,35 @@
+{
+  "glyph" : "棍",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "uen",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "木",
+      "right" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "日",
+          "bottom" : "比"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "木",
+    "phoneticPart" : {
+      "style" : "top_bottom",
+      "slots" : {
+        "top" : "日",
+        "bottom" : "比"
+      }
+    }
+  }
+}

@@ -14,6 +14,7 @@ import kranji.singular.radicals.RadicalComponents;
 import kranji.singular.space.SpaceAndDirection;
 import kranji.singular.structures.Structures;
 import kranji.singular.tools.ToolsAndVessels;
+import kranji.singular.unsure.UnsureSingulars;
 import kranji.zi.SingularBlock;
 import kranji.zi.SingularZi;
 
@@ -107,7 +108,8 @@ public final class PerclassSingularIndex {
             ActionsAndStates.class,
             AbstractConcepts.class,
             SpaceAndDirection.class,
-            PlantsAndAgriculture.class
+            PlantsAndAgriculture.class,
+            UnsureSingulars.class
     };
 
     private final Map<String, Ref> byGlyph;

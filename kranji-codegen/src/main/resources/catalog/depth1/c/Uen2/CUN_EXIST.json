@@ -1,0 +1,22 @@
+{
+  "glyph" : "存",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 39,
+  "pinyin" : {
+    "initial" : "c",
+    "final" : "uen",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "才",
+      "content" : "子"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "才(shelter) + 子(child) → preserve, exist"
+  }
+}

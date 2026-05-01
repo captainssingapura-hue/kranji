@@ -1,0 +1,28 @@
+{
+  "glyph" : "然",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 86,
+  "pinyin" : {
+    "initial" : "r",
+    "final" : "an",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : {
+        "style" : "left_right",
+        "slots" : {
+          "left" : "月",
+          "right" : "犬"
+        }
+      },
+      "bottom" : "灬"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "月(肉, meat) + 犬(dog) + 灬(fire) → burn (original sense); loaned to mean 'thus, so'"
+  }
+}

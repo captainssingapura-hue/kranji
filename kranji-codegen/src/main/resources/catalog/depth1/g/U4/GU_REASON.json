@@ -1,0 +1,23 @@
+{
+  "glyph" : "故",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 66,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "古",
+      "right" : "攵"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "攵",
+    "phoneticPart" : "古"
+  }
+}

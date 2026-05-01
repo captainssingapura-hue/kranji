@@ -1,0 +1,23 @@
+{
+  "glyph" : "扣",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 64,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "ou",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "扌",
+      "right" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "口"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "肠",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 130,
+  "pinyin" : {
+    "initial" : "ch",
+    "final" : "ang",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "月",
+      "right" : "昜"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "月",
+    "phoneticPart" : "昜"
+  }
+}

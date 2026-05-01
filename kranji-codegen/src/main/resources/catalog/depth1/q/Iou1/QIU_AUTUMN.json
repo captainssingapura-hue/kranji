@@ -1,0 +1,22 @@
+{
+  "glyph" : "秋",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 115,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "iou",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "禾",
+      "right" : "火"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "禾(grain) + 火(fire) → autumn; harvest and burning of fields"
+  }
+}

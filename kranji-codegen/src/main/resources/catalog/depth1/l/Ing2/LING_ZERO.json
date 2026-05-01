@@ -1,0 +1,23 @@
+{
+  "glyph" : "零",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 173,
+  "pinyin" : {
+    "initial" : "l",
+    "final" : "ing",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "雨",
+      "bottom" : "令"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "雨",
+    "phoneticPart" : "令"
+  }
+}

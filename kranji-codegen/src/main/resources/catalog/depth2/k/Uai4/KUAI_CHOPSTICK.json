@@ -1,0 +1,23 @@
+{
+  "glyph" : "筷",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 118,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "uai",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "竹",
+      "bottom" : "快"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "竹",
+    "phoneticPart" : "快"
+  }
+}

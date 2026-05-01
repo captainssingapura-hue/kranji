@@ -1,0 +1,23 @@
+{
+  "glyph" : "速",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 162,
+  "pinyin" : {
+    "initial" : "s",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_left",
+    "slots" : {
+      "wrapper" : "辶",
+      "content" : "束"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "辶",
+    "phoneticPart" : "束"
+  }
+}

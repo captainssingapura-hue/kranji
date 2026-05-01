@@ -1,0 +1,22 @@
+{
+  "glyph" : "耕",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 127,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "eng",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "耒",
+      "right" : "井"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "plow (耒) and well-field (井) — to till, plow"
+  }
+}

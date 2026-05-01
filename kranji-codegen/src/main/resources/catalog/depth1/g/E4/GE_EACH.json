@@ -1,0 +1,22 @@
+{
+  "glyph" : "各",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 30,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "e",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "夂",
+      "bottom" : "口"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "foot (夂) arriving at mouth of cave (口) — each, every"
+  }
+}

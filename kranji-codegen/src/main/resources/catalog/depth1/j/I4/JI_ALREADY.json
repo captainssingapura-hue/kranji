@@ -1,0 +1,15 @@
+{
+  "glyph" : "既",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 71,
+  "pinyin" : { "initial" : "j", "final" : "i", "tone" : 4 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "皀", "right" : "旡" }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "person turned away (旡) from food vessel (皀) — finished eating, already done"
+  }
+}

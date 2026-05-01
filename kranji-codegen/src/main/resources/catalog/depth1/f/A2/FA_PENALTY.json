@@ -1,0 +1,28 @@
+{
+  "glyph" : "罚",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 122,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "a",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "罒",
+      "bottom" : {
+        "style" : "left_right",
+        "slots" : {
+          "left" : "讠",
+          "right" : "刂"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "罒(net) + 讠(speech) + 刂(knife) → punishment under law"
+  }
+}

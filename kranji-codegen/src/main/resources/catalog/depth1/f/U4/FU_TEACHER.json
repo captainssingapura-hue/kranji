@@ -1,0 +1,35 @@
+{
+  "glyph" : "傅",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : {
+        "style" : "left_right",
+        "slots" : {
+          "left" : "甫",
+          "right" : "寸"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : {
+      "style" : "left_right",
+      "slots" : {
+        "left" : "甫",
+        "right" : "寸"
+      }
+    }
+  }
+}

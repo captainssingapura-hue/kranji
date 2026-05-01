@@ -1,0 +1,23 @@
+{
+  "glyph" : "棵",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "e",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "木",
+      "right" : "果"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "木",
+    "phoneticPart" : "果"
+  }
+}

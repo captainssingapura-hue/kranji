@@ -1,0 +1,16 @@
+{
+  "glyph" : "借",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 9,
+  "pinyin" : { "initial" : "j", "final" : "ie", "tone" : 4 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "亻", "right" : "昔" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "昔"
+  }
+}

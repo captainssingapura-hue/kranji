@@ -1,0 +1,35 @@
+{
+  "glyph" : "逢",
+  "ziCharForm" : "unicode",
+  "strokes" : 11,
+  "radicalNo" : 162,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "eng",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "semi_enclosure_bottom_left",
+    "slots" : {
+      "wrapper" : "辶",
+      "content" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "夂",
+          "bottom" : "丰"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "辶",
+    "phoneticPart" : {
+      "style" : "top_bottom",
+      "slots" : {
+        "top" : "夂",
+        "bottom" : "丰"
+      }
+    }
+  }
+}

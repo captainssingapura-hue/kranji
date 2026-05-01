@@ -1,0 +1,23 @@
+{
+  "glyph" : "格",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "e",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "木",
+      "right" : "各"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "木",
+    "phoneticPart" : "各"
+  }
+}

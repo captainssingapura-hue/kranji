@@ -1,0 +1,28 @@
+{
+  "glyph" : "服",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 74,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "月",
+      "right" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "卩",
+          "bottom" : "又"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "hand (又) subduing a kneeling person (卩) beside a body (月) — submit, serve"
+  }
+}

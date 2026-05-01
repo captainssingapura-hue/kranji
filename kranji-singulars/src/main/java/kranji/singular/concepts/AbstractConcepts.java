@@ -635,6 +635,18 @@ public final class AbstractConcepts {
     }
     public static final Zhi_Quality ZHI_QUALITY = new Zhi_Quality();
 
+    /** 合 — unite, combine, join. Treated as an atomic component because
+     *  its sub-structure (亼 over 口) involves a non-standard singular
+     *  (亼) and the character is universally taught as a unit. */
+    public record He_Unite() implements LibraryMember<BasicSet>, kranji.zi.SingularZi {
+        @Override public String glyph()   { return "\u5408"; }
+        @Override public String meaning() { return "unite, combine, join"; }
+        @Override public String pinyinText()  { return "h\u00E9"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final He_Unite HE_UNITE = new He_Unite();
+
     public static final List<LibraryMember<BasicSet>> ALL = List.of(
             BU, ZHENG, ZHI_STRAIGHT, PING, YI_MEANING,
             SHI_THING, XUE_STUDY, YE_ALSO, NAI, QI_ITS,
@@ -650,5 +662,5 @@ public final class AbstractConcepts {
             LUN, HUO_OR, SHANG, MING_FATE, BIAO, DIAN,
             GUAI_GOOD, XING_FORTUNE, XIE,
             GU,
-            SHI_REAL, DING_DECIDE, ZE_DUTY, ZHI_QUALITY);
+            SHI_REAL, DING_DECIDE, ZE_DUTY, ZHI_QUALITY, HE_UNITE);
 }

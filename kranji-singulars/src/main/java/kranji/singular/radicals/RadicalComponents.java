@@ -624,6 +624,15 @@ public final class RadicalComponents {
     }
     public static final Yu_Feather YU_FEATHER = new Yu_Feather();
 
+    public record Zhu_Bamboo() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
+        @Override public String glyph()   { return "\u7AF9"; }
+        @Override public String meaning() { return "bamboo"; }
+        @Override public String pinyinText()  { return "zh\u00FA"; }
+        @Override public int strokes()    { return 6; }
+        @Override public BasicSet library() { return BasicSet.INSTANCE; }
+    }
+    public static final Zhu_Bamboo ZHU_BAMBOO = new Zhu_Bamboo();
+
     public record Shi_Show() implements LibraryMember<BasicSet>, kranji.zi.SingularPart {
         @Override public String glyph()   { return "\u793A"; }
         @Override public String meaning() { return "show, reveal"; }
@@ -819,7 +828,7 @@ public final class RadicalComponents {
             // CJK Ext-B
             ZUO_HAND, HUA_STROKE, XIA_HOOK, JI_PERSON, PAI_SPREAD, DUI_MOUND,
             // Standalone 独体字 components
-            ZHI_ARRIVE, YU_FEATHER, SHI_SHOW, LIANG_GOOD, FEI_WRONG,
+            ZHI_ARRIVE, YU_FEATHER, ZHU_BAMBOO, SHI_SHOW, LIANG_GOOD, FEI_WRONG,
             YIN_SOUND, QIAN_OWE, MEI_EACH,
             // Additional atoms from decomposition passes
             NIU_TOP, DIAN, YI_TURN, SHUI_VARIANT, WANG_NET, JI_NOT,

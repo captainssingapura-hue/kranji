@@ -1,0 +1,23 @@
+{
+  "glyph" : "腔",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 130,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "iang",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "月",
+      "right" : "空"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "月",
+    "phoneticPart" : "空"
+  }
+}

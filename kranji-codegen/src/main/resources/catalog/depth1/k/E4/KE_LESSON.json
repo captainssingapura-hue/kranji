@@ -1,0 +1,23 @@
+{
+  "glyph" : "课",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 149,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "e",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "讠",
+      "right" : "果"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "讠",
+    "phoneticPart" : "果"
+  }
+}

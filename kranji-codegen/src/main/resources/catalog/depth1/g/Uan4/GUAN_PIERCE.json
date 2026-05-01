@@ -1,0 +1,22 @@
+{
+  "glyph" : "贯",
+  "ziCharForm" : "unicode",
+  "strokes" : 8,
+  "radicalNo" : 154,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "uan",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "毌",
+      "bottom" : "贝"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "string (毌) threading cowries (贝) — pierce through, penetrate"
+  }
+}

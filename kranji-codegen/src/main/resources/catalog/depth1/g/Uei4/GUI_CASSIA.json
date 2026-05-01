@@ -1,0 +1,23 @@
+{
+  "glyph" : "桂",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "uei",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "木",
+      "right" : "圭"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "木",
+    "phoneticPart" : "圭"
+  }
+}

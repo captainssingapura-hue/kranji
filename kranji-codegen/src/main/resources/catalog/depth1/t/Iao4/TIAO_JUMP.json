@@ -1,0 +1,16 @@
+{
+  "glyph" : "跳",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 157,
+  "pinyin" : { "initial" : "t", "final" : "iao", "tone" : 4 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "足", "right" : "兆" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "足",
+    "phoneticPart" : "兆"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "glyph" : "笔",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 118,
+  "pinyin" : {
+    "initial" : "b",
+    "final" : "i",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "竹",
+      "bottom" : "毛"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "bamboo (竹) shaft with hair (毛) tip — a writing brush"
+  }
+}

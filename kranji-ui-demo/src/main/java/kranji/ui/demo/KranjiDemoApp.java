@@ -19,7 +19,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import kranji.classification.EtymologicalCategory;
 import kranji.classification.EtymologicalCategory.*;
-import kranji.common.perclass.AllPerclassRecords;
+import kranji.common.perclass.staging.AllZiRecords;
 import kranji.zi.*;
 import kranji.zi.CompositionLayout.*;
 import kranji.pinyin.Initial;
@@ -30,8 +30,6 @@ import kranji.library.BasicSet;
 import kranji.library.ZiLibrary;
 import kranji.singular.SingularFamiliesPerclass;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.IdentityHashMap;
@@ -98,6 +96,28 @@ public class KranjiDemoApp extends Application {
      */
     private record RouteKey(int depth, String initialLabel, String finalToneLabel) {}
 
+    /**
+     * Reverse index: for each <b>slot glyph string</b> that appears as
+     * an <em>immediate</em> slot value of some Zi, the list of Zi that
+     * use it. Built once at startup; lookup on selection is O(1).
+     *
+     * <p>Keyed by glyph string (not by {@link BlockStructure} instance)
+     * because the same conceptual radical can be represented by
+     * multiple singleton classes across modules — instance equality
+     * fails. The CLI {@code AssociatedZiCli} validated this strategy.</p>
+     */
+    private java.util.Map<String, List<Zi>> immediateUsersIndex;
+
+    /**
+     * Glyph-string → table-displayable {@link Zi}. Includes
+     * {@link SingularZi}, {@link ComposedZiT} composed Zi, AND
+     * {@code PartAsZi} adapters for {@link SingularPart} radicals.
+     * Used to adapt arbitrary {@link BlockStructure} click targets
+     * (which may be plain {@code SingularPart}s, not {@code Zi}s) to
+     * something the detail pane / Associated tab can render.
+     */
+    private java.util.Map<String, Zi> byGlyph;
+
     private static final String ALL_DEPTHS    = "All Depths";
     private static final String ALL_PY_INIT   = "All PY Initials";
     private static final String ALL_PY_FINAL  = "All PY Finals";
@@ -123,6 +143,7 @@ public class KranjiDemoApp extends Application {
 
         // Build categorised lists from the library
         buildLists();
+        buildImmediateUsersIndex();
 
         // Wrap data in a FilteredList for dynamic filtering — start with all
         backingList = FXCollections.observableArrayList(allList);
@@ -174,20 +195,88 @@ public class KranjiDemoApp extends Application {
         svgPane.setPadding(new Insets(6, 6, 0, 6));
         VBox.setVgrow(svgWebView, Priority.ALWAYS);
 
-        // Vertical split: detail split on top, SVG WebView on bottom
-        var rightSplit = new SplitPane(detailSplit, svgPane);
+        // ── Associated tab: a self-contained mini-explorer.
+        //   Left  = Zi-table of the parents (same columns as main).
+        //   Right = inner detail (header + pinyin + etymology + clickable
+        //           structure). No SVG inside the tab — the SVG pane
+        //           is global and only follows main/structure activity.
+        // Crucially, interactions inside this tab do NOT touch the
+        // main table selection or the SVG pane.
+        ObservableList<Zi> assocItems = FXCollections.observableArrayList();
+        var assocTable = new TableView<>(assocItems);
+        addStandardColumns(assocTable);
+        assocTable.setPlaceholder(new Label("(no Zi use this glyph as an immediate component)"));
+
+        var assocDetailBox = new VBox(12);
+        assocDetailBox.setPadding(new Insets(16));
+        var assocDetailScroll = new ScrollPane(assocDetailBox);
+        assocDetailScroll.setFitToWidth(true);
+        assocDetailScroll.setStyle(
+                "-fx-background-color: transparent; -fx-background: transparent;");
+
+        var assocSplit = new SplitPane(assocTable, assocDetailScroll);
+        assocSplit.setDividerPositions(0.45);
+
+        // ── Tab pane: SVG + Associated ──
+        var svgTab = new Tab("SVG", svgPane);
+        svgTab.setClosable(false);
+        var assocTab = new Tab("Associated", assocSplit);
+        assocTab.setClosable(false);
+        var bottomTabs = new TabPane(svgTab, assocTab);
+        bottomTabs.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+
+        // Vertical split: detail split on top, tab pane on bottom
+        var rightSplit = new SplitPane(detailSplit, bottomTabs);
         rightSplit.setOrientation(Orientation.VERTICAL);
         rightSplit.setDividerPositions(0.42);
 
+        // Single dispatcher used both by the table selection (full
+        // re-render of the detail pane) and by single-clicks inside the
+        // signature view (just push the clicked Zi to the SVG pane).
+        java.util.function.Consumer<Zi> svgDispatcher = z -> {
+            if (z == null) return;
+            var svgContent = BlockSvgRenderer.render(z);
+            var showBlocks = blockToggle.isSelected();
+            svgWebView.getEngine().loadContent(
+                    wrapSvgHtml(svgContent, showBlocks), "text/html");
+        };
+
+        // Row-click on the Associated table → update the inner detail
+        // pane only. Main table, SVG, and Associated table contents are
+        // all unchanged — the tab is self-contained.
+        assocTable.setRowFactory(tv -> {
+            var row = new TableRow<Zi>();
+            row.setOnMouseClicked(ev -> {
+                if (!row.isEmpty() && ev.getClickCount() == 1) {
+                    showInExplorer(assocDetailBox, row.getItem());
+                }
+            });
+            return row;
+        });
+
+        // "Show this block" used by the MAIN view (table selection +
+        // single-click on glyphs in the main Structure panel). Adapts
+        // the BlockStructure to a Zi (including SingularPart → PartAsZi
+        // via the byGlyph map), then updates the SVG pane and the
+        // Associated table contents. Clears the Associated tab's inner
+        // detail back to a hint.
+        java.util.function.Consumer<BlockStructure> showBlock = block -> {
+            Zi z = adaptZi(block);
+            if (z == null) return;
+            svgDispatcher.accept(z);
+            renderAssociated(assocItems, assocTab, z);
+            resetExplorerDetail(assocDetailBox);
+        };
+
         table.getSelectionModel().selectedItemProperty().addListener((obs, old, entry) -> {
             if (entry != null) {
-                renderDetail(detailBox, treeBox, entry);
-                var svgContent = BlockSvgRenderer.render(entry);
-                var showBlocks = blockToggle.isSelected();
-                svgWebView.getEngine().loadContent(
-                        wrapSvgHtml(svgContent, showBlocks), "text/html");
+                renderDetail(detailBox, treeBox, entry, showBlock);
+                showBlock.accept(entry.structure());
             }
         });
+
+        // Initial hint inside the Associated tab.
+        resetExplorerDetail(assocDetailBox);
 
         var split = new SplitPane(leftPane, rightSplit);
         split.setDividerPositions(0.32);
@@ -233,7 +322,15 @@ public class KranjiDemoApp extends Application {
         // block tree via {@link BlockStructures#depthOf(BlockStructure)},
         // which keeps the Depth → Pinyin cascade filter working without
         // needing pre-partitioned per-depth modules.
-        var composed = new ArrayList<Zi>(AllPerclassRecords.ALL);
+        // AllZiRecords.ALL = hand-authored ∪ promoted ∪ staged (every typed
+        // ComposedZi/SingularZi record in the project). Filter out the
+        // anonymous synthetic inline-composition helpers (empty glyph) —
+        // they're internal sub-blocks of an outer record, not user-facing Zi.
+        var composed = new ArrayList<Zi>();
+        for (Zi z : AllZiRecords.ALL) {
+            String g = z.character();
+            if (g != null && !g.isEmpty()) composed.add(z);
+        }
         composed.sort(byStrokes);
         composedList = List.copyOf(composed);
         // "Typed" source is an alias onto the same data today — retained
@@ -246,6 +343,14 @@ public class KranjiDemoApp extends Application {
         all.addAll(partsList);
         all.addAll(composedList);
         allList = List.copyOf(all);
+
+        // Glyph → preferred Zi adapter (for resolving structure clicks
+        // back to a table-displayable record, including SingularPart).
+        byGlyph = new java.util.HashMap<>();
+        for (Zi z : allList) {
+            String g = z.character();
+            if (g != null && !g.isEmpty()) byGlyph.putIfAbsent(g, z);
+        }
 
         // Build the depth-routing index (used by the Depth → Pinyin filter group).
         // Each Zi carries its own PinyinSyllable, so grouping/filtering is a
@@ -647,7 +752,19 @@ public class KranjiDemoApp extends Application {
     private TableView<Zi> createTable(FilteredList<Zi> items) {
         var table = new TableView<Zi>();
         table.setMinWidth(360);
+        addStandardColumns(table);
+        table.setItems(items);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        return table;
+    }
 
+    /**
+     * Add the same five-column layout (字 / Pinyin / 笔画 / Structure /
+     * Etymology) used by both the main selection table and the
+     * Associated tab's table. Column widths are tuned for the main
+     * table — the Associated table re-uses them as-is.
+     */
+    private static void addStandardColumns(TableView<Zi> table) {
         var colGlyph = new TableColumn<Zi, String>("字");
         colGlyph.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().character()));
         colGlyph.setPrefWidth(50);
@@ -671,14 +788,13 @@ public class KranjiDemoApp extends Application {
         colEtym.setPrefWidth(115);
 
         table.getColumns().addAll(colGlyph, colPinyin, colStrokes, colComp, colEtym);
-        table.setItems(items);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-        return table;
     }
 
     // ── Detail panel ────────────────────────────────────────────────────
 
-    private void renderDetail(VBox box, VBox treeBox, Zi e) {
+    private void renderDetail(VBox box, VBox treeBox, Zi e,
+                              java.util.function.Consumer<BlockStructure> dispatcher) {
         box.getChildren().clear();
         treeBox.getChildren().clear();
 
@@ -713,103 +829,30 @@ public class KranjiDemoApp extends Application {
 
         box.getChildren().addAll(header, metaLabel, separator(), etymSection, pySection);
 
-        // ── Typed layout (only for ComposedZiT records) ─────────────────
-        // Shows the precise parameterized layout interface, e.g.
-        // "LeftRightT<Ri, Yue>" — the invariant the type system now
-        // enforces at compile time. Reflects on the record's generic
-        // interfaces at render time; no instance state required.
-        if (e instanceof ComposedZiT zt) {
-            var typedLabel = typedLayoutSignature(zt);
-            if (typedLabel != null) {
-                var typedSection = section("TYPED LAYOUT (compile-time verified)",
-                        renderTypedLayout(typedLabel, zt.getClass()));
-                box.getChildren().add(typedSection);
-            }
-        }
+        // (Structure / decomposition lives in the right-side pane —
+        //  see the right-pane wiring below for the clickable signature
+        //  view that replaces the old tree.)
 
         // ── Right side: composition tree ────────────────────────────────
-        var compTitle = new Label("COMPOSITION \u2014 " + compositionLabelChinese(e.structure()));
+        var compTitle = new Label("STRUCTURE \u2014 " + compositionLabelChinese(e.structure())
+                + "  (click any glyph to drill in)");
         compTitle.setFont(Font.font("System", FontWeight.BOLD, 13));
         compTitle.setStyle("-fx-text-fill: #444;");
-        var tree = renderCompositionTree(e.structure());
-        VBox.setVgrow(tree, Priority.ALWAYS);
-        treeBox.getChildren().addAll(compTitle, tree);
+        // (composition tree removed — replaced by LayoutSignatureView below)
+        var sig = LayoutSignatureView.render(e.structure(), 16, dispatcher);
+        sig.setPadding(new Insets(8, 0, 0, 0));
+        var sigScroll = new ScrollPane(sig);
+        sigScroll.setFitToWidth(true);
+        sigScroll.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
+        VBox.setVgrow(sigScroll, Priority.ALWAYS);
+        treeBox.getChildren().addAll(compTitle, sigScroll);
     }
 
     // ── Composition rendering (TreeView) ──────────────────────────────────
 
-    private TreeView<String> renderCompositionTree(BlockStructure structure) {
-        var root = buildTreeItem(structure);
-        root.setExpanded(true);
-        var tree = new TreeView<>(root);
-        tree.setShowRoot(true);
-        return tree;
-    }
+    // (Tree-building helpers removed — replaced by LayoutSignatureView.)
 
-    private static TreeItem<String> buildTreeItem(BlockStructure node) {
-        return switch (node) {
-            case ComposedBlock comp -> {
-                var item = new TreeItem<>(compositionLabel(comp));
-                item.setExpanded(true);
-                switch (comp.composition()) {
-                    case LeftRight lr -> {
-                        item.getChildren().add(slotItem("Left", lr.left()));
-                        item.getChildren().add(slotItem("Right", lr.right()));
-                    }
-                    case TopBottom tb -> {
-                        item.getChildren().add(slotItem("Top", tb.top()));
-                        item.getChildren().add(slotItem("Bottom", tb.bottom()));
-                    }
-                    case LeftMiddleRight lmr -> {
-                        item.getChildren().add(slotItem("Left", lmr.left()));
-                        item.getChildren().add(slotItem("Middle", lmr.middle()));
-                        item.getChildren().add(slotItem("Right", lmr.right()));
-                    }
-                    case TopMiddleBottom tmb -> {
-                        item.getChildren().add(slotItem("Top", tmb.top()));
-                        item.getChildren().add(slotItem("Middle", tmb.middle()));
-                        item.getChildren().add(slotItem("Bottom", tmb.bottom()));
-                    }
-                    case FullEnclosure fe -> {
-                        item.getChildren().add(slotItem("Outer", fe.outer()));
-                        item.getChildren().add(slotItem("Inner", fe.inner()));
-                    }
-                    case SemiEnclosureUpperLeft se -> addWrapperContentItems(item, se.wrapper(), se.content());
-                    case SemiEnclosureUpperRight se -> addWrapperContentItems(item, se.wrapper(), se.content());
-                    case SemiEnclosureBottomLeft se -> addWrapperContentItems(item, se.wrapper(), se.content());
-                    case SemiEnclosureTopThree se -> addWrapperContentItems(item, se.wrapper(), se.content());
-                    case SemiEnclosureBottomThree se -> addWrapperContentItems(item, se.wrapper(), se.content());
-                    case SemiEnclosureLeftThree se -> addWrapperContentItems(item, se.wrapper(), se.content());
-                }
-                yield item;
-            }
-            default -> new TreeItem<>(singularLabel(node));
-        };
-    }
-
-    private static TreeItem<String> slotItem(String role, BlockStructure resolved) {
-        if (resolved instanceof ComposedBlock) {
-            // Nested composed structure — recurse
-            var sub = buildTreeItem(resolved);
-            sub.setValue(role + ":  " + sub.getValue());
-            return sub;
-        }
-        // Leaf node
-        return new TreeItem<>(role + ":  " + singularLabel(resolved));
-    }
-
-    private static void addWrapperContentItems(TreeItem<String> parent, BlockStructure wrapper, BlockStructure content) {
-        parent.getChildren().add(slotItem("Wrapper", wrapper));
-        parent.getChildren().add(slotItem("Content", content));
-    }
-
-    private static String singularLabel(BlockStructure node) {
-        if (node instanceof SingularBlock sb
-                && (!sb.name().equals(sb.glyph()) || !sb.meaning().isEmpty())) {
-            return sb.glyph() + "  " + sb.name() + " \u2014 " + sb.meaning();
-        }
-        return node.glyph();
-    }
+    // singularLabel removed \u2014 only used by the deleted tree.
 
     // ── Etymology rendering ─────────────────────────────────────────────
 
@@ -859,56 +902,10 @@ public class KranjiDemoApp extends Application {
 
     // ── Typed layout rendering ─────────────────────────────────────────
 
-    /**
-     * Returns a readable rendering of the record's typed layout interface,
-     * e.g. {@code "LeftRightT<Ri, Yue>"} or {@code "SemiEnclosureBottomLeftT<ZouZhiDi,
-     * TopMiddleBottomPartT<Xue, ...>>"}. Returns {@code null} if no typed
-     * layout interface is declared (defensive — the invariant test
-     * guarantees every ComposedZiT has one).
-     */
-    private static String typedLayoutSignature(ComposedZiT record) {
-        for (Type iface : record.getClass().getGenericInterfaces()) {
-            if (!(iface instanceof ParameterizedType pt)) continue;
-            var raw = (Class<?>) pt.getRawType();
-            // Typed layout interfaces all live in kranji.zi and extend
-            // CompositionLayoutT. Skip ComposedZiT itself (non-parameterized).
-            if (!CompositionLayoutT.class.isAssignableFrom(raw)) continue;
-            return renderTypeSignature(pt);
-        }
-        return null;
-    }
-
-    private static String renderTypeSignature(Type t) {
-        if (t instanceof Class<?> c) return c.getSimpleName();
-        if (t instanceof ParameterizedType pt) {
-            var raw = (Class<?>) pt.getRawType();
-            var sb = new StringBuilder(raw.getSimpleName()).append('<');
-            var args = pt.getActualTypeArguments();
-            for (int i = 0; i < args.length; i++) {
-                if (i > 0) sb.append(", ");
-                sb.append(renderTypeSignature(args[i]));
-            }
-            return sb.append('>').toString();
-        }
-        return t.getTypeName();
-    }
-
-    private VBox renderTypedLayout(String signature, Class<?> recordClass) {
-        var box = new VBox(4);
-        // Interface signature — monospace for readability of the nested
-        // generic arguments (can get quite deep, e.g. Biang).
-        var sigLabel = new Label(signature);
-        sigLabel.setFont(Font.font("Consolas", 13));
-        sigLabel.setWrapText(true);
-        sigLabel.setStyle("-fx-text-fill: #2563EB;");
-        box.getChildren().add(sigLabel);
-
-        // Fully-qualified record location (helps users jump to source).
-        var fqnLabel = fieldLabel("record: " + recordClass.getName());
-        fqnLabel.setStyle(fqnLabel.getStyle() + " -fx-text-fill: #888;");
-        box.getChildren().add(fqnLabel);
-        return box;
-    }
+    // (Old reflection-based typedLayoutSignature / renderTypeSignature /
+    //  renderTypedLayout removed: replaced by {@link LayoutSignatureView}
+    //  which walks the {@code BlockStructure} directly and emits clickable
+    //  glyphs in place of synthetic class names.)
 
     // ── BlockStructure → display string ──────────────────────────────────
 
@@ -1006,6 +1003,131 @@ public class KranjiDemoApp extends Application {
             };
         }
         return node.glyph();
+    }
+
+    // ── Associated-Zi index + rendering ─────────────────────────────────
+
+    /**
+     * Walk every Zi in the corpus and, for each one whose structure is
+     * a {@link ComposedBlock}, register it under each of its immediate
+     * slot values. Result: querying a slot returns every parent Zi
+     * that uses it directly. About 2500 Zi × 2-3 slots ≈ 7k inserts at
+     * startup; no measurable cost.
+     */
+    private void buildImmediateUsersIndex() {
+        // Glyph-string keys (validated via AssociatedZiCli + the
+        // AssociatedZiUiPathTest unit test). Skip anonymous synthetic
+        // slots (empty glyph) so they don't conflate every synthetic
+        // under one key.
+        immediateUsersIndex = new java.util.HashMap<>();
+        for (Zi z : allList) {
+            if (!(z.structure() instanceof ComposedBlock cb)) continue;
+            for (BlockStructure slot : cb.composition().components()) {
+                String g = slot.glyph();
+                if (g == null || g.isEmpty()) continue;
+                immediateUsersIndex.computeIfAbsent(g, k -> new ArrayList<>()).add(z);
+            }
+        }
+    }
+
+    /**
+     * Reset the Associated tab's inner detail pane to a hint.
+     * Called whenever the Associated table contents are refreshed
+     * (i.e. on main-table selection change or main-Structure click)
+     * so the user starts from a clean state.
+     */
+    private static void resetExplorerDetail(VBox box) {
+        box.getChildren().clear();
+        var hint = new Label("Click a row on the left to view details.");
+        hint.setStyle("-fx-text-fill: #888;");
+        box.getChildren().add(hint);
+    }
+
+    /**
+     * Render the inner detail of the Associated tab for {@code target}.
+     * Header + pinyin + etymology + clickable structure signature.
+     * No SVG — the SVG pane is global and only the main view drives it.
+     *
+     * <p>Single-clicks on glyphs inside the structure signature recurse
+     * into <em>this same</em> renderer (via {@code self}-recursion),
+     * so the user can drill within the Associated tab without
+     * affecting the main view.</p>
+     */
+    private void showInExplorer(VBox box, Zi target) {
+        if (target == null) return;
+        renderAssociatedDetail(box, target);
+    }
+
+    /**
+     * Adapt an arbitrary {@link BlockStructure} to a table-displayable
+     * {@link Zi}. SingularZi/ComposedZi pass through; SingularPart is
+     * resolved to its {@code PartAsZi} adapter via the {@link #byGlyph}
+     * map; everything else returns {@code null}.
+     */
+    private Zi adaptZi(BlockStructure block) {
+        if (block == null) return null;
+        if (block instanceof Zi z) return z;
+        return byGlyph.get(block.glyph());
+    }
+
+    private void renderAssociatedDetail(VBox box, Zi e) {
+        box.getChildren().clear();
+
+        var glyphText = new Text(e.character());
+        glyphText.setFont(Font.font("Microsoft YaHei", FontWeight.NORMAL, 64));
+
+        var pinyinLabel = styledLabel(formatPinyin(e), 16);
+        var codeLabel = styledLabel(e.codepoint(), 11);
+        codeLabel.setStyle(codeLabel.getStyle() + " -fx-text-fill: #888;");
+
+        var headerInfo = new VBox(2, pinyinLabel, codeLabel);
+        headerInfo.setAlignment(Pos.CENTER_LEFT);
+
+        var header = new HBox(16, glyphText, headerInfo);
+        header.setAlignment(Pos.CENTER_LEFT);
+
+        var metaLabel = styledLabel(
+                e.strokes() + " strokes  ·  Kangxi radical " + e.radicalNo(), 12);
+        metaLabel.setStyle(metaLabel.getStyle() + " -fx-text-fill: #666;");
+
+        var etymSection = section(
+                "ETYMOLOGY — " + etymologyLabelChinese(e.etymology()),
+                renderEtymology(e.etymology()));
+
+        box.getChildren().addAll(header, metaLabel, etymSection);
+
+        // Structure signature — single-clicks recurse to *this* explorer
+        // detail, double-click expands inline (same as anywhere else).
+        if (e.structure() instanceof ComposedBlock) {
+            var compTitle = new Label("STRUCTURE (click any glyph for its detail)");
+            compTitle.setFont(Font.font("System", FontWeight.BOLD, 13));
+            compTitle.setStyle("-fx-text-fill: #444;");
+            var sig = LayoutSignatureView.render(e.structure(), 14,
+                    child -> showInExplorer(box, adaptZi(child)));
+            sig.setPadding(new Insets(8, 0, 0, 0));
+            var sigScroll = new ScrollPane(sig);
+            sigScroll.setFitToWidth(true);
+            sigScroll.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
+            VBox.setVgrow(sigScroll, Priority.ALWAYS);
+            box.getChildren().addAll(compTitle, sigScroll);
+        }
+    }
+
+    /**
+     * Refresh the Associated table's row data with every Zi that uses
+     * {@code target} as an immediate component. Sorts by stroke count
+     * then codepoint for stable display.
+     */
+    private void renderAssociated(ObservableList<Zi> items, Tab tab, Zi target) {
+        items.clear();
+        var users = immediateUsersIndex.getOrDefault(target.character(), List.of());
+        tab.setText("Associated (" + users.size() + ")");
+        if (users.isEmpty()) return;   // table placeholder shows the empty message
+        // Stable display order: stroke count, then codepoint.
+        var sorted = new ArrayList<>(users);
+        sorted.sort(Comparator.comparingInt(Zi::strokes)
+                .thenComparing(z -> z.character().codePointAt(0)));
+        items.addAll(sorted);
     }
 
     private static String formatPinyin(Zi e) {

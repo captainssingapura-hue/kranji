@@ -1,0 +1,28 @@
+{
+  "glyph" : "寇",
+  "ziCharForm" : "unicode",
+  "strokes" : 11,
+  "radicalNo" : 40,
+  "pinyin" : {
+    "initial" : "k",
+    "final" : "ou",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "宀",
+      "bottom" : {
+        "style" : "left_right",
+        "slots" : {
+          "left" : "元",
+          "right" : "攵"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "宀(house) + 元(person/head) + 攵(strike) → bandit, invader breaking into a home"
+  }
+}

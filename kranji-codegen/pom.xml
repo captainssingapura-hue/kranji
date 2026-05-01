@@ -21,13 +21,6 @@
         JSON catalog is the source of truth.
     </description>
 
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.10.2</junit.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
@@ -51,11 +44,25 @@
             <artifactId>kranji-json-bridge</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <!-- Hand-authored ComposedZi records — used by GlyphIndex to know
+             which composed glyphs are already available as components. -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-perclass</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <!-- Promoted ComposedZi records — same role: GlyphIndex needs them so
+             the iterator skips already-promoted glyphs and can resolve them
+             as components for newly-staged records. -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-common-perclass-promoted</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

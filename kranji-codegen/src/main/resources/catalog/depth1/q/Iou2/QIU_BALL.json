@@ -1,0 +1,23 @@
+{
+  "glyph" : "球",
+  "ziCharForm" : "unicode",
+  "strokes" : 11,
+  "radicalNo" : 96,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "iou",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "王",
+      "right" : "求"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "王",
+    "phoneticPart" : "求"
+  }
+}

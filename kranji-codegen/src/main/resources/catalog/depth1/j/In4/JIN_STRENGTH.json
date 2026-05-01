@@ -1,0 +1,23 @@
+{
+  "glyph" : "劲",
+  "ziCharForm" : "unicode",
+  "strokes" : 7,
+  "radicalNo" : 19,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "in",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "巠",
+      "right" : "力"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "力",
+    "phoneticPart" : "巠"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "洒",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 85,
+  "pinyin" : {
+    "initial" : "s",
+    "final" : "a",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "氵",
+      "right" : "西"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "氵",
+    "phoneticPart" : "西"
+  }
+}

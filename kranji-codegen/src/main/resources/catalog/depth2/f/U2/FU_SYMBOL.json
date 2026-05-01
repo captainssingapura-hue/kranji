@@ -1,0 +1,23 @@
+{
+  "glyph" : "符",
+  "ziCharForm" : "unicode",
+  "strokes" : 11,
+  "radicalNo" : 118,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "竹",
+      "bottom" : "付"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "竹",
+    "phoneticPart" : "付"
+  }
+}

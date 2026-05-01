@@ -1,0 +1,16 @@
+{
+  "glyph" : "擒",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 64,
+  "pinyin" : { "initial" : "q", "final" : "in", "tone" : 2 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "扌", "right" : "禽" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "扌",
+    "phoneticPart" : "禽"
+  }
+}

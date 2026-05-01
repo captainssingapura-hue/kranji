@@ -1,0 +1,23 @@
+{
+  "glyph" : "惭",
+  "ziCharForm" : "unicode",
+  "strokes" : 11,
+  "radicalNo" : 61,
+  "pinyin" : {
+    "initial" : "c",
+    "final" : "an",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "忄",
+      "right" : "斩"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "忄",
+    "phoneticPart" : "斩"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "glyph" : "繁",
+  "ziCharForm" : "unicode",
+  "strokes" : 17,
+  "radicalNo" : 120,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "an",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : {
+        "style" : "left_right",
+        "slots" : {
+          "left" : "每",
+          "right" : "攵"
+        }
+      },
+      "bottom" : "糸"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "糸",
+    "phoneticPart" : {
+      "style" : "left_right",
+      "slots" : {
+        "left" : "每",
+        "right" : "攵"
+      }
+    }
+  }
+}

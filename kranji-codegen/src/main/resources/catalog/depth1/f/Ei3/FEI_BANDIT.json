@@ -1,0 +1,23 @@
+{
+  "glyph" : "匪",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 22,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "ei",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "semi_enclosure_upper_left",
+    "slots" : {
+      "wrapper" : "匚",
+      "content" : "非"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "匚",
+    "phoneticPart" : "非"
+  }
+}

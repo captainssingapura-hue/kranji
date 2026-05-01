@@ -1,0 +1,23 @@
+{
+  "glyph" : "决",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 15,
+  "pinyin" : {
+    "initial" : "j",
+    "final" : "ve",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "冫",
+      "right" : "夬"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "冫",
+    "phoneticPart" : "夬"
+  }
+}

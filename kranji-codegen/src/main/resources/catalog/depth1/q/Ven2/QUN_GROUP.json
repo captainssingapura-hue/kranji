@@ -1,0 +1,23 @@
+{
+  "glyph" : "群",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 123,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "üen",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "君",
+      "right" : "羊"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "羊",
+    "phoneticPart" : "君"
+  }
+}

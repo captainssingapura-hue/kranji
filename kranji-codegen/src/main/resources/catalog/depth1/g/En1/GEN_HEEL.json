@@ -1,0 +1,23 @@
+{
+  "glyph" : "跟",
+  "ziCharForm" : "unicode",
+  "strokes" : 13,
+  "radicalNo" : 157,
+  "pinyin" : {
+    "initial" : "g",
+    "final" : "en",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "足",
+      "right" : "艮"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "足",
+    "phoneticPart" : "艮"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "glyph" : "防",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 170,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "ang",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "阝",
+      "right" : "方"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "阝",
+    "phoneticPart" : "方"
+  }
+}

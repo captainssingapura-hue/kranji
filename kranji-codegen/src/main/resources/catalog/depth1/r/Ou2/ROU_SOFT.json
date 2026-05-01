@@ -1,0 +1,23 @@
+{
+  "glyph" : "柔",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "r",
+    "final" : "ou",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "矛",
+      "bottom" : "木"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "木",
+    "phoneticPart" : "矛"
+  }
+}

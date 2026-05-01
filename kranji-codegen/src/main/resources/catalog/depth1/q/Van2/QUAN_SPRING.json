@@ -1,0 +1,22 @@
+{
+  "glyph" : "泉",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 85,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "üan",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "白",
+      "bottom" : "水"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "白(clear) + 水(water) → spring water"
+  }
+}

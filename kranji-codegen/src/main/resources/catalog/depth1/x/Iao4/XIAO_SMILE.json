@@ -1,0 +1,22 @@
+{
+  "glyph" : "笑",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 118,
+  "pinyin" : {
+    "initial" : "x",
+    "final" : "iao",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "竹",
+      "bottom" : "夭"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "bamboo (竹) over bent figure (夭) — bent with laughter"
+  }
+}

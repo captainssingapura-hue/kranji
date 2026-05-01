@@ -1,0 +1,22 @@
+{
+  "glyph" : "伏",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "犬"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "亻(person) + 犬(dog) → dog crouching beside person → to lie low/hide"
+  }
+}

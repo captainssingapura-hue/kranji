@@ -1,0 +1,23 @@
+{
+  "glyph" : "任",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 9,
+  "pinyin" : {
+    "initial" : "r",
+    "final" : "en",
+    "tone" : 4
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "亻",
+      "right" : "壬"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "亻",
+    "phoneticPart" : "壬"
+  }
+}

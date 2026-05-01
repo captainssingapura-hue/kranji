@@ -1,0 +1,16 @@
+{
+  "glyph" : "消",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 85,
+  "pinyin" : { "initial" : "x", "final" : "iao", "tone" : 1 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "氵", "right" : "肖" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "氵",
+    "phoneticPart" : "肖"
+  }
+}

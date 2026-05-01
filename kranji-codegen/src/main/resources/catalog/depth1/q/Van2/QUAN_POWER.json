@@ -1,0 +1,22 @@
+{
+  "glyph" : "权",
+  "ziCharForm" : "unicode",
+  "strokes" : 6,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "q",
+    "final" : "üan",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "木",
+      "right" : "又"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "simplified from 權; 木(tree) + 又(hand) → authority, power"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "glyph" : "烧",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 86,
+  "pinyin" : { "initial" : "sh", "final" : "ao", "tone" : 1 },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : { "left" : "火", "right" : "尧" }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "火",
+    "phoneticPart" : "尧"
+  }
+}

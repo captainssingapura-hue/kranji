@@ -1,0 +1,23 @@
+{
+  "glyph" : "辅",
+  "ziCharForm" : "unicode",
+  "strokes" : 11,
+  "radicalNo" : 159,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "u",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "车",
+      "right" : "甫"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "车",
+    "phoneticPart" : "甫"
+  }
+}

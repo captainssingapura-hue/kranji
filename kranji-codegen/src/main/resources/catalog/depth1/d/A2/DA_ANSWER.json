@@ -1,0 +1,23 @@
+{
+  "glyph" : "答",
+  "ziCharForm" : "unicode",
+  "strokes" : 12,
+  "radicalNo" : 118,
+  "pinyin" : {
+    "initial" : "d",
+    "final" : "a",
+    "tone" : 2
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : "竹",
+      "bottom" : "合"
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "竹",
+    "phoneticPart" : "合"
+  }
+}

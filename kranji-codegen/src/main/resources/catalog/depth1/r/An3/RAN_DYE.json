@@ -1,0 +1,28 @@
+{
+  "glyph" : "染",
+  "ziCharForm" : "unicode",
+  "strokes" : 9,
+  "radicalNo" : 75,
+  "pinyin" : {
+    "initial" : "r",
+    "final" : "an",
+    "tone" : 3
+  },
+  "composition" : {
+    "style" : "top_bottom",
+    "slots" : {
+      "top" : {
+        "style" : "left_right",
+        "slots" : {
+          "left" : "氵",
+          "right" : "九"
+        }
+      },
+      "bottom" : "木"
+    }
+  },
+  "etymology" : {
+    "kind" : "compound_indicative",
+    "meaningHint" : "氵(water dye) + 九(many times) + 木(tree source of dye) → dye"
+  }
+}

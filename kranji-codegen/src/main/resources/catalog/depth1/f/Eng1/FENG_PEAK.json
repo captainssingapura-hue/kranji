@@ -1,0 +1,35 @@
+{
+  "glyph" : "峰",
+  "ziCharForm" : "unicode",
+  "strokes" : 10,
+  "radicalNo" : 46,
+  "pinyin" : {
+    "initial" : "f",
+    "final" : "eng",
+    "tone" : 1
+  },
+  "composition" : {
+    "style" : "left_right",
+    "slots" : {
+      "left" : "山",
+      "right" : {
+        "style" : "top_bottom",
+        "slots" : {
+          "top" : "夂",
+          "bottom" : "丰"
+        }
+      }
+    }
+  },
+  "etymology" : {
+    "kind" : "phono_semantic",
+    "semanticPart" : "山",
+    "phoneticPart" : {
+      "style" : "top_bottom",
+      "slots" : {
+        "top" : "夂",
+        "bottom" : "丰"
+      }
+    }
+  }
+}
