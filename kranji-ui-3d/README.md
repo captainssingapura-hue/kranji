@@ -84,7 +84,7 @@ dragging one line doesn't pull the other.
 
 ### Defaults
 
-- Default couplet: 海内存知己 / 天涯若比邻 (Wang Bo).
+- Default couplet: 天增岁月人增寿 / 春满乾坤福满园 (a classic Spring Festival 春联).
 - Default texture: Solid (uses the glyph color).
 - Default font: first available from a curated CJK list (typically
   *Microsoft YaHei* on Windows).
