@@ -37,8 +37,8 @@ import kranji.ui.threed.graph.LiveSpringMode;
  */
 public final class CoupletApp extends Application {
 
-    private static final String DEFAULT_UPPER = "海内存知己";
-    private static final String DEFAULT_LOWER = "天涯若比邻";
+    private static final String DEFAULT_UPPER = "天增岁月人增寿";
+    private static final String DEFAULT_LOWER = "春满乾坤福满园";
     private static final Color GLYPH_COLOR  = Color.rgb(20, 20, 20);
     /** Springs are intentionally faint so the characters dominate. */
     private static final Color SPRING_COLOR = Color.rgb(160, 160, 160, 0.18);
