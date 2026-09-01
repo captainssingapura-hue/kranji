@@ -53,6 +53,7 @@ public record KnownIssuesCatalogue()
                 KnownIssue006Doc.INSTANCE,
                 KnownIssue007Doc.INSTANCE,
                 KnownIssue008Doc.INSTANCE,
-                KnownIssue009Doc.INSTANCE);
+                KnownIssue009Doc.INSTANCE,
+                KnownIssue010Doc.INSTANCE);
     }
 }

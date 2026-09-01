@@ -4,6 +4,8 @@ import kranji.phonic.SourceReadings;
 import kranji.phonic.SyllableIndex;
 import kranji.pinyin.PinyinSyllable;
 import kranji.reading.model.Article;
+import kranji.reading.model.ArticleClass;
+import kranji.reading.model.ArticleHeader;
 import kranji.reading.model.ArticleId;
 import kranji.reading.model.Block;
 import kranji.reading.model.Token;
@@ -14,6 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Reads the plain-text article format.
@@ -82,6 +85,60 @@ public final class ArticleParser {
             findings.add(ParseFinding.error(1, e.getMessage()));
             return new ParsedArticle(Optional.empty(), findings);
         }
+    }
+
+    /**
+     * Reads only what precedes {@code ---}.
+     *
+     * <p>Listing a catalogue must not cost a full parse. {@link #parse} resolves
+     * every character against the corpus and validates every override; that is
+     * the right price to render an article and the wrong one to learn its
+     * title.</p>
+     *
+     * <p>Throws rather than returning empty. These are bundled files, read at
+     * boot: a missing uuid or an unknown type is an authoring mistake that
+     * should stop the build, not quietly drop the article out of the
+     * catalogue where nobody would notice it had gone.</p>
+     *
+     * @throws IllegalArgumentException when the header cannot be understood
+     */
+    public static ArticleHeader headerOnly(String source) {
+        var ignored = new ArrayList<ParseFinding>();
+        List<String> lines = source.replace("\r\n", "\n").lines().toList();
+        int divider = lines.indexOf("---");
+        Map<String, String> header =
+                header(divider < 0 ? lines : lines.subList(0, divider), ignored);
+
+        String id = required(header, "id");
+        String title = required(header, "title");
+        String rawUuid = required(header, "uuid");
+        String rawType = required(header, "type");
+
+        ArticleClass type = ArticleClass.ofWireId(rawType).orElseThrow(
+                () -> new IllegalArgumentException("unknown article type '" + rawType
+                        + "' - expected one of " + wireIds()));
+        UUID uuid;
+        try {
+            uuid = UUID.fromString(rawUuid);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("'" + rawUuid + "' is not a uuid", e);
+        }
+        return new ArticleHeader(new ArticleId(id), uuid, title,
+                header.getOrDefault("author", ""), type);
+    }
+
+    private static String required(Map<String, String> header, String key) {
+        String value = header.get(key);
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException("the header needs a '" + key + "'");
+        }
+        return value;
+    }
+
+    private static String wireIds() {
+        var out = new ArrayList<String>();
+        for (ArticleClass c : ArticleClass.values()) out.add(c.wireId());
+        return String.join(", ", out);
     }
 
     // ── Header ─────────────────────────────────────────────────────────

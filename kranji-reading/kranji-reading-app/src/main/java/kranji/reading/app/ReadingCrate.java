@@ -6,7 +6,11 @@ import hue.captains.singapura.js.homing.core.js.CoreJsCrate;
 import hue.captains.singapura.js.homing.grid.RelationGridCrate;
 import kranji.reading.app.css.ReadingCss;
 import kranji.reading.app.phonic.PhonicSourceWidget;
+import kranji.reading.app.read.ArticleCatalogueWidget;
 import kranji.reading.app.read.ArticleReaderWidget;
+import kranji.reading.app.read.ArticleReadingsModule;
+import kranji.reading.app.read.ReaderCellStyleModule;
+import kranji.reading.app.read.ArticleSelectionSecretaryModule;
 import kranji.reading.app.read.ArticleScannerModule;
 import kranji.reading.app.ui.GlyphMetricsModule;
 import kranji.reading.app.ui.ReaderControlsModule;
@@ -50,6 +54,10 @@ public final class ReadingCrate implements Crate {
                 CrateEntry.of(PhonicSourceWidget.INSTANCE),
                 CrateEntry.of(ArticleReaderWidget.INSTANCE),
                 CrateEntry.of(ArticleScannerModule.INSTANCE),
+                CrateEntry.of(ArticleReadingsModule.INSTANCE),
+                CrateEntry.of(ReaderCellStyleModule.INSTANCE),
+                CrateEntry.of(ArticleCatalogueWidget.INSTANCE),
+                CrateEntry.of(ArticleSelectionSecretaryModule.INSTANCE),
                 CrateEntry.of(TypefacePickerModule.INSTANCE),
                 CrateEntry.of(GlyphMetricsModule.INSTANCE),
                 CrateEntry.of(TextBandsModule.INSTANCE),

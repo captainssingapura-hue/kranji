@@ -21,10 +21,12 @@ var SIZE_KEY = 'kranji.reading.glyphSize';
  *   branch, css, selectClass, btnClass,
  *   sizes: [ { id, label, zi, ann } ],   // CSS class handles, from the caller
  *   extra: [ element ],                  // e.g. the typeface picker's select
- *   onChange: fn,                        // any styling control moved
- *   onArticle: fn(id)                    // a different article was picked
+ *   onChange: fn                         // any styling control moved
  * }
- * Returns { element, mode(), size(), grid(), fillCatalogue(ids, current) }.
+ * Returns { element, mode(), size(), grid() }.
+ *
+ * Which article to read is not a styling control and is not chosen here - the
+ * Library says, over the articleSelection party.
  */
 function createReaderControls(opts) {
     var branch = opts.branch, css = opts.css;
@@ -44,16 +46,6 @@ function createReaderControls(opts) {
         bar.appendChild(el);
         return el;
     }
-
-    // Article. Populated once the first article arrives carrying the
-    // catalogue, and hidden while there is only one thing to read.
-    var picked = false;
-    var articleSelect = branch.createElement('articleSelect', 'select');
-    css.setClass(articleSelect, opts.selectClass);
-    articleSelect.addEventListener('change', function () {
-        if (opts.onArticle) opts.onArticle(articleSelect.value);
-    });
-    bar.appendChild(articleSelect);
 
     var mode = 'all';
     select('modeSelect', READER_MODES, mode, function (v) {
@@ -91,17 +83,6 @@ function createReaderControls(opts) {
                 if (opts.sizes[i].id === sizeId) return opts.sizes[i];
             }
             return opts.sizes[0];
-        },
-        fillCatalogue: function (ids, current) {
-            if (picked || !ids || ids.length < 2) return;
-            picked = true;
-            for (var i = 0; i < ids.length; i++) {
-                var o = branch.createElement('articleOpt' + i, 'option');
-                o.value = ids[i];
-                o.textContent = ids[i];
-                if (ids[i] === current) o.selected = true;
-                articleSelect.appendChild(o);
-            }
         }
     };
 }

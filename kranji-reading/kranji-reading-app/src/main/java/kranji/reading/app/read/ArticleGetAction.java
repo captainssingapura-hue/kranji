@@ -11,28 +11,38 @@ import kranji.reading.content.ParsedArticle;
 import kranji.reading.model.Article;
 import kranji.reading.model.ArticleId;
 import kranji.reading.model.Block;
-import kranji.reading.model.Cell;
-import kranji.reading.model.Cells;
-import kranji.reading.model.Token;
+import kranji.reading.model.Lines;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Serves one article as an ES module, already resolved into cells.
+ * Serves one article as an ES module, in the form it was authored.
  *
- * <p>The model is a flat list of tokens; a <b>cell</b> is a rendering unit —
- * one character plus any punctuation glued to it. Merging happens here rather
- * than in the browser so the rule is written once, in Java, where it can be
- * tested.</p>
+ * <pre>{@code
+ * { kind: "verse", lines: ["床前明月光，", "疑是地{dì}上霜。"] }
+ * { kind: "p",     text:  "春天来了。小草绿了，花儿开了。" }
+ * }</pre>
  *
- * <h2>Why punctuation is glued</h2>
+ * <h2>The wire is the source</h2>
  *
- * <p>禁则: 。，、 must never begin a line and 「（ must never end one. Making the
- * pair one atomic cell is the whole mechanism — a table row cannot break inside
- * a cell, so the rule holds without any line-breaking code.</p>
+ * <p>This used to send cells with every character's codepoint and reading
+ * resolved. Both were restatements: the codepoint of what the glyph already
+ * says, and the reading of what the corpus already knows. Measured on the
+ * bundled articles, dropping them made a module three to six times smaller —
+ * but size was the lesser reason.</p>
+ *
+ * <p>The real cost was that a principal reading became <em>frozen into every
+ * article that used the character</em>. Correcting 地 in the corpus would leave
+ * every article containing 地 quietly serving the old reading. Now an article
+ * carries only what nothing else can supply: its text, and the readings its
+ * author chose against the principal, written {@code 地{dì}}.</p>
+ *
+ * <p>{@link Lines} writes that form and the parser reads it, so authoring,
+ * storage, and wire are one format. A browser turns it into squares with
+ * {@code ArticleScannerModule}, which is {@link kranji.reading.model.Cells}
+ * ported to JavaScript and held to it by a parity test.</p>
  *
  * <p>Data literals only, like the other data actions, asserted by
  * {@code ArticleGetActionTest}.</p>
@@ -87,15 +97,10 @@ public final class ArticleGetAction
         js.append("export const title = ").append(quote(article.title())).append(";\n");
         js.append("export const length = ").append(article.length()).append(";\n");
 
-        // Every article carries the catalogue, so a reader can offer the others
-        // without a second request. It is small and changes only when the
-        // bundled set does.
-        js.append("export const catalogue = [");
-        List<ArticleId> all = ClasspathArticles.INSTANCE.catalogue();
-        for (int i = 0; i < all.size(); i++) {
-            js.append(i > 0 ? ", " : "").append(quote(all.get(i).value()));
-        }
-        js.append("];\n");
+        // No catalogue here. Every article used to carry the whole list so the
+        // reader's own dropdown could offer the others - one list repeated into
+        // every article, to be read by nothing once /article-tree existed.
+        // Choosing what to read is the Library's job now.
 
         js.append("export const blocks = [\n");
         List<Block> blocks = article.blocks();
@@ -109,56 +114,28 @@ public final class ArticleGetAction
 
     private static void appendBlock(StringBuilder js, Block block) {
         switch (block) {
-            case Block.Paragraph p -> {
-                js.append("  { kind: \"p\", cells: ");
-                appendCells(js, p.tokens());
-                js.append(" }");
-            }
+            case Block.Paragraph p ->
+                // A paragraph is one flow that wraps, so it is one string. Verse
+                // has authored breaks, so it is many. The wire mirrors the ADT
+                // rather than flattening both into a single shape.
+                js.append("  { kind: \"p\", text: ").append(quote(Lines.of(p.tokens())))
+                  .append(" }");
             case Block.Verse v -> {
                 js.append("  { kind: \"verse\", lines: [\n");
-                List<List<Token>> lines = v.lines();
+                List<String> lines = Lines.of(v);
                 for (int i = 0; i < lines.size(); i++) {
-                    js.append("    ");
-                    appendCells(js, lines.get(i));
-                    js.append(i + 1 < lines.size() ? "," : "").append("\n");
+                    js.append("    ").append(quote(lines.get(i)))
+                      .append(i + 1 < lines.size() ? "," : "").append("\n");
                 }
                 js.append("  ] }");
             }
-            case Block.Illustration i -> {
+            case Block.Illustration i ->
                 js.append("  { kind: \"img\", src: ")
                   .append(quote("/article-asset?file=" + i.file()))
-                  .append(", alt: ").append(quote(i.alt())).append(", caption: ");
-                appendCells(js, i.caption());
-                js.append(" }");
-            }
+                  .append(", alt: ").append(quote(i.alt()))
+                  .append(", caption: ").append(quote(Lines.of(i.caption())))
+                  .append(" }");
         }
-    }
-
-    /**
-     * Serialises the cells for one line. The merge rule itself lives in
-     * {@link Cells}, in the model, where it is tested without a browser.
-     */
-    private static void appendCells(StringBuilder js, List<Token> tokens) {
-        List<String> out = new ArrayList<>();
-        for (Cell cell : Cells.of(tokens)) {
-            out.add(switch (cell) {
-                case Cell.Char c -> character(c.character(), "", "");
-                case Cell.CharWithPunctuation c ->
-                        character(c.character(), c.leading(), c.trailing());
-                case Cell.Plain p -> "{ t: " + quote(p.text()) + " }";
-            });
-        }
-        js.append("[").append(String.join(", ", out)).append("]");
-    }
-
-    private static String character(Token.Zi zi, String leading, String trailing) {
-        var cell = new StringBuilder("{ z: ").append(quote(zi.zi().value()))
-                .append(", c: ").append(quote(zi.zi().codePointLabel()))
-                .append(", r: ").append(quote(zi.reading().toDiacritic()));
-        if (zi.authored())        cell.append(", o: true");
-        if (!leading.isEmpty())   cell.append(", lp: ").append(quote(leading));
-        if (!trailing.isEmpty())  cell.append(", p: ").append(quote(trailing));
-        return cell.append(" }").toString();
     }
 
     private static String errorModule(String problem) {

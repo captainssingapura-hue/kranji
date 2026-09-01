@@ -9,7 +9,9 @@ import hue.captains.singapura.js.homing.workspace.shell.PartyDecl;
 import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpec;
 
 import kranji.reading.app.phonic.PhonicSourceWidget;
+import kranji.reading.app.read.ArticleCatalogueWidget;
 import kranji.reading.app.read.ArticleReaderWidget;
+import kranji.reading.app.read.ArticleSelectionSecretaryModule;
 import kranji.reading.app.zi.SyllableDetailWidget;
 import kranji.reading.app.zi.SyllableTreeWidget;
 import kranji.reading.app.zi.ZiCharactersWidget;
@@ -47,6 +49,9 @@ public final class ReadingWorkspaceSpec implements WorkspaceSpec {
                 WidgetEntry.of(ReadingHomeWidget.class, WidgetLabel.of("Reading Home"))
                         .withIcon(new WidgetIcon.Emoji("\uD83D\uDCD6"))   // 📖
                         .withGroup(read),
+                WidgetEntry.of(ArticleCatalogueWidget.class, WidgetLabel.of("Library"))
+                        .withIcon(new WidgetIcon.Emoji("\uD83D\uDCC7"))
+                        .withGroup(read),
                 WidgetEntry.of(ArticleReaderWidget.class, WidgetLabel.of("Reader"))
                         .withIcon(new WidgetIcon.Emoji("\uD83D\uDCDA"))
                         .withGroup(read),
@@ -76,6 +81,15 @@ public final class ReadingWorkspaceSpec implements WorkspaceSpec {
                          .build(),
                 PartyDecl.of("ziSelection", ZiSelectionSecretaryModule.INSTANCE, "ZiSelectionSecretary")
                          .exposedAs("ziParty")
+                         .build(),
+                // Which article to read. Separate from navigation because an
+                // article is an identity, not a tree position, and separate
+                // from ziSelection so the library can gain other producers -
+                // a search result, a "continue reading" tile - without the
+                // reader learning about any of them.
+                PartyDecl.of("articleSelection", ArticleSelectionSecretaryModule.INSTANCE,
+                             "ArticleSelectionSecretary")
+                         .exposedAs("articleParty")
                          .build()
         );
     }
