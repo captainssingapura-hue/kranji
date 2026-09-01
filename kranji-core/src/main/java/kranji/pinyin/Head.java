@@ -33,4 +33,21 @@ public enum Head {
     public String chinese() {
         return chinese;
     }
+
+    /**
+     * The medial letter as pinyin writes it, empty for {@link #OPEN}.
+     *
+     * <p>Companion to {@link Body#symbol()} and {@link Tail#symbol()}, so a
+     * caller can spell any part of a final without knowing which part it
+     * holds. Initial-dependent orthography — j/q/x dropping the ü, the
+     * zero-initial y-/w- prefixes — is applied above this, not here.</p>
+     */
+    public String symbol() {
+        return switch (this) {
+            case OPEN -> "";
+            case I -> "i";
+            case U -> "u";
+            case V -> "ü";
+        };
+    }
 }

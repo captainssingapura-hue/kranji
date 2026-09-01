@@ -23,6 +23,8 @@
         <module>kranji-util</module>
         <module>kranji-ui-demo</module>
         <module>kranji-ui-3d</module>
+        <module>kranji-studio</module>
+        <module>kranji-reading</module>
     </modules>
 
     <properties>
@@ -33,6 +35,8 @@
         <jacoco.version>0.8.12</jacoco.version>
         <junit.version>5.10.2</junit.version>
         <javafx.version>21.0.2</javafx.version>
+        <homing.core.version>LOCAL-SNAPSHOT</homing.core.version>
+        <jontology.version>0.0.1</jontology.version>
     </properties>
 
     <dependencyManagement>
@@ -43,6 +47,11 @@
                 <version>${jackson.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.github.captainssingapura-hue.lang.ontology</groupId>
+                <artifactId>core</artifactId>
+                <version>${jontology.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>

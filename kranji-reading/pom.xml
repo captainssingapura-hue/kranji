@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+        <artifactId>Kranji</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>kranji-reading</artifactId>
+    <packaging>pom</packaging>
+
+    <description>
+        Kranji Reading - an adaptive Chinese reading app for children. Pinyin
+        appears only where the reader has not yet secured the character, and an
+        unfamiliar character can explain its own composition.
+
+        Split so the domain stays testable without a browser:
+          -model    domain types and the corpus bridge; depends on kranji-core only
+          -content  article source SPI and the bundled catalogue
+          -app      Homing workspaces, widgets, server; the only crated module
+          -prep     preparation and validation CLI, a build-time tool
+
+        Dependency rule: -model and -content never depend on Homing, and nothing
+        in Kranji proper depends on kranji-reading.
+    </description>
+
+    <modules>
+        <module>kranji-reading-model</module>
+        <module>kranji-reading-content</module>
+        <module>kranji-reading-app</module>
+        <module>kranji-reading-prep</module>
+    </modules>
+</project>
