@@ -26,24 +26,24 @@ import java.util.List;
  * <p>Separate from {@link ArticleReaderWidget} on purpose. The reader works;
  * a spike should not be able to break it.</p>
  */
-public record GridReaderCellModule() implements DomModule<GridReaderCellModule> {
+public record ArticleBoardModule() implements DomModule<ArticleBoardModule> {
 
     /** The cell factory for {@code RelationGrid}'s {@code cellFactory}. */
-    public record createGridReaderCell() implements Exportable._Constant<GridReaderCellModule> {}
+    public record createArticleCell() implements Exportable._Constant<ArticleBoardModule> {}
 
     /** A Relation over one paragraph: rows are wrapped lines. */
-    public record createParagraphRelation() implements Exportable._Constant<GridReaderCellModule> {}
+    public record createParagraphRelation() implements Exportable._Constant<ArticleBoardModule> {}
 
     /** A Relation over one verse: rows are the lines the author wrote. */
-    public record createVerseRelation() implements Exportable._Constant<GridReaderCellModule> {}
+    public record createVerseRelation() implements Exportable._Constant<ArticleBoardModule> {}
 
     /** Repaints every square without rebuilding, for a control change. */
-    public record repaintGrid() implements Exportable._Constant<GridReaderCellModule> {}
+    public record repaintGrid() implements Exportable._Constant<ArticleBoardModule> {}
 
     /** Builds one grid per block and appends it to the body. */
-    public record buildArticleBoards() implements Exportable._Constant<GridReaderCellModule> {}
+    public record buildArticleBoards() implements Exportable._Constant<ArticleBoardModule> {}
 
-    public static final GridReaderCellModule INSTANCE = new GridReaderCellModule();
+    public static final ArticleBoardModule INSTANCE = new ArticleBoardModule();
 
     /**
      * The cell's classes are imported here rather than passed in — which is
@@ -51,8 +51,8 @@ public record GridReaderCellModule() implements DomModule<GridReaderCellModule> 
      * dresses elements has to import what it dresses them with.
      */
     @Override
-    public ImportsFor<GridReaderCellModule> imports() {
-        return ImportsFor.<GridReaderCellModule>builder()
+    public ImportsFor<ArticleBoardModule> imports() {
+        return ImportsFor.<ArticleBoardModule>builder()
                 .add(new ModuleImports<>(List.of(
                         new hue.captains.singapura.js.homing.grid.RelationGridModule.RelationGrid()),
                         hue.captains.singapura.js.homing.grid.RelationGridModule.INSTANCE))
@@ -71,9 +71,9 @@ public record GridReaderCellModule() implements DomModule<GridReaderCellModule> 
     }
 
     @Override
-    public ExportsOf<GridReaderCellModule> exports() {
+    public ExportsOf<ArticleBoardModule> exports() {
         return new ExportsOf<>(INSTANCE,
-                List.of(new createGridReaderCell(), new createParagraphRelation(),
+                List.of(new createArticleCell(), new createParagraphRelation(),
                         new createVerseRelation(), new repaintGrid(),
                         new buildArticleBoards()));
     }

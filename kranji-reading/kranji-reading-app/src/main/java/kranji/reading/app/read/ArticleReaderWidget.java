@@ -100,12 +100,12 @@ public final class ArticleReaderWidget
                         List.of(new ReaderCellStyleModule.createReaderCellStyle()),
                         ReaderCellStyleModule.INSTANCE),
                 new ModuleImports<>(List.of(
-                        new GridReaderCellModule.createGridReaderCell(),
-                        new GridReaderCellModule.createParagraphRelation(),
-                        new GridReaderCellModule.createVerseRelation(),
-                        new GridReaderCellModule.repaintGrid(),
-                        new GridReaderCellModule.buildArticleBoards()),
-                        GridReaderCellModule.INSTANCE));
+                        new ArticleBoardModule.createArticleCell(),
+                        new ArticleBoardModule.createParagraphRelation(),
+                        new ArticleBoardModule.createVerseRelation(),
+                        new ArticleBoardModule.repaintGrid(),
+                        new ArticleBoardModule.buildArticleBoards()),
+                        ArticleBoardModule.INSTANCE));
     }
 
     @Override
@@ -205,16 +205,9 @@ public final class ArticleReaderWidget
                 "        return banding.cellsPerRow(available, controls.size().w);",
                 "    }",
                 "",
-                "    var style = createReaderCellStyle({",
-                "        metrics: metrics,",
-                "        size: function () { return controls.size(); },",
-                "        grid: function () { return controls.grid(); },",
-                "        mode: function () { return controls.mode(); },",
-                "        typefaceClass: function () { return typeface.currentClass(); }",
-                "    });",
-                "    function styleCell(td, fontSpec) { style.cell(td, fontSpec); }",
-                "    function styleAnn(td) { style.ann(td); }",
-                "    function fontSpecOf(td) { return style.fontSpecOf(td); }",
+                "    // Only the mark offsets are left here; a square dresses itself.",
+                "    var style = createReaderCellStyle({ metrics: metrics });",
+                "    function fontSpecOf(el) { return style.fontSpecOf(el); }",
                 "",
                 "    function applyMode() { applyCells(); }",
                 "",
@@ -306,7 +299,7 @@ public final class ArticleReaderWidget
                 "        status.textContent = mod.length + ' characters.';",
                 "",
                 "",
-                "        var cellFactory = createGridReaderCell({",
+                "        var cellFactory = createArticleCell({",
                 "            branch:   db,",
                 "            grid:     function () { return controls.grid(); },",
                 "            size:     function () { return controls.size(); },",

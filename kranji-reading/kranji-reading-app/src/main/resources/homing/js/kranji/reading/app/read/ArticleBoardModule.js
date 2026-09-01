@@ -1,10 +1,11 @@
 // =============================================================================
-// GridReaderCellModule — one square, as a RelationGrid cell widget.
+// ArticleBoardModule — an article drawn as boards of squares.
 //
-// The spike that asks whether the reader's square survives being a grid cell
-// rather than a td we built ourselves. Minesweeper is the precedent: a cell
-// factory returns a stateful widget, and the grid hands it the host element to
-// dress however it likes.
+// One board per block: a verse's rows are the lines the author wrote, a
+// paragraph's are the wrap. Each square is a RelationGrid cell widget, which is
+// what brings keyboard navigation and selection to a reader that used to
+// hand-roll a table. Minesweeper is the precedent - a cell factory returns a
+// stateful widget and the grid hands it the host element to dress.
 //
 // The annotation moves INSIDE the cell, stacked over the character, because a
 // Relation row is one row of cells and there is no row above to put it in. The
@@ -24,7 +25,7 @@
  * A cell's value is the scanner's cell object - { z, r, p, lp, t } - or null
  * for a square past the end of a line.
  */
-function createGridReaderCell(opts) {
+function createArticleCell(opts) {
     var seq = 0;
 
     return function () {
