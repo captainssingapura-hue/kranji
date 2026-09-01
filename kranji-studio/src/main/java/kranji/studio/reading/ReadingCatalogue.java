@@ -5,6 +5,7 @@ import hue.captains.singapura.js.homing.studio.base.DocProvider;
 import hue.captains.singapura.js.homing.studio.base.app.DocReader;
 import hue.captains.singapura.js.homing.studio.base.app.Entry;
 import hue.captains.singapura.js.homing.studio.base.app.L1_Catalogue;
+import kranji.studio.reading.known.KnownCharactersCatalogue;
 import kranji.studio.KranjiCatalogue;
 
 import java.util.List;
@@ -32,16 +33,20 @@ public record ReadingCatalogue()
     @Override public String badge()   { return "DESIGN"; }
     @Override public String icon()    { return "\uD83D\uDCD6"; }   // 📖
 
+    @Override
+    public List<KnownCharactersCatalogue> subCatalogues() {
+        return List.of(KnownCharactersCatalogue.INSTANCE);
+    }
+
     @Override public List<Entry<ReadingCatalogue>> leaves() {
         return List.of(
                 entry(ReadingOverviewDoc.INSTANCE),
                 entry(ReadingDomainModelDoc.INSTANCE),
                 entry(AdaptivePinyinDoc.INSTANCE),
-                entry(KnownTrackingDoc.INSTANCE),
-                entry(KnownZiManagementDoc.INSTANCE),
                 entry(ArticleCatalogueDoc.INSTANCE),
                 entry(ArticlePreparationDoc.INSTANCE),
                 entry(ArticleFormatDoc.INSTANCE),
+                entry(ArticleLibraryDoc.INSTANCE),
                 entry(SimpleZiLayerDoc.INSTANCE),
                 entry(ZiCatalogueDoc.INSTANCE),
                 entry(ModuleStructureDoc.INSTANCE)
@@ -55,9 +60,10 @@ public record ReadingCatalogue()
 
     @Override public List<Doc> docs() {
         return List.of(ReadingOverviewDoc.INSTANCE, ReadingDomainModelDoc.INSTANCE,
-                AdaptivePinyinDoc.INSTANCE, KnownTrackingDoc.INSTANCE,
-                KnownZiManagementDoc.INSTANCE, ArticleCatalogueDoc.INSTANCE,
+                AdaptivePinyinDoc.INSTANCE,
+                ArticleCatalogueDoc.INSTANCE,
                 ArticlePreparationDoc.INSTANCE, ArticleFormatDoc.INSTANCE,
+                ArticleLibraryDoc.INSTANCE,
                 SimpleZiLayerDoc.INSTANCE,
                 ZiCatalogueDoc.INSTANCE,
                 ModuleStructureDoc.INSTANCE);

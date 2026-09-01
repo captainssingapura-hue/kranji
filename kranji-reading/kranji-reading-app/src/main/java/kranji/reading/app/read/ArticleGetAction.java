@@ -6,10 +6,13 @@ import hue.captains.singapura.tao.http.action.GetAction;
 import hue.captains.singapura.tao.http.action.Param;
 import hue.captains.singapura.tao.http.action.ParamMarshaller;
 import io.vertx.ext.web.RoutingContext;
-import kranji.reading.content.ClasspathArticles;
+import kranji.reading.content.Articles;
+import kranji.reading.content.DemoLibrary;
 import kranji.reading.content.ParsedArticle;
 import kranji.reading.model.Article;
-import kranji.reading.model.ArticleId;
+import kranji.reading.library.ArticleAddress;
+import kranji.reading.library.CollectionId;
+import kranji.reading.library.LocalId;
 import kranji.reading.model.Block;
 import kranji.reading.model.Lines;
 
@@ -59,6 +62,7 @@ public final class ArticleGetAction
     /** @param id the article slug, e.g. {@code jing-ye-si} */
     public record Query(String id) implements Param._QueryString {}
 
+
     @Override
     public ParamMarshaller._QueryString<RoutingContext, Query> queryStrMarshaller() {
         return ctx -> new Query(ctx.request().getParam("id"));
@@ -74,26 +78,29 @@ public final class ArticleGetAction
         return CompletableFuture.completedFuture(
                 new DocContent(moduleFor(query.id()), JS));
     }
-
-    /** Visible for testing — the module text for one article. */
-    public static String moduleFor(String rawId) {
-        ArticleId id;
+    public static String moduleFor(String rawAddress) {
+        ArticleAddress address;
         try {
-            id = new ArticleId(rawId == null ? "" : rawId);
+            String raw = rawAddress == null ? "" : rawAddress.trim();
+            int colon = raw.lastIndexOf(':');
+            if (colon <= 0) throw new IllegalArgumentException("expected collection:local");
+            address = new ArticleAddress(
+                    CollectionId.named(raw.substring(0, colon)),
+                    LocalId.named(raw.substring(colon + 1)));
         } catch (RuntimeException e) {
-            return errorModule("not an article id: '" + rawId + "'");
+            return errorModule("not an article address: '" + rawAddress + "'");
         }
-        Optional<ParsedArticle> found = ClasspathArticles.INSTANCE.find(id);
-        if (found.isEmpty()) return errorModule("no article '" + id + "'");
+        Optional<ParsedArticle> found = Articles.read(DemoLibrary.INSTANCE, address);
+        if (found.isEmpty()) return errorModule("no article '" + address + "'");
         ParsedArticle parsed = found.get();
         if (parsed.article().isEmpty()) {
-            return errorModule("article '" + id + "' did not parse");
+            return errorModule("article '" + address + "' did not parse");
         }
         Article article = parsed.article().get();
 
         var js = new StringBuilder();
         js.append("// Generated from the Kranji corpus. Data only - no behaviour.\n");
-        js.append("export const id = ").append(quote(article.id().value())).append(";\n");
+        js.append("export const id = ").append(quote(article.address().toString())).append(";\n");
         js.append("export const title = ").append(quote(article.title())).append(";\n");
         js.append("export const length = ").append(article.length()).append(";\n");
 

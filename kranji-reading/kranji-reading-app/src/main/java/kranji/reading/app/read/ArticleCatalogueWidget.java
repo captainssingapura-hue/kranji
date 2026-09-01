@@ -116,7 +116,7 @@ public final class ArticleCatalogueWidget
                 "                branch:      branch,",
                 "                container:   container,",
                 "                data:        treeJson,",
-                "                expandDepth: 2,",
+                "                expandDepth: 3,",
                 "                onSelect: function (sel) {",
                 "                    if (sel && sel.activated) open(sel);",
                 "                },",

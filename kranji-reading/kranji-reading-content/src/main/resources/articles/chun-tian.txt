@@ -1,8 +1,0 @@
-id: chun-tian
-uuid: f05fc4fa-7103-4470-ac84-6eae82f36bc8
-title: 春天来了
-type: jixuwen
----
-春天来了。小草绿了，花儿开了。
-
-小鸟在树上唱歌，孩子们在草地{dì}上玩。风很轻，太阳很好。

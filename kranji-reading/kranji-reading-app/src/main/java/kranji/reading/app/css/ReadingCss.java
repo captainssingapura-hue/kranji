@@ -739,7 +739,99 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
                 new kr_read_punct_x1(),
                 new kr_read_punct_x2(),
                 new kr_read_punct_x3(),
-                new kr_read_punct_lead());
+                new kr_read_punct_lead(),
+                new kr_gr_cell(),
+                new kr_gr_ann(),
+                new kr_gr_zi(),
+                new kr_gr_grid(),
+                new kr_gr_host(),
+                new kr_gr_ruled());
+    }
+
+    // ── The grid reader's square ───────────────────────────────────────
+    //
+    // Separate from the table reader's classes rather than shared. A grid
+    // cell is a div the grid owns, not a td we made, and the spike must not
+    // be able to perturb the reader that works.
+
+    /** One square: annotation stacked over the character. */
+    public record kr_gr_cell() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-end;
+                padding: 0;
+                cursor: pointer;
+                box-sizing: border-box;
+                """;
+        }
+    }
+
+    /** The reading, above the character. Fixed height so hiding cannot reflow. */
+    public record kr_gr_ann() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-family: system-ui, sans-serif;
+                white-space: nowrap;
+                color: var(--color-text-muted);
+                """;
+        }
+    }
+
+    /** The character. Its own box, so punctuation can hang off the edge. */
+    public record kr_gr_zi() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                position: relative;
+                text-align: center;
+                color: var(--color-text-primary);
+                """;
+        }
+    }
+
+    /**
+     * The board host: shrinks to its content instead of filling the pane.
+     *
+     * <p>A grid table stretches to whatever it is given, which for a page of
+     * squares means the squares stop being square. Minesweeper uses
+     * {@code inline-block} for the same reason - the board is a fixed shape,
+     * not a layout that adapts.</p>
+     *
+     * <p>Block rather than inline-block, though: an article is a column of
+     * paragraphs, and inline-block lets a second board sit beside the first
+     * whenever the pane happens to be wide enough. {@code width: fit-content}
+     * keeps the shrink without the flow.</p>
+     */
+    public record kr_gr_host() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: block;
+                width: fit-content;
+                margin-bottom: var(--space-4, 16px);
+                border-radius: 6px;
+                overflow: hidden;
+                """;
+        }
+    }
+
+    /**
+     * The board outline, drawn only when the practice grid is on.
+     *
+     * <p>Separate from {@link kr_gr_host} because the outline is part of the
+     * ruling: with the grid off the squares lose their lines, and a rectangle
+     * still around the paragraph is the one line nobody asked for.</p>
+     */
+    public record kr_gr_ruled() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                border: 1px solid var(--color-border);
+                """;
+        }
+    }
+
+    /** The practice-book rule, on the character box rather than the whole cell. */
+    public record kr_gr_grid() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                border: 1px solid var(--color-border);
+                """;
+        }
     }
 
     @Override

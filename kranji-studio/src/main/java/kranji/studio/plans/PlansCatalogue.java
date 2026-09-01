@@ -32,7 +32,8 @@ public record PlansCatalogue()
         return List.of(
                 Entry.of(this, KranjiReadingPlan.INSTANCE),
                 Entry.of(this, HomingIntegrationPlan.INSTANCE),
-                Entry.of(this, PhonicCoveragePlan.INSTANCE)
+                Entry.of(this, PhonicCoveragePlan.INSTANCE),
+                Entry.of(this, ContentPlan.INSTANCE)
         );
     }
 }

@@ -1,9 +1,11 @@
 package kranji.reading.app.read;
 
 import hue.captains.singapura.js.homing.ssjs.test.JsModuleTestBase;
-import kranji.reading.content.ClasspathArticles;
+import kranji.reading.content.Articles;
+import kranji.reading.content.DemoLibrary;
 import kranji.reading.model.Article;
-import kranji.reading.model.ArticleId;
+import kranji.reading.library.ArticleCollection;
+import kranji.reading.library.ArticleRef;
 import kranji.reading.model.Block;
 import kranji.reading.model.Cell;
 import kranji.reading.model.Cells;
@@ -147,8 +149,10 @@ class ArticleScannerTest extends JsModuleTestBase {
     @Test
     void agreesWithTheJavaItWasPortedFrom() {
         int linesChecked = 0;
-        for (ArticleId id : ClasspathArticles.INSTANCE.catalogue()) {
-            Article article = ClasspathArticles.INSTANCE.find(id).orElseThrow().orThrow();
+        for (ArticleCollection collection : DemoLibrary.INSTANCE.tree().collections()) {
+          for (ArticleRef ref : collection.articles()) {
+            Article article = Articles.read(collection.address(ref.id()), ref)
+                                      .orElseThrow().orThrow();
             for (Block block : article.blocks()) {
                 for (List<Token> tokens : linesOf(block)) {
                     List<Cell> java = Cells.of(tokens);
@@ -158,8 +162,9 @@ class ArticleScannerTest extends JsModuleTestBase {
                     linesChecked++;
                 }
             }
+          }
         }
-        assertTrue(linesChecked >= 7,
+        assertTrue(linesChecked >= 40,
                 "expected the bundled articles to contribute lines, got " + linesChecked);
     }
 

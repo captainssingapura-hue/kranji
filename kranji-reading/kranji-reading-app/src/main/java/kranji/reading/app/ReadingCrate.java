@@ -12,6 +12,7 @@ import kranji.reading.app.read.ArticleReadingsModule;
 import kranji.reading.app.read.ReaderCellStyleModule;
 import kranji.reading.app.read.ArticleSelectionSecretaryModule;
 import kranji.reading.app.read.ArticleScannerModule;
+import kranji.reading.app.read.GridReaderCellModule;
 import kranji.reading.app.ui.GlyphMetricsModule;
 import kranji.reading.app.ui.ReaderControlsModule;
 import kranji.reading.app.ui.TextBandsModule;
@@ -54,6 +55,7 @@ public final class ReadingCrate implements Crate {
                 CrateEntry.of(PhonicSourceWidget.INSTANCE),
                 CrateEntry.of(ArticleReaderWidget.INSTANCE),
                 CrateEntry.of(ArticleScannerModule.INSTANCE),
+                CrateEntry.of(GridReaderCellModule.INSTANCE),
                 CrateEntry.of(ArticleReadingsModule.INSTANCE),
                 CrateEntry.of(ReaderCellStyleModule.INSTANCE),
                 CrateEntry.of(ArticleCatalogueWidget.INSTANCE),

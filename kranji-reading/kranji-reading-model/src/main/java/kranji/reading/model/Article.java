@@ -1,6 +1,7 @@
 package kranji.reading.model;
 
 import hue.captains.singapura.tao.ontology.ValueObject;
+import kranji.reading.library.ArticleAddress;
 import kranji.zi.ZiCharUTF8;
 
 import java.util.LinkedHashSet;
@@ -14,17 +15,17 @@ import java.util.Set;
  * <p>Content only. What a reader knows lives in a profile, and the two meet
  * at render time — which is what lets one article serve every reader.</p>
  */
-public record Article(ArticleId id, String title, List<Block> blocks) implements ValueObject {
+public record Article(ArticleAddress address, String title, List<Block> blocks) implements ValueObject {
 
     public Article {
-        Objects.requireNonNull(id, "id");
+        Objects.requireNonNull(address, "address");
         Objects.requireNonNull(title, "title");
         blocks = List.copyOf(blocks);
         if (title.isBlank()) {
-            throw new IllegalArgumentException("an article needs a title: " + id);
+            throw new IllegalArgumentException("an article needs a title: " + address);
         }
         if (blocks.isEmpty()) {
-            throw new IllegalArgumentException("an article with no blocks: " + id);
+            throw new IllegalArgumentException("an article with no blocks: " + address);
         }
     }
 

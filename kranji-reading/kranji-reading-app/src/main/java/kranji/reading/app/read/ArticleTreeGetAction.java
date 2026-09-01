@@ -6,33 +6,37 @@ import hue.captains.singapura.tao.http.action.GetAction;
 import hue.captains.singapura.tao.http.action.Param;
 import hue.captains.singapura.tao.http.action.ParamMarshaller;
 import io.vertx.ext.web.RoutingContext;
-import kranji.reading.content.ClasspathArticles;
-import kranji.reading.model.ArticleTree;
+import kranji.reading.content.DemoLibrary;
+import kranji.reading.library.ArticleCollection;
+import kranji.reading.library.ArticleRef;
+import kranji.reading.library.LibraryTree;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * The articles as a tree, shelved by class.
+ * The library as a tree, for the browser to draw.
  *
  * <p>Same node shape as {@code /zi-tree}, so the same {@code TreeRenderer}
  * draws it — {@code level}, {@code segment}, a {@code display} block, and
  * {@code children}.</p>
  *
- * <h2>The segment is the identity</h2>
+ * <h2>Collections are the leaves the author wrote</h2>
  *
- * <p>A title's {@code segment} is its {@link kranji.reading.model.ArticleId},
- * so activating a leaf yields the id with nothing to look up. That is the whole
- * contract between this tree and the reader: the tree says which article, the
- * party carries it, and the reader fetches it.</p>
+ * <p>Branches and collections are declared in {@link DemoLibrary}; the articles
+ * beneath a collection are <em>not</em> — they travel with it. That is why
+ * rearranging the tree cannot lose or duplicate an article: the tree never held
+ * one.</p>
  *
- * <p>Built from headers only. Listing every article never parses one.</p>
+ * <p>An article node carries its full address, {@code collection:local}, which
+ * is what the reader needs and all it needs. Built from the Java catalogue, so
+ * listing the whole library opens no files.</p>
  */
 public final class ArticleTreeGetAction
         implements GetAction<RoutingContext, ArticleTreeGetAction.Query,
                              EmptyParam.NoHeaders, DocContent> {
 
-    /** No query - the whole tree is small and always wanted whole. */
+    /** No query - the tree is small and always wanted whole. */
     public record Query() implements Param._QueryString {}
 
     /** Route this action is mounted on. */
@@ -51,55 +55,87 @@ public final class ArticleTreeGetAction
     }
 
     @Override
-    public CompletableFuture<DocContent> execute(Query query,
-                                                 EmptyParam.NoHeaders headers) {
+    public CompletableFuture<DocContent> execute(Query query, EmptyParam.NoHeaders headers) {
         return CompletableFuture.completedFuture(new DocContent(treeJson(), JSON));
     }
 
     /** Visible for testing — the whole tree. */
     public static String treeJson() {
-        List<ArticleTree.Shelf> shelves =
-                ArticleTree.shelve(ClasspathArticles.INSTANCE.headers());
-
-        int total = shelves.stream().mapToInt(s -> s.titles().size()).sum();
+        LibraryTree tree = DemoLibrary.INSTANCE.tree();
+        int articles = tree.collections().stream().mapToInt(c -> c.articles().size()).sum();
 
         var js = new StringBuilder();
-        js.append("{\"level\":\"L0\",\"segment\":\"articles\",\"display\":{")
-          .append("\"label\":").append(quote("Articles"))
-          .append(",\"badge\":").append(quote(String.valueOf(total)))
-          .append(",\"note\":").append(quote(total + " to read"))
-          .append(",\"kind\":\"library\"},\"dimensions\":[],\"children\":[");
-
-        for (int i = 0; i < shelves.size(); i++) {
-            if (i > 0) js.append(',');
-            appendShelf(js, shelves.get(i));
-        }
-        return js.append("]}").toString();
+        appendNode(js, tree, 0, String.valueOf(articles), articles + " to read", "library");
+        return js.toString();
     }
 
-    private static void appendShelf(StringBuilder js, ArticleTree.Shelf shelf) {
-        js.append("{\"level\":\"L1\",\"segment\":").append(quote(shelf.type().wireId()))
-          .append(",\"display\":{\"label\":").append(quote(shelf.type().displayName()))
-          .append(",\"badge\":").append(quote(String.valueOf(shelf.titles().size())))
-          .append(",\"note\":").append(quote(shelf.type().summary()))
-          .append(",\"kind\":\"shelf\"},\"dimensions\":[],\"children\":[");
-
-        List<ArticleTree.Title> titles = shelf.titles();
-        for (int i = 0; i < titles.size(); i++) {
-            if (i > 0) js.append(',');
-            appendTitle(js, titles.get(i));
+    private static void appendNode(StringBuilder js, LibraryTree node, int level,
+                                   String badge, String note, String kind) {
+        switch (node) {
+            case LibraryTree.Branch b -> {
+                open(js, level, segment(b.title()), b.title(), badge, note, kind);
+                List<LibraryTree> children = b.children();
+                for (int i = 0; i < children.size(); i++) {
+                    if (i > 0) js.append(',');
+                    LibraryTree child = children.get(i);
+                    appendNode(js, child, level + 1, countOf(child), noteOf(child), kindOf(child));
+                }
+                js.append("]}");
+            }
+            case LibraryTree.Shelf s -> {
+                ArticleCollection c = s.collection();
+                open(js, level, c.id().value(), c.title(),
+                     String.valueOf(c.articles().size()), c.summary(), "shelf");
+                List<ArticleRef> articles = c.articles();
+                for (int i = 0; i < articles.size(); i++) {
+                    if (i > 0) js.append(',');
+                    appendArticle(js, level + 1, c, articles.get(i));
+                }
+                js.append("]}");
+            }
         }
-        js.append("]}");
     }
 
-    private static void appendTitle(StringBuilder js, ArticleTree.Title title) {
-        var header = title.header();
-        js.append("{\"level\":\"L2\",\"segment\":").append(quote(header.id().value()))
-          .append(",\"display\":{\"label\":").append(quote(header.title()))
+    private static void appendArticle(StringBuilder js, int level,
+                                      ArticleCollection c, ArticleRef ref) {
+        // The segment is the full address. The reader needs nothing else, and
+        // an article is addressed the same way wherever its collection hangs.
+        js.append("{\"level\":\"L").append(level).append("\",\"segment\":")
+          .append(quote(c.address(ref.id()).toString()))
+          .append(",\"display\":{\"label\":").append(quote(ref.title()))
           .append(",\"badge\":").append(quote(""))
-          .append(",\"note\":").append(quote(header.hasAuthor() ? header.author() : ""))
-          // The reader keys off this. A shelf is not openable; a title is.
+          .append(",\"note\":").append(quote(ref.author()))
           .append(",\"kind\":\"article\"},\"dimensions\":[],\"children\":[]}");
+    }
+
+    private static void open(StringBuilder js, int level, String segment, String label,
+                             String badge, String note, String kind) {
+        js.append("{\"level\":\"L").append(level).append("\",\"segment\":").append(quote(segment))
+          .append(",\"display\":{\"label\":").append(quote(label))
+          .append(",\"badge\":").append(quote(badge))
+          .append(",\"note\":").append(quote(note == null ? "" : note))
+          .append(",\"kind\":\"").append(kind).append("\"},\"dimensions\":[],\"children\":[");
+    }
+
+    private static String countOf(LibraryTree node) {
+        return switch (node) {
+            case LibraryTree.Shelf s -> String.valueOf(s.collection().articles().size());
+            case LibraryTree.Branch b -> String.valueOf(
+                    b.collections().stream().mapToInt(c -> c.articles().size()).sum());
+        };
+    }
+
+    private static String noteOf(LibraryTree node) {
+        return node instanceof LibraryTree.Shelf s ? s.collection().summary() : "";
+    }
+
+    private static String kindOf(LibraryTree node) {
+        return node instanceof LibraryTree.Shelf ? "shelf" : "group";
+    }
+
+    /** A branch has no id of its own; its title is stable enough to address by. */
+    private static String segment(String title) {
+        return title;
     }
 
     private static String quote(String raw) {
