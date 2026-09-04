@@ -24,6 +24,8 @@ target/
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
+# Also the promoted Kranji jar - see dist/BUILD.txt. (gitignore has no
+# trailing comments; a "/dist/ # note" line matches nothing.)
 /dist/
 /nbdist/
 /.nb-gradle/
