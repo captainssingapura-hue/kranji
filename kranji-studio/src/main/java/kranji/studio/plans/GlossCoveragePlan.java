@@ -13,13 +13,13 @@ import hue.captains.singapura.js.homing.studio.base.tracker.Task;
 import java.util.List;
 
 /**
- * Live tracker for glosses at corpus scale — the 8,759 pairs, not the 447.
+ * Live tracker for glosses at corpus scale — the 8,764 pairs, not the 447.
  *
  * <p>{@code GlossPlan} covers the hand-crafted set that makes the bundled
  * library self-contained, and its {@code gp5} reserves a phase for "the ported
  * tail — if it is ever wanted". This is that phase, opened out into a plan of
  * its own, because it is the same shape of work {@code PhonicCoveragePlan}
- * already did for readings: one corpus, 22 partitions, taken one at a time.</p>
+ * already did for readings: one corpus, 101 partitions, taken one at a time.</p>
  *
  * <p>The reason it is a sibling plan rather than a longer {@code gp5} is that
  * its hard part is not the import. It is <b>review at a scale nobody can review
@@ -38,7 +38,7 @@ public final class GlossCoveragePlan implements Plan {
         return "Source of truth: GlossCoveragePlan.java. Edit, recompile, restart the server.";
     }
     @Override public String summary() {
-        return "A meaning for every (character, reading) the phonic corpus lists - 8,759 pairs "
+        return "A meaning for every (character, reading) the phonic corpus lists - 8,764 pairs "
              + "across 8,100 characters - imported partition by partition, and reviewed by "
              + "triage rather than by reading all of it.";
     }
@@ -48,18 +48,25 @@ public final class GlossCoveragePlan implements Plan {
         return List.of(
                 new Objective("Cover the corpus, not the library",
                         "GlossPlan's target is the 447 pairs the 23 demo articles use. This "
-                      + "one's is every pair the corpus has a reading for: 8,759 appearances "
-                      + "across 8,100 characters, 592 of them polyphonic. The reader stops "
+                      + "one's is every pair the corpus has a reading for: 8,764 appearances "
+                      + "across 8,100 characters, 594 of them polyphonic. The reader stops "
                       + "wherever it stops, and a set sized to the bundled articles has "
-                      + "nothing to say the moment somebody adds an article."),
+                      + "nothing to say the moment somebody adds an article.\n\n"
+                      + "Those figures are the GENERATED corpus - the partition files under "
+                      + "kranji/phonic, which is what every consumer actually reads. "
+                      + "PhonicCoveragePlan quotes slightly larger ones because it counts the "
+                      + "Unihan source it builds from, before the generator drops what it "
+                      + "cannot parse. Both are right about their own universe, and the pair "
+                      + "counts differ by single digits; anything counting glosses should use "
+                      + "these."),
 
                 new Objective("A partition is a unit of work and a unit of trust",
                         "Not a shard for convenience. A finished partition is importable, "
                       + "countable, reviewable and shippable on its own, so progress is a list "
                       + "of partitions that are done rather than a percentage that never "
-                      + "arrives. Reusing the phonic axis makes that free."),
+                      + "arrives. ZiPartition makes that free - the reader already fetches by the same cut."),
 
-                new Objective("Triage, because nobody reviews 8,759 rows",
+                new Objective("Triage, because nobody reviews 8,764 rows",
                         "At five seconds a row an exhaustive pass is a twelve-hour sitting, and "
                       + "a twelve-hour sitting is not a review - it is a rubber stamp with "
                       + "extra steps. The machine has to decide what deserves a person: the "
@@ -67,14 +74,21 @@ public final class GlossCoveragePlan implements Plan {
 
                 new Objective("A verdict outlives the row it was about",
                         "The imported data is GENERATED, so it will be regenerated - a better "
-                      + "sense-selection policy, a newer CC-CEDICT. A review that lived in the "
+                      + "sense-selection policy, a newer Unihan drop. A review that lived in the "
                       + "generated file would be destroyed every time, and a review keyed on a "
                       + "line number would be worse: it would survive and be wrong."),
 
-                new Objective("Provenance stays separable",
-                        "Decision g2 already settled this and it does not get relitigated here: "
-                      + "ported data lives in its own module under its own licence, and a build "
-                      + "without that module is fully permissive.")
+                new Objective("Provenance stays visible",
+                        "Decision g2 settled this and its answer CHANGED, so the old form of "
+                      + "this objective - ported data in its own module under its own licence "
+                      + "- describes something that no longer exists. Unihan seeds the tail, "
+                      + "Unicode's terms are permissive, and the whole build stays under the "
+                      + "project's own licence.\n\n"
+                      + "What survives the change is the property that actually mattered: a "
+                      + "gloss can be told apart by where it came from. That now lives on the "
+                      + "ROW rather than in a module boundary, which is a stronger place for "
+                      + "it - the question a reviewer asks is 'has a person checked this "
+                      + "one', and a module cannot answer that.")
         );
     }
 
@@ -83,46 +97,66 @@ public final class GlossCoveragePlan implements Plan {
         return List.of(
                 new Decision("gc1",
                         "What is a partition?",
-                        "The 22 phonic partitions - a character files under its principal "
-                      + "reading's initial, so it appears in exactly one.",
-                        "Reuse the phonic axis; do not invent a second one",
+                        "101 slices, codepoint modulo 101 - the same cut the reader already "
+                      + "fetches by. ZiPartition owns the rule.",
+                        "One cut for the whole system, not one per consumer",
                         DecisionStatus.RESOLVED,
-                        "The corpus is already cut this way and committed that way: 22 files "
-                      + "under kranji/phonic, from zero.tsv at 1,115 characters down to r.tsv "
-                      + "at 117. The cut is total and disjoint, which is the only property a "
-                      + "unit of work actually needs.\n\n"
-                      + "Every alternative is worse for a specific reason. By radical: the "
-                      + "gloss key is phonic, so a radical partition would straddle it. By "
-                      + "frequency band: the bands move when the frequency source is updated, "
-                      + "and a unit of work that redefines itself cannot be finished. By "
-                      + "codepoint range: arbitrary, and it splits polyphones from nothing in "
-                      + "particular.",
-                        "The phonic partition of an initial is exactly the universe of the "
-                      + "gloss partition for that initial, so coverage per partition is a "
-                      + "subtraction rather than a join. The Sound picker's initial filter is "
-                      + "already a partition selector - it was built for the sound relation and "
-                      + "turns out to be the navigation this needs.\n\n"
-                      + "One wrinkle to state rather than discover: a partition is filed by "
-                      + "PRINCIPAL reading, so a polyphone's alternate readings sit in the "
-                      + "partition of its principal. 行 files under x (xíng) and its háng "
-                      + "reading comes with it. That is right - a character is reviewed once, "
-                      + "with all its readings in front of you - but it means a partition is "
-                      + "not 'every pair whose reading starts with x'."),
+                        "REVERSED. This used to answer 'the 22 phonic partitions', reusing the "
+                      + "by-initial files under kranji/phonic. Two things decided against it.\n\n"
+                      + "Balance. Those 22 run from 121 pairs to 1,183 - a 9.8x spread - so a "
+                      + "unit of work meant anything from a coffee break to a weekend, and "
+                      + "there was no cheap fix: sub-splitting on a phonetic key leaves zero's "
+                      + "largest child at 739, because pinyin is itself skewed. Modulo 101 "
+                      + "runs 68 to 102, a spread of 1.5x. Every partition is the same "
+                      + "sitting.\n\n"
+                      + "Duplication. The reader was ALREADY slicing this corpus 101 ways by "
+                      + "codepoint to fetch the syllable map. Reviewing on a second axis meant "
+                      + "two definitions of 'a slice of the corpus', and the failure mode is "
+                      + "specific: a reviewer signs off a partition the reader never "
+                      + "receives.\n\n"
+                      + "The old objection to codepoint was 'arbitrary, and it splits "
+                      + "polyphones from nothing in particular'. The first half is fair and "
+                      + "was accepted knowingly. The second half was simply wrong: the slice "
+                      + "is computed from the CHARACTER, so all of a character's readings go "
+                      + "with it - the same property the by-initial scheme was praised for.\n\n"
+                      + "What codepoint order does cost is real. Contiguous ranges would have "
+                      + "grouped the corpus by radical, since the Unified Ideographs block is "
+                      + "ordered radical-then-stroke - forty consecutive codepoints are forty "
+                      + "hand-verbs, then forty feathers. Modulo scatters that. It was weighed "
+                      + "and set aside: the grouping helps a reviewer who needs context to "
+                      + "judge a gloss, and a Chinese-language expert does not.\n\n"
+                      + "The frequency-band alternative is still rejected on its original "
+                      + "grounds, which have not weakened: the bands move when the frequency "
+                      + "source is updated, and a unit of work that redefines itself cannot be "
+                      + "finished.",
+                        "A partition means one thing in the reader, the codegen and the "
+                      + "workbench, because all three call ZiPartition. Coverage per partition "
+                      + "is a subtraction rather than a join.\n\n"
+                      + "The Sound picker's initial filter is no longer a partition selector - "
+                      + "it filters the sound relation, which is a different axis and stays "
+                      + "useful for what it was built for. Partition navigation needs its own "
+                      + "control.\n\n"
+                      + "One property survives the change unchanged, and it is the one that "
+                      + "mattered: a character is reviewed once, with all its readings in "
+                      + "front of you. 行 carries both xíng and háng into whichever slice its "
+                      + "codepoint lands in."),
 
                 new Decision("gc2",
                         "Which partition first, and in what order after that?",
-                        "r first to build the pipeline on 117 characters. Then by frequency "
-                      + "weight, not alphabetically.",
-                        "Cheapest first, then by where a reader actually stops",
+                        "Any partition first - they are all the same size now. Then by "
+                      + "frequency weight, not by index.",
+                        "Order by where a reader actually stops",
                         DecisionStatus.OPEN,
-                        "Two different orders serve two different purposes and the plan needs "
-                      + "both. The first partition is a pipeline test: it should be the "
-                      + "smallest, so a wrong sense-selection policy costs 117 rows of rework "
-                      + "and not 1,115. r is that partition.\n\n"
-                      + "After that, alphabetical order is indefensible - it would put b and c "
-                      + "ahead of the partitions holding the characters children actually "
-                      + "read. Ordering by summed kHanyuPinlu frequency puts the value first, "
-                      + "and the frequency data is already in the corpus.\n\n"
+                        "Half of this decision dissolved when gc1 was reversed. It used to "
+                      + "read 'r first, because it is the smallest at 117' - a pipeline test "
+                      + "sized so that a wrong sense-selection policy cost 117 rows of rework "
+                      + "rather than 1,115. Under modulo 101 every slice is 68 to 102 pairs, "
+                      + "so there is no cheapest one to start with and nothing to choose. Take "
+                      + "partition 0.\n\n"
+                      + "The other half stands. Ordering by index is indefensible for the same "
+                      + "reason alphabetical was - it is unrelated to what a child reads. "
+                      + "Ordering by summed kHanyuPinlu frequency puts the value first, and "
+                      + "the frequency data is already in the corpus.\n\n"
                       + "OPEN because the weighting is not obvious: kHanyuPinlu reaches only "
                       + "2,827 of the 8,100, so two thirds of every partition has no frequency "
                       + "evidence at all. Weighting by the evidence that exists may just rank "
@@ -195,61 +229,74 @@ public final class GlossCoveragePlan implements Plan {
     public List<Phase> phases() {
         return List.of(
                 new Phase("gc-1", "The second collection",
-                        "An empty module that composes correctly before it has any data.",
-                        "kranji-gloss-cedict with its own LICENSE and attribution, registered "
-                      + "through the ZiCollection SPI, and precedence defined so the "
-                      + "hand-crafted set wins every collision. Wiring first and data second, "
-                      + "because a composition bug found after 8,000 rows exist is found in "
-                      + "the wrong place.",
+                        "An empty collection that composes correctly before it has any data.",
+                        "A seeded collection beside the hand-crafted one, registered through "
+                      + "the ZiCollection SPI, with precedence defined so a hand-checked gloss "
+                      + "wins every collision. Wiring first and data second, because a "
+                      + "composition bug found after 8,000 rows exist is found in the wrong "
+                      + "place.\n\n"
+                      + "It is no longer a separate MODULE. g2 changed: there is no ported "
+                      + "data and no second licence, so the reason for a module boundary went "
+                      + "with it. Two collections inside kranji-gloss is enough - what has to "
+                      + "stay separable is which rows a person has checked, and that is a "
+                      + "property of a row.",
                         PhaseStatus.NOT_STARTED,
                         List.of(
                                 new Task("Declare the project's own licence first (gp5 task, still open)", false),
-                                new Task("Confirm CC-CEDICT's terms from the source", false),
-                                new Task("kranji-gloss-cedict module, LICENSE, attribution in the data header", false),
-                                new Task("ZiCollection service registration, discovered alongside HandCrafted", false),
-                                new Task("Precedence in Glosses.of: hand-crafted wins, with a test", false),
-                                new Task("Reading app and studio both still green with the module absent", false)),
+                                new Task("A seeded ZiCollection, discovered alongside HandCrafted", false),
+                                new Task("Provenance on the row: seeded, or checked by a person", false),
+                                new Task("Precedence in Glosses.of: hand-checked wins, with a test", false),
+                                new Task("Reading app and studio both still green with the seed absent", false)),
                         List.of(),
                         "Two collections are discovered, a collision resolves to the "
-                      + "hand-crafted gloss, and removing the module leaves a permissive build "
-                      + "that still passes.",
+                      + "hand-checked gloss, and removing the seed leaves a build that still "
+                      + "passes.",
                         "Keep one collection and hand-craft on demand, as GlossPlan gp3 does.",
                         "S",
-                        "Encodes decision gc5 - hand-crafted wins every collision - which is "
-                      + "the one thing here that cannot be retrofitted once 8,000 ported rows "
-                      + "exist, because by then every regression it prevents is invisible."),
+                        "Encodes decision gc5 - a hand-checked gloss wins every collision - "
+                      + "which is the one thing here that cannot be retrofitted once 8,000 "
+                      + "seeded rows exist, because by then every regression it prevents is "
+                      + "invisible."),
 
-                new Phase("gc-2", "The importer, on one partition",
-                        "r: 117 characters, the smallest partition in the corpus.",
-                        "CC-CEDICT in, one senses.tsv out, for a single initial. The "
-                      + "sense-selection policy is the whole difficulty - CEDICT entries are "
-                      + "word entries with several glosses, and this model wants a few ranked "
-                      + "senses per READING in a register a child reads. Proving that on 117 "
-                      + "characters is the point of doing r first.",
+                new Phase("gc-2", "The seeder, on one partition",
+                        "One partition of the 101: around 80 characters and 87 pairs.",
+                        "Unihan kDefinition in, one senses.tsv partition out. The "
+                      + "sense-selection policy is the whole difficulty - kDefinition packs "
+                      + "several senses into one field in a scholarly register, and this model "
+                      + "wants a few ranked senses per READING in a register a child reads. "
+                      + "Proving that on one partition is the point of doing one first.\n\n"
+                      + "A partition rather than an initial: ZiPartition slices the corpus "
+                      + "101 ways by codepoint, the same way the reader fetches it, so a "
+                      + "partition means one thing everywhere. The old plan said 'r, the "
+                      + "smallest at 117' - that was the by-initial axis, which ran 121 to "
+                      + "1,183 pairs and is no longer how the corpus is cut.",
                         PhaseStatus.NOT_STARTED,
                         List.of(
-                                new Task("Numbered-pinyin conversion, u: to ue and tone 5 to 0, tested", false),
-                                new Task("Match CEDICT entries to corpus pairs; report unmatched as findings", false),
+                                new Task("Seed the monophonic characters of one partition; leave polyphones queued", false),
                                 new Task("Sense-selection policy: how many, which, and in what priority", false),
                                 new Task("Emit the partition in the existing senses.tsv shape", false),
                                 new Task("Regeneration is a no-op diff when inputs are unchanged", false),
-                                new Task("Coverage for r, stated as covered / missing / unmatched", false)),
+                                new Task("Coverage for the partition: seeded / queued / no source", false)),
                         List.of(new Dependency("gc-1", "Needs somewhere to put the output.")),
-                        "r imports, parses under the existing TSV reader, and its coverage is a "
-                      + "number with a reason for every gap.",
-                        "Import per character on demand rather than per partition.",
+                        "One partition seeds, parses under the existing TSV reader, and its "
+                      + "coverage is a number with a reason for every gap.",
+                        "Seed per character on demand rather than per partition.",
                         "M",
-                        "The expensive half of this is already done and is worth not "
-                      + "rediscovering: GlossPlan gp5 records that the numbered-pinyin "
-                      + "rendering had to become correct on its own account, and it now is - "
-                      + "the collapses iou-iu, uei-ui, uen-un round-trip across all 1,284 "
-                      + "corpus syllables. The import no longer has to reimplement pinyin "
-                      + "orthography underneath itself."),
+                        "Two things carried over from when this was a CC-CEDICT importer.\n\n"
+                      + "The numbered-pinyin rendering had to become correct on its own "
+                      + "account and now is - the collapses iou-iu, uei-ui, uen-un round-trip "
+                      + "across all 1,284 corpus syllables. Seeding from Unihan does not need "
+                      + "it, because the readings are already ours, but the hazard is the "
+                      + "same: a reading that matches nothing produces a gloss belonging to no "
+                      + "pair, and it is gc's validity check that catches it.\n\n"
+                      + "And the sense-count heuristic still holds against the new source. An "
+                      + "entry packing many senses is where mechanical selection fails, so the "
+                      + "count is worth flagging on rather than trusting."),
 
                 new Phase("gc-3", "Triage",
                         "The checks that decide what a person looks at.",
                         "Every automatic check that can flag a row before a human sees it, so "
-                      + "the review queue is a few hundred rows and not 8,759. These are "
+                      + "the review queue is a few hundred rows and not 8,764. These are "
                       + "cheap, and each one is a rule the hand-crafted set already learned "
                       + "the hard way.",
                         PhaseStatus.NOT_STARTED,
@@ -302,7 +349,7 @@ public final class GlossCoveragePlan implements Plan {
                       + "the same fix here."),
 
                 new Phase("gc-5", "The sweep",
-                        "22 partitions, one at a time, in the gc2 order.",
+                        "101 partitions, one at a time, in the gc2 order.",
                         "The grind. Import, triage, review, mark the partition done, move on. "
                       + "Each partition lands as its own commit with its own coverage number, "
                       + "so the work is legible in the history and abandonable at any point "
