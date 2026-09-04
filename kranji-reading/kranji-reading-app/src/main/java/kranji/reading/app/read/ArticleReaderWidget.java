@@ -10,6 +10,10 @@ import kranji.reading.app.ui.GlyphMetricsModule;
 import kranji.reading.app.ui.ReaderControlsModule;
 import kranji.reading.app.ui.TextBandsModule;
 import kranji.reading.app.ui.TypefacePickerModule;
+import kranji.reading.library.ArticleAddress;
+import kranji.reading.library.ArticleCollection;
+import kranji.reading.library.ArticleRef;
+import kranji.reading.library.Libraries;
 
 import java.util.List;
 
@@ -481,7 +485,7 @@ public final class ArticleReaderWidget
                 "        });",
                 "    }",
                 "",
-                "    load('kranji.reader.demo.tangshi:jing-ye-si');",
+                "    load('" + opensAt() + "');",
                 "",
                 "    return {",
                 "        root: root,",
@@ -499,5 +503,27 @@ public final class ArticleReaderWidget
                 "            known.leave();",
                 "        }",
                 "    };");
+    }
+
+    /**
+     * What the reader opens on: the first article in the mounted library.
+     *
+     * <p>Asked of the library rather than written out. A literal address here
+     * is a second place the catalogue has to be kept true, and the one nothing
+     * checks: it held one demo poem until a published root displaced it,
+     * at which point the reader would have opened on "no article" and the
+     * build would have stayed green.</p>
+     *
+     * <p>First rather than chosen, because choosing means naming one, which is
+     * the literal again. Which article that is stays a decision of whoever
+     * arranged the root — it is the first thing a reader sees, so it is an
+     * editorial call and belongs with the other one.</p>
+     */
+    static ArticleAddress opensAt() {
+        for (ArticleCollection c : Libraries.mounted().tree().collections()) {
+            for (ArticleRef ref : c.articles()) return c.address(ref.id());
+        }
+        throw new IllegalStateException("library '" + Libraries.mounted().name()
+                + "' mounted with no articles in it, so the reader has nothing to open");
     }
 }
