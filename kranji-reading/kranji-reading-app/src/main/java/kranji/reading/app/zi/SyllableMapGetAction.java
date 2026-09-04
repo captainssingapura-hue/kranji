@@ -9,6 +9,7 @@ import io.vertx.ext.web.RoutingContext;
 import kranji.phonic.PhonicPartitions;
 import kranji.phonic.SourceReadings;
 import kranji.pinyin.PinyinSyllable;
+import kranji.zi.ZiPartition;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -63,17 +64,16 @@ public final class SyllableMapGetAction
     /**
      * How many partitions the map is split into.
      *
-     * <p><b>Prime.</b> Codepoints are not random - Han characters run in dense
-     * contiguous blocks, and radical-ordered ranges land on regular strides. A
-     * power-of-two modulus keeps the low bits and inherits that structure; a
-     * prime one does not, so the split stays even for reasons that do not
-     * depend on how Unicode happens to be laid out.</p>
+     * <p>Not decided here any more. {@link ZiPartition} owns the rule, because
+     * the workbench now slices the same corpus the same way — and two constants
+     * that have to agree are two constants that eventually will not. What that
+     * costs is a reviewer signing off a partition the reader never receives.</p>
      *
-     * <p>Exported in every module so a client can check the constant it built
-     * against — a mismatch means it would compute the wrong partition for
+     * <p>Kept as a field because it is written into every served module for the
+     * client to check against: a mismatch would compute the wrong partition for
      * every character, which is worth failing loudly on.</p>
      */
-    public static final int PARTITIONS = 101;
+    public static final int PARTITIONS = ZiPartition.COUNT;
 
     private static final String JS = "text/javascript; charset=utf-8";
 
@@ -104,7 +104,7 @@ public final class SyllableMapGetAction
         } catch (NumberFormatException e) {
             return errorModule("not a partition index: '" + rawPartition + "'");
         }
-        if (partition < 0 || partition >= PARTITIONS) {
+        if (!ZiPartition.exists(partition)) {
             return errorModule("partition " + partition + " is outside 0.." + (PARTITIONS - 1));
         }
 
@@ -119,7 +119,7 @@ public final class SyllableMapGetAction
         int count = 0;
         for (SourceReadings row : PhonicPartitions.loadAll()) {
             int cp = row.zi().codePoint();
-            if (Math.floorMod(cp, PARTITIONS) != partition) continue;
+            if (ZiPartition.of(cp) != partition) continue;
             if (!first) js.append(",\n");
             first = false;
             count++;
