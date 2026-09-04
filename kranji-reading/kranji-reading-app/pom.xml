@@ -34,6 +34,22 @@
         </dependency>
 
         <!--
+            The published library, as a discovered root rather than an API.
+
+            Runtime scope for the same reason the gloss modules have it: the app
+            compiles against ArticleLibrary and never names a root, so which
+            library is served is a deployment question. Both roots are on the
+            classpath here and the reader gets this one, because DemoLibrary
+            ranks above 0 and yields - see kranji.reading.library.Libraries.
+        -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-library-all</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--
             The glosses, as an SPI implementation rather than an API.
 
             Runtime scope on purpose: the app compiles against ZiCollection in
