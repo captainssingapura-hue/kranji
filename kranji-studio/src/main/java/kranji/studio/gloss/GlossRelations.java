@@ -210,7 +210,8 @@ public final class GlossRelations {
             case "phraseSense" -> List.of("phrase", "sense", "english", "pinned readings");
             case "problem"     -> List.of("glyph", "reading", "part", "kind", "doubts",
                                           "state", "verdict", "kept", "source");
-            case "partition"   -> List.of("partition", "curated", "seeded", "issues", "open");
+            case "partition"   -> List.of("partition", "curated", "seeded", "issues", "open",
+                                          "source");
             // Same columns as "problem", minus the one that is now the parent.
             case "issue"       -> List.of("glyph", "reading", "kind", "doubts",
                                           "state", "verdict", "kept", "source");
@@ -298,9 +299,13 @@ public final class GlossRelations {
 
             // ── The curated chain ──────────────────────────────────────
 
-            case "partition" -> Partitions.rows().stream().map(r -> new Row(
-                    r.label(), "", r.label(),
-                    List.of(r.label(), r.curated(), r.seeded(), r.issues(), r.open())))
+            // Read fresh, so the counts and the path are what is on disk right
+            // now rather than what was on the classpath when the JVM started.
+            case "partition" -> Partitions.rows(CuratedSource.readAll()).stream()
+                    .map(r -> new Row(
+                            r.label(), "", r.label(),
+                            List.of(r.label(), r.curated(), r.seeded(), r.issues(),
+                                    r.open(), r.source())))
                     .toList();
 
             // The same rows "problem" serves, hung off a partition instead of
@@ -319,7 +324,9 @@ public final class GlossRelations {
             // rather than the file - the model round-trips through GlossTsv,
             // so it IS the file, and re-parsing would be a second reader to
             // keep in step with the first.
-            case "curated" -> senses(Partitions.curated()).stream().map(r -> new Row(
+            case "curated" -> senses(CuratedSource.readAll().stream()
+                    .flatMap(p -> p.glosses().stream()).toList())
+                    .stream().map(r -> new Row(
                     sensePk(r.codePoint(), r.reading(), r.meaning()),
                     "p%03d".formatted(kranji.zi.ZiPartition.of(r.codePoint())),
                     r.meaning(),

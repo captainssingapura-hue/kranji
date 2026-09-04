@@ -40,16 +40,22 @@ public final class Partitions {
      * @param issues   entries in the seeder's log
      * @param open     those nobody has settled
      */
-    public record Row(int partition, int curated, int seeded, int issues, int open) {
+    public record Row(int partition, int curated, int seeded, int issues, int open,
+                      String source) {
 
         /** {@code p041}, so files, keys and labels all read the same. */
         public String label() { return "p%03d".formatted(partition); }
     }
 
-    private static final List<Row> ROWS = build();
-
-    private static List<Row> build() {
-        int[] curated = countSenses(0);
+    /**
+     * The rows, counting the curated side from what was just read off disk.
+     *
+     * <p>Takes the partitions rather than fetching them, so the count in the
+     * selector and the rows in the grid come from ONE read. Counting them
+     * separately would let the two disagree for the length of an edit, which
+     * is precisely the window this bench exists to work in.</p>
+     */
+    public static List<Row> rows(List<CuratedSource.Partition> curatedNow) {
         int[] seeded = countSenses(1);
         int[] issues = new int[ZiPartition.COUNT];
         int[] open = new int[ZiPartition.COUNT];
@@ -60,8 +66,18 @@ public final class Partitions {
         }
 
         var out = new ArrayList<Row>(ZiPartition.COUNT);
-        for (int p = 0; p < ZiPartition.COUNT; p++) {
-            out.add(new Row(p, curated[p], seeded[p], issues[p], open[p]));
+        for (CuratedSource.Partition p : curatedNow) {
+            int senses = 0;
+            for (ZiGloss entry : p.glosses()) {
+                for (SoundGloss sound : entry.sounds()) senses += sound.senses().size();
+            }
+            // A partition that will not parse says so where the count goes -
+            // a zero there would read as "nothing written yet", which is the
+            // one thing it does not mean.
+            String origin = p.ok() ? p.origin()
+                    : p.origin() + "  [" + p.problems().size() + " problems]";
+            out.add(new Row(p.partition(), senses, seeded[p.partition()],
+                    issues[p.partition()], open[p.partition()], origin));
         }
         return List.copyOf(out);
     }
@@ -87,32 +103,4 @@ public final class Partitions {
         return out;
     }
 
-    /** All 101, in order. */
-    public static List<Row> rows() { return ROWS; }
-
-    /** The curated glosses filed in one partition, in file order. */
-    public static List<ZiGloss> curatedIn(int partition) {
-        var out = new ArrayList<ZiGloss>();
-        for (ZiCollection c : ZiCollections.discovered()) {
-            for (ZiCollection layer : c.layers()) {
-                if (layer.precedence() != 0) continue;
-                for (ZiGloss entry : layer.characters().all()) {
-                    if (ZiPartition.of(entry.zi().codePoint()) == partition) out.add(entry);
-                }
-            }
-        }
-        return List.copyOf(out);
-    }
-
-    /** Every curated gloss, keyed by the partition it is filed in. */
-    public static List<ZiGloss> curated() {
-        var out = new ArrayList<ZiGloss>();
-        for (ZiCollection c : ZiCollections.discovered()) {
-            for (ZiCollection layer : c.layers()) {
-                if (layer.precedence() != 0) continue;
-                out.addAll(layer.characters().all());
-            }
-        }
-        return List.copyOf(out);
-    }
 }
