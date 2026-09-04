@@ -178,13 +178,26 @@ public final class GlossRelations {
             // branches. It scopes on the CHARACTER of the selected pair, not
             // the pair - see scopeKeysFor.
             case "problem"     -> "demand";
-            default            -> null;      // sound, phrase
+
+            // A second chain, for the curated workbench, and it is short: pick
+            // a partition, see its issues and its written rows side by side.
+            //
+            // "issue" holds the same rows as "problem" and hangs off something
+            // else, which is the whole reason both exist. The gloss workbench
+            // asks "what is wrong with THIS character", reached by walking
+            // sounds and pairs; the curated workbench asks "what is left in
+            // THIS partition", reached by picking a file. One relation cannot
+            // have two parents, and neither question is the other one.
+            case "issue"       -> "partition";
+            case "curated"     -> "partition";
+            default            -> null;      // sound, phrase, partition
         };
     }
 
     /** The relations, in the order a picker should offer them. */
     public static List<String> relations() {
-        return List.of("sound", "demand", "sense", "phrase", "phraseSense", "problem");
+        return List.of("sound", "demand", "sense", "phrase", "phraseSense", "problem",
+                       "partition", "issue", "curated");
     }
 
     public static List<String> columnsOf(String relation) {
@@ -197,6 +210,11 @@ public final class GlossRelations {
             case "phraseSense" -> List.of("phrase", "sense", "english", "pinned readings");
             case "problem"     -> List.of("glyph", "reading", "part", "kind", "doubts",
                                           "state", "verdict", "kept", "source");
+            case "partition"   -> List.of("partition", "curated", "seeded", "issues", "open");
+            // Same columns as "problem", minus the one that is now the parent.
+            case "issue"       -> List.of("glyph", "reading", "kind", "doubts",
+                                          "state", "verdict", "kept", "source");
+            case "curated"     -> List.of("glyph", "reading", "priority", "meaning", "examples");
             default            -> List.of();
         };
     }
@@ -276,6 +294,41 @@ public final class GlossRelations {
                                     r.kind(), r.doubts(),
                                     r.state().name().toLowerCase(java.util.Locale.ROOT),
                                     r.verdict(), r.kept(), r.detail())))
+                    .toList();
+
+            // ── The curated chain ──────────────────────────────────────
+
+            case "partition" -> Partitions.rows().stream().map(r -> new Row(
+                    r.label(), "", r.label(),
+                    List.of(r.label(), r.curated(), r.seeded(), r.issues(), r.open())))
+                    .toList();
+
+            // The same rows "problem" serves, hung off a partition instead of
+            // a character, and ordered by sound within it for the same reason.
+            case "issue" -> SeedProblems.rows().stream()
+                    .sorted(Comparator.comparing(SeedProblems.Row::reading)
+                            .thenComparingInt(SeedProblems.Row::codePoint))
+                    .map(r -> new Row(
+                            r.pairKey(), "p%03d".formatted(r.partition()), r.glyph(),
+                            List.of(r.glyph(), r.reading(), r.kind(), r.doubts(),
+                                    r.state().name().toLowerCase(java.util.Locale.ROOT),
+                                    r.verdict(), r.kept(), r.detail())))
+                    .toList();
+
+            // What is written in that partition's file, read out of the model
+            // rather than the file - the model round-trips through GlossTsv,
+            // so it IS the file, and re-parsing would be a second reader to
+            // keep in step with the first.
+            case "curated" -> senses(Partitions.curated()).stream().map(r -> new Row(
+                    sensePk(r.codePoint(), r.reading(), r.meaning()),
+                    "p%03d".formatted(kranji.zi.ZiPartition.of(r.codePoint())),
+                    r.meaning(),
+                    // No refs. The gloss workbench walks a sense sideways to the
+                    // phrases that show it; this bench has no phrase widget, and
+                    // refTargetOf says "curated" points at nothing - so rows
+                    // carrying refs would advertise a link the module denies.
+                    List.of(r.glyph(), r.reading(), r.priority().code(),
+                            r.meaning(), r.examples())))
                     .toList();
 
             default -> List.of();

@@ -57,7 +57,7 @@ class GlossCascadeTest {
         // selected pair - see aProblemScopesOnTheCharacterNotThePair.
         var roots = GlossRelations.relations().stream()
                 .filter(r -> GlossRelations.upstreamOf(r) == null).toList();
-        assertEquals(List.of("sound", "phrase"), roots);
+        assertEquals(List.of("sound", "phrase", "partition"), roots);
     }
 
     // ── The sound filter ──────────────────────────────────────────────

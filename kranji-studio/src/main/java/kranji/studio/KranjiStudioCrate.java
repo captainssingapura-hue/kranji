@@ -3,7 +3,10 @@ package kranji.studio;
 import hue.captains.singapura.js.homing.core.Crate;
 import hue.captains.singapura.js.homing.core.CrateEntry;
 import hue.captains.singapura.js.homing.grid.RelationGridCrate;
+import kranji.studio.gloss.CuratedEntityWidget;
 import kranji.studio.gloss.DemandEntityWidget;
+import kranji.studio.gloss.IssueEntityWidget;
+import kranji.studio.gloss.PartitionEntityWidget;
 import kranji.studio.gloss.GlossCss;
 import kranji.studio.gloss.GlossSelectionSecretaryModule;
 import kranji.studio.gloss.PhraseEntityWidget;
@@ -41,7 +44,10 @@ public final class KranjiStudioCrate implements Crate {
                 CrateEntry.of(SenseEntityWidget.INSTANCE),
                 CrateEntry.of(PhraseEntityWidget.INSTANCE),
                 CrateEntry.of(PhraseSenseEntityWidget.INSTANCE),
-                CrateEntry.of(ProblemEntityWidget.INSTANCE));
+                CrateEntry.of(ProblemEntityWidget.INSTANCE),
+                CrateEntry.of(PartitionEntityWidget.INSTANCE),
+                CrateEntry.of(IssueEntityWidget.INSTANCE),
+                CrateEntry.of(CuratedEntityWidget.INSTANCE));
     }
 
     @Override
