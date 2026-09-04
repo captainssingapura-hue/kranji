@@ -94,15 +94,32 @@ public final class GlossSeedMain {
     public record Result(String tsv, List<String> queuedPolyphone,
                          List<String> noSource, List<String> flagged, int seededPairs) {
 
+        /**
+         * What happened, and to which characters.
+         *
+         * <p>Named rather than counted. "7 flagged" tells a reviewer how much
+         * work there is and nothing about where it is, so it is a number they
+         * have to go and re-derive before they can act on it.</p>
+         */
         public String report(int partition) {
-            return """
+            var out = new StringBuilder("""
                    Partition %d
                      seeded      %d characters, %d pairs
                      flagged     %d of those want a person's eye
                      queued      %d polyphones - a per-character field cannot split them
-                     no source   %d characters have no kDefinition
+                     unseeded    %d characters have no usable kDefinition
                    """.formatted(partition, seededPairs, seededPairs,
-                                 flagged.size(), queuedPolyphone.size(), noSource.size());
+                                 flagged.size(), queuedPolyphone.size(), noSource.size()));
+            listInto(out, "FLAGGED - seeded, but check before trusting", flagged);
+            listInto(out, "QUEUED - split the senses across the readings by hand", queuedPolyphone);
+            listInto(out, "NOT SEEDABLE - write one; the doubt says why", noSource);
+            return out.toString();
+        }
+
+        private static void listInto(StringBuilder out, String heading, List<String> items) {
+            if (items.isEmpty()) return;
+            out.append('\n').append(heading).append('\n');
+            for (String item : items) out.append("  ").append(item).append('\n');
         }
     }
 
@@ -134,11 +151,16 @@ public final class GlossSeedMain {
 
             GlossSeedPolicy.Seed seed = GlossSeedPolicy.of(definitions.get(cp));
             if (!seed.usable()) {
-                noSource.add(row.zi().value() + " " + row.zi().codePointLabel());
+                // The doubts travel with it: "no kDefinition at all" and "had one,
+                // nothing survived" both end here and are different jobs. 岷 has a
+                // gloss - it is 72 characters, and Meaning takes 60.
+                noSource.add(row.zi().value() + "  " + row.zi().codePointLabel()
+                           + "  " + seed.doubts());
                 continue;
             }
             if (seed.wantsReview()) {
-                flagged.add(row.zi().value() + " " + seed.doubts());
+                flagged.add(row.zi().value() + "  " + row.principal().numbered()
+                          + "  " + seed.doubts() + "  -> " + seed.meanings());
             }
             rows.put(cp, glossOf(row, seed));
         }
