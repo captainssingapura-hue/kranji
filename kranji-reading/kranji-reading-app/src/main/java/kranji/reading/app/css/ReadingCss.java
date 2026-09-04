@@ -321,12 +321,82 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
         }
     }
 
+    /**
+     * The reader's header strip: the Settings button, and the fit line.
+     *
+     * <p>{@code position: relative} because the settings panel hangs off it.
+     * The panel is an overlay rather than a row that opens, and that is not a
+     * cosmetic choice: the reader rebuilds the whole article whenever the
+     * available width crosses a band boundary, so a panel that pushed the board
+     * down would relayout the page every time somebody looked at the
+     * settings.</p>
+     */
+    public record kr_rd_head() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: var(--space-2, 8px);
+                margin-bottom: var(--space-2, 8px);
+                """;
+        }
+    }
+
+    /**
+     * The settings panel, open.
+     *
+     * <p>Floats over the top of the board. Its counterpart is
+     * {@link kr_kn_hidden} — one class or the other, never both, because two
+     * classes that each set {@code display} are resolved by stylesheet order
+     * rather than by the order they were applied.</p>
+     */
+    public record kr_rd_settings() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: var(--space-2, 8px);
+                position: absolute;
+                top: calc(100% + 6px);
+                left: 0;
+                z-index: 30;
+                padding: var(--space-3, 12px);
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: 8px;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+                """;
+        }
+    }
+
     /** A dropdown in a control row. */
     public record kr_select() implements CssClass<ReadingCss> {
         @Override public String body() { return """
                 font: inherit;
                 font-size: 12px;
                 padding: 2px 6px;
+                color: var(--color-text-primary);
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: 3px;
+                """;
+        }
+    }
+
+    /**
+     * The claim, as a two-value picker inside a grid cell.
+     *
+     * <p>Fills its cell, because the cell's width is fixed and a control that
+     * did not fill it would leave the column looking mis-sized rather than
+     * deliberately sized.</p>
+     */
+    public record kr_kn_pick() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font: inherit;
+                font-size: 12px;
+                width: 100%;
+                box-sizing: border-box;
+                padding: 2px 4px;
                 color: var(--color-text-primary);
                 background: var(--color-surface);
                 border: 1px solid var(--color-border);
@@ -386,6 +456,26 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
                 font-size: 18px;
                 font-weight: 600;
                 color: var(--color-text-primary);
+                margin-bottom: var(--space-2, 8px);
+                """;
+        }
+    }
+
+    /**
+     * What a reading means, under the reading itself.
+     *
+     * <p>Set below the sound rather than beside it. A reading and its meaning
+     * are two different kinds of answer, and running them together on one line
+     * makes the pinyin harder to find — which is the thing a reader came for
+     * first. Quieter than the reading, and quiet enough that a character with
+     * no gloss looks like a character with nothing to add rather than like a
+     * pane that failed to load.</p>
+     */
+    public record kr_reading_meaning() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-size: 14px;
+                line-height: 1.4;
+                color: var(--color-text-secondary, #555);
                 margin-bottom: var(--space-2, 8px);
                 """;
         }
@@ -686,12 +776,111 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
         }
     }
 
+    /** One reading, with its own toggle — the reading left, the claim right. */
+    public record kr_kn_line() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 6px 0;
+                border-bottom: 1px solid var(--color-border);
+                """;
+        }
+    }
+
+    /**
+     * Everything said about one reading, stacked, left of its button.
+     *
+     * <p>{@code min-width: 0} because a flex child will not shrink below its
+     * content by default, and a long gloss would otherwise push the button off
+     * the edge of a narrow pane rather than wrapping.</p>
+     */
+    public record kr_kn_claim() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+                """;
+        }
+    }
+
+    /**
+     * A toggle that is currently claimed.
+     *
+     * <p>Filled rather than outlined, because the question the pane answers at
+     * a glance is which readings are already in — and an outline reads as an
+     * offer, not a fact.</p>
+     */
+    public record kr_kn_on() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                color: var(--color-surface);
+                background: var(--color-text-primary);
+                border-color: var(--color-text-primary);
+                """;
+        }
+    }
+
+    /**
+     * A control the page drives rather than the person — the download anchor
+     * and the file picker, both clicked from a button that says what it does.
+     */
+    public record kr_kn_hidden() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: none;
+                """;
+        }
+    }
+
+    /**
+     * The exported record, shown so it can be read and selected by hand.
+     *
+     * <p>Monospaced and tall enough to see that something real came out —
+     * a copy that reports success and produced nothing is worse than one that
+     * fails loudly.</p>
+     */
+    public record kr_kn_text() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+                height: 120px;
+                margin: 8px 0;
+                padding: 8px;
+                font-family: ui-monospace, monospace;
+                font-size: 12px;
+                line-height: 1.5;
+                color: var(--color-text-primary);
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: 3px;
+                """;
+        }
+    }
+
+    /** The count line above the viewer's grid. */
+    public record kr_kn_tally() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-size: 12px;
+                color: var(--color-text-secondary);
+                margin-left: auto;
+                align-self: center;
+                """;
+        }
+    }
+
     @Override
     public List<CssClass<ReadingCss>> cssClasses() {
         return List.of(
                 new kr_widget_root(),
                 new kr_bar(),
                 new kr_btn(),
+                new kr_kn_line(),
+                new kr_kn_claim(),
+                new kr_kn_on(),
+                new kr_kn_tally(),
+                new kr_kn_hidden(),
+                new kr_kn_text(),
                 new kr_grid_host(),
                 new kr_card(),
                 new kr_badge(),
@@ -714,12 +903,16 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
                 new kr_font_kai(),
                 new kr_font_fangsong(),
                 new kr_control(),
+                new kr_rd_head(),
+                new kr_rd_settings(),
                 new kr_select(),
+                new kr_kn_pick(),
                 new kr_zi_hero(),
                 new kr_zi_hero_glyph(),
                 new kr_zi_hero_meta(),
                 new kr_reading_row(),
                 new kr_reading_name(),
+                new kr_reading_meaning(),
                 new kr_reading_parts(),
                 new kr_read_title(),
                 new kr_read_verse(),
@@ -744,8 +937,10 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
                 new kr_gr_ann(),
                 new kr_gr_zi(),
                 new kr_gr_grid(),
+                new kr_gr_known(),
                 new kr_gr_host(),
-                new kr_gr_ruled());
+                new kr_gr_ruled(),
+                new kr_gr_quiet());
     }
 
     // ── The grid reader's square ───────────────────────────────────────
@@ -754,9 +949,17 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
     // cell is a div the grid owns, not a td we made, and the spike must not
     // be able to perturb the reader that works.
 
-    /** One square: annotation stacked over the character. */
+    /**
+     * One square: annotation stacked over the character.
+     *
+     * <p>{@code position: relative} because the mastery mark hangs off it. The
+     * mark cannot live inside the character box: that box has its textContent
+     * rewritten on every repaint, and assigning textContent replaces every
+     * child.</p>
+     */
     public record kr_gr_cell() implements CssClass<ReadingCss> {
         @Override public String body() { return """
+                position: relative;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -813,6 +1016,36 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
     }
 
     /**
+     * Silences the grid substrate's own cell chrome.
+     *
+     * <p>RelationGrid draws a hairline on the bottom and right of every
+     * {@code td}. That is right for a data table and wrong for a page of
+     * squares: the ruling here belongs to the exercise book and is drawn on the
+     * character box by {@link kr_gr_grid}, so the grid's own lines sit
+     * underneath it as a second set that no control turns off.</p>
+     *
+     * <p>{@code border-color: transparent} rather than {@code border: none},
+     * because those hairlines occupy space — removing them would shift every
+     * square, and the reader's rule is that toggling a setting never moves
+     * anything.</p>
+     *
+     * <p><b>{@code !important} is load-bearing here, not laziness.</b> The grid
+     * injects its stylesheet <em>unlayered</em> from {@code GridLayoutModule},
+     * and an unlayered normal declaration outranks every layer — so this rule,
+     * which lands in {@code @layer component}, loses on the cascade no matter
+     * how specific it is. Raising importance is the only lever a layer has
+     * against unlayered CSS. The grid offers no option for this: the border is
+     * hardcoded and so is {@code td.className}.</p>
+     */
+    public record kr_gr_quiet() implements CssClass<ReadingCss> {
+        @Override public String pseudoState() { return " .hgr-td"; }
+        @Override public String body() { return """
+                border-color: transparent !important;
+                """;
+        }
+    }
+
+    /**
      * The board outline, drawn only when the practice grid is on.
      *
      * <p>Separate from {@link kr_gr_host} because the outline is part of the
@@ -822,6 +1055,49 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
     public record kr_gr_ruled() implements CssClass<ReadingCss> {
         @Override public String body() { return """
                 border: 1px solid var(--color-border);
+                """;
+        }
+    }
+
+    /**
+     * The mastery mark: this reading is already claimed.
+     *
+     * <p>A green tick. It began as a small accent dot, on the reasoning that a
+     * mark competing with the character makes the page harder to read — true in
+     * principle, and in practice the dot was so quiet that the one moment worth
+     * celebrating did not register at all. A tick is read as <em>done</em>
+     * without having to be learnt, and green says it in a way no amount of
+     * accent colour does.</p>
+     *
+     * <p>Its own font, not the reader's. The character box may be set in Kaiti
+     * or Fangsong, and a tick rendered from a calligraphic CJK face is a
+     * different shape on every typeface the picker offers.</p>
+     *
+     * <p>The halo is {@code --color-surface}, so the tick stays legible where
+     * it overlaps a dense character's strokes and does so in whichever theme is
+     * running. The green is a token with a fallback: no theme defines
+     * {@code --color-success} yet, and when one does it should win.</p>
+     *
+     * <p>Absolutely positioned, so appearing and disappearing cannot move a
+     * square. That is the same rule the annotation follows: earning a mark must
+     * never shift the page under the child who earned it.</p>
+     *
+     * <p>Bottom-right, where the practice-book rule is quietest and where a
+     * character's own strokes are least likely to reach.</p>
+     */
+    public record kr_gr_known() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                position: absolute;
+                right: 3px;
+                bottom: 1px;
+                font-family: system-ui, sans-serif;
+                font-size: 13px;
+                font-weight: 700;
+                line-height: 1;
+                color: var(--color-success, #2f9e44);
+                text-shadow: 0 0 2px var(--color-surface),
+                             0 0 2px var(--color-surface);
+                pointer-events: none;
                 """;
         }
     }

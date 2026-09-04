@@ -7,6 +7,7 @@ import hue.captains.singapura.js.homing.grid.StockCellsModule;
 import hue.captains.singapura.js.homing.workspace.LifecycleHint;
 import hue.captains.singapura.js.homing.workspace.WorkspaceWidget;
 import kranji.reading.app.css.ReadingCss;
+import kranji.reading.app.ui.PinyinSwfModule;
 
 import java.util.List;
 
@@ -60,7 +61,10 @@ public final class PhonicSourceWidget
                         new ReadingCss.kr_bar(),
                         new ReadingCss.kr_btn(),
                         new ReadingCss.kr_grid_host()),
-                        ReadingCss.INSTANCE));
+                        ReadingCss.INSTANCE),
+                new ModuleImports<>(
+                        List.of(new PinyinSwfModule.createPinyinSwf()),
+                        PinyinSwfModule.INSTANCE));
     }
 
     @Override
@@ -87,6 +91,19 @@ public final class PhonicSourceWidget
                 "    var owner = Object.freeze({ toString: function(){ return 'phonicSource'; } });",
                 "    var grid = null;",
                 "    var seq = 0;",
+                "    var swf = createPinyinSwf();",
+                "",
+                "    // The display boundary. The readings the corpus parse produced are",
+                "    // carried canonically and shown as pinyin; 'mandarin' and 'evidence'",
+                "    // quote the source file verbatim and are not ours to rewrite.",
+                "    function shown(col, v) {",
+                "        if (col === 'principal') return swf.toSWF(v);",
+                "        if (col === 'alternates') {",
+                "            return String(v || '').split(' ').filter(Boolean)",
+                "                   .map(function (s) { return swf.toSWF(s); }).join(' ');",
+                "        }",
+                "        return v;",
+                "    }",
                 "",
                 "    // The grid owns its cell elements, so its branch is dissolved and",
                 "    // remade on every load - a branch registers names, and reusing one",
@@ -107,7 +124,7 @@ public final class PhonicSourceWidget
                 "            pks:     function () { return order.slice(); },",
                 "            columns: function () { return columns.slice(); },",
                 "            get:     function (pk, col) {",
-                "                         return byPk[pk] ? byPk[pk][col] : undefined; },",
+                "                         return byPk[pk] ? shown(col, byPk[pk][col]) : undefined; },",
                 "            subscribe:   function (fn) { subs.push(fn); },",
                 "            unsubscribe: function (fn) {",
                 "                         var i = subs.indexOf(fn);",

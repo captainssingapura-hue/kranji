@@ -52,8 +52,8 @@ class PhonicSourceGetActionTest {
 
         assertTrue(js.contains("pk: \"U+597D\""), "addressed by codepoint, not by reading");
         assertTrue(js.contains("glyph: \"好\""));
-        assertTrue(js.contains("principal: \"hǎo\""));
-        assertTrue(js.contains("alternates: \"hào\""));
+        assertTrue(js.contains("principal: \"hao3\""));
+        assertTrue(js.contains("alternates: \"hao4\""));
         assertTrue(js.contains("readings: 2"));
     }
 
@@ -63,7 +63,7 @@ class PhonicSourceGetActionTest {
     void thePrincipalReadingIsDecomposedIntoItsFiveParts() {
         String js = PhonicSourceGetAction.moduleFor("h");
         assertTrue(row(js, "U+9EC4").contains(
-                "principal: \"huáng\", initial: \"h\", medial: \"u\", "
+                "principal: \"huang2\", initial: \"h\", medial: \"u\", "
               + "nucleus: \"a\", coda: \"ng\", tone: 2"),
                 "声母 韵头 韵腹 韵尾 声调, all four parts present");
     }

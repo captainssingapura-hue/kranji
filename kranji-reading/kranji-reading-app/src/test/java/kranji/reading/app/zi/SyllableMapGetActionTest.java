@@ -126,8 +126,8 @@ class SyllableMapGetActionTest {
 
         Matcher m = Pattern.compile("(?m)^  " + cp + ":\\[([^\\]]*)\\]").matcher(js);
         assertTrue(m.find(), "好 should be in the partition its hash names");
-        assertEquals("\"h\u01ceo\",\"h\u00e0o\"", m.group(1),
-                "the readings themselves, principal first, with no indirection");
+        assertEquals("\"hao3\",\"hao4\"", m.group(1),
+                "the canonical readings, principal first, with no indirection");
     }
 
     // ── Unknown input ──────────────────────────────────────────────────

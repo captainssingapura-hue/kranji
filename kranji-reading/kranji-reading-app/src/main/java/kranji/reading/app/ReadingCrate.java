@@ -11,16 +11,28 @@ import kranji.reading.app.read.ArticleReaderWidget;
 import kranji.reading.app.read.ArticleReadingsModule;
 import kranji.reading.app.read.ReaderCellStyleModule;
 import kranji.reading.app.read.ArticleSelectionSecretaryModule;
+import kranji.reading.app.known.KnownSecretaryModule;
+import kranji.reading.app.known.KnownZiWidget;
+import kranji.reading.app.known.KnownSetModule;
+import kranji.reading.app.known.KnownWatchModule;
+import kranji.reading.app.known.KnownStoreModule;
+import kranji.reading.app.known.KnownPersistenceModule;
+import kranji.reading.app.known.KnownImportControlsModule;
+import kranji.reading.app.known.KnownTransferModule;
+import kranji.reading.app.known.KnownTransferWidget;
 import kranji.reading.app.read.ArticleScannerModule;
+import kranji.reading.app.read.ReadabilityModule;
 import kranji.reading.app.read.ArticleBoardModule;
 import kranji.reading.app.ui.GlyphMetricsModule;
 import kranji.reading.app.ui.ReaderControlsModule;
 import kranji.reading.app.ui.TextBandsModule;
+import kranji.reading.app.ui.PinyinSwfModule;
 import kranji.reading.app.ui.TypefacePickerModule;
 import kranji.reading.app.zi.SyllableDetailWidget;
 import kranji.reading.app.zi.SyllableTreeWidget;
 import kranji.reading.app.zi.ZiCharactersWidget;
 import kranji.reading.app.zi.ZiDetailWidget;
+import kranji.reading.app.zi.ZiReadingsGridModule;
 import kranji.reading.app.zi.ZiSelectionSecretaryModule;
 
 import java.util.List;
@@ -50,17 +62,29 @@ public final class ReadingCrate implements Crate {
                 CrateEntry.of(SyllableTreeWidget.INSTANCE),
                 CrateEntry.of(SyllableDetailWidget.INSTANCE),
                 CrateEntry.of(ZiCharactersWidget.INSTANCE),
+                CrateEntry.of(ZiReadingsGridModule.INSTANCE),
                 CrateEntry.of(ZiDetailWidget.INSTANCE),
                 CrateEntry.of(ZiSelectionSecretaryModule.INSTANCE),
                 CrateEntry.of(PhonicSourceWidget.INSTANCE),
                 CrateEntry.of(ArticleReaderWidget.INSTANCE),
                 CrateEntry.of(ArticleScannerModule.INSTANCE),
+                CrateEntry.of(ReadabilityModule.INSTANCE),
+                CrateEntry.of(KnownSetModule.INSTANCE),
+                CrateEntry.of(KnownStoreModule.INSTANCE),
+                CrateEntry.of(KnownTransferModule.INSTANCE),
+                CrateEntry.of(KnownImportControlsModule.INSTANCE),
+                CrateEntry.of(KnownPersistenceModule.INSTANCE),
+                CrateEntry.of(KnownWatchModule.INSTANCE),
+                CrateEntry.of(KnownSecretaryModule.INSTANCE),
+                CrateEntry.of(KnownZiWidget.INSTANCE),
+                CrateEntry.of(KnownTransferWidget.INSTANCE),
                 CrateEntry.of(ArticleBoardModule.INSTANCE),
                 CrateEntry.of(ArticleReadingsModule.INSTANCE),
                 CrateEntry.of(ReaderCellStyleModule.INSTANCE),
                 CrateEntry.of(ArticleCatalogueWidget.INSTANCE),
                 CrateEntry.of(ArticleSelectionSecretaryModule.INSTANCE),
                 CrateEntry.of(TypefacePickerModule.INSTANCE),
+                CrateEntry.of(PinyinSwfModule.INSTANCE),
                 CrateEntry.of(GlyphMetricsModule.INSTANCE),
                 CrateEntry.of(TextBandsModule.INSTANCE),
                 CrateEntry.of(ReaderControlsModule.INSTANCE)

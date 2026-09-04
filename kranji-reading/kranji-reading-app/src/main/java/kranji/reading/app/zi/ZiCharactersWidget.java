@@ -5,6 +5,7 @@ import hue.captains.singapura.js.homing.core.ModuleImports;
 import hue.captains.singapura.js.homing.workspace.LifecycleHint;
 import hue.captains.singapura.js.homing.workspace.WorkspaceWidget;
 import kranji.reading.app.css.ReadingCss;
+import kranji.reading.app.ui.PinyinSwfModule;
 import kranji.reading.app.ui.TypefacePickerModule;
 
 import java.util.List;
@@ -72,12 +73,17 @@ public final class ZiCharactersWidget extends WorkspaceWidget<WorkspaceWidget._N
                         ReadingCss.INSTANCE),
                 new ModuleImports<>(
                         List.of(new TypefacePickerModule.createTypefacePicker()),
-                        TypefacePickerModule.INSTANCE));
+                        TypefacePickerModule.INSTANCE),
+                new ModuleImports<>(
+                        List.of(new PinyinSwfModule.createPinyinSwf()),
+                        PinyinSwfModule.INSTANCE));
     }
 
     @Override
     protected List<String> constructBodyJs() {
         return List.of(
+                "    var swf = createPinyinSwf();",
+                "",
                 "    var root = branch.createElement('root', 'div');",
                 "    css.setClass(root, kr_widget_root);",
                 "",
@@ -165,7 +171,7 @@ public final class ZiCharactersWidget extends WorkspaceWidget<WorkspaceWidget._N
                 "        // the row stays even and the page reads as one thing.",
                 "        var r = cards.createElement('r' + idx, 'div');",
                 "        css.setClass(r, kr_zi_readings);",
-                "        r.textContent = syllable;",
+                "        r.textContent = swf.toSWF(syllable);",
                 "        box.appendChild(r);",
                 "",
                 "        // Extra readings become a corner mark rather than another line:",
@@ -177,8 +183,8 @@ public final class ZiCharactersWidget extends WorkspaceWidget<WorkspaceWidget._N
                 "            css.setClass(m, entry.readHereByDefault ? kr_zi_mark : kr_zi_mark_alt);",
                 "            m.textContent = '+' + others;",
                 "            m.title = entry.readHereByDefault",
-                "                ? 'Also read ' + entry.readings.slice(1).join(', ')",
-                "                : 'Usually read ' + entry.readings[0];",
+                "                ? 'Also read ' + entry.readings.slice(1).map(function (x) { return swf.toSWF(x); }).join(', ')",
+                "                : 'Usually read ' + swf.toSWF(entry.readings[0]);",
                 "            box.appendChild(m);",
                 "        }",
                 "        // A card is now a way in to the character itself. The pane does",

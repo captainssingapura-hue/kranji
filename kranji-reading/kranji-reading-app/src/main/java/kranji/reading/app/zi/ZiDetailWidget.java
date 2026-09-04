@@ -2,24 +2,61 @@ package kranji.reading.app.zi;
 
 import hue.captains.singapura.js.homing.core.Importable;
 import hue.captains.singapura.js.homing.core.ModuleImports;
+import hue.captains.singapura.js.homing.grid.RelationGridModule;
+import hue.captains.singapura.js.homing.grid.StockCellsModule;
 import hue.captains.singapura.js.homing.workspace.LifecycleHint;
 import hue.captains.singapura.js.homing.workspace.WorkspaceWidget;
 import kranji.reading.app.css.ReadingCss;
+import kranji.reading.app.known.KnownPersistenceModule;
+import kranji.reading.app.known.KnownSetModule;
+import kranji.reading.app.known.KnownStoreModule;
+import kranji.reading.app.ui.PinyinSwfModule;
 
 import java.util.List;
 
 /**
- * One character, in full.
+ * One character, in full — and where its readings are claimed.
  *
- * <p>Joins the character-selection Party rather than the navigator: it reacts
- * to {@code ShowZi}, which carries a codepoint, and never to {@code NavigateTo},
- * which carries a tree path. Clicking a card in the Characters pane is what
- * produces the selection; this pane never names its producer.</p>
+ * <h2>Two panes that were the same pane</h2>
  *
- * <p>Shows every reading the character has, each decomposed into the five
- * parts of a syllable, with the corpus evidence beside it. The point of the
- * pane is that a polyphonic character stops being a footnote on a card and
- * becomes the subject.</p>
+ * <p>This absorbed Mark Known, which had grown into a near-copy of it: the same
+ * hero, the same list of readings, the same meaning under each. The two
+ * differed by one control. Keeping them apart meant a child looked at a
+ * character in one pane and claimed it in another, and every field shown in
+ * both had to be kept in step by hand.</p>
+ *
+ * <p>The merge is not just a paste. The reading list became a
+ * {@link ZiReadingsGridModule} grid whose rows are (character, reading) pairs —
+ * the key the whole system is grained on — with the claim as a cell. So the row
+ * a person reads and the row they act on are the same row, which is what the
+ * two panes could never quite manage between them.</p>
+ *
+ * <h2>Everything about a reading is in its row</h2>
+ *
+ * <p>The claim, the sound, the meaning, the five parts of the syllable, and how
+ * many other characters share it. The parts were chips under the grid that
+ * followed the cursor; as columns they can be compared, and two readings of one
+ * character that differ only in the tone now say so at a glance — which is the
+ * thing a strip showing one at a time could never do.</p>
+ *
+ * <p>There is no count of how often the corpus uses a reading. It decided
+ * nothing a reader does, and it cost the meaning the width it needed.</p>
+ *
+ * <h2>The claim is a picker, not a button</h2>
+ *
+ * <p>Two values in one cell, so the same control both claims a reading and
+ * gives it back. A button could only have gone one way: in a grid the cursor
+ * lands on rows by arrow key and by stray click, and a press that destroyed a
+ * deliberate claim would be one keystroke from wherever it happened to be.
+ * Choosing from a picker costs two acts and only the second fires, which is
+ * what lets the destructive direction live in a cell at all.</p>
+ *
+ * <p>Every column except the meaning is fixed width. Their content is bounded
+ * and the meaning's is not, so the meaning takes what is left and the control a
+ * person aims at stops moving between characters.</p>
+ *
+ * <p>It joins two buses. Character selection says what to show; the known set
+ * says what is already claimed and receives the claims made here.</p>
  *
  * <p>No CJK appears in this file. Characters arrive from the corpus.</p>
  */
@@ -39,24 +76,46 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
     @Override
     protected List<ModuleImports<? extends Importable>> bodyImports() {
         return List.of(
+                new ModuleImports<>(
+                        List.of(new RelationGridModule.RelationGrid()),
+                        RelationGridModule.INSTANCE),
+                new ModuleImports<>(
+                        List.of(new StockCellsModule.TextCell()),
+                        StockCellsModule.INSTANCE),
                 new ModuleImports<>(List.of(
                         new ReadingCss.kr_widget_root(),
                         new ReadingCss.kr_status(),
-                        new ReadingCss.kr_badge(),
                         new ReadingCss.kr_zi_hero(),
                         new ReadingCss.kr_zi_hero_glyph(),
                         new ReadingCss.kr_zi_hero_meta(),
-                        new ReadingCss.kr_reading_row(),
-                        new ReadingCss.kr_reading_name(),
-                        new ReadingCss.kr_reading_parts(),
-                        new ReadingCss.kr_part(),
+                        new ReadingCss.kr_kn_pick(),
+                        new ReadingCss.kr_kn_tally(),
+                        new ReadingCss.kr_grid_host(),
                         new ReadingCss.kr_font_kai()),
-                        ReadingCss.INSTANCE));
+                        ReadingCss.INSTANCE),
+                new ModuleImports<>(
+                        List.of(new ZiReadingsGridModule.createZiReadingsGrid()),
+                        ZiReadingsGridModule.INSTANCE),
+                new ModuleImports<>(
+                        List.of(new KnownSetModule.createKnownSet()),
+                        KnownSetModule.INSTANCE),
+                new ModuleImports<>(
+                        List.of(new KnownStoreModule.createKnownStore()),
+                        KnownStoreModule.INSTANCE),
+                new ModuleImports<>(
+                        List.of(new KnownPersistenceModule.createKnownPersistence()),
+                        KnownPersistenceModule.INSTANCE),
+                new ModuleImports<>(
+                        List.of(new PinyinSwfModule.createPinyinSwf()),
+                        PinyinSwfModule.INSTANCE));
     }
 
     @Override
     protected List<String> constructBodyJs() {
         return List.of(
+                "    var knownSet = createKnownSet();",
+                "    var swf = createPinyinSwf();",
+                "",
                 "    var root = branch.createElement('root', 'div');",
                 "    css.setClass(root, kr_widget_root);",
                 "",
@@ -65,91 +124,98 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "    status.textContent = 'Click a character to see it here.';",
                 "    root.appendChild(status);",
                 "",
-                "    var body = branch.createElement('body', 'div');",
-                "    root.appendChild(body);",
+                "    // The hero is rebuilt per character rather than cleared. Emptying an",
+                "    // element is a wholesale wipe; dissolving the branch that made it is",
+                "    // how this codebase takes DOM away.",
+                "    var heroHost = branch.createElement('heroHost', 'div');",
+                "    root.appendChild(heroHost);",
+                "",
+                "    var host = branch.createElement('host', 'div');",
+                "    css.setClass(host, kr_grid_host);",
+                "    root.appendChild(host);",
+                "",
+                "    var tally = branch.createElement('tally', 'div');",
+                "    css.setClass(tally, kr_kn_tally);",
+                "    root.appendChild(tally);",
                 "",
                 "    var owner = Object.freeze({ toString: function () { return 'ziDetail'; } });",
                 "    var __seq = 0;",
+                "    var __known = [];",
+                "    var __lastImport = [];",
+                "    var __storeProblem = false;",
                 "",
-                "    function clearBody() {",
-                "        if (branch.getBranch('detail')) branch.dissolveBranch('detail');",
-                "    }",
+                "    // ── The record ────────────────────────────────────────────",
                 "",
-                "    function readingRow(db, idx, r) {",
-                "        var row = db.createElement('r' + idx, 'div');",
-                "        css.setClass(row, kr_reading_row);",
+                "    var __knownParty = (workspaceCtx && workspaceCtx.knownParty)",
+                "                     ? workspaceCtx.knownParty : null;",
+                "    var __knownActorId = null;",
                 "",
-                "        var name = db.createElement('n' + idx, 'div');",
-                "        css.setClass(name, kr_reading_name);",
-                "        name.textContent = r.reading + (r.principal ? '' : '  (also)');",
-                "        row.appendChild(name);",
-                "",
-                "        var parts = db.createElement('p' + idx, 'div');",
-                "        css.setClass(parts, kr_reading_parts);",
-                "        row.appendChild(parts);",
-                "",
-                "        // The five parts a syllable is made of, each as its own chip.",
-                "        var spec = [['initial', r.initial], ['medial', r.medial],",
-                "                    ['nucleus', r.nucleus], ['coda', r.coda],",
-                "                    ['tone', String(r.tone)]];",
-                "        for (var i = 0; i < spec.length; i++) {",
-                "            var chip = db.createElement('c' + idx + '_' + i, 'span');",
-                "            css.setClass(chip, kr_part);",
-                "            chip.textContent = spec[i][0] + ' ' + spec[i][1];",
-                "            parts.appendChild(chip);",
+                "    function tellKnown(msg) {",
+                "        if (__knownParty && __knownActorId) {",
+                "            __knownParty.tellFrom(__knownActorId, msg);",
                 "        }",
-                "",
-                "        var note = db.createElement('t' + idx, 'div');",
-                "        css.setClass(note, kr_status);",
-                "        var bits = [];",
-                "        if (r.homophones > 0) bits.push(r.homophones + ' other characters read this way');",
-                "        if (r.observed > 0) bits.push('observed ' + r.observed + ' times');",
-                "        note.textContent = bits.join(' \\u00b7 ');",
-                "        row.appendChild(note);",
-                "        return row;",
                 "    }",
+                "",
+                "    function paintTally() {",
+                "        var readings = __known.length;",
+                "        var chars = knownSet.characters(__known).length;",
+                "        var count = readings === 0 ? 'Nothing marked yet'",
+                "            : chars + (chars === 1 ? ' character' : ' characters')",
+                "              + ', ' + readings + (readings === 1 ? ' reading' : ' readings');",
+                "        // A failure to save is the one thing a person must be told about",
+                "        // unprompted: marking looks identical either way, and what is",
+                "        // lost is only discovered on the next visit.",
+                "        tally.textContent = __storeProblem",
+                "            ? count + ' \\u00b7 NOT SAVED on this device' : count;",
+                "    }",
+                "",
+                "    // ── The grid ──────────────────────────────────────────────",
+                "",
+                "    var readings = createZiReadingsGrid({",
+                "        branch: branch, css: css, host: host, owner: owner,",
+                "        RelationGrid: RelationGrid, TextCell: TextCell,",
+                "        pickClass: kr_kn_pick,",
+                "        swf: swf,",
+                "        isKnown: function (key) { return __known.indexOf(key) >= 0; },",
+                "        onMark:   function (key) { tellKnown({ kind: 'MarkKnown',   key: key }); },",
+                "        onUnmark: function (key) { tellKnown({ kind: 'UnmarkKnown', key: key }); },",
+                "    });",
+                "",
+                "    // ── The character ─────────────────────────────────────────",
                 "",
                 "    function render(mod, seq) {",
                 "        if (seq !== __seq) return;",
-                "        clearBody();",
+                "        if (branch.getBranch('hero')) branch.dissolveBranch('hero');",
                 "        if (!mod.glyph) {",
+                "            readings.show(0, []);",
                 "            status.textContent = mod.problem ? 'Nothing here: ' + mod.problem",
                 "                                            : 'No such character.';",
                 "            return;",
                 "        }",
-                "        var db = branch.createBranch('detail');",
-                "        db.activate(owner);",
                 "",
-                "        var hero = db.createElement('hero', 'div');",
+                "        var hb = branch.createBranch('hero');",
+                "        hb.activate(owner);",
+                "        var hero = hb.createElement('hero', 'div');",
                 "        css.setClass(hero, kr_zi_hero);",
+                "        heroHost.appendChild(hero);",
                 "",
-                "        var g = db.createElement('glyph', 'div');",
-                "        css.setClass(g, kr_zi_hero_glyph, kr_font_kai);",
-                "        g.textContent = mod.glyph;",
-                "        hero.appendChild(g);",
+                "        var glyph = hb.createElement('glyph', 'div');",
+                "        css.setClass(glyph, kr_zi_hero_glyph, kr_font_kai);",
+                "        glyph.textContent = mod.glyph;",
+                "        hero.appendChild(glyph);",
                 "",
-                "        var meta = db.createElement('meta', 'div');",
+                "        var meta = hb.createElement('meta', 'div');",
                 "        css.setClass(meta, kr_zi_hero_meta);",
                 "        meta.textContent = mod.codePoint",
                 "            + (mod.supplementary ? '  (outside the BMP)' : '')",
-                "            + '  \\u00b7  principally ' + mod.principal;",
+                "            + '  \\u00b7  principally ' + mod.principal",
+                "            + (mod.unmodelled ? '  \\u00b7  not modelled: ' + mod.unmodelled : '');",
                 "        hero.appendChild(meta);",
-                "        body.appendChild(hero);",
                 "",
                 "        status.textContent = mod.polyphonic",
-                "            ? 'Read ' + mod.readings.length + ' ways.'",
+                "            ? 'Read ' + mod.readings.length + ' ways \\u2014 mark each on its own.'",
                 "            : 'One reading.';",
-                "",
-                "        for (var i = 0; i < mod.readings.length; i++) {",
-                "            body.appendChild(readingRow(db, i, mod.readings[i]));",
-                "        }",
-                "",
-                "        if (mod.unmodelled) {",
-                "            var u = db.createElement('unmodelled', 'div');",
-                "            css.setClass(u, kr_status);",
-                "            u.textContent = 'Not modelled here: ' + mod.unmodelled;",
-                "            body.appendChild(u);",
-                "        }",
+                "        readings.show(mod.glyph.codePointAt(0), mod.readings);",
                 "    }",
                 "",
                 "    function load(codePoint) {",
@@ -160,11 +226,12 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "            .then(function (mod) { render(mod, seq); })",
                 "            .catch(function (err) {",
                 "                if (seq !== __seq) return;",
-                "                clearBody();",
                 "                status.textContent = 'Could not load ' + codePoint + ': '",
                 "                    + (err && err.message ? err.message : String(err));",
                 "            });",
                 "    }",
+                "",
+                "    // ── Joining ───────────────────────────────────────────────",
                 "",
                 "    var __actorId = null;",
                 "    var __ziParty = (workspaceCtx && workspaceCtx.ziParty)",
@@ -182,6 +249,40 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "        });",
                 "    }",
                 "",
+                "    if (__knownParty) {",
+                "        __knownActorId = 'known/zi-' + Math.random().toString(36).slice(2, 8);",
+                "        __knownParty.joinActor({",
+                "            id: __knownActorId,",
+                "            parentSecretary: 'knownSet',",
+                "            reactors: {",
+                "                KnownChanged: function (msg) {",
+                "                    __known = (msg && msg.known) ? msg.known : [];",
+                "                    __lastImport = (msg && msg.lastImport) ? msg.lastImport : [];",
+                "                    store.changed(__known, __lastImport);",
+                "                    // The cells read isKnown() as they paint, so the grid is",
+                "                    // redrawn rather than told which row moved. Four rows at",
+                "                    // most - the bookkeeping would cost more than the redraw.",
+                "                    readings.refresh();",
+                "                    paintTally();",
+                "                }",
+                "            }",
+                "        });",
+                "    }",
+                "",
+                "    // This pane writes, so it persists. The order rule - never write",
+                "    // before the device has answered - lives in the persistence module.",
+                "    var store = createKnownPersistence({",
+                "        store: createKnownStore(),",
+                "        tell: function (msg) { tellKnown(msg); },",
+                "        onProblem: function (broken) { __storeProblem = broken; paintTally(); }",
+                "    });",
+                "    if (__knownParty) {",
+                "        tellKnown({ kind: 'WhatIsKnown' });",
+                "        store.start();",
+                "    }",
+                "",
+                "    paintTally();",
+                "",
                 "    return {",
                 "        root: root,",
                 "        setActive: function (active) {},",
@@ -189,7 +290,11 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "            if (__actorId && __ziParty) {",
                 "                try { __ziParty.leave(__actorId); } catch (e) {}",
                 "            }",
-                "        }",
+                "            if (__knownActorId && __knownParty) {",
+                "                try { __knownParty.leave(__knownActorId); } catch (e) {}",
+                "            }",
+                "        },",
+                "        dispose: function () { __seq++; readings.destroy(); }",
                 "    };");
     }
 }

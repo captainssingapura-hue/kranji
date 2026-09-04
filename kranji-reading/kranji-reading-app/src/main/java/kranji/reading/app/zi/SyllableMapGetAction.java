@@ -126,7 +126,7 @@ public final class SyllableMapGetAction
             js.append("  ").append(cp).append(":[");
             List<PinyinSyllable> rs = row.all();
             for (int k = 0; k < rs.size(); k++) {
-                js.append(k > 0 ? "," : "").append(quote(rs.get(k).toDiacritic()));
+                js.append(k > 0 ? "," : "").append(quote(rs.get(k).numbered()));
             }
             js.append(']');
         }

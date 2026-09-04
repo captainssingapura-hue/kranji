@@ -6,6 +6,7 @@ import hue.captains.singapura.js.homing.core.ExportsOf;
 import hue.captains.singapura.js.homing.core.ImportsFor;
 import hue.captains.singapura.js.homing.core.ModuleImports;
 import kranji.reading.app.css.ReadingCss;
+import kranji.reading.app.ui.PinyinSwfModule;
 
 import java.util.List;
 
@@ -31,17 +32,17 @@ public record ArticleBoardModule() implements DomModule<ArticleBoardModule> {
     /** The cell factory for {@code RelationGrid}'s {@code cellFactory}. */
     public record createArticleCell() implements Exportable._Constant<ArticleBoardModule> {}
 
-    /** A Relation over one paragraph: rows are wrapped lines. */
-    public record createParagraphRelation() implements Exportable._Constant<ArticleBoardModule> {}
-
-    /** A Relation over one verse: rows are the lines the author wrote. */
-    public record createVerseRelation() implements Exportable._Constant<ArticleBoardModule> {}
+    /** A Relation over the article: one row per display line. */
+    public record createLineRelation() implements Exportable._Constant<ArticleBoardModule> {}
 
     /** Repaints every square without rebuilding, for a control change. */
     public record repaintGrid() implements Exportable._Constant<ArticleBoardModule> {}
 
-    /** Builds one grid per block and appends it to the body. */
-    public record buildArticleBoards() implements Exportable._Constant<ArticleBoardModule> {}
+    /** The article as display lines, in reading order. */
+    public record articleLines() implements Exportable._Constant<ArticleBoardModule> {}
+
+    /** Builds the article as one board and appends it to the body. */
+    public record buildArticleBoard() implements Exportable._Constant<ArticleBoardModule> {}
 
     public static final ArticleBoardModule INSTANCE = new ArticleBoardModule();
 
@@ -57,6 +58,9 @@ public record ArticleBoardModule() implements DomModule<ArticleBoardModule> {
                         new hue.captains.singapura.js.homing.grid.RelationGridModule.RelationGrid()),
                         hue.captains.singapura.js.homing.grid.RelationGridModule.INSTANCE))
                 .add(new ModuleImports<>(List.of(
+                        new PinyinSwfModule.createPinyinSwf()),
+                        PinyinSwfModule.INSTANCE))
+                .add(new ModuleImports<>(List.of(
                         new ReadingCss.kr_gr_cell(),
                         new ReadingCss.kr_gr_ann(),
                         new ReadingCss.kr_gr_zi(),
@@ -65,6 +69,7 @@ public record ArticleBoardModule() implements DomModule<ArticleBoardModule> {
                         new ReadingCss.kr_read_punct_lead(),
                         new ReadingCss.kr_gr_host(),
                         new ReadingCss.kr_gr_ruled(),
+                        new ReadingCss.kr_gr_known(),
                         new ReadingCss.kr_read_hidden()),
                         ReadingCss.INSTANCE))
                 .build();
@@ -73,8 +78,8 @@ public record ArticleBoardModule() implements DomModule<ArticleBoardModule> {
     @Override
     public ExportsOf<ArticleBoardModule> exports() {
         return new ExportsOf<>(INSTANCE,
-                List.of(new createArticleCell(), new createParagraphRelation(),
-                        new createVerseRelation(), new repaintGrid(),
-                        new buildArticleBoards()));
+                List.of(new createArticleCell(), new createLineRelation(),
+                        new repaintGrid(), new articleLines(),
+                        new buildArticleBoard()));
     }
 }

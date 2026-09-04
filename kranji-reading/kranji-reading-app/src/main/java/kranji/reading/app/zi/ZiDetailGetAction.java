@@ -9,6 +9,7 @@ import io.vertx.ext.web.RoutingContext;
 import kranji.phonic.SourceReadings;
 import kranji.phonic.SyllableIndex;
 import kranji.pinyin.PinyinSyllable;
+import kranji.reading.app.gloss.ZiGlossary;
 import kranji.simple.PhonicProjection;
 import kranji.zi.ZiCharUTF8;
 
@@ -74,16 +75,25 @@ public final class ZiDetailGetAction
         js.append("export const codePoint = ").append(quote(zi.codePointLabel())).append(";\n");
         js.append("export const supplementary = ").append(zi.isSupplementary()).append(";\n");
         js.append("export const principal = ")
-          .append(quote(row.principal().toDiacritic())).append(";\n");
+          .append(quote(row.principal().numbered())).append(";\n");
         js.append("export const polyphonic = ").append(row.isPolyphonic()).append(";\n");
 
         // Every reading, decomposed. The parse already produced these parts, so
         // this reports structure rather than taking the syllable apart again.
+        //
+        // And what each one MEANS, from whichever collections are on the
+        // classpath. Meaning belongs on the reading rather than on the
+        // character: the whole reason a pane lists readings side by side is to
+        // make "this one, not that one" a choice somebody can make, and until
+        // now that choice was between two sounds with nothing to tell them
+        // apart. A reading nothing explains carries an empty string, which is
+        // the same shape as one that is explained and simply says less.
         js.append("export const readings = [\n");
         List<PinyinSyllable> all = row.all();
         for (int i = 0; i < all.size(); i++) {
             PinyinSyllable s = all.get(i);
-            js.append("  { reading: ").append(quote(s.toDiacritic()))
+            List<String> meanings = ZiGlossary.meaningsOf(zi.codePoint(), s.numbered());
+            js.append("  { reading: ").append(quote(s.numbered()))
               .append(", address: ").append(quote(addressOf(s)))
               .append(", principal: ").append(i == 0)
               .append(", initial: ").append(quote(PhonicProjection.onsetSegment(s)))
@@ -94,6 +104,9 @@ public final class ZiDetailGetAction
               .append(", observed: ").append(row.frequency().countOf(s.toDiacritic()))
               .append(", homophones: ")
               .append(SyllableIndex.instance().charactersOf(s).size() - 1)
+              .append(", meaning: ")
+              .append(quote(meanings.isEmpty() ? "" : meanings.get(0)))
+              .append(", meanings: ").append(list(meanings))
               .append(" }").append(i + 1 < all.size() ? "," : "").append("\n");
         }
         js.append("];\n");
@@ -120,6 +133,15 @@ public final class ZiDetailGetAction
             sb.append(reading).append(' ').append(row.frequency().countOf(reading));
         }
         return sb.toString();
+    }
+
+    /** A JS array literal of strings, on one line — data, like everything here. */
+    private static String list(List<String> values) {
+        var sb = new StringBuilder("[");
+        for (int i = 0; i < values.size(); i++) {
+            sb.append(i > 0 ? ", " : "").append(quote(values.get(i)));
+        }
+        return sb.append(']').toString();
     }
 
     /** An absent part reads as absent; a blank cell reads as missing data. */

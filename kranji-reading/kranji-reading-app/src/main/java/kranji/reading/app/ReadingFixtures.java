@@ -10,6 +10,8 @@ import hue.captains.singapura.tao.http.action.GetAction;
 import io.vertx.ext.web.RoutingContext;
 import kranji.reading.app.phonic.PhonicSourceGetAction;
 import kranji.reading.app.read.ArticleGetAction;
+import kranji.reading.app.gloss.ZiGlossGetAction;
+import kranji.reading.app.read.ArticleCensusGetAction;
 import kranji.reading.app.read.ArticleTreeGetAction;
 import kranji.reading.app.zi.ZiDataGetAction;
 import kranji.reading.app.zi.SyllableMapGetAction;
@@ -62,7 +64,9 @@ public record ReadingFixtures(Umbrella<ReadingStudio> umbrella)
         actions.put(ZiDetailGetAction.PATH, new ZiDetailGetAction());
         actions.put(ArticleGetAction.PATH, new ArticleGetAction());
         actions.put(ArticleTreeGetAction.PATH, new ArticleTreeGetAction());
+        actions.put(ArticleCensusGetAction.PATH, new ArticleCensusGetAction());
         actions.put(SyllableMapGetAction.PATH, new SyllableMapGetAction());
+        actions.put(ZiGlossGetAction.PATH, new ZiGlossGetAction());
         return Map.copyOf(actions);
     }
 

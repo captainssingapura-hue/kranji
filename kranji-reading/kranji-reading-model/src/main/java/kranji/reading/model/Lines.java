@@ -37,7 +37,7 @@ public final class Lines {
                 // takes the corpus principal, which is what leaves the corpus
                 // free to be corrected.
                 if (zi.authored()) {
-                    sb.append('{').append(zi.reading().toDiacritic()).append('}');
+                    sb.append('{').append(zi.reading().numbered()).append('}');
                 }
             } else {
                 sb.append(token.text());

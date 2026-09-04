@@ -42,7 +42,7 @@ class ZiDataGetActionTest {
     void carriesTheSyllableAndItsCharacters() {
         String js = ZiDataGetAction.moduleFor("h.ao.3");
 
-        assertTrue(js.contains("export const syllable = \"hǎo\""));
+        assertTrue(js.contains("export const syllable = \"hao3\""));
         assertTrue(js.contains("export const initial = \"h\""));
         assertTrue(js.contains("export const finalPart = \"ao\""));
         assertTrue(js.contains("export const tone = 3"));
@@ -53,7 +53,7 @@ class ZiDataGetActionTest {
     @Test
     void carriesEveryReadingOfAPolyphonicCharacter() {
         String js = ZiDataGetAction.moduleFor("h.ao.3");
-        assertTrue(js.contains("readings: [\"hǎo\", \"hào\"]"), "好 reads hǎo and hào");
+        assertTrue(js.contains("readings: [\"hao3\", \"hao4\"]"), "好 reads hǎo and hào");
         assertTrue(js.contains("polyphonic: true"));
         assertTrue(js.contains("readHereByDefault: true"));
     }
@@ -100,7 +100,7 @@ class ZiDataGetActionTest {
         String js = ZiDataGetAction.moduleFor("q.iao.2");
 
         assertFalse(js.contains("export const characters = [];"));
-        assertTrue(js.contains("export const syllable = \"qiáo\""));
+        assertTrue(js.contains("export const syllable = \"qiao2\""));
     }
 
     @Test

@@ -11,6 +11,9 @@ import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpec;
 import kranji.reading.app.phonic.PhonicSourceWidget;
 import kranji.reading.app.read.ArticleCatalogueWidget;
 import kranji.reading.app.read.ArticleReaderWidget;
+import kranji.reading.app.known.KnownSecretaryModule;
+import kranji.reading.app.known.KnownTransferWidget;
+import kranji.reading.app.known.KnownZiWidget;
 import kranji.reading.app.read.ArticleSelectionSecretaryModule;
 import kranji.reading.app.zi.SyllableDetailWidget;
 import kranji.reading.app.zi.SyllableTreeWidget;
@@ -44,6 +47,7 @@ public final class ReadingWorkspaceSpec implements WorkspaceSpec {
     public List<WidgetEntry> widgetEntries() {
         WidgetGroup read = WidgetGroup.of("Read");
         WidgetGroup sounds = WidgetGroup.of("Sounds");
+        WidgetGroup known = WidgetGroup.of("Known");
         WidgetGroup source = WidgetGroup.of("Source");
         return List.of(
                 WidgetEntry.of(ReadingHomeWidget.class, WidgetLabel.of("Reading Home"))
@@ -67,6 +71,18 @@ public final class ReadingWorkspaceSpec implements WorkspaceSpec {
                 WidgetEntry.of(ZiDetailWidget.class, WidgetLabel.of("Character"))
                         .withIcon(new WidgetIcon.Emoji("\uD83D\uDD0E"))
                         .withGroup(sounds),
+                // Mark Known was here. It is now the Character pane above:
+                // claiming a reading and looking at one were the same list with
+                // one control's difference between them.
+                WidgetEntry.of(KnownZiWidget.class, WidgetLabel.of("Known"))
+                        .withIcon(new WidgetIcon.Emoji("\uD83C\uDFC5"))   // medal
+                        .withGroup(known),
+                // Last of the three, because it is the one nobody opens daily:
+                // marking is the child's, reviewing is anyone's, and moving the
+                // whole record in or out is a parent's occasional maintenance.
+                WidgetEntry.of(KnownTransferWidget.class, WidgetLabel.of("Import / Export"))
+                        .withIcon(new WidgetIcon.Emoji("\uD83D\uDCBE"))   // floppy disk
+                        .withGroup(known),
                 WidgetEntry.of(PhonicSourceWidget.class, WidgetLabel.of("Phonic Source"))
                         .withIcon(new WidgetIcon.Emoji("\uD83D\uDCCA"))   // bar chart
                         .withGroup(source)
@@ -90,6 +106,13 @@ public final class ReadingWorkspaceSpec implements WorkspaceSpec {
                 PartyDecl.of("articleSelection", ArticleSelectionSecretaryModule.INSTANCE,
                              "ArticleSelectionSecretary")
                          .exposedAs("articleParty")
+                         .build(),
+                // What the reader already knows. Unlike the other three this
+                // bus holds state rather than relaying a selection, and every
+                // broadcast carries the whole set - a pane that mounted late
+                // is correct on the next change rather than needing a resync.
+                PartyDecl.of("knownSet", KnownSecretaryModule.INSTANCE, "KnownSecretary")
+                         .exposedAs("knownParty")
                          .build()
         );
     }

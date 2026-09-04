@@ -33,6 +33,22 @@
             <version>${project.parent.version}</version>
         </dependency>
 
+        <!--
+            The glosses, as an SPI implementation rather than an API.
+
+            Runtime scope on purpose: the app compiles against ZiCollection in
+            kranji-core and never names a collection, so which collections exist
+            is a deployment question. Compile scope would let a widget reach
+            past the seam and call HandCrafted directly, and the first one that
+            did would pin the app to one body of data.
+        -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-gloss</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <dependency>
             <groupId>io.github.captainssingapura-hue.homing.js</groupId>
             <artifactId>homing-studio-starter</artifactId>

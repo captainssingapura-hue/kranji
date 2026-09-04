@@ -101,7 +101,7 @@ public final class ZiDataGetAction
         List<ZiCharUTF8> characters = index.charactersOf(target);
         if (characters.isEmpty()) return errorModule("no characters read '" + name + "'");
 
-        String syllable = target.toDiacritic();
+        String syllable = target.numbered();
         var js = new StringBuilder();
         js.append("// Generated from the Kranji corpus. Data only - no behaviour.\n");
         js.append("export const name = ").append(quote(name)).append(";\n");
@@ -120,7 +120,7 @@ public final class ZiDataGetAction
               .append(", readings: [");
             for (int r = 0; r < all.size(); r++) {
                 if (r > 0) js.append(", ");
-                js.append(quote(all.get(r).toDiacritic()));
+                js.append(quote(all.get(r).numbered()));
             }
             js.append("], readHereByDefault: ").append(index.isPrincipalAt(zi, target))
               .append(", polyphonic: ").append(all.size() > 1)
