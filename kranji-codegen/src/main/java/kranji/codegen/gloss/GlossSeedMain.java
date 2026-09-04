@@ -60,66 +60,163 @@ public final class GlossSeedMain {
     private static final String DEFAULT_UNIHAN = "input/_2500/Unihan_Readings.txt";
 
     /** Where seeded partitions are written. */
-    private static final String DEFAULT_OUT = "kranji-gloss/src/main/resources/kranji/gloss/seed";
+    private static final String DEFAULT_OUT = "kranji-gloss-seed/src/main/resources/kranji/seed";
 
     private GlossSeedMain() {}
 
     public static void main(String[] args) throws IOException {
         if (args.length < 1) {
-            System.err.println("Usage: GlossSeedMain <partition 0.." + (ZiPartition.COUNT - 1)
-                             + "> [unihan] [outDir]");
+            System.err.println("Usage: GlossSeedMain <partition|all> [unihan] [outDir]");
             System.exit(2);
             return;
         }
+        Path unihan = Path.of(args.length > 1 ? args[1] : DEFAULT_UNIHAN);
+        Path outDir = Path.of(args.length > 2 ? args[2] : DEFAULT_OUT);
+        Map<Integer, String> definitions = definitions(unihan);
+        Files.createDirectories(outDir);
+
+        if (args[0].trim().equalsIgnoreCase("all")) {
+            seedAll(definitions, outDir);
+            return;
+        }
+
         int partition = Integer.parseInt(args[0].trim());
         if (!ZiPartition.exists(partition)) {
             System.err.println("No partition " + partition + " - there are " + ZiPartition.COUNT);
             System.exit(2);
             return;
         }
-        Path unihan = Path.of(args.length > 1 ? args[1] : DEFAULT_UNIHAN);
-        Path outDir = Path.of(args.length > 2 ? args[2] : DEFAULT_OUT);
-
-        Result result = seed(partition, definitions(unihan));
-
-        Files.createDirectories(outDir);
-        Path out = outDir.resolve(name(partition) + ".tsv");
-        Files.writeString(out, result.tsv(), StandardCharsets.UTF_8);
-
-        System.out.println(result.report(partition));
-        System.out.println("Written: " + out);
+        write(partition, seed(partition, definitions), outDir);
     }
 
-    /** The seeded rows, and what could not be seeded. */
-    public record Result(String tsv, List<String> queuedPolyphone,
-                         List<String> noSource, List<String> flagged, int seededPairs) {
+    /**
+     * Every partition, with a running total.
+     *
+     * <p>The console is not the report. Windows mangles CJK on stdout, so the
+     * per-partition detail goes to a file beside the data where the glyphs
+     * survive and the workbench can read it later; the terminal gets counts,
+     * which are the part it can render.</p>
+     */
+    private static void seedAll(Map<Integer, String> definitions, Path outDir)
+            throws IOException {
+        int seeded = 0, flagged = 0, queued = 0, unseeded = 0;
+        for (int p = 0; p < ZiPartition.COUNT; p++) {
+            Result result = seed(p, definitions);
+            write(p, result, outDir);
+            seeded += result.seededPairs();
+            flagged += result.flagged().size();
+            queued += result.queuedPolyphone().size();
+            unseeded += result.noSource().size();
+        }
+        System.out.printf("""
+                %d partitions
+                  seeded    %d pairs
+                  flagged   %d seeded rows want a person's eye
+                  queued    %d polyphones to split by hand
+                  unseeded  %d characters have no usable kDefinition
+                Detail per partition: %s/pNNN.flags.tsv
+                """, ZiPartition.COUNT, seeded, flagged, queued, unseeded, outDir);
+    }
 
-        /**
-         * What happened, and to which characters.
-         *
-         * <p>Named rather than counted. "7 flagged" tells a reviewer how much
-         * work there is and nothing about where it is, so it is a number they
-         * have to go and re-derive before they can act on it.</p>
-         */
+    /**
+     * Where these rows came from, on every file that carries them.
+     *
+     * <p>Reproduced from the header of the drop itself rather than recalled,
+     * and repeated per file rather than kept once in a NOTICE, because a file
+     * gets copied out of a repository far more often than a repository gets
+     * read. The phonic partitions already carry the same line; these did not,
+     * which was an omission in the first seeder run.</p>
+     *
+     * <p>Written here and not in {@link GlossTsv}, which the hand-crafted set
+     * shares — that data is authored for the project and owes Unicode nothing,
+     * and stamping this on it would be a false claim in the other direction.</p>
+     */
+    private static final String PROVENANCE = """
+            # Seeded from the Unicode Character Database (Unihan), field kDefinition.
+            # (c) 2025 Unicode, Inc. Unicode and the Unicode Logo are registered
+            # trademarks of Unicode, Inc. in the U.S. and other countries.
+            # For terms of use and license, see https://www.unicode.org/terms_of_use.html
+            # Generated by GlossSeedMain - regenerate rather than edit.
+            #
+            # NOT CHECKED BY ANYBODY. A machine's first reading of a dictionary
+            # field, kept apart from the hand-written set for that reason.
+            """;
+
+    /** The partition's rows, and the log of what it could not do cleanly. */
+    private static void write(int partition, Result result, Path outDir) throws IOException {
+        Files.writeString(outDir.resolve(name(partition) + ".tsv"),
+                          PROVENANCE + result.tsv(), StandardCharsets.UTF_8);
+        Files.writeString(outDir.resolve(name(partition) + ".flags.tsv"),
+                          PROVENANCE + result.flagFile(partition), StandardCharsets.UTF_8);
+    }
+
+    /** What the seeder could not do cleanly, and to which character. */
+    public enum Kind {
+        /** Seeded, but something about the selection wants confirming. */
+        FLAGGED,
+        /** A polyphone. Its senses need splitting across its readings by hand. */
+        QUEUED,
+        /** Nothing usable to seed from. Somebody has to write one. */
+        UNSEEDED
+    }
+
+    /**
+     * One row of a partition's log.
+     *
+     * <p>Structured rather than a formatted line, because this is going into a
+     * file the workbench will read. A log a person can grep and a tool cannot
+     * load is a log that gets re-derived by hand.</p>
+     */
+    public record Note(int codePoint, String glyph, String reading,
+                       Kind kind, String doubts, String detail) {}
+
+    /** The seeded rows, and what could not be seeded. */
+    public record Result(String tsv, List<Note> notes, int seededPairs) {
+
+        public Result {
+            notes = List.copyOf(notes);
+        }
+
+        public List<Note> of(Kind kind) {
+            return notes.stream().filter(n -> n.kind() == kind).toList();
+        }
+
+        public List<Note> flagged()         { return of(Kind.FLAGGED); }
+        public List<Note> queuedPolyphone() { return of(Kind.QUEUED); }
+        public List<Note> noSource()        { return of(Kind.UNSEEDED); }
+
+        /** Counts, for a terminal that cannot render the glyphs anyway. */
         public String report(int partition) {
-            var out = new StringBuilder("""
+            return """
                    Partition %d
                      seeded      %d characters, %d pairs
                      flagged     %d of those want a person's eye
                      queued      %d polyphones - a per-character field cannot split them
                      unseeded    %d characters have no usable kDefinition
                    """.formatted(partition, seededPairs, seededPairs,
-                                 flagged.size(), queuedPolyphone.size(), noSource.size()));
-            listInto(out, "FLAGGED - seeded, but check before trusting", flagged);
-            listInto(out, "QUEUED - split the senses across the readings by hand", queuedPolyphone);
-            listInto(out, "NOT SEEDABLE - write one; the doubt says why", noSource);
-            return out.toString();
+                                 flagged().size(), queuedPolyphone().size(),
+                                 noSource().size());
         }
 
-        private static void listInto(StringBuilder out, String heading, List<String> items) {
-            if (items.isEmpty()) return;
-            out.append('\n').append(heading).append('\n');
-            for (String item : items) out.append("  ").append(item).append('\n');
+        /** The log, as a file - one row per thing a reviewer has to look at. */
+        public String flagFile(int partition) {
+            var out = new StringBuilder();
+            out.append("# Seeded partition ").append(partition)
+               .append(" - what the seeder could not do cleanly.\n");
+            out.append("# Generated by GlossSeedMain; regenerate rather than edit.\n");
+            out.append("# FLAGGED  seeded, check before trusting\n");
+            out.append("# QUEUED   a polyphone; split its senses across its readings\n");
+            out.append("# UNSEEDED nothing usable to seed from; write one\n");
+            out.append("# codepoint\tglyph\treading\tkind\tdoubts\tdetail\n");
+            for (Note n : notes) {
+                out.append(n.codePoint()).append('\t')
+                   .append(n.glyph()).append('\t')
+                   .append(n.reading()).append('\t')
+                   .append(n.kind()).append('\t')
+                   .append(n.doubts()).append('\t')
+                   .append(n.detail()).append('\n');
+            }
+            return out.toString();
         }
     }
 
@@ -136,39 +233,46 @@ public final class GlossSeedMain {
         // TreeMap: codepoint order, so the output is stable across runs and a
         // regeneration diffs to nothing when the input has not moved.
         var rows = new TreeMap<Integer, ZiGloss>();
-        var queued = new ArrayList<String>();
-        var noSource = new ArrayList<String>();
-        var flagged = new ArrayList<String>();
+        var notes = new ArrayList<Note>();
 
         for (SourceReadings row : PhonicPartitions.loadAll()) {
             int cp = row.zi().codePoint();
             if (ZiPartition.of(cp) != partition) continue;
 
             if (row.isPolyphonic()) {
-                queued.add(row.zi().value() + " " + row.readingTexts());
+                notes.add(new Note(cp, row.zi().value(), row.principal().numbered(),
+                        Kind.QUEUED, "", String.join(" ", row.readingTexts())));
                 continue;
             }
 
             GlossSeedPolicy.Seed seed = GlossSeedPolicy.of(definitions.get(cp));
+            // Joined, not List.toString(): the brackets are Java leaking into a
+            // data file, and a reviewer's verdict records this string - so
+            // "[TRUNCATED]" against "TRUNCATED" reads as a changed problem.
+            String doubts = seed.doubts().stream().map(Enum::name)
+                                .collect(java.util.stream.Collectors.joining(", "));
+
             if (!seed.usable()) {
                 // The doubts travel with it: "no kDefinition at all" and "had one,
                 // nothing survived" both end here and are different jobs. 岷 has a
                 // gloss - it is 72 characters, and Meaning takes 60.
-                noSource.add(row.zi().value() + "  " + row.zi().codePointLabel()
-                           + "  " + seed.doubts());
+                notes.add(new Note(cp, row.zi().value(), row.principal().numbered(),
+                        Kind.UNSEEDED, doubts, raw(definitions.get(cp))));
                 continue;
             }
             if (seed.wantsReview()) {
-                flagged.add(row.zi().value() + "  " + row.principal().numbered()
-                          + "  " + seed.doubts() + "  -> " + seed.meanings());
+                // The raw field, not just what was kept: a reviewer judging a
+                // TRUNCATED row needs to see what was left behind, and going
+                // back to an 8MB drop for it is how a flag gets ignored.
+                notes.add(new Note(cp, row.zi().value(), row.principal().numbered(),
+                        Kind.FLAGGED, doubts, raw(definitions.get(cp))));
             }
             rows.put(cp, glossOf(row, seed));
         }
 
         int pairs = rows.size();   // monophonic: one character is one pair
         return new Result(GlossTsv.writeSenses(List.copyOf(rows.values())),
-                          List.copyOf(queued), List.copyOf(noSource),
-                          List.copyOf(flagged), pairs);
+                          List.copyOf(notes), pairs);
     }
 
     /** One character's seeded gloss, at its single reading. */
@@ -193,6 +297,12 @@ public final class GlossSeedMain {
             case 1  -> Priority.SECONDARY;
             default -> Priority.AUXILIARY;
         };
+    }
+
+    /** The source field, flattened so it cannot break the row it is logged in. */
+    private static String raw(String kDefinition) {
+        if (kDefinition == null) return "<no kDefinition>";
+        return kDefinition.replaceAll("\\s+", " ").trim();
     }
 
     /** {@code codepoint -> kDefinition}, for every character the drop defines. */

@@ -27,8 +27,25 @@ class GlossSeedPolicyTest {
         // entry, or four where the corpus offered near-synonyms.
         var seed = GlossSeedPolicy.of("throne; position, post; rank, status; seat");
 
-        assertEquals(List.of("throne", "position, post", "rank, status"), seed.meanings());
-        assertTrue(seed.doubts().contains(Doubt.TRUNCATED), "a fourth was on offer");
+        // All four. This used to keep three and flag the fourth, which was the
+        // cap talking rather than the language: the bands are not one each, so
+        // a reading may carry several auxiliary meanings.
+        assertEquals(List.of("throne", "position, post", "rank, status", "seat"),
+                seed.meanings());
+        assertFalse(seed.doubts().contains(Doubt.TRUNCATED), "nothing was cut");
+    }
+
+    @Test
+    void aFieldThatIsReallyADictionaryEntryStillTruncates() {
+        // U+3498 㤘, the longest in the corpus at eight. Five is where the data
+        // sits - 138 of the 141 fields offering more than three offer four or
+        // five - so what still flags is a field nobody would print whole.
+        var seed = GlossSeedPolicy.of(
+                "obstinate; stubborn; opinionated; obstinacy; stubbornness; "
+              + "intransigent, truculent; savage, ferocious; fierce");
+
+        assertEquals(GlossSeedPolicy.MAX_SENSES, seed.meanings().size());
+        assertTrue(seed.doubts().contains(Doubt.TRUNCATED));
     }
 
     @Test
@@ -44,14 +61,32 @@ class GlossSeedPolicyTest {
     // ── What is not a meaning ─────────────────────────────────────────
 
     @Test
-    void crossReferencesAreDroppedAndTheDropIsAdmitted() {
+    void aStrikeThatLeavesAMeaningStandingIsNotADoubt() {
         // A pointer at another character is not a meaning, and a reviewer
-        // would strike it every time. Dropping it silently is what the flag
-        // prevents.
+        // would strike it every time - which is exactly why saying so is not
+        // worth their time. This used to raise FILTERED, and 豹 kept "leopard,
+        // panther", lost "surname", and asked a person to confirm it.
         var seed = GlossSeedPolicy.of("same as U+7684; bright; clear");
 
         assertEquals(List.of("bright", "clear"), seed.meanings());
+        assertFalse(seed.doubts().contains(Doubt.FILTERED),
+                "the filter succeeded; there is nothing to look at");
+    }
+
+    @Test
+    void aStrikeThatLeavesNothingIsStillWorthNaming() {
+        // The other half, and the reason FILTERED did not simply go away.
+        // "had no gloss at all" and "had one that was all apparatus" send
+        // whoever writes the replacement to different places.
+        //
+        // Both groups here are cross-references, which are never a meaning
+        // however little else there is - unlike a proper noun, which is one
+        // when it is the last thing standing.
+        var seed = GlossSeedPolicy.of("same as U+7684; variant of U+767D");
+
+        assertFalse(seed.usable());
         assertTrue(seed.doubts().contains(Doubt.FILTERED));
+        assertTrue(seed.doubts().contains(Doubt.EMPTY));
     }
 
     @Test
@@ -114,7 +149,55 @@ class GlossSeedPolicyTest {
               + "Japan and Taiwan = trillion, which nobody agrees about");
 
         assertEquals(List.of("omen", "million", "mega"), seed.meanings());
+        assertFalse(seed.doubts().contains(Doubt.VERBOSE),
+                "three meanings survived; the long one was the encyclopaedia");
+    }
+
+    @Test
+    void aProperNounGoesWhileARealMeaningIsStanding() {
+        // 邴. The city named after the character does not explain it, so with
+        // "pleased" on offer the city goes - and quietly, because a reviewer
+        // would have struck it too.
+        var seed = GlossSeedPolicy.of("name of a river in Shandong; pleased");
+
+        assertEquals(List.of("pleased"), seed.meanings());
+        assertEquals(List.of(), seed.doubts());
+    }
+
+    @Test
+    void aProperNounStaysWhenItIsTheLastThingStanding() {
+        // The condition, and the bug it fixes. 侴 IS a surname; 岽 IS a place
+        // in Guangxi. Striking those unconditionally deleted the one gloss 114
+        // characters had and filed them as unglossed, which is the opposite of
+        // tidying.
+        assertEquals(List.of("surname"), GlossSeedPolicy.of("surname").meanings());
+        assertEquals(List.of("name of a river in Shandong"),
+                GlossSeedPolicy.of("name of a river in Shandong").meanings());
+    }
+
+    @Test
+    void aPlainNounIsNeverMistakenForAProperOne() {
+        // Why every pattern carries a specifier. 河 means "river"; a river in
+        // Shandong is where a river happens to be. Patterns stopping at the
+        // noun would strike the meanings they exist to protect.
+        assertEquals(List.of("river", "stream"),
+                GlossSeedPolicy.of("river; stream").meanings());
+        assertEquals(List.of("city", "state"),
+                GlossSeedPolicy.of("city; state").meanings());
+    }
+
+    @Test
+    void aFieldThatIsOnlyLongSaysSoRatherThanSayingNothing() {
+        // 岷, the first row that ever broke the generator: 72 characters where
+        // Meaning takes 60. Not a proper-noun pattern, just unprintable - and
+        // still worth naming, because the character needs a gloss and this
+        // says the source had something to say rather than nothing.
+        var seed = GlossSeedPolicy.of(
+                "Minshan mountain range in northern Sichuan and southern Gansu, Min River");
+
+        assertFalse(seed.usable());
         assertTrue(seed.doubts().contains(Doubt.VERBOSE));
+        assertTrue(seed.doubts().contains(Doubt.EMPTY));
     }
 
     @Test

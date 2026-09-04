@@ -47,6 +47,47 @@ public interface ZiCollection extends GlossSource {
     Phrases phrases();
 
     /**
+     * Who wins when two collections gloss the same character. Lower is more
+     * authoritative.
+     *
+     * <h2>Why this cannot be left to discovery order</h2>
+     *
+     * <p>{@link Glosses#of} keeps the FIRST entry it sees for a character and
+     * shadows the rest, so the order sources arrive in decides which gloss a
+     * reader gets. {@link java.util.ServiceLoader} does not specify that order
+     * — it follows the classpath, which differs between a jar, an IDE and a
+     * shaded build.</p>
+     *
+     * <p>With one collection that was invisible. With two it means a character
+     * glossed both by hand and by machine shows whichever the classpath
+     * happened to yield, and the same build can answer differently on another
+     * machine. Precedence makes the order a property of the data.</p>
+     *
+     * <p>0 is hand-authored: somebody read it and meant it. Seeded material
+     * ranks above 0 and yields to it.</p>
+     */
+    default int precedence() { return 0; }
+
+    /**
+     * The collections this one is built from, most authoritative first.
+     *
+     * <p>A leaf answers with itself, which is what makes this safe to walk
+     * everywhere: {@code for (ZiCollection layer : c.layers())} reads the same
+     * whether {@code c} is one body of data or a stack of them.</p>
+     *
+     * <h2>Why a caller ever needs to look inside</h2>
+     *
+     * <p>{@link #precedence()} answers "who wins", and a composed collection
+     * has to answer that with a single number for the whole stack — which
+     * erases the question the workbench actually asks: <em>has a person
+     * written this row, or did a machine guess it?</em> Layers keep that
+     * answerable. Without them, one layered collection at precedence 0 makes
+     * every seeded row look hand-authored, and the review queue empties
+     * itself.</p>
+     */
+    default List<ZiCollection> layers() { return List.of(this); }
+
+    /**
      * The glosses, for {@link Glosses#of}. Defaulted from the repository so an
      * implementation states its data once.
      */

@@ -90,6 +90,7 @@
 30011	画	hua4	S	a picture	图画	
 30000	田	tian2	P	a field	田里	
 27663	氏	shi4	P	a family name	氏族	
+27663	氏	zhi1	P	an ancient people, in the name 月氏	月氏	
 22909	好	hao3	P	good; well	好人	
 21917	喝	he1	P	to drink	喝水	
 20820	兔	tu4	P	a rabbit	兔子	
@@ -102,6 +103,7 @@
 30707	石	shi2	P	a stone	石头	
 25226	把	ba3	P	to hold	把住	
 25226	把	ba3	S	(marks what is acted on)	把门关上	
+25226	把	ba4	P	a handle	刀把	
 23601	就	jiu4	P	then; at once	就是	
 21448	又	you4	P	again	又来了	
 21448	又	you4	S	and also	又高又大	
@@ -150,8 +152,7 @@
 23435	宋	song4	P	(the state of Song)	宋人	
 22902	奶	nai3	P	milk	牛奶	
 22902	奶	nai3	S	grandmother	奶奶	
-22836	头	tou2	P	a head	头上	
-22836	头	tou2	S	the top	山头	
+22836	头	tou2	P	head	头上	
 22826	太	tai4	P	too; very	太多	
 22774	壶	hu2	P	a pot; a kettle	水壶	
 21487	可	ke3	P	can; may	可以	
@@ -611,3 +612,5 @@
 19990	世	shi4	P	the world	世上	
 19990	世	shi4	S	an age	一世	
 19971	七	qi1	P	seven	七个	
+29484	猬	wei4	P	a hedgehog	刺猬	
+24530	忒	tui1	P	too, excessively	忒好	

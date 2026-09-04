@@ -19,9 +19,15 @@
         module carries no third-party licence and is distributable under
         whatever terms Kranji itself adopts.
 
-        Glosses ported from a licensed corpus belong in their own module - see
-        the Glosses plan, decision g2. Keeping them apart is what makes the
-        licence of a given build a checkable fact rather than a claim.
+        Machine-seeded glosses live in kranji-gloss-seed and never here. That
+        module holds a first guess at 7,121 characters that nobody has checked;
+        this one holds several hundred a person wrote and reviewed against the
+        articles that use them. Keeping them apart is what makes "how much of
+        this build has somebody read?" a question the dependency graph answers.
+
+        Nothing here depends on that module, and nothing there depends on this
+        one. GlossTsv - the file format both collections read - sits below both
+        in kranji-core.
     </description>
 
     <properties>

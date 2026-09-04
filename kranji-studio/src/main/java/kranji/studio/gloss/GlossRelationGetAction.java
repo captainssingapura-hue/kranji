@@ -105,7 +105,8 @@ public final class GlossRelationGetAction
             // A bare `parent=` is one empty value: the caller is saying
             // "nothing is selected", which must show nothing. No `parent` at
             // all is a different statement and leaves the relation whole.
-            List<String> keys = parents.stream().filter(k -> !k.isEmpty()).toList();
+            List<String> keys = GlossRelations.scopeKeysFor(name,
+                    parents.stream().filter(k -> !k.isEmpty()).toList());
             rows = (from == null || from.isEmpty())
                     ? GlossRelations.under(rows, keys)
                     : GlossRelations.withPks(rows,

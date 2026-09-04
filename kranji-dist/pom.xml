@@ -50,6 +50,18 @@
             <version>${project.version}</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-gloss-seed</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-gloss-layered</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -76,6 +88,13 @@
                                     quietly has no meanings in it. Vert.x and
                                     Jackson load the same way.
                                 -->
+                                <!-- The Unicode notice travels with the data it is about. A NOTICE that
+                                     stays in the repository is not attached to anything a person
+                                     downloads. -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
+                                    <resource>META-INF/NOTICE-kranji</resource>
+                                    <file>${project.basedir}/../NOTICE</file>
+                                </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>kranji.dist.KranjiApp</mainClass>

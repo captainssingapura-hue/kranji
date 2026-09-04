@@ -13,7 +13,7 @@ import hue.captains.singapura.js.homing.studio.base.tracker.Task;
 import java.util.List;
 
 /**
- * Live tracker for glosses at corpus scale — the 8,764 pairs, not the 447.
+ * Live tracker for glosses at corpus scale — the 8,763 pairs, not the 447.
  *
  * <p>{@code GlossPlan} covers the hand-crafted set that makes the bundled
  * library self-contained, and its {@code gp5} reserves a phase for "the ported
@@ -38,9 +38,9 @@ public final class GlossCoveragePlan implements Plan {
         return "Source of truth: GlossCoveragePlan.java. Edit, recompile, restart the server.";
     }
     @Override public String summary() {
-        return "A meaning for every (character, reading) the phonic corpus lists - 8,764 pairs "
-             + "across 8,100 characters - imported partition by partition, and reviewed by "
-             + "triage rather than by reading all of it.";
+        return "A meaning for every (character, reading) the phonic corpus lists - 8,763 pairs "
+             + "across 8,100 characters. Seeded from Unihan in one pass, all 101 partitions; "
+             + "reviewed partition by partition, by triage rather than by reading all of it.";
     }
 
     @Override
@@ -48,17 +48,21 @@ public final class GlossCoveragePlan implements Plan {
         return List.of(
                 new Objective("Cover the corpus, not the library",
                         "GlossPlan's target is the 447 pairs the 23 demo articles use. This "
-                      + "one's is every pair the corpus has a reading for: 8,764 appearances "
-                      + "across 8,100 characters, 594 of them polyphonic. The reader stops "
+                      + "one's is every pair the corpus has a reading for: 8,763 appearances "
+                      + "across 8,100 characters, 593 of them polyphonic. The reader stops "
                       + "wherever it stops, and a set sized to the bundled articles has "
                       + "nothing to say the moment somebody adds an article.\n\n"
-                      + "Those figures are the GENERATED corpus - the partition files under "
-                      + "kranji/phonic, which is what every consumer actually reads. "
-                      + "PhonicCoveragePlan quotes slightly larger ones because it counts the "
-                      + "Unihan source it builds from, before the generator drops what it "
-                      + "cannot parse. Both are right about their own universe, and the pair "
-                      + "counts differ by single digits; anything counting glosses should use "
-                      + "these."),
+                      + "These now agree with PhonicCoveragePlan, and for a while they did "
+                      + "not. This plan counted the partition files as written - 8,764 pairs, "
+                      + "594 polyphones - and that one counted what the model could parse out "
+                      + "of them, 8,759 and 592. The gap was exactly two characters: 哼 listed "
+                      + "hng and 欸 listed four ê forms, notations the standard replaced, so "
+                      + "the files carried five readings nothing could read.\n\n"
+                      + "It was not a rounding difference and it was not harmless. 欸 read as "
+                      + "a monophone, so the seeder gave one gloss to all five of its "
+                      + "readings. SourceCorrections respells the four and drops the one, and "
+                      + "there is now a single number for a slice of the corpus rather than "
+                      + "two defensible ones."),
 
                 new Objective("A partition is a unit of work and a unit of trust",
                         "Not a shard for convenience. A finished partition is importable, "
@@ -66,7 +70,7 @@ public final class GlossCoveragePlan implements Plan {
                       + "of partitions that are done rather than a percentage that never "
                       + "arrives. ZiPartition makes that free - the reader already fetches by the same cut."),
 
-                new Objective("Triage, because nobody reviews 8,764 rows",
+                new Objective("Triage, because nobody reviews 8,763 rows",
                         "At five seconds a row an exhaustive pass is a twelve-hour sitting, and "
                       + "a twelve-hour sitting is not a review - it is a rubber stamp with "
                       + "extra steps. The machine has to decide what deserves a person: the "
@@ -85,10 +89,16 @@ public final class GlossCoveragePlan implements Plan {
                       + "Unicode's terms are permissive, and the whole build stays under the "
                       + "project's own licence.\n\n"
                       + "What survives the change is the property that actually mattered: a "
-                      + "gloss can be told apart by where it came from. That now lives on the "
-                      + "ROW rather than in a module boundary, which is a stronger place for "
-                      + "it - the question a reviewer asks is 'has a person checked this "
-                      + "one', and a module cannot answer that.")
+                      + "gloss can be told apart by where it came from. That is now answered "
+                      + "in two places, and they answer different questions.\n\n"
+                      + "The MODULE says which collection a gloss came from - hand-written or "
+                      + "machine-seeded - and says it in the dependency graph, where nobody "
+                      + "has to remember it and a build can drop one side entirely. The ROW "
+                      + "has to answer the finer one a reviewer actually asks: has a person "
+                      + "checked THIS one. A module cannot answer that, because the day the "
+                      + "seed is half reviewed it is neither wholly checked nor wholly not, "
+                      + "and that day is every day from the first verdict onward.\n\n"
+                      + "The module boundary exists. The row-level mark is still open.")
         );
     }
 
@@ -206,22 +216,31 @@ public final class GlossCoveragePlan implements Plan {
 
                 new Decision("gc5",
                         "When both collections have a pair, which wins?",
-                        "The hand-crafted set. The ported set fills gaps and never overrides.",
-                        "Hand-crafted beats ported, always",
-                        DecisionStatus.OPEN,
+                        "The hand-crafted set. The seeded set fills gaps and never overrides.",
+                        "Hand-crafted beats seeded, always",
+                        DecisionStatus.RESOLVED,
                         "The SPI composes whatever is on the classpath through "
-                      + "Glosses.of(GlossSource...), and today nothing states what happens on "
-                      + "a collision because nothing collides. Once the ported set arrives, "
-                      + "every one of the 447 hand-crafted pairs collides.\n\n"
+                      + "Glosses.of(GlossSource...), which keeps the FIRST source that has a "
+                      + "character and shadows the rest. With one collection that was "
+                      + "invisible. The seed collides with 341 of the hand-crafted "
+                      + "characters.\n\n"
                       + "Hand-crafted winning is the only defensible rule: those pairs were "
                       + "written for the register a child reads, reviewed against the articles "
                       + "that use them, and are the ones the demand test holds at 100%. A "
-                      + "ported gloss silently displacing one would regress the app's most "
+                      + "seeded gloss silently displacing one would regress the app's most "
                       + "visible text and no test would notice.",
-                        "Needs stating in code, not in a comment - Glosses.of has to define "
-                      + "precedence and a test has to hold it. Also needs the workbench to "
-                      + "SHOW which collection answered, or a reviewer will spend time on rows "
-                      + "the app never displays.")
+                        "Stated in code. ZiCollection.precedence() is 0 for hand-authored and "
+                      + "1 for the seed; ZiCollections.load() sorts by it, breaking ties on "
+                      + "name; ZiCollectionSpiTest asserts the resulting ORDER, not just the "
+                      + "membership.\n\n"
+                      + "That last part is the load-bearing one. ServiceLoader does not "
+                      + "specify the order it yields providers - it follows the classpath, "
+                      + "which differs between a jar, an IDE and a shaded build - so before "
+                      + "the sort the same build could have answered differently on another "
+                      + "machine, and the symptom would have been one character quietly "
+                      + "showing a machine's guess.\n\n"
+                      + "Still needed: the workbench has to SHOW which collection answered, "
+                      + "or a reviewer will spend time on rows the app never displays.")
         );
     }
 
@@ -235,18 +254,29 @@ public final class GlossCoveragePlan implements Plan {
                       + "wins every collision. Wiring first and data second, because a "
                       + "composition bug found after 8,000 rows exist is found in the wrong "
                       + "place.\n\n"
-                      + "It is no longer a separate MODULE. g2 changed: there is no ported "
-                      + "data and no second licence, so the reason for a module boundary went "
-                      + "with it. Two collections inside kranji-gloss is enough - what has to "
-                      + "stay separable is which rows a person has checked, and that is a "
-                      + "property of a row.",
-                        PhaseStatus.NOT_STARTED,
+                      + "It IS a separate module, kranji-gloss-seed, and that answer has now "
+                      + "been given twice in opposite directions. The first time the reason "
+                      + "was licence - ported data under someone else's terms - and when g2 "
+                      + "removed the ported data the reason went with it, so the two "
+                      + "collections shared kranji-gloss.\n\n"
+                      + "They no longer do, and the reason is different: SEPARABILITY. One "
+                      + "module is 437 pairs somebody wrote and reviewed against the articles "
+                      + "that use them; the other is a machine's first guess at 7,121 "
+                      + "characters. Sharing a jar made 'how much of this build has a person "
+                      + "read?' a question you answer by remembering. It is now a question "
+                      + "the dependency graph answers, and dropping the seed is one line.\n\n"
+                      + "The boundary is real, not decorative: kranji-gloss-seed depends on "
+                      + "kranji-core and nothing else. A seed that could not ship without the "
+                      + "hand-crafted set would not be separate in the way that matters, so "
+                      + "GlossTsv - the format both read - moved down into core rather than "
+                      + "becoming a dependency of one collection on the other.",
+                        PhaseStatus.IN_PROGRESS,
                         List.of(
                                 new Task("Declare the project's own licence first (gp5 task, still open)", false),
-                                new Task("A seeded ZiCollection, discovered alongside HandCrafted", false),
+                                new Task("A seeded ZiCollection, discovered alongside HandCrafted", true),
                                 new Task("Provenance on the row: seeded, or checked by a person", false),
-                                new Task("Precedence in Glosses.of: hand-checked wins, with a test", false),
-                                new Task("Reading app and studio both still green with the seed absent", false)),
+                                new Task("Precedence in Glosses.of: hand-checked wins, with a test", true),
+                                new Task("Reading app and studio both still green with the seed absent", true)),
                         List.of(),
                         "Two collections are discovered, a collision resolves to the "
                       + "hand-checked gloss, and removing the seed leaves a build that still "
@@ -270,13 +300,13 @@ public final class GlossCoveragePlan implements Plan {
                       + "partition means one thing everywhere. The old plan said 'r, the "
                       + "smallest at 117' - that was the by-initial axis, which ran 121 to "
                       + "1,183 pairs and is no longer how the corpus is cut.",
-                        PhaseStatus.NOT_STARTED,
+                        PhaseStatus.DONE,
                         List.of(
-                                new Task("Seed the monophonic characters of one partition; leave polyphones queued", false),
-                                new Task("Sense-selection policy: how many, which, and in what priority", false),
-                                new Task("Emit the partition in the existing senses.tsv shape", false),
-                                new Task("Regeneration is a no-op diff when inputs are unchanged", false),
-                                new Task("Coverage for the partition: seeded / queued / no source", false)),
+                                new Task("Seed the monophonic characters of one partition; leave polyphones queued", true),
+                                new Task("Sense-selection policy: how many, which, and in what priority", true),
+                                new Task("Emit the partition in the existing senses.tsv shape", true),
+                                new Task("Regeneration is a no-op diff when inputs are unchanged", true),
+                                new Task("Coverage for the partition: seeded / queued / no source", true)),
                         List.of(new Dependency("gc-1", "Needs somewhere to put the output.")),
                         "One partition seeds, parses under the existing TSV reader, and its "
                       + "coverage is a number with a reason for every gap.",
@@ -285,7 +315,7 @@ public final class GlossCoveragePlan implements Plan {
                         "Two things carried over from when this was a CC-CEDICT importer.\n\n"
                       + "The numbered-pinyin rendering had to become correct on its own "
                       + "account and now is - the collapses iou-iu, uei-ui, uen-un round-trip "
-                      + "across all 1,284 corpus syllables. Seeding from Unihan does not need "
+                      + "across all 1,288 corpus syllables. Seeding from Unihan does not need "
                       + "it, because the readings are already ours, but the hazard is the "
                       + "same: a reading that matches nothing produces a gloss belonging to no "
                       + "pair, and it is gc's validity check that catches it.\n\n"
@@ -296,17 +326,17 @@ public final class GlossCoveragePlan implements Plan {
                 new Phase("gc-3", "Triage",
                         "The checks that decide what a person looks at.",
                         "Every automatic check that can flag a row before a human sees it, so "
-                      + "the review queue is a few hundred rows and not 8,764. These are "
+                      + "the review queue is a few hundred rows and not 8,763. These are "
                       + "cheap, and each one is a rule the hand-crafted set already learned "
                       + "the hard way.",
-                        PhaseStatus.NOT_STARTED,
+                        PhaseStatus.IN_PROGRESS,
                         List.of(
-                                new Task("No gloss at all for a pair the corpus lists", false),
-                                new Task("Length beyond what a child mid-story reads", false),
+                                new Task("No gloss at all for a pair the corpus lists", true),
+                                new Task("Length beyond what a child mid-story reads", true),
                                 new Task("One gloss reused across two readings of a polyphone - the cardinality bug", false),
-                                new Task("A semicolon list long enough to be several senses in one row", false),
+                                new Task("A semicolon list long enough to be several senses in one row", true),
                                 new Task("A gloss naming a reading the phonic corpus does not list", false),
-                                new Task("Register markers: grammatical vocabulary, 'used in', 'variant of'", false),
+                                new Task("Register markers: grammatical vocabulary, 'used in', 'variant of'", true),
                                 new Task("Rank the queue by frequency, then by polyphony", false)),
                         List.of(new Dependency("gc-2", "Needs data to check.")),
                         "The queue for a finished partition is a small fraction of its rows, "
@@ -349,29 +379,47 @@ public final class GlossCoveragePlan implements Plan {
                       + "the same fix here."),
 
                 new Phase("gc-5", "The sweep",
-                        "101 partitions, one at a time, in the gc2 order.",
-                        "The grind. Import, triage, review, mark the partition done, move on. "
-                      + "Each partition lands as its own commit with its own coverage number, "
-                      + "so the work is legible in the history and abandonable at any point "
-                      + "without leaving the corpus half-imported.",
-                        PhaseStatus.NOT_STARTED,
+                        "101 partitions seeded in one pass; reviewed partition by partition.",
+                        "Seeding and reviewing came apart, and that is the change worth "
+                      + "recording. This phase was planned as one grind - import, triage, "
+                      + "review, mark done, next - with each partition landing as its own "
+                      + "commit.\n\n"
+                      + "The seeding half turned out to be a single deterministic run, so it "
+                      + "was done for all 101 at once: 7,121 pairs seeded, 593 polyphones "
+                      + "queued, 386 characters with nothing usable to seed from, and 386 "
+                      + "seeded rows flagged. The bar for that pass was deliberately low - "
+                      + "the SPI loads it, the reader and the studio run on it - because a "
+                      + "seed nobody has checked is a starting point either way, and having "
+                      + "all of it lets the review order be chosen rather than forced by what "
+                      + "happens to be imported.\n\n"
+                      + "So a partition is no longer 'imported or not'. It is seeded, and "
+                      + "reviewed or not, and that second axis is what remains. The per-"
+                      + "partition commit still applies to review, where the work actually is.",
+                        PhaseStatus.IN_PROGRESS,
                         List.of(
-                                new Task("r (117) - the pipeline proof", false),
-                                new Task("The next four, to establish a per-partition cost", false),
-                                new Task("Re-decide gc2's order once a real cost per row is known", false),
-                                new Task("The remaining partitions", false),
-                                new Task("zero (1,115) last - the largest, and the one most likely to need policy changes", false)),
-                        List.of(new Dependency("gc-4", "Needs the tool.")),
-                        "Every partition is imported and its queue drained to a stated "
-                      + "standard, and the corpus coverage number is one a person can defend.",
+                                new Task("Seed every partition; log what could not be done cleanly, per partition", true),
+                                new Task("A partition's log is a file the workbench can load, not a console dump", true),
+                                new Task("Review the first partition, to establish a real cost per row", false),
+                                new Task("Choose the review order once that cost is known", false),
+                                new Task("The remaining partitions, reviewed", false),
+                                new Task("The 592 queued polyphones, split by hand", false)),
+                        List.of(new Dependency("gc-4",
+                                "Needs the tool - to REVIEW. Seeding did not, which is why it "
+                              + "ran first.")),
+                        "Every partition is seeded and its queue drained to a stated standard, "
+                      + "and the corpus coverage number is one a person can defend.",
                         "Stop after the partitions that carry the frequent characters; the tail "
-                      + "degrades to no gloss, which the app already handles.",
+                      + "keeps its unreviewed seed, which the app already shows.",
                         "L",
-                        "The plan deliberately does not promise all 22. The app degrades "
-                      + "silently where there is no gloss - ZiGlossary answers empty and the "
-                      + "column stays blank - so a half-swept corpus is a working app with "
-                      + "less to say, not a broken one. That is what makes stopping a decision "
-                      + "rather than a failure."),
+                        "The plan deliberately does not promise all 101 reviewed. The app "
+                      + "degrades silently where there is no gloss - ZiGlossary answers empty "
+                      + "and the column stays blank - so a half-reviewed corpus is a working "
+                      + "app with less that has been checked, not a broken one. That is what "
+                      + "makes stopping a decision rather than a failure.\n\n"
+                      + "What the whole-corpus seed changes is the shape of the risk. Before, "
+                      + "an unswept partition said nothing; now it says something nobody has "
+                      + "read. That is the trade that was taken knowingly, and it is why "
+                      + "provenance on the row (gc-1) matters more than it did."),
 
                 new Phase("gc-6", "The gate",
                         "What the build holds once the sweep is real.",
@@ -401,7 +449,7 @@ public final class GlossCoveragePlan implements Plan {
                       + "partition stays finished when the next one starts.", false),
                 new Acceptance("Hand-crafted glosses are never displaced",
                         "Where both collections have a pair, the app shows the hand-crafted "
-                      + "gloss, and a test holds it.", false),
+                      + "gloss, and a test holds it.", true),
                 new Acceptance("No verdict outlives its subject",
                         "A regenerated gloss whose text changed has no verdict, and returns to "
                       + "the queue without anyone remembering to put it there.", false),

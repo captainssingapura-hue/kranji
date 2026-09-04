@@ -12,6 +12,8 @@
         <module>kranji-core</module>
         <module>kranji-singulars</module>
         <module>kranji-gloss</module>
+        <module>kranji-gloss-seed</module>
+        <module>kranji-gloss-layered</module>
         <module>kranji-json</module>
         <module>kranji-json-bridge</module>
         <module>kranji-singulars-perclass</module>

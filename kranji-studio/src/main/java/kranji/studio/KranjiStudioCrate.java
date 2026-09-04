@@ -7,6 +7,7 @@ import kranji.studio.gloss.DemandEntityWidget;
 import kranji.studio.gloss.GlossCss;
 import kranji.studio.gloss.GlossSelectionSecretaryModule;
 import kranji.studio.gloss.PhraseEntityWidget;
+import kranji.studio.gloss.ProblemEntityWidget;
 import kranji.studio.gloss.PhraseSenseEntityWidget;
 import kranji.studio.gloss.SenseEntityWidget;
 import kranji.studio.gloss.SoundEntityWidget;
@@ -39,7 +40,8 @@ public final class KranjiStudioCrate implements Crate {
                 CrateEntry.of(DemandEntityWidget.INSTANCE),
                 CrateEntry.of(SenseEntityWidget.INSTANCE),
                 CrateEntry.of(PhraseEntityWidget.INSTANCE),
-                CrateEntry.of(PhraseSenseEntityWidget.INSTANCE));
+                CrateEntry.of(PhraseSenseEntityWidget.INSTANCE),
+                CrateEntry.of(ProblemEntityWidget.INSTANCE));
     }
 
     @Override

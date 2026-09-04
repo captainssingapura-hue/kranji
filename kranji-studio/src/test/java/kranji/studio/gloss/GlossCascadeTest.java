@@ -51,6 +51,10 @@ class GlossCascadeTest {
         // model, but because a filter over the readings is exactly the shape
         // the cascade already had, and giving it a bespoke mechanism would have
         // meant two ways of scoping a grid.
+        //
+        // "problem" is demand's second child, so demand is where the chain
+        // branches rather than ends. It scopes on the character of the
+        // selected pair - see aProblemScopesOnTheCharacterNotThePair.
         var roots = GlossRelations.relations().stream()
                 .filter(r -> GlossRelations.upstreamOf(r) == null).toList();
         assertEquals(List.of("sound", "phrase"), roots);
@@ -154,6 +158,38 @@ class GlossCascadeTest {
                 assertFalse(a.pk().equals(b.pk()), "readings must not share a sense row");
             }
         }
+    }
+
+    // ── The one relation that scopes on less than it is given ─────────
+
+    @Test
+    void aProblemScopesOnTheCharacterNotThePair() {
+        // A problem belongs to a CHARACTER. 欸 is queued because its five
+        // readings need splitting by hand, and arriving at it through any one
+        // of them must show the same single job - scoping on the pair would
+        // hide the row unless you happened to pick the reading it is filed
+        // under, which is the reading nobody has decided yet.
+        var viaAi3 = GlossRelations.under(rows("problem"),
+                GlossRelations.scopeKeysFor("problem", List.of("27448:ai3")));
+        var viaEi1 = GlossRelations.under(rows("problem"),
+                GlossRelations.scopeKeysFor("problem", List.of("27448:ei1")));
+
+        assertEquals(1, viaAi3.size());
+        assertEquals("27448:ai3", viaAi3.get(0).pk());
+        assertEquals(viaAi3, viaEi1, "the reading you came by must not change the answer");
+    }
+
+    @Test
+    void narrowingToACharacterMergesTheReadingsOfOne() {
+        // Two readings of one character are one selection here. Leaving the
+        // duplicate in would double-count a "how many selected" reading of it.
+        assertEquals(List.of("22320"),
+                GlossRelations.scopeKeysFor("problem", List.of("22320:de0", "22320:di4")));
+
+        // And every other relation is handed its keys untouched - this is one
+        // relation's exception, not a new rule for the cascade.
+        var pairs = List.of("22320:de0", "22320:di4");
+        assertEquals(pairs, GlossRelations.scopeKeysFor("sense", pairs));
     }
 
     @Test
