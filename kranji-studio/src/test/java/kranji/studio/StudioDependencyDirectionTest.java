@@ -38,6 +38,28 @@ class StudioDependencyDirectionTest {
 
     private static final String STUDIO = "kranji-studio";
 
+    /**
+     * The one module allowed to name the studio: the packaging module.
+     *
+     * <p>{@code kranji-dist} is not product code and holds none — a launcher
+     * that picks an app by its first argument, and nothing else. It composes
+     * deployables, so declaring both apps is its entire job, and the route the
+     * rule guards against is still closed: no reading-app class can reference a
+     * studio type, because no reading module declares the dependency.</p>
+     *
+     * <p>What this exemption <b>does</b> cost is worth stating. The jar
+     * kranji-dist builds carries the studio inside it, so it is a development
+     * artifact — fine on a machine that is already running the workbench, and
+     * not what you would put on a family's device. A reader-only jar is a
+     * second shade execution with the studio filtered out, on the day that
+     * matters.</p>
+     *
+     * <p>Named rather than pattern-matched. A rule with an exception list is
+     * only as good as how hard the list is to grow: one literal is a line
+     * somebody has to add on purpose.</p>
+     */
+    private static final String PACKAGING = "kranji-dist";
+
     /** {@code <dependency>…<artifactId>x</artifactId>…</dependency>}, across newlines. */
     private static final Pattern DEPENDENCY =
             Pattern.compile("<dependency>(.*?)</dependency>", Pattern.DOTALL);
@@ -73,13 +95,14 @@ class StudioDependencyDirectionTest {
     private static final String TARGET =
             java.io.File.separator + "target" + java.io.File.separator;
 
-    /** Every pom in the reactor except the studio's own. */
+    /** Every pom in the reactor except the studio's own and the packaging module's. */
     private static List<Path> otherPoms() {
         Path root = reactorRoot();
         try (Stream<Path> walk = Files.walk(root)) {
             return walk.filter(p -> p.getFileName().toString().equals("pom.xml"))
                        .filter(p -> !p.toString().contains(TARGET))
                        .filter(p -> !p.getParent().getFileName().toString().equals(STUDIO))
+                       .filter(p -> !p.getParent().getFileName().toString().equals(PACKAGING))
                        .toList();
         } catch (IOException e) {
             throw new UncheckedIOException("could not walk " + root, e);
@@ -103,6 +126,25 @@ class StudioDependencyDirectionTest {
         assertEquals(List.of(), offenders,
                 () -> "the studio holds internal tooling, so nothing in the product may depend "
                     + "on it. Declared by:\n  " + String.join("\n  ", offenders));
+    }
+
+    @Test
+    void theOneExemptionIsLiveAndTheProductIsStillCovered() {
+        // An exemption nobody uses is a hole waiting for someone to find. This
+        // says the packaging module really does declare the studio - so if that
+        // stops being true, the exemption goes rather than lingering.
+        Path dist = reactorRoot().resolve(PACKAGING).resolve("pom.xml");
+        assertTrue(Files.exists(dist), () -> "no " + PACKAGING + " module at " + dist);
+        assertTrue(read(dist).contains("<artifactId>" + STUDIO + "</artifactId>"),
+                PACKAGING + " no longer declares the studio - drop the exemption");
+
+        // And the half that matters: the app a child runs is still checked, and
+        // still does not name the studio.
+        Path app = reactorRoot()
+                .resolve("kranji-reading").resolve("kranji-reading-app").resolve("pom.xml");
+        assertTrue(otherPoms().contains(app), "the reading app must still be covered");
+        assertTrue(!read(app).contains("<artifactId>" + STUDIO + "</artifactId>"),
+                "the reading app must not depend on the studio");
     }
 
     @Test

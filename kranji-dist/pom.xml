@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+        <artifactId>kranji</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>kranji-dist</artifactId>
+
+    <description>
+        One runnable jar: the reader and the studio, with every dependency
+        inside it.
+
+        The point is a version that stays still. Development moves the working
+        tree constantly, and a child reading — or a parent taking a backup —
+        should not be sharing a server with that. Build this once, run it, and
+        keep breaking things elsewhere.
+
+        It holds no code of its own beyond the launcher: a module that shipped
+        behaviour would be a third place where the apps differ.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-reading-app</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-studio</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!--
+            The gloss collections, as an SPI implementation.
+
+            Already reachable transitively, and named here anyway: this jar is
+            a deployment, and what it deploys should be a decision this file
+            records rather than a consequence of somebody else's dependency
+            list. Without it the apps still start and simply have no meanings.
+        -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-gloss</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>shade</goal></goals>
+                        <configuration>
+                            <finalName>kranji</finalName>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <transformers>
+                                <!--
+                                    The one that matters. Kranji finds its gloss
+                                    collections with ServiceLoader, and every
+                                    jar carrying a provider declares it at the
+                                    same path - META-INF/services. A plain merge
+                                    keeps whichever copy it unpacks last, so
+                                    without this the fat jar starts fine and
+                                    quietly has no meanings in it. Vert.x and
+                                    Jackson load the same way.
+                                -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>kranji.dist.KranjiApp</mainClass>
+                                </transformer>
+                            </transformers>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <!--
+                                            Signatures cover the jar they were
+                                            written for. Carried into a shaded
+                                            jar they describe contents that no
+                                            longer exist, and the JVM refuses to
+                                            load the result.
+                                        -->
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                        <!--
+                                            One flat classpath cannot honour
+                                            several module descriptors, and this
+                                            jar is run with -jar rather than on
+                                            the module path.
+                                        -->
+                                        <exclude>module-info.class</exclude>
+                                        <exclude>META-INF/versions/*/module-info.class</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
