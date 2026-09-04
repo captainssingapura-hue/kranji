@@ -19,8 +19,14 @@ public enum Tone {
     /** 去声 (ˋ) — Falling tone, e.g. mà. */
     FOURTH(4, "ˋ", "去声"),
 
-    /** 轻声 (·) — Neutral/unstressed tone, e.g. ma. */
-    NEUTRAL(5, "·", "轻声");
+    /**
+     * 轻声 (·) — Neutral/unstressed tone, e.g. ma.
+     *
+     * <p><b>Zero, not five.</b> The tone number is part of the internal
+     * representation of a syllable, where 0 reads as "no tone" rather than as
+     * a fifth one - and Mandarin has four tones plus the absence of one.</p>
+     */
+    NEUTRAL(0, "·", "轻声");
 
     private final int number;
     private final String diacritic;
@@ -32,7 +38,7 @@ public enum Tone {
         this.chinese = chinese;
     }
 
-    /** Returns the tone number (1–5). */
+    /** The tone number: 1-4, or 0 for neutral. */
     @JsonValue
     public int number() {
         return number;
@@ -48,14 +54,21 @@ public enum Tone {
         return chinese;
     }
 
-    /** Looks up a Tone by its number (1–5). */
+    /**
+     * Looks up a Tone by its number.
+     *
+     * <p>{ 5} is accepted as well as { 0} for the neutral tone: it
+     * was the number this enum used before, and data written then - the
+     * generated per-class corpus among it - still says 5. Only 0 is ever
+     * emitted.</p>
+     */
     public static Tone ofNumber(int n) {
         return switch (n) {
             case 1 -> FIRST;
             case 2 -> SECOND;
             case 3 -> THIRD;
             case 4 -> FOURTH;
-            case 5 -> NEUTRAL;
+            case 0, 5 -> NEUTRAL;
             default -> throw new IllegalArgumentException("Invalid tone number: " + n);
         };
     }

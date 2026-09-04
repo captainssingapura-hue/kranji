@@ -1,0 +1,13 @@
+# Conformance baseline for kranji-reading-app.
+#
+# Deliberately EMPTY. The gate was added while the module held a single widget,
+# so there was nothing to grandfather - every rule passes on its merits.
+#
+# A finding belongs here only when it is genuinely pre-existing and being paid
+# down deliberately. A legitimate, permanent exception belongs in
+# ReadingConformance.ALLOWANCES with a stated reason instead - do not weaken a
+# rule and do not baseline new code.
+#
+# Regenerating: never pipe console output into this file on Windows. The console
+# mangles UTF-8 and one bad byte makes the whole baseline load as empty, which
+# silently turns every baselined finding back into a new error.

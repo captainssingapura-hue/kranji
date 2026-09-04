@@ -1,0 +1,613 @@
+# Kranji hand-crafted glosses - senses
+# Source: project-authored; no third-party licence
+#
+# A row is one meaning of one reading. Order is the rank within that reading,
+# written out rather than left to row position - sorting this file in a
+# spreadsheet would otherwise re-rank every meaning silently.
+# Examples are phrase keys separated by 、; a #n suffix names a phrase sense
+# other than its first, and is silent otherwise.
+# codepoint	glyph	reading	priority	meaning	examples	because
+19996	东	dong1	P	east	东方|东边|山东|东西#1	
+20002	丢	diu1	P	to lose	丢了	
+20002	丢	diu1	S	to throw away	丢掉	
+20302	低	di1	P	low	低声	
+20302	低	di1	S	to lower	低头	
+21040	到	dao4	P	to arrive; to reach	到了	
+21160	动	dong4	P	to move	动物	
+21500	叼	diao1	P	to hold in the mouth	叼着	
+22320	地	de0	P	(makes a word describe how something is done)	慢慢地走	the particle is what a reader meets most, and it is the primary sense OF THIS READING; di4 has its own
+22320	地	di4	P	earth; ground; land	地上|土地|地方	
+22810	多	duo1	P	many; much	很多	
+22823	大	da4	P	big	大人	
+23545	对	dui4	P	correct	对了	
+23545	对	dui4	S	towards	对着	
+23545	对	dui4	A	a pair	一对	
+24403	当	dang1	P	to serve as	当然	
+24403	当	dang1	S	just at	当时	
+24471	得	de0	P	(joins a verb to how it is done)	跑得快	
+24471	得	de2	P	to get; to obtain	得到	three readings, one shape; a polyphone glossed at some readings and not others implies the rest are meaningless
+24471	得	dei3	P	must; to have to	我得走了	
+25140	戴	dai4	P	to wear (on the head or face)	戴帽子	
+25481	掉	diao4	P	to fall; to drop	掉下来	
+27934	洞	dong4	P	a hole; a cave	山洞	
+28404	滴	di1	P	a drop	水滴	
+28404	滴	di1	S	to drip	滴水	
+28783	灯	deng1	P	a lamp; a light	台灯	
+28857	点	dian3	P	a dot	黑点	
+28857	点	dian3	S	a little	一点	
+28857	点	dian3	A	o'clock	三点	
+30340	的	de0	P	(marks what belongs to what)	我的	
+30462	盾	dun4	P	a shield	盾牌	
+31532	第	di4	P	(makes a number an order: first, second)	第一	
+31561	等	deng3	P	to wait	等一下	
+31561	等	deng3	S	a rank	等级	
+31572	答	da2	P	to answer	回答	
+37117	都	dou1	P	all; both	都是	
+39030	顶	ding3	P	the top	山顶	
+39030	顶	ding3	S	to carry on the head	顶着	
+19968	一	yi1	P	one	一个|第一|一点	
+20102	了	le0	P	(marks that something has happened)	到了|丢了	
+26377	有	you3	P	to have	有的	
+26377	有	you3	S	there is	有人	
+20182	他	ta1	P	he; him	他的|他们	
+22312	在	zai4	P	at; in	现在	
+22312	在	zai4	S	to be somewhere	在家	
+19978	上	shang4	P	up; on; above	上山|地上	
+37324	里	li3	P	inside	里面|家里	
+26159	是	shi4	P	to be; is	是的|都是	
+25105	我	wo3	P	I; me	我的|我们	
+20154	人	ren2	P	a person	大人|人们	
+20010	个	ge4	P	(counts most things)	一个|那个	
+19981	不	bu4	P	not	不是|不好	
+22825	天	tian1	P	the sky	天上	
+22825	天	tian1	S	a day	今天	
+35828	说	shuo1	P	to say; to speak	说话|说明	
+21482	只	zhi1	P	(counts animals)	一只鸭|两只蚂蚁	
+26469	来	lai2	P	to come	来了|起来	
+24456	很	hen3	P	very	很多|很好	
+23376	子	zi3	P	a child; a son	子女	
+27700	水	shui3	P	water	水滴|水果	
+23427	它	ta1	P	it (an animal or a thing)	它的	
+36215	起	qi3	P	to rise; to get up	起来|一起	
+29422	狮	shi1	P	a lion	狮子	
+23567	小	xiao3	P	small; little	小鸟|大小	
+21313	十	shi2	P	ten	十个|十分	
+22269	国	guo2	P	a country	中国|国王	
+21073	剑	jian4	P	a sword	宝剑	
+20174	从	cong2	P	from	从前	
+20174	从	cong2	S	to follow	跟从	
+20040	么	me0	P	(ends a question word)	什么	
+26102	时	shi2	P	time	时间	
+26102	时	shi2	S	an hour	小时	
+21435	去	qu4	P	to go	回去	
+20204	们	men0	P	(makes a word mean more than one)	我们	
+19979	下	xia4	P	down; below	下来	
+19979	下	xia4	S	to get off	下车	
+37027	那	na4	P	that	那个	
+35199	西	xi1	P	west	西边	
+32650	羊	yang2	P	a sheep	山羊	
+30011	画	hua4	P	to draw	画画|画蛇	
+30011	画	hua4	S	a picture	图画	
+30000	田	tian2	P	a field	田里	
+27663	氏	shi4	P	a family name	氏族	
+22909	好	hao3	P	good; well	好人	
+21917	喝	he1	P	to drink	喝水	
+20820	兔	tu4	P	a rabbit	兔子	
+20250	会	hui4	P	can; to know how	学会	
+37202	酒	jiu3	P	wine	酒杯	
+36866	适	shi4	P	to suit	适合	
+36866	适	shi4	S	fitting	合适	
+36208	走	zou3	P	to walk; to go	走开	
+31166	禾	he2	P	a grain plant	禾苗	
+30707	石	shi2	P	a stone	石头	
+25226	把	ba3	P	to hold	把住	
+25226	把	ba3	S	(marks what is acted on)	把门关上	
+23601	就	jiu4	P	then; at once	就是	
+21448	又	you4	P	again	又来了	
+21448	又	you4	S	and also	又高又大	
+20160	什	shen2	P	(with 么, makes the word for what)	什么	
+20013	中	zhong1	P	the middle	中间	
+20013	中	zhong1	S	in; among	其中	
+36824	还	hai2	P	still	还在	
+36824	还	hai2	S	also	还有	
+36807	过	guo4	P	to pass; to cross	走过	
+35841	谁	shei2	P	who	是谁	
+34434	蚂	ma3	P	(part of the word for ant)	蚂蚁	
+34433	蚁	yi3	P	an ant	蚂蚁	
+33853	落	luo4	P	to fall; to drop	落下	
+33457	花	hua1	P	a flower	花草	
+33337	船	chuan2	P	a boat	小船	
+30475	看	kan4	P	to look; to see	看见	
+29483	猫	mao1	P	a cat	小猫	
+29066	熊	xiong2	P	a bear	大熊猫	
+26679	样	yang4	P	a kind	花样	
+26679	样	yang4	S	a way	这样	
+26641	树	shu4	P	a tree	大树	
+23569	少	shao3	P	few; little	不少	
+23460	室	shi4	P	a room	教室	
+21507	吃	chi1	P	to eat	吃饭	
+20063	也	ye3	P	also; too	也是	
+40493	鸭	ya1	P	a duck	鸭子	
+39640	高	gao1	P	tall; high	高山	
+36825	这	zhe4	P	this	这个	
+34917	补	bu3	P	to mend; to patch	补一补	
+34503	蛇	she2	P	a snake	画蛇	
+33495	苗	miao2	P	a sprout	禾苗	
+33311	舟	zhou1	P	a boat	刻舟	
+33258	自	zi4	P	self	自己	
+33258	自	zi4	S	from	自古	
+33050	脚	jiao3	P	a foot	脚下	
+32780	而	er2	P	and	而后	
+32780	而	er2	S	yet	然而	
+30683	矛	mao2	P	a spear	矛头	
+30528	着	zhe0	P	(marks something going on)	叼着	
+27809	没	mei2	P	not; to not have	没有	
+26970	楚	chu3	P	(the state of Chu)	楚人	
+26089	早	zao3	P	early	很早	
+26089	早	zao3	S	the morning	早上	
+24555	快	kuai4	P	fast; quick	很快	
+23608	尸	shi1	P	a corpse	尸体	
+23435	宋	song4	P	(the state of Song)	宋人	
+22902	奶	nai3	P	milk	牛奶	
+22902	奶	nai3	S	grandmother	奶奶	
+22836	头	tou2	P	a head	头上	
+22836	头	tou2	S	the top	山头	
+22826	太	tai4	P	too; very	太多	
+22774	壶	hu2	P	a pot; a kettle	水壶	
+21487	可	ke3	P	can; may	可以	
+21069	前	qian2	P	the front	前方	
+21069	前	qian2	S	before	从前	
+20854	其	qi2	P	his; its; that	其中	
+20799	儿	er2	P	a child; a son	儿子	
+20570	做	zuo4	P	to do; to make	做人	
+20320	你	ni3	P	you	你们	
+20197	以	yi3	P	with; by means of	可以	
+20004	两	liang3	P	two	两个	
+40517	鹅	e2	P	a goose	白鹅	
+39135	食	shi2	P	food	食物	
+39135	食	shi2	S	to eat	进食	
+39118	风	feng1	P	wind	大风	
+36827	进	jin4	P	to enter; to go in	进来	
+36793	边	bian1	P	a side; an edge	河边	
+36305	跑	pao3	P	to run	跑开	
+33021	能	neng2	P	can; to be able	不能	
+32773	者	zhe3	P	(one who does something)	作者	
+31505	笑	xiao4	P	to laugh; to smile	笑话	
+31481	竹	zhu2	P	bamboo	竹子	
+30896	碰	peng4	P	to bump; to touch	碰到	
+30524	眼	yan3	P	an eye	眼睛	
+30333	白	bai2	P	white	白色	
+30333	白	bai2	S	plain; blank	空白	
+27827	河	he2	P	a river	河水	
+27801	沙	sha1	P	sand	沙子	
+27743	江	jiang1	P	a large river	江边	
+27515	死	si3	P	to die	死了	
+27515	死	si3	S	dead	死水	
+26729	桩	zhuang1	P	a wooden post	树桩	
+26666	株	zhu1	P	a tree stump	守株	
+26666	株	zhu1	S	(counts trees)	一株树	
+26368	最	zui4	P	most	最好	
+26126	明	ming2	P	bright	明月	
+26126	明	ming2	S	next (in time)	明天	
+26045	施	shi1	P	to carry out; to apply	施行	
+25214	找	zhao3	P	to look for	找到	
+25163	手	shou3	P	a hand	手上	
+25152	所	suo3	P	a place	住所	
+25152	所	suo3	S	(marks what is done)	所见	
+25104	成	cheng2	P	to become	成为	
+25104	成	cheng2	S	to succeed	成事	
+24930	慢	man4	P	slow	很慢	
+24590	怎	zen3	P	how	怎么	
+24320	开	kai1	P	to open	开门|打开	
+24320	开	kai1	S	to start	开始	
+24066	市	shi4	P	a market	市场	
+24066	市	shi4	S	a city	城市	
+24050	已	yi3	P	already	已经	
+24049	己	ji3	P	oneself	自己	
+23478	家	jia1	P	a home	回家|家里	
+23478	家	jia1	S	a family	一家人	
+22905	她	ta1	P	she; her	她的	
+22827	夫	fu1	P	a man	农夫	
+22827	夫	fu1	S	a husband	丈夫	
+22768	声	sheng1	P	a sound; a voice	大声	
+22352	坐	zuo4	P	to sit	坐下	
+22238	回	hui2	P	to return; to go back	回来	
+21602	呢	ne0	P	(softens a question)	怎么呢	
+21518	后	hou4	P	behind	背后	
+21518	后	hou4	S	after	后来	
+21050	刺	ci4	P	to pierce	刺穿	
+21050	刺	ci4	S	a thorn	鱼刺	
+20960	几	ji3	P	how many	几个	
+20960	几	ji3	S	a few	几天	
+20892	农	nong2	P	farming	农田	
+20892	农	nong2	S	a farmer	农夫	
+20877	再	zai4	P	again	再来	
+20307	体	ti3	P	a body	身体	
+20303	住	zhu4	P	to live; to stay	住在	
+20030	举	ju3	P	to raise; to lift	举手	
+40657	黑	hei1	P	black; dark	黑色	
+40479	鸟	niao3	P	a bird	小鸟	
+38632	雨	yu3	P	rain	下雨	
+38382	问	wen4	P	to ask	问题	
+38378	闪	shan3	P	to flash	闪光	
+38378	闪	shan3	S	to dodge	闪开	
+38271	长	zhang3	P	to grow	长大	
+38271	长	zhang3	S	older	长者	
+37322	释	shi4	P	to let go	释放	
+37322	释	shi4	S	to explain	解释	
+37051	邻	lin2	P	a neighbour	邻居	
+36523	身	shen1	P	a body	身上	
+35874	谢	xie4	P	to thank	谢谢	
+35805	话	hua4	P	speech; words	说话	
+35797	试	shi4	P	to try	试试	
+35797	试	shi4	S	a test	考试	
+35760	记	ji4	P	to remember	记住	
+35760	记	ji4	S	to record	记下	
+35302	触	chu4	P	to touch; to bump into	触碰	
+35270	视	shi4	P	to look at	视线	
+35265	见	jian4	P	to see	看见	
+35265	见	jian4	S	to meet	见面	
+34892	行	xing2	P	to walk; to go	行走	
+34892	行	xing2	S	all right	不行	
+33609	草	cao3	P	grass	青草	
+32511	绿	lü4	P	green	绿色	
+32473	给	gei3	P	to give	给你	
+32463	经	jing1	P	to pass through	经过	
+32463	经	jing1	S	already	已经	
+31890	粒	li4	P	(counts small round things)	一粒米	
+31359	穿	chuan1	P	to wear	穿上	
+31359	穿	chuan1	S	to pass through	穿过	
+30693	知	zhi1	P	to know	知道	
+30555	睛	jing1	P	(part of the word for eye)	眼睛	
+30452	直	zhi2	P	straight	笔直	
+30452	直	zhi2	S	directly	直接	
+29992	用	yong4	P	to use	有用	
+29366	状	zhuang4	P	a shape	形状	
+29366	状	zhuang4	S	a state	状态	
+28155	添	tian1	P	to add	添上	
+27969	流	liu2	P	to flow	流水	
+27969	流	liu2	S	a stream	河流	
+27714	求	qiu2	P	to seek; to ask for	求剑	
+27668	气	qi4	P	air	空气	
+27668	气	qi4	S	anger	生气	
+27611	毛	mao2	P	hair; fur	羊毛	
+27599	每	mei3	P	every	每天	
+27468	歌	ge1	P	a song	唱歌	
+26376	月	yue4	P	the moon	月光	
+26376	月	yue4	S	a month	二月	
+26356	更	geng4	P	more; even more	更好	
+26149	春	chun1	P	spring	春天	
+26143	星	xing1	P	a star	星星	
+26085	日	ri4	P	the sun	日光	
+26085	日	ri4	S	a day	日子	
+26041	方	fang1	P	a direction	前方	
+26041	方	fang1	S	a square	方形	
+25343	拿	na2	P	to take; to hold	拿走	
+25325	拭	shi4	P	to wipe	擦拭	
+25165	才	cai2	P	only then	刚才	
+25165	才	cai2	S	talent	人才	
+24537	忙	mang2	P	busy	很忙|帮忙	
+24537	忙	mang2	S	to hurry	急忙	
+24418	形	xing2	P	a shape; a form	形状	
+23665	山	shan1	P	a hill; a mountain	高山	
+23621	居	ju1	P	to live	居住	
+23621	居	ju1	S	a home	邻居	
+23436	完	wan2	P	to finish	做完	
+23436	完	wan2	S	complete; whole	完全	
+23398	学	xue2	P	to learn; to study	学习	
+22987	始	shi3	P	to begin	开始	
+22865	契	qi4	P	to carve	契刻	
+22865	契	qi4	S	an agreement	契约	
+22812	夜	ye4	P	night	夜里	
+22797	复	fu4	P	again	反复	
+22797	复	fu4	S	to repeat	复习	
+22788	处	chu4	P	a place	到处	
+22368	坠	zhui4	P	to fall; to drop	坠下	
+22280	圈	juan4	P	a pen for animals	羊圈	
+22280	圈	quan1	P	a circle; a ring	圆圈	
+22266	固	gu4	P	solid; firm	牢固	
+21644	和	he2	P	and; with	你和我	
+21644	和	he2	S	gentle	和气	
+21495	号	hao4	P	a mark	记号	
+21495	号	hao4	S	a number	号码	
+21483	叫	jiao4	P	to call; to be called	叫做	
+21475	口	kou3	P	a mouth	开口	
+21475	口	kou3	S	an opening	门口	
+21464	变	bian4	P	to change	变成	
+21407	原	yuan2	P	original	原来	
+21407	原	yuan2	S	a plain	平原	
+21320	午	wu3	P	noon	中午	
+21315	千	qian1	P	a thousand	千万	
+21051	刻	ke4	P	to carve	刻舟	
+21051	刻	ke4	S	a moment	一刻	
+20937	凉	liang2	P	cool	凉水	
+20912	冰	bing1	P	ice	冰水	
+20852	兴	xing4	P	interest	兴趣	
+20852	兴	xing4	S	a mood	高兴	
+20837	入	ru4	P	to enter	入门	
+20808	先	xian1	P	first; earlier	先生	
+20687	像	xiang4	P	to look like	好像	
+20687	像	xiang4	S	an image	画像	
+20505	候	hou4	P	to wait	等候	
+20505	候	hou4	S	a time	时候	
+20351	使	shi3	P	to make; to use	使用	
+20170	今	jin1	P	now; today	今年	
+20116	五	wu3	P	five	五个	
+20107	事	shi4	P	a matter; a thing	故事	
+20043	之	zhi1	P	(joins what belongs to what)	之后	
+19977	三	san1	P	three	三个	
+40644	黄	huang2	P	yellow	黄色	
+39277	饭	fan4	P	rice	米饭	
+39277	饭	fan4	S	a meal	吃饭	
+39184	餐	can1	P	a meal	早餐	
+39134	飞	fei1	P	to fly	飞走	
+39048	颈	jing3	P	the neck	长颈	
+39033	项	xiang4	P	the nape	颈项	
+39033	项	xiang4	S	an item	项目	
+38754	面	mian4	P	a face	面前	
+38754	面	mian4	S	a side	里面	
+38752	靠	kao4	P	to lean on; to rely on	靠近	
+38706	露	lu4	P	dew	露水	
+38706	露	lu4	S	to show	露出	
+38684	霜	shuang1	P	frost	白霜	
+38498	院	yuan4	P	a courtyard	院子	
+38451	阳	yang2	P	the sun	太阳	
+38451	阳	yang2	S	bright	阳光	
+38395	闻	wen2	P	to hear	听闻	
+38395	闻	wen2	S	to smell	闻到	
+38388	间	jian1	P	between	中间	
+38388	间	jian1	S	a room	房间	
+38386	闲	xian2	P	free; at leisure	空闲	
+38376	门	men2	P	a door; a gate	开门	
+38271	长	chang2	P	long	长长	
+38236	镜	jing4	P	a mirror	镜子	
+38236	镜	jing4	S	a lens	眼镜	
+38155	锋	feng1	P	a sharp point; an edge	锋利	
+38148	锄	chu2	P	a hoe	锄头	
+38148	锄	chu2	S	to hoe	锄地	
+38075	钻	zuan1	P	to bore through	钻进	
+37326	野	ye3	P	wild	野草	
+37326	野	ye3	S	open country	野外	
+37325	重	zhong4	P	heavy	很重	
+37325	重	zhong4	S	important	重要	
+36989	遽	ju4	P	hurriedly; at once	遽然	
+36893	逝	shi4	P	to pass away; to go by	逝去	
+36828	远	yuan3	P	far	很远	
+36763	辛	xin1	P	hard; bitter	辛苦	
+36731	轻	qing1	P	light in weight	很轻	
+36731	轻	qing1	S	gentle	轻轻	
+36335	路	lu4	P	a road; a way	路上	
+36214	赶	gan3	P	to hurry	赶快	
+36214	赶	gan3	S	to drive away	赶走	
+35831	请	qing3	P	please	请进	
+35831	请	qing3	S	to invite	请客	
+35799	诗	shi1	P	a poem	古诗	
+35782	识	shi2	P	to know; to recognise	认识	
+35475	誓	shi4	P	to swear	发誓	
+35475	誓	shi4	S	an oath	誓言	
+35282	角	jiao3	P	a horn	牛角	
+35282	角	jiao3	S	a corner	角落	
+35273	觉	jue2	P	to feel; to sense	觉得	
+35273	觉	jiao4	P	sleep	睡觉	
+35201	要	yao4	P	to want	想要	
+35201	要	yao4	S	must	要是	
+35013	装	zhuang1	P	to load	装水	
+35013	装	zhuang1	S	to pretend	装作	
+34903	街	jie1	P	a street	街上	
+34892	行	hang2	P	a row; a line	一行	
+34892	行	heng2	P	attainment; skill	道行	
+22280	圈	juan1	P	to shut in; to pen up	圈养	
+33618	荒	huang1	P	wasteland	荒地	
+33618	荒	huang1	S	barren	荒山	
+33510	苦	ku3	P	bitter	苦水	
+33510	苦	ku3	S	hard	辛苦	
+33509	若	ruo4	P	if; like	若干	
+33394	色	se4	P	colour	白色	
+33394	色	shai3	P	colour (in everyday speech)	掉色	
+33136	腰	yao1	P	the waist	弯腰	
+32972	背	bei4	P	the back	背上	
+32972	背	bei4	S	behind	背后	
+32972	背	bei1	P	to carry on the back	背书包	
+32789	耕	geng1	P	to plough; to till	耕田	
+32786	耒	lei3	P	an old wooden plough	耒耜	
+32676	群	qun2	P	a crowd; a flock	一群	
+32467	结	jie2	P	to tie	结绳|结果	
+32467	结	jie2	S	a knot	打结	
+32467	结	jie1	P	to bear fruit	结实	
+32418	红	hong2	P	red	红色	
+32047	累	lei4	P	tired	很累	
+32047	累	lei2	P	a burden	累赘	
+32047	累	lei3	P	to pile up	积累	
+31354	空	kong1	P	empty	空白	
+31354	空	kong1	S	the sky	天空	
+31354	空	kong4	P	free time; a gap	有空	
+31351	穷	qiong2	P	poor	穷人	
+31351	穷	qiong2	S	exhausted	无穷	
+31181	种	zhong3	P	a kind	种类	
+31181	种	zhong3	S	a seed	种子	
+31181	种	zhong4	P	to plant	种田	
+31181	种	chong2	P	(a family name)	种师道	
+30828	硬	ying4	P	hard; firm	很硬	
+30772	破	po4	P	broken	破了	
+30772	破	po4	S	to break	打破	
+30691	矣	yi3	P	(ends a sentence, in old writing)	晚矣	
+30690	矢	shi3	P	an arrow	弓矢	
+30561	睡	shui4	P	to sleep	睡着	
+30496	眠	mian2	P	to sleep	安眠	
+30446	目	mu4	P	an eye	目光	
+30424	盘	pan2	P	a plate	盘子	
+30424	盘	pan2	S	to coil	盘起	
+30342	皆	jie1	P	all; every	皆是	
+30097	疑	yi2	P	to doubt; to suspect	疑心	
+30041	留	liu2	P	to stay	留下	
+30041	留	liu2	S	to keep	留住	
+29616	现	xian4	P	now	现在	
+29616	现	xian4	S	to appear	出现	
+29609	玩	wan2	P	to play	玩水	
+29436	狼	lang2	P	a wolf	野狼	
+29233	爱	ai4	P	to love	爱心	
+28903	烧	shao1	P	to burn; to cook	烧水	
+28369	滑	hua2	P	slippery	很滑	
+28369	滑	hua2	S	to slide	滑下	
+28287	湿	shi1	P	wet	湿了	
+28165	清	qing1	P	clear; clean	清水	
+28082	液	ye4	P	a liquid	液体	
+28041	涉	she4	P	to wade; to involve	涉水	
+28023	海	hai3	P	the sea	大海	
+28014	浮	fu2	P	to float	浮起	
+27975	浇	jiao1	P	to water; to pour	浇水	
+27874	波	bo1	P	a wave	水波	
+27773	汽	qi4	P	steam; vapour	汽水	
+27735	汗	han4	P	sweat	出汗	
+27604	比	bi3	P	to compare	比一比	
+27604	比	bi3	S	than	比你高	
+27492	此	ci3	P	this	因此	
+27490	止	zhi3	P	to stop	止住	
+27442	欲	yu4	P	to want	欲求	
+27442	欲	yu4	S	about to	欲言	
+27004	楼	lou2	P	a storey	楼上	
+27004	楼	lou2	S	a building	高楼	
+26869	棵	ke1	P	(counts plants)	一棵树	
+26725	桥	qiao2	P	a bridge	小桥	
+26657	校	xiao4	P	a school	学校	
+26543	枯	ku1	P	withered; dry	枯木	
+26479	杯	bei1	P	a cup	一杯水	
+26412	本	ben3	P	a root	根本	
+26412	本	ben3	S	(counts books)	一本书	
+26395	望	wang4	P	to look at	看望	
+26395	望	wang4	S	to hope	希望	
+26354	曲	qu1	P	bent; crooked	弯曲	
+26352	曰	yue1	P	to say (in old writing)	子曰	
+26195	晓	xiao3	P	dawn	春晓	
+26195	晓	xiao3	S	to know	知晓	
+26049	旁	pang2	P	beside	旁边	
+26049	旁	pang2	S	a side	两旁	
+25972	整	zheng3	P	whole	整个	
+25972	整	zheng3	S	to tidy	整理	
+25925	故	gu4	P	old; former	故乡	
+25925	故	gu4	S	a reason	故事	
+25925	故	gu4	A	therefore	故此	
+25913	改	gai3	P	to change; to correct	改正	
+25910	收	shou1	P	to gather; to receive	收好	
+25758	撞	zhuang4	P	to knock into	撞上	
+25644	搬	ban1	P	to move something	搬走	
+25509	接	jie1	P	to receive; to join	接住	
+25490	排	pai2	P	a row	一排	
+25490	排	pai2	S	to arrange	排好	
+25484	掌	zhang3	P	the palm	手掌	
+25484	掌	zhang3	S	to control	掌管	
+25441	捡	jian3	P	to pick up	捡起	
+25342	拾	shi2	P	to pick up; to gather	拾起	
+25320	拨	bo1	P	to push aside; to dial	拨开	
+25300	拔	ba2	P	to pull out	拔苗	
+25260	抬	tai2	P	to lift; to carry	抬头	
+25240	折	zhe2	P	to break	折了	
+25240	折	zhe2	S	to fold	折纸	
+24908	慌	huang1	P	flustered; in a panic	慌张	
+24785	惑	huo4	P	confused	迷惑	
+24785	惑	huo4	S	to mislead	惑人	
+24724	悔	hui3	P	to regret	后悔	
+24643	恃	shi4	P	to rely on	有恃	
+24605	思	si1	P	to think	思考	
+24605	思	si1	S	to miss	思念	
+24515	心	xin1	P	the heart; the mind	小心	
+24448	往	wang3	P	towards	往前	
+24448	往	wang3	S	to go	往来	
+24352	张	zhang1	P	to open out	张嘴	
+24352	张	zhang1	S	(counts flat things)	一张纸	
+24202	床	chuang2	P	a bed	上床	
+24180	年	nian2	P	a year	今年	
+24179	平	ping2	P	flat	平地	
+24179	平	ping2	S	peaceful	平安	
+24120	常	chang2	P	often	常常	
+24120	常	chang2	S	usual	平常	
+24110	帮	bang1	P	to help	帮忙	
+24038	左	zuo3	P	left	左手	
+23736	岸	an4	P	a bank; a shore	河岸	
+23681	岁	sui4	P	a year of age	三岁	
+23627	屋	wu1	P	a house	屋子	
+23627	屋	wu1	S	a room	屋里	
+23618	层	ceng2	P	a layer	一层	
+23618	层	ceng2	S	a storey	楼层	
+23613	尽	jin3	P	as far as possible	尽量	
+23613	尽	jin4	P	to use up	用尽	
+23613	尽	jin4	S	the end	尽头	
+23458	客	ke4	P	a guest	客人	
+23454	实	shi2	P	real; solid	实在	
+23453	宝	bao3	P	a treasure	宝剑	
+23432	守	shou3	P	to guard; to wait for	守株	
+23401	孩	hai2	P	a child	孩子	
+23244	嫌	xian2	P	to mind; to dislike	嫌少	
+22815	够	gou4	P	enough	不够	
+22806	外	wai4	P	outside	外面	
+22763	士	shi4	P	a scholar; a gentleman	士人	
+22362	坚	jian1	P	firm; hard	坚固	
+22303	土	tu3	P	earth; soil	土地	
+22260	围	wei2	P	to surround	四周围	
+22253	园	yuan2	P	a garden	花园	
+22240	因	yin1	P	because	因为	
+22240	因	yin1	S	a cause	原因	
+22235	四	si4	P	four	四个	
+22068	嘴	zui3	P	a mouth	张嘴	
+21980	嗜	shi4	P	to be fond of	嗜好	
+21884	啼	ti2	P	to cry; to crow	啼哭	
+21809	唱	chang4	P	to sing	唱歌	
+21608	周	zhou1	P	a circle	四周	
+21608	周	zhou1	S	a week	一周	
+21566	吾	wu2	P	I; my (in old writing)	吾人	
+21561	吹	chui1	P	to blow	吹风	
+21543	吧	ba0	P	(softens a suggestion)	走吧	
+21543	吧	ba1	P	a bar	酒吧	
+21521	向	xiang4	P	towards	向前	
+21521	向	xiang4	S	a direction	方向	
+21494	叶	ye4	P	a leaf	叶子	
+21494	叶	xie2	P	to rhyme	叶韵	
+21491	右	you4	P	right	右手	
+21482	只	zhi3	P	only	只有	
+21478	另	ling4	P	another; separately	另外	
+21457	发	fa1	P	to send out	发出|发现	
+21457	发	fa1	S	to grow	发芽	
+21457	发	fa4	P	hair	头发	
+21335	南	nan2	P	south	南方	
+21335	南	na1	P	(in a Buddhist chant)	南无	
+21334	卖	mai4	P	to sell	卖出	
+21253	包	bao1	P	to wrap	包住	
+21253	包	bao1	S	a bag	书包	
+21183	势	shi4	P	power	势力	
+21183	势	shi4	S	a tendency	走势	
+21147	力	li4	P	strength; power	力气	
+21103	副	fu4	P	(counts sets)	一副	
+21103	副	fu4	S	deputy	副手	
+21033	利	li4	P	sharp	锋利	
+21033	利	li4	S	benefit	利益	
+20998	分	fen1	P	to divide	分开	
+20998	分	fen1	S	a minute	十分	
+20998	分	fen4	P	a share; a part	过分	
+20986	出	chu1	P	to go out	出来	
+20986	出	chu1	S	to produce	出产	
+20919	冷	leng3	P	cold	很冷	
+20864	冀	ji4	P	to hope for	冀求	
+20859	养	yang3	P	to raise; to nourish	养分	
+20851	关	guan1	P	to close	关门	
+20851	关	guan1	S	to concern	关心	
+20840	全	quan2	P	whole; all	全部	
+20809	光	guang1	P	light	月光	
+20809	光	guang1	S	bare	光头	
+20493	倍	bei4	P	times; fold	一倍	
+20381	依	yi1	P	to rely on	依山	
+20381	依	yi1	S	according to	依次	
+20365	侍	shi4	P	to wait on	侍立	
+20142	亮	liang4	P	bright	天亮	
+20134	亦	yi4	P	also (in old writing)	亦然	
+20110	于	yu2	P	at; in; to	于是	
+20108	二	er4	P	two	二月	
+20070	书	shu1	P	a book	书包	
+20070	书	shu1	S	to write	书写	
+20065	乡	xiang1	P	a village	乡下	
+20065	乡	xiang1	S	one's home place	故乡	
+20046	乎	hu1	P	(ends a question, in old writing)	不亦乐乎	
+20026	为	wei4	P	for; because of	因为	
+20026	为	wei2	P	to be; to act as	为人	
+19990	世	shi4	P	the world	世上	
+19990	世	shi4	S	an age	一世	
+19971	七	qi1	P	seven	七个	

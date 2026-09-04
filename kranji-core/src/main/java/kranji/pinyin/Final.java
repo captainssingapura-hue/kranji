@@ -24,12 +24,7 @@ public record Final(Head head, Body body, Tail tail) {
      * {@link PinyinSyllable#toDiacritic()}, not here.</p>
      */
     public String spelling() {
-        String medial = switch (head) {
-            case I -> "i";
-            case U -> "u";
-            case V -> "ü";
-            case OPEN -> "";
-        };
+        String medial = head.symbol();
         String nucleus = body.symbol();
         // Pinyin orthography quirk: the u-glide in "ao"/"iao" is written
         // as "o", not "u" — the Tail symbol is phonemic, not spelling.
