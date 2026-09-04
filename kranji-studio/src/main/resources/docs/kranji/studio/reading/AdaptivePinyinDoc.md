@@ -1,14 +1,13 @@
 # Adaptive Pinyin
 
-The core mechanic. A character carries its reading only when this reader needs
-it.
+The core mechanic. A reading is shown only when this reader needs it.
 
 ## Four modes
 
 | Mode | Shows pinyin for | For |
 |---|---|---|
 | `ALL` | every Han character | earliest readers; matches familiar 注音 material |
-| `ADAPTIVE` | characters not yet `KNOWN` | the default, and the reason the app exists |
+| `ADAPTIVE` | readings not in the known set | the default, and the reason the app exists |
 | `ON_TAP` | nothing until tapped | self-testing — "do I actually know this?" |
 | `NONE` | nothing | fluency check, or reading aloud to an adult |
 
@@ -18,35 +17,55 @@ how willing a child is to attempt a hard sentence.
 
 ## The rule
 
-For a `HanToken`, with mode `m` and profile `p`:
+For a cell carrying character `z` and reading `r`, with mode `m` and known set
+`k`:
 
 ```
 ALL       → annotate
 NONE      → bare
 ON_TAP    → bare, reveal on tap
-ADAPTIVE  → annotate unless p.state(glyph) == KNOWN
+ADAPTIVE  → annotate unless (z, r) is in k
 ```
 
-`UNSEEN` and `LEARNING` both annotate. A character in `LEARNING` is one the
-reader has met and not yet secured; removing support at that point is precisely
-when it hurts. Support is withdrawn on promotion to `KNOWN`, not before.
+**The test is on the pair, not the character.** The cell already knows which
+reading it is showing — that is what the annotation says — so the test is the
+pair it already has. Two occurrences of 行 in one article get different answers
+when only xíng has been marked: 行走 loses its pinyin, 银行 keeps it. A
+character-keyed test could not express that, and would withdraw support from the
+harder of the two. See *The Known Set*.
 
-The rule is deliberately trivial. Everything interesting lives in how a
-character reaches `KNOWN`, which is the subject of the next document.
+There are no states. An earlier design had `UNSEEN → LEARNING → KNOWN` with
+promotion and demotion; it was cut, and with it the question of when support is
+withdrawn. A reading is in the set or it is not.
+
+The rule is deliberately trivial. Everything interesting lives in how a reading
+enters the set, which is the subject of the next document.
 
 ## Presentation
 
-Annotations sit above the character, as ruby text — the convention children's
-material already uses. Three properties matter:
+Annotations sit above the character, in the annotation row of the cell.
 
-- **Line rhythm is stable.** Space for the annotation line is reserved whether
-  or not a given line uses it, so toggling modes does not reflow the page.
-  Text that jumps when a setting changes is disorienting for a child.
+**Not ruby.** Ruby spreads its base characters apart to fit the annotation, so
+spacing would depend on which readings this reader knows — the page would
+re-space as a child learns, and the same article would have a different shape in
+June than in January. That is the one thing this mechanic must not do. Each line
+is a two-row table instead: annotations above, characters below, every column
+one square. See the Reader phase, where ruby was tested and rejected on
+evidence.
+
+Three properties matter:
+
+- **Line rhythm is stable.** Space for the annotation is reserved whether or not
+  a given cell uses it, so toggling modes does not reflow the page. Text that
+  jumps when a setting changes is disorienting for a child.
 - **The annotation is visually subordinate.** Smaller and lighter than the
   character. The character is what is being learned; pinyin is scaffolding and
   should look like scaffolding.
-- **Switching modes never reflows.** Same consequence as the first point, worth
-  stating as a hard requirement because it is easy to violate.
+- **Marking never reflows either.** Hidden with `visibility`, never `display`,
+  so a cell keeps its height. This matters more here than for the manual modes:
+  marking a reading changes every occurrence of it in the article, potentially
+  several lines apart. If that reflowed, the child's place on the page would
+  move as a reward for knowing something.
 
 ## The composition hint
 
@@ -69,7 +88,7 @@ Three things are happening:
    built from 青. The child is not memorising an arbitrary pairing.
 2. **The meaning is grounded.** 氵 is water; 清 is about clarity of water. The
    composition is the etymology.
-3. **It connects to what the reader already has.** If 青 is `KNOWN`, say so. A
+3. **It connects to what the reader already has.** If 青 is in the known set, say so. A
    new character built from familiar parts is a much smaller ask than a new
    shape, and telling the reader that is most of the encouragement needed.
 

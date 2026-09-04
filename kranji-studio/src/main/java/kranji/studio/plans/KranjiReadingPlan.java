@@ -82,8 +82,8 @@ public final class KranjiReadingPlan implements Plan {
 
                 new Decision("r2",
                         "How does a character become KNOWN?",
-                        "Explicitly, from any of several channels - never by algorithm.",
-                        "Explicit, multi-channel, reversible",
+                        "Explicitly, from wherever the reader already is - never by algorithm.",
+                        "Explicit, reversible, unattributed",
                         DecisionStatus.RESOLVED,
                         "An algorithm inferring knowledge from silence is guessing: a child who "
                       + "did not tap for a reading may have skipped the word or guessed from "
@@ -91,9 +91,16 @@ public final class KranjiReadingPlan implements Plan {
                       + "wherever the reader already is - in the reader, in the manager, in "
                       + "review, or by bulk import - and makes every mark removable.",
                         "Introduces the known-set manager as a first-class surface rather than a "
-                      + "settings page. Each mark records the channel it came from, so a bulk "
-                      + "import is distinguishable from a reviewed confirmation and a bad import "
-                      + "can be undone as a unit. Demotion is a plain button, not a decay rule."),
+                      + "settings page, and a bad import can be undone as a unit. Demotion is a "
+                      + "plain button, not a decay rule.\n\n"
+                      + "AMENDED: per-mark channel provenance is cut. It was kept for exactly "
+                      + "one reason - that a bulk import must be undoable whole - and that turned "
+                      + "out not to need it: the import remembers the keys it ADDED and stores "
+                      + "them beside the set, so undo works without knowing where any individual "
+                      + "mark came from. The cost of keeping it would have been the shape of the "
+                      + "set, the stored row and the export format families may already hold. "
+                      + "What is given up is that only the most recent import stays "
+                      + "identifiable; see The Known Set."),
 
                 new Decision("r3",
                         "How are per-occurrence readings resolved during preparation?",
@@ -198,7 +205,7 @@ public final class KranjiReadingPlan implements Plan {
                                 new Task("Overview and scope", true),
                                 new Task("Domain model - content tree, profile, per-occurrence readings", true),
                                 new Task("Adaptive pinyin - modes, rule, composition hint", true),
-                                new Task("Known-character management - channels, add and remove", true),
+                                new Task("Known-character management - add, remove, import", true),
                                 new Task("Article catalogue and readability", true),
                                 new Task("Article preparation - polyphony and the baseline", true),
                                 new Task("The simple Zi layer - two tiers, Java DSL", true),
@@ -288,8 +295,8 @@ public final class KranjiReadingPlan implements Plan {
                                 new Task("Article, Block (Paragraph | Verse | Illustration), Token (Zi | Plain)", true),
                                 new Task("Cell model and the punctuation-merge rule, unit-tested", true),
                                 new Task("Corpus bridge - readings resolved through SyllableIndex", true),
-                                new Task("Profile, KnownEntry, CharacterState, Channel", false),
-                                new Task("Readability as a pure function of article and profile", false)),
+                                new Task("Profile and the known set - no states, no channels (r2)", true),
+                                new Task("Readability as a pure function of article and profile", true)),
                         List.of(new Dependency("rp2", "Needs somewhere to live."),
                                 new Dependency("rp3", "Needs the corpus to resolve against.")),
                         "Model compiles and is unit-tested with no browser and no Homing runtime "
@@ -312,7 +319,7 @@ public final class KranjiReadingPlan implements Plan {
                         List.of(
                                 new Task("Reader widget - fixed square grid, not ruby", true),
                                 new Task("Reserved annotation row - no reflow when modes change", true),
-                                new Task("ALL and NONE modes", true),
+                                new Task("ALL, ADAPTIVE and NONE modes", true),
                                 new Task("Article GetAction serving resolved cells", true),
                                 new Task("Typeface and size controls, shared with the Characters pane", true),
                                 new Task("Punctuation drawn by the cell class, measured per glyph", true),
@@ -335,21 +342,21 @@ public final class KranjiReadingPlan implements Plan {
 
                 new Phase("rp6", "Known Zi management",
                         "Make the known set a place, not a setting.",
-                        "A workspace for the known set: browse by state, add and remove, see "
-                      + "where each mark came from, bulk-import a list, undo an import as a unit. "
-                      + "This is the surface r2 chose instead of an inference algorithm.",
-                        PhaseStatus.NOT_STARTED,
+                        "A workspace for the known set: browse it, add and remove, bulk-import "
+                      + "a list, undo an import as a unit. This is the surface r2 chose instead "
+                      + "of an inference algorithm.",
+                        PhaseStatus.IN_PROGRESS,
                         List.of(
-                                new Task("Known-set workspace and grid widget", false),
-                                new Task("Add and remove, single and bulk", false),
-                                new Task("Channel provenance recorded per mark", false),
-                                new Task("Import a character list; undo an import as a unit", false),
-                                new Task("Filter by state, radical, stroke count, composition", false),
-                                new Task("Mark-known channel wired from the reader", false)),
+                                new Task("Known-set workspace and grid widget", true),
+                                new Task("Add and remove, single and bulk", true),
+                                new Task("Channel provenance per mark - CUT, see r2", true),
+                                new Task("Import a character list; undo an import as a unit", true),
+                                new Task("Filter by radical, stroke count, composition", false),
+                                new Task("Marking wired from a reader selection", true)),
                         List.of(new Dependency("rp4", "Needs the profile model."),
-                                new Dependency("rp5", "The reader is one of the channels.")),
-                        "A character can be marked and unmarked from two channels, and the "
-                      + "manager shows which channel each mark came from.",
+                                new Dependency("rp5", "The reader is where a character is picked.")),
+                        "A reading can be marked and unmarked, and an import can be taken back "
+                      + "whole without touching what the child earned.",
                         "",
                         "L",
                         "Filtering by radical and composition is where the corpus makes this "
@@ -360,21 +367,32 @@ public final class KranjiReadingPlan implements Plan {
                         "IndexedDB-backed profiles, export and import, several profiles per "
                       + "device, ADAPTIVE mode wired to profile state, and the composition hint "
                       + "for characters that have a structural record.",
-                        PhaseStatus.NOT_STARTED,
+                        PhaseStatus.IN_PROGRESS,
                         List.of(
-                                new Task("IndexedDB store behind a storage port", false),
+                                new Task("IndexedDB store behind a storage port", true),
                                 new Task("Several profiles on one device", false),
-                                new Task("Export and import a profile as a file", false),
-                                new Task("ADAPTIVE mode", false),
+                                new Task("Export and import a profile as a file", true),
+                                new Task("ADAPTIVE mode", true),
                                 new Task("Composition hint, one level deep by default", false),
                                 new Task("Flag which components the reader already knows", false)),
                         List.of(new Dependency("rp6", "Needs a known set worth reading against.")),
-                        "Marking a character known removes its annotation on the next render, "
-                      + "and the profile survives a browser restart.",
+                        "Marking a reading known removes its annotation without a reload, and "
+                      + "the record survives a browser restart.",
                         "Fall back to manual modes; the reader works without a profile.",
                         "L",
-                        "Define the stored shape for several profiles even if the switcher UI "
-                      + "lands late - retrofitting a single-profile schema is expensive."),
+                        "Taken: the stored shape carries a profile key from the start although "
+                      + "only \"default\" is ever written, because a key added later is a "
+                      + "migration whereas a key with one value is a word.\n\n"
+                      + "The set is keyed on (character, reading), not the character - see The "
+                      + "Known Set. That is what lets 行走 lose its pinyin while 银行 keeps "
+                      + "it, and a character-keyed set would have withdrawn support from the "
+                      + "harder of the two. The reader only watches the set; marking stays a "
+                      + "deliberate act made in front of a character's other readings.\n\n"
+                      + "One bug worth remembering: the party answers a new member immediately "
+                      + "with an empty set, while the disk is still being read, and persisting "
+                      + "that reply erased the record on every visit. Nothing on screen looked "
+                      + "wrong - it came back empty only on the NEXT load. The rule now lives "
+                      + "in one tested module rather than in each pane."),
 
                 new Phase("rp8", "Article source and preparation",
                         "Turn text into articles, repeatably.",
@@ -453,20 +471,36 @@ public final class KranjiReadingPlan implements Plan {
                         "The themed catalogue over the article source, readability per profile, "
                       + "the bands, best-fit-first ordering, frequency-tier reach, and the "
                       + "almost-ready view.",
-                        PhaseStatus.NOT_STARTED,
+                        PhaseStatus.IN_PROGRESS,
                         List.of(
-                                new Task("Themed catalogue over the source SPI", false),
-                                new Task("Readability and distinct-new-character count", false),
+                                new Task("Themed catalogue over the source SPI", true),
+                                new Task("Readability and distinct-new-character count", true),
                                 new Task("Frequency-tier reach as a second difficulty signal", false),
-                                new Task("Bands and best-fit-first ordering", false),
+                                new Task("Bands, shown on the tree and in the reader", true),
+                                new Task("Best-fit-first ordering", false),
                                 new Task("Almost-ready view", false),
-                                new Task("Keep too-hard articles visible", false)),
+                                new Task("Keep too-hard articles visible", true)),
                         List.of(new Dependency("rp7", "Readability needs a profile."),
                                 new Dependency("rp8", "Needs prepared articles to measure.")),
-                        "Articles are ranked by fit and the just-right band is populated.",
+                        "Every article carries its readability and its count of readings left "
+                      + "to learn, on the tree and in the reader, updated as marks are made.",
                         "Fall back to a flat themed list with no readability figures.",
                         "M",
-                        "")
+                        "The split that made this cheap: the server sends a CENSUS - what "
+                      + "each article asks, counted by reading - and the browser intersects "
+                      + "it with a known set the server has never seen. Readability could "
+                      + "not have been computed server-side without breaking r4, and doing "
+                      + "it locally means re-ranking as a child learns costs no request.\n\n"
+                      + "16KB for the whole library of 23, cached by URL, so it is sent once "
+                      + "rather than per article per profile change.\n\n"
+                      + "Counted by READING, not by character, matching the known set. An "
+                      + "article using 行 as háng asks nothing of a reader who learnt xíng, "
+                      + "and folding them together would report a readability the child "
+                      + "cannot achieve.\n\n"
+                      + "Best-fit ordering is written and tested but not wired: the tree's "
+                      + "order is the curated one an author chose, and re-sorting it by fit "
+                      + "would throw that away. It belongs to a flat listing view, not to "
+                      + "this tree.")
         );
     }
     @Override
@@ -481,16 +515,19 @@ public final class KranjiReadingPlan implements Plan {
                         "Prepared articles show the right reading for polyphonic characters, "
                       + "and no article ships with an unconsidered ambiguity.", false),
                 new Acceptance("Annotation adapts",
-                        "A character marked known loses its annotation; an unknown one keeps it.", false),
-                new Acceptance("Marks are reversible and attributed",
-                        "Any character can be unmarked, and the manager shows which channel "
-                      + "each mark came from.", false),
+                        "A reading marked known loses its annotation; an unmarked one keeps it, "
+                      + "including the other reading of the same character.", true),
+                new Acceptance("Marks are reversible",
+                        "Any reading can be unmarked, and a bulk import can be taken back "
+                      + "whole without touching the readings the child earned. Attribution "
+                      + "was dropped from this criterion when channel provenance was cut - "
+                      + "see r2.", true),
                 new Acceptance("Characters explain themselves",
                         "Tapping an unfamiliar character in the corpus shows its composition "
                       + "and flags which components the reader already knows.", false),
                 new Acceptance("Nothing leaves the device",
                         "No network transmission of profile state; the server holds no profile; "
-                      + "export is explicit and user-initiated.", false),
+                      + "export is explicit and user-initiated.", true),
                 new Acceptance("Out-of-corpus characters degrade gracefully",
                         "An article containing characters Kranji does not model still renders "
                       + "and still annotates.", false),

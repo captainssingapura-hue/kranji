@@ -13,7 +13,7 @@ public record KnownSetDoc() implements ClasspathMarkdownDoc {
 
     @Override public UUID   uuid()    { return ID; }
     @Override public String title()   { return "The Known Set"; }
-    @Override public String summary() { return "One set of characters, no states, no timestamps - and why provenance still earns its place."; }
+    @Override public String summary() { return "Keyed on (character, reading), not the character - one set, no states, no timestamps."; }
     @Override public String category(){ return "DESIGN"; }
     @Override public List<Reference> references() { return List.of(); }
 }

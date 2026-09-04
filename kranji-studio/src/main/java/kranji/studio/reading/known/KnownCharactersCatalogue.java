@@ -15,7 +15,8 @@ import java.util.List;
  * <p>Small documents rather than two large ones. The earlier pair described a
  * three-state learning model that has been cut: the app does not teach, it
  * lets a child read and records the only fact that changes what they see —
- * which characters they can read without pinyin.</p>
+ * which readings they can read without pinyin, keyed on the (character, reading)
+ * pair rather than the character alone.</p>
  *
  * <p>Each document here covers one decision, so a change to marking does not
  * require re-reading the storage design to find out whether anything moved.</p>
@@ -28,7 +29,7 @@ public record KnownCharactersCatalogue()
     @Override public ReadingCatalogue parent() { return ReadingCatalogue.INSTANCE; }
     @Override public String name()    { return "Known Characters"; }
     @Override public String summary() {
-        return "One set, not a learning model - the characters a child reads without pinyin, "
+        return "One set, not a learning model - the readings a child reads without pinyin, "
              + "how one gets in, how one gets out, and where the record lives.";
     }
     @Override public String badge()   { return "SECTION"; }

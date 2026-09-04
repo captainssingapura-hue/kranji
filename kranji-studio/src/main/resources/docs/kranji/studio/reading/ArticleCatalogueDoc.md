@@ -25,14 +25,42 @@ metadata on each article rather than the top-level split — a browsing child as
 The computed number that makes the catalogue useful:
 
 ```
-readability(article, profile) =
-    KNOWN Han tokens in article ÷ total Han tokens in article
+readability(article, reader) =
+    known Han tokens in article ÷ total Han tokens in article
 ```
 
-Reported as a percentage, alongside the count of distinct unfamiliar characters
+Reported as a percentage, alongside the count of distinct unfamiliar **readings**
 — which is often the more useful figure. An article at 94% with eight distinct
-new characters is a different proposition from 94% with one new character
-repeated forty times. The second is a much better lesson.
+new readings is a different proposition from 94% with one repeated forty times.
+The second is a much better lesson.
+
+### Counted by reading, not by character
+
+Matching the known set. An article using 行 as háng asks nothing of a reader who
+has learnt xíng, and folding the two together would report a readability the
+child cannot actually achieve. See *The Known Set*.
+
+### Computed in the browser, and it has to be
+
+The known set never leaves the device, so the server **cannot** work this out —
+and must not try. It ships the half that depends only on the article:
+
+```
+census(article) = { total, { "codePoint:reading": occurrences } }
+```
+
+A census is profile-free, so it is generated once for the whole library, cached
+by URL, and intersected locally with a set the server has never seen. That is
+also what makes the figures free to keep current: marking a reading re-ranks
+every article without a request.
+
+The whole bundled library is 16KB of census. Sending it per article, or
+recomputing per profile change, would have made a catalogue that re-ranks as a
+child learns too expensive to be worth having.
+
+**The census key must stay byte-identical to the known set's.** The measure is a
+set intersection; a difference of one character makes every article read 0% and
+nothing throws. Pinned by test on both sides.
 
 ### Bands
 
@@ -56,9 +84,19 @@ offer.
 ## What the catalogue shows
 
 Each article tile carries title, theme, length, readability for the current
-profile, and the count of distinct new characters. Sorting defaults to *best fit
+reader, and the count of distinct new readings. Sorting defaults to *best fit
 first* — nearest the middle of the just-right band, rather than simply highest
 readability, which would trivially rank the easiest material top.
+
+**As built**, every article in the tree carries its percentage as a badge and
+its band plus readings-to-learn beside it, and the reader repeats the same
+figures for the article it has open. Both come from one census and one known
+set, so they cannot disagree.
+
+Best-fit ordering is written and tested but **not wired to the tree**: a tree's
+order is the curated one an author chose — 唐诗启蒙 before 儿歌, 静夜思 first
+within it — and re-sorting by fit would throw that away. It belongs to a flat
+listing view, which is where the almost-ready view belongs too.
 
 One derived view worth building: **"almost ready"** — articles that would enter
 the just-right band once a small number of specific characters are learned.

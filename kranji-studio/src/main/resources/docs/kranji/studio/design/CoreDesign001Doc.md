@@ -107,10 +107,18 @@ numbered pinyin, or the `ü → v` fold that Chinese input methods use (`nv3`),
 which is ASCII, injective, and pleasant to read. Both are rejected, for two
 reasons of unequal weight.
 
-The lesser reason is correctness cost: our own numbered rendering emits `nü3`
-and `jüen1`, so an ASCII form means reimplementing pinyin orthography — ü to v,
+The lesser reason was correctness cost: our own numbered rendering emitted `nü3`
+and `jüen1`, so an ASCII form meant reimplementing pinyin orthography — ü to v,
 plus the written collapses `iou→iu`, `uei→ui`, `üen→un` — underneath a
 permanent value.
+
+**That reason has expired.** The numbered form was later adopted as the
+system's internal representation of a reading, so it had to be made correct on
+its own account: it now emits `jun1` and `liu2`, sharing its spelling rules with
+the diacritic renderer, and the collapses are checked to round-trip across all
+1,284 corpus syllables. Building an address from it would cost little today.
+
+The decision stands unchanged, because it never rested on that argument.
 
 **The real reason is stability.** A codepoint cannot change. A reading is data,
 and data gets corrected. If the address is derived from a reading, then fixing a

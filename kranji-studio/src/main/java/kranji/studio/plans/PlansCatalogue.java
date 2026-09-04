@@ -33,7 +33,9 @@ public record PlansCatalogue()
                 Entry.of(this, KranjiReadingPlan.INSTANCE),
                 Entry.of(this, HomingIntegrationPlan.INSTANCE),
                 Entry.of(this, PhonicCoveragePlan.INSTANCE),
-                Entry.of(this, ContentPlan.INSTANCE)
+                Entry.of(this, ContentPlan.INSTANCE),
+                Entry.of(this, GlossPlan.INSTANCE),
+                Entry.of(this, GlossCoveragePlan.INSTANCE)
         );
     }
 }

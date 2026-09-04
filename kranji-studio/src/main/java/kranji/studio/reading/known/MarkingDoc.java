@@ -13,7 +13,7 @@ public record MarkingDoc() implements ClasspathMarkdownDoc {
 
     @Override public UUID   uuid()    { return ID; }
     @Override public String title()   { return "Marking a Character Known"; }
-    @Override public String summary() { return "Article to Zi Details to Add - deliberate because it costs a look at the character first."; }
+    @Override public String summary() { return "One toggle per reading in a pane of its own - deliberate because it costs a look first."; }
     @Override public String category(){ return "DESIGN"; }
     @Override public List<Reference> references() { return List.of(); }
 }

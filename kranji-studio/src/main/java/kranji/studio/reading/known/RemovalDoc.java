@@ -13,7 +13,7 @@ public record RemovalDoc() implements ClasspathMarkdownDoc {
 
     @Override public UUID   uuid()    { return ID; }
     @Override public String title()   { return "Removing a Character"; }
-    @Override public String summary() { return "A first-class operation behind a deliberate reveal, so a fat finger cannot undo a term's reading."; }
+    @Override public String summary() { return "Give one reading back, never a character - and take a whole optimistic import back at once."; }
     @Override public String category(){ return "DESIGN"; }
     @Override public List<Reference> references() { return List.of(); }
 }

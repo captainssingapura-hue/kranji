@@ -13,7 +13,7 @@ public record ProfileStorageDoc() implements ClasspathMarkdownDoc {
 
     @Override public UUID   uuid()    { return ID; }
     @Override public String title()   { return "Profiles and Storage"; }
-    @Override public String summary() { return "IndexedDB on the device, export to a file the family owns, and several children per browser."; }
+    @Override public String summary() { return "IndexedDB on the device, the plain-text record a family owns, and why a write waits for the load."; }
     @Override public String category(){ return "DESIGN"; }
     @Override public List<Reference> references() { return List.of(); }
 }

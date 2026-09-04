@@ -6,6 +6,8 @@ import hue.captains.singapura.js.homing.studio.base.app.DocReader;
 import hue.captains.singapura.js.homing.studio.base.app.Entry;
 import hue.captains.singapura.js.homing.studio.base.app.L0_Catalogue;
 import hue.captains.singapura.js.homing.studio.base.app.L1_Catalogue;
+import hue.captains.singapura.js.homing.studio.base.app.Navigable;
+import hue.captains.singapura.js.homing.workspace.shell.GenericWorkspace;
 import kranji.studio.architecture.ArchitectureCatalogue;
 import kranji.studio.corpus.CorpusCatalogue;
 import kranji.studio.design.CoreDesignCatalogue;
@@ -17,17 +19,23 @@ import kranji.studio.reading.ReadingCatalogue;
 import java.util.List;
 
 /**
- * L0 root of Kranji Studio. Three sections, each a focused L1:
+ * L0 root of Kranji Studio. Seven sections, each a focused L1:
  *
  * <ol>
- *   <li><b>Architecture</b> — the type system and the layout/codegen pipeline.</li>
+ *   <li><b>Core Design</b> — numbered decisions about the shape of the system.</li>
+ *   <li><b>Architecture</b> — the type system, the layout/codegen pipeline, and
+ *       the gloss tier.</li>
  *   <li><b>Corpus</b> — what the catalogue actually contains, and how it grows.</li>
  *   <li><b>Explorations</b> — forward-looking work generalising Kranji's
  *       typed-composition pattern to other domains.</li>
+ *   <li><b>Reading</b> — the reading app's domain and its decisions.</li>
+ *   <li><b>Plans</b> — in-flight work, tracked with the plan kit.</li>
+ *   <li><b>Backlog</b> — findings, known issues, and enhancements not yet scheduled.</li>
  * </ol>
  *
- * <p>In-flight work is tracked separately as {@code Plan}s, registered on
- * {@link KranjiStudio#plans()} and served by the framework's shared plan host.</p>
+ * <p>Alongside them sits the <b>Gloss Workbench</b>, a leaf rather than a
+ * section: the first tool here that reads the model instead of describing it.
+ * Sections hold writing; the workbench holds instruments.</p>
  */
 public record KranjiCatalogue()
         implements L0_Catalogue<KranjiCatalogue>, DocProvider {
@@ -36,18 +44,24 @@ public record KranjiCatalogue()
 
     @Override public String name()    { return "Kranji · Studio"; }
     @Override public String summary() {
-        return "Documentation and planning for Kranji — a Java 21 library that models Chinese "
-             + "characters as typed composition trees. Architecture notes, corpus reports, and "
-             + "explorations generalising the pattern to other domains.";
+        return "Internal tooling for building Kranji — a Java 21 library that models Chinese "
+             + "characters as typed composition trees. Design notes, corpus reports, plans, and "
+             + "workbench tools that read the model so it can be checked.";
     }
     @Override public String badge()   { return "STUDIO"; }
     @Override public String icon()    { return "\u6797"; }   // 林
 
     @Override public List<Entry<KranjiCatalogue>> leaves() {
+        Navigable<GenericWorkspace.Params, GenericWorkspace> workbench =
+                new Navigable<>(GenericWorkspace.INSTANCE,
+                        new GenericWorkspace.Params(GlossWorkspaceSpec.KIND),
+                        "Gloss Workbench",
+                        "The gloss tier as relations - one grid per relation, several at once.");
         return List.of(
                 Entry.of(this, DocReader.INSTANCE,
                         new DocReader.Params(KranjiIntroDoc.INSTANCE.uuid().toString()),
-                        KranjiIntroDoc.INSTANCE)
+                        KranjiIntroDoc.INSTANCE),
+                Entry.of(this, workbench)
         );
     }
 
