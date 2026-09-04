@@ -11,6 +11,7 @@
     <modules>
         <module>kranji-core</module>
         <module>kranji-singulars</module>
+        <module>kranji-gloss</module>
         <module>kranji-json</module>
         <module>kranji-json-bridge</module>
         <module>kranji-singulars-perclass</module>
@@ -35,7 +36,14 @@
         <jacoco.version>0.8.12</jacoco.version>
         <junit.version>5.10.2</junit.version>
         <javafx.version>21.0.2</javafx.version>
-        <homing.core.version>LOCAL-SNAPSHOT</homing.core.version>
+        <!--
+          A released version, not LOCAL-SNAPSHOT. A snapshot moves under the
+          build: the framework can change without anything here changing, so a
+          break arrives with no commit to blame it on and a green build is not
+          reproducible tomorrow. Pinning trades that for having to step the
+          version deliberately, which is the right way round.
+        -->
+        <homing.core.version>0.8.0</homing.core.version>
         <jontology.version>0.0.1</jontology.version>
     </properties>
 

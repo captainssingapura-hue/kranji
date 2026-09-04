@@ -22,16 +22,62 @@ public record PinyinSyllable(
 ) {
 
     /**
-     * Returns the numbered-tone representation (e.g. {@code "qing1"},
-     * {@code "zhi1"}, {@code "lü4"}). Natural key for PinyinHub vertex
-     * IDs and the canonical round-trip form fed back into
-     * {@link #parse(String)}.
+     * Parses the canonical form, and only that.
+     *
+     * <p>{@link #parse} accepts a diacritic string as well, which is right at a
+     * boundary where a person writes one — an article source, an imported file.
+     * Below the display layer nothing should be holding {@code dōng}, so an
+     * authoring surface that is internal uses this instead, and a stray display
+     * form fails the build rather than quietly working.</p>
+     */
+    public static PinyinSyllable parseCanonical(String numbered) {
+        if (numbered == null || !numbered.matches("[a-zü]+[0-4]")) {
+            throw new IllegalArgumentException(
+                    "'" + numbered + "' is not the canonical form - expected written "
+                  + "spelling and a tone digit, like dong1, nü3 or de0");
+        }
+        return parse(numbered);
+    }
+
+    /**
+     * The canonical internal form: standard written spelling plus a tone
+     * digit — {@code "qing1"}, {@code "zhi1"}, {@code "lü4"}, {@code "jun1"},
+     * {@code "de0"}.
+     *
+     * <p><b>This is what the system uses everywhere below the display
+     * layer</b> — keys, wire formats, registries. It is ASCII apart from
+     * {@code ü}, which occurs in exactly four toneless syllables (lü, lüe, nü,
+     * nüe), so it carries no combining marks and has no two byte sequences
+     * that look alike and compare unequal. {@link #toDiacritic()} is the
+     * display form and belongs only past a rendering boundary.</p>
+     *
+     * <p>Written spelling, not the underlying form: {@code jun1} rather than
+     * {@code jüen1}, {@code liu2} rather than {@code liou2}. It shares
+     * {@code applyDisplayOrthography} with {@link #toDiacritic()}, so the two
+     * cannot disagree about how a syllable is spelt — only about how its tone
+     * is written.</p>
      *
      * <p>Syllabic consonants ({@code Body.NULL}) get the conventional
-     * placeholder {@code "i"} so {@code zhī → "zhi1"} round-trips cleanly.</p>
+     * placeholder {@code "i"}, so {@code zhī → "zhi1"} round-trips cleanly.</p>
      */
+    public String numbered() {
+        String spelling = applyDisplayOrthography(initial, fin);
+        if (spelling.isEmpty() && isSyllabicConsonantInitial(initial)) {
+            spelling = "i";
+        }
+        return initial.pinyin() + spelling + tone.number();
+    }
+
+    /**
+     * The underlying spelling plus a tone digit — {@code "jüen1"} for jūn.
+     *
+     * @deprecated it is not standard written pinyin, so it cannot be shown and
+     *     cannot be parsed back by anything expecting the written form. Use
+     *     {@link #numbered()}.
+     */
+    @Deprecated
     public String numberedTone() {
-        return base() + tone.number();
+        return numbered();
     }
 
     /**
