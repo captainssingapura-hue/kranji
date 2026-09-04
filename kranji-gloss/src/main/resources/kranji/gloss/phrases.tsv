@@ -1,0 +1,587 @@
+# Kranji hand-crafted glosses - example phrases
+# Source: project-authored; no third-party licence
+#
+# A row is one sense of one phrase. Pins are position=reading, and exist ONLY
+# where a character reads differently from the corpus principal - so every pin
+# marks a place a reader would otherwise guess wrong. Position, not glyph:
+# 慢慢地走 repeats 慢, and two glyph-keyed pins could not be told apart.
+#
+# 东西 carries two senses that are not even read alike - dongxi for the object,
+# dong-xi for the directions. It is sense 1 that shows 东 = east.
+# phrase	sense	english	pins
+东西	0	a thing	
+东西	1	east and west	
+东方	0	the east	
+东边	0	the east side	
+山东	0	Shandong, a province	
+丢了	0	lost	
+低头	0	to lower the head	
+到了	0	arrived	
+动物	0	an animal	
+叼着	0	holding in the mouth	
+慢慢地走	0	to walk slowly	
+地上	0	on the ground	0=di4
+土地	0	land	1=di4
+地方	0	a place	0=di4
+很多	0	a lot	
+大人	0	an adult	
+对了	0	that's right	
+当然	0	of course	
+跑得快	0	runs fast	1=de0
+得到	0	to obtain	
+我得走了	0	I have to go	1=dei3
+戴帽子	0	to wear a hat	
+掉下来	0	to fall down	
+山洞	0	a cave	
+水滴	0	a drop of water	
+台灯	0	a desk lamp	
+一点	0	a little	
+我的	0	mine	
+盾牌	0	a shield	
+第一	0	first	
+等一下	0	wait a moment	
+回答	0	to answer	
+都是	0	all are	
+山顶	0	a mountain top	
+一个	0	one of something	
+有人	0	there is someone	
+有的	0	some of them	
+他的	0	his	
+他们	0	they; them	
+在家	0	at home	
+现在	0	now	
+上山	0	to go up a hill	
+里面	0	inside	
+家里	0	at home; in the house	
+是的	0	yes; that is so	
+我们	0	we; us	
+人们	0	people	
+那个	0	that one	
+不是	0	is not	
+不好	0	not good	
+今天	0	today	
+天上	0	in the sky	
+说话	0	to speak	
+说明	0	to explain	
+一只鸭	0	one duck	1=zhi1
+两只蚂蚁	0	two ants	1=zhi1
+来了	0	has come	
+起来	0	to get up	
+很好	0	very good	
+子女	0	sons and daughters	
+水果	0	fruit	
+它的	0	its	
+一起	0	together	
+狮子	0	a lion	
+小鸟	0	a little bird	
+大小	0	size	
+十个	0	ten of them	
+十分	0	very; completely	
+中国	0	China	
+国王	0	a king	
+宝剑	0	a fine sword	
+从前	0	once upon a time	
+什么	0	what	
+时间	0	time	
+回去	0	to go back	
+下来	0	to come down	
+西边	0	the west side	
+山羊	0	a goat	
+画画	0	to draw a picture	
+田里	0	in the field	
+氏族	0	a clan	
+好人	0	a good person	
+喝水	0	to drink water	
+兔子	0	a rabbit	
+学会	0	to learn how	
+酒杯	0	a wine cup	
+合适	0	suitable	
+走开	0	to go away	
+禾苗	0	a young grain plant	
+石头	0	a stone	
+就是	0	exactly; that is	
+又来了	0	here it comes again	
+中间	0	the middle	
+还有	0	and also; there is still	
+走过	0	to walk past	
+是谁	0	who is it	
+蚂蚁	0	an ant	
+落下	0	to fall down	
+花草	0	flowers and grass	
+小船	0	a little boat	
+看见	0	to see	
+小猫	0	a little cat	
+大熊猫	0	a giant panda	
+这样	0	this way; like this	
+大树	0	a big tree	
+不少	0	quite a few	
+教室	0	a classroom	
+吃饭	0	to eat a meal	
+也是	0	is also	
+鸭子	0	a duck	
+高山	0	a high mountain	
+这个	0	this one	
+补一补	0	to patch it up	
+画蛇	0	to draw a snake	
+刻舟	0	to carve the boat	
+自己	0	oneself	
+脚下	0	underfoot	
+而后	0	and then	
+矛头	0	the point of a spear	
+没有	0	to not have; there is not	
+楚人	0	a man of Chu	
+早上	0	in the morning	
+很快	0	very fast	
+尸体	0	a corpse	
+宋人	0	a man of Song	
+奶奶	0	grandmother	
+头上	0	on the head	
+太多	0	too many	
+水壶	0	a kettle	
+可以	0	may; can	
+其中	0	among them	
+儿子	0	a son	
+做人	0	to conduct oneself	
+你们	0	you (more than one)	
+两个	0	two of them	
+白鹅	0	a white goose	
+食物	0	food	
+大风	0	a strong wind	
+进来	0	to come in	
+河边	0	the riverside	
+跑开	0	to run off	
+不能	0	cannot	
+作者	0	the author	
+笑话	0	a joke	
+竹子	0	bamboo	
+碰到	0	to bump into	
+眼睛	0	an eye	
+白色	0	white	
+河水	0	river water	
+沙子	0	sand	
+江边	0	the riverside	
+死了	0	has died	
+树桩	0	a tree stump	
+守株	0	to guard the stump	
+最好	0	best	
+明天	0	tomorrow	
+施行	0	to put into practice	
+找到	0	to find	
+手上	0	in the hand	
+成为	0	to become	
+很慢	0	very slow	
+怎么	0	how; in what way	
+打开	0	to open	
+城市	0	a city	
+已经	0	already	
+回家	0	to go home	
+她的	0	hers	
+农夫	0	a farmer	
+大声	0	loudly	
+坐下	0	to sit down	
+回来	0	to come back	
+怎么呢	0	how so	
+后来	0	afterwards	
+刺穿	0	to pierce through	
+几个	0	a few of them	
+再来	0	to come again	
+身体	0	the body	
+住在	0	to live at	
+举手	0	to raise a hand	
+黑色	0	black	
+下雨	0	to rain	
+问题	0	a question	
+闪开	0	to dodge aside	
+长大	0	to grow up	
+释放	0	to set free	
+邻居	0	a neighbour	
+身上	0	on the body	
+谢谢	0	thank you	
+试试	0	to give it a try	
+记住	0	to remember	
+触碰	0	to touch	
+视线	0	a line of sight	
+行走	0	to walk	
+青草	0	green grass	
+绿色	0	green	
+给你	0	for you	
+一粒米	0	one grain of rice	
+穿上	0	to put on	
+知道	0	to know	
+直接	0	direct; straight	
+有用	0	useful	
+形状	0	a shape	
+添上	0	to add on	
+流水	0	running water	
+求剑	0	to look for the sword	
+生气	0	to get angry	
+羊毛	0	wool	
+每天	0	every day	
+唱歌	0	to sing	
+月光	0	moonlight	
+更好	0	even better	
+春天	0	spring	
+星星	0	a star	
+日子	0	a day; days	
+前方	0	ahead	
+拿走	0	to take away	
+擦拭	0	to wipe clean	
+刚才	0	just now	
+帮忙	0	to help	
+做完	0	to finish doing	
+学习	0	to study	
+开始	0	to begin	
+契约	0	an agreement	
+夜里	0	at night	
+复习	0	to revise	
+到处	0	everywhere	
+坠下	0	to fall down	
+羊圈	0	a sheep pen	1=juan4
+圆圈	0	a circle	
+牢固	0	firm; solid	
+和气	0	gentle; friendly	
+记号	0	a mark	
+叫做	0	to be called	
+开口	0	to open one's mouth	
+变成	0	to turn into	
+原来	0	it turns out; originally	
+中午	0	midday	
+千万	0	ten million; by all means	
+凉水	0	cool water	
+冰水	0	iced water	
+高兴	0	glad	
+入门	0	to get started	
+先生	0	a gentleman; a teacher	
+好像	0	to seem like	
+时候	0	a time	
+使用	0	to use	
+今年	0	this year	
+五个	0	five of them	
+故事	0	a story	
+之后	0	after that	
+三个	0	three of them	
+黄色	0	yellow	
+早餐	0	breakfast	
+飞走	0	to fly away	
+长颈	0	a long neck	0=chang2
+项目	0	an item	
+靠近	0	to draw near	
+露水	0	dew	
+白霜	0	white frost	
+院子	0	a courtyard	
+太阳	0	the sun	
+闻到	0	to catch a smell of	
+空闲	0	free time	
+开门	0	to open the door	
+长长	0	very long	0=chang2 1=chang2
+镜子	0	a mirror	
+锋利	0	sharp	
+锄头	0	a hoe	
+钻进	0	to bore into	
+野草	0	wild grass	
+很重	0	very heavy	
+遽然	0	all of a sudden	
+逝去	0	to pass away	
+很远	0	very far	
+辛苦	0	hard work; toilsome	
+轻轻	0	gently	
+路上	0	on the road	
+赶走	0	to drive away	
+请进	0	please come in	
+古诗	0	an old poem	
+认识	0	to know someone	
+发誓	0	to swear an oath	
+牛角	0	an ox horn	
+觉得	0	to feel	
+睡觉	0	to sleep	1=jiao4
+要是	0	if	
+装水	0	to fill with water	
+街上	0	in the street	
+一行	0	a row	1=hang2
+道行	0	a monk's attainment	1=heng2
+圈养	0	to raise penned in	0=juan1
+荒地	0	waste ground	
+若干	0	a certain number	
+掉色	0	to lose colour	1=shai3
+弯腰	0	to bend at the waist	
+背后	0	behind	
+背书包	0	to carry a schoolbag	0=bei1
+耕田	0	to plough a field	
+耒耜	0	an old plough	
+一群	0	a flock	
+结果	0	a result	
+结实	0	sturdy	0=jie1
+红色	0	red	
+很累	0	very tired	
+累赘	0	a burden	0=lei2
+积累	0	to build up	1=lei3
+天空	0	the sky	
+有空	0	to have free time	1=kong4
+穷人	0	a poor person	
+种子	0	a seed	
+种田	0	to farm	0=zhong4
+种师道	0	Zhong Shidao, a Song general	0=chong2
+很硬	0	very hard	
+破了	0	has broken	
+晚矣	0	it is too late	
+弓矢	0	a bow and arrow	
+睡着	0	to fall asleep	
+安眠	0	to sleep peacefully	
+目光	0	a gaze	
+盘子	0	a plate	
+皆是	0	all are	
+疑心	0	suspicion	
+留下	0	to stay behind	
+玩水	0	to play in the water	
+野狼	0	a wild wolf	
+爱心	0	a loving heart	
+烧水	0	to boil water	
+很滑	0	very slippery	
+湿了	0	has got wet	
+清水	0	clear water	
+液体	0	a liquid	
+涉水	0	to wade through water	
+大海	0	the sea	
+浮起	0	to float up	
+浇水	0	to water plants	
+水波	0	a ripple	
+汽水	0	a fizzy drink	
+出汗	0	to sweat	
+比一比	0	to compare	
+因此	0	for this reason	
+止住	0	to bring to a stop	
+欲言	0	about to speak	
+楼上	0	upstairs	
+一棵树	0	one tree	
+小桥	0	a little bridge	
+学校	0	a school	
+枯木	0	a withered tree	
+一杯水	0	a cup of water	
+一本书	0	one book	
+看望	0	to visit	
+弯曲	0	bent	
+子曰	0	the Master said	
+春晓	0	a spring dawn	
+旁边	0	beside	
+整个	0	the whole of	
+改正	0	to put right	
+收好	0	to put away safely	
+撞上	0	to run into	
+搬走	0	to move away	
+接住	0	to catch	
+一排	0	a row	
+手掌	0	the palm of a hand	
+捡起	0	to pick up	
+拾起	0	to gather up	
+拨开	0	to push aside	
+拔苗	0	to pull up a sprout	
+抬头	0	to raise the head	
+折了	0	has snapped	
+慌张	0	flustered	
+迷惑	0	puzzled	
+后悔	0	to regret	
+有恃	0	to have something to rely on	
+思念	0	to miss someone	
+小心	0	careful	
+往前	0	forwards	
+一张纸	0	one sheet of paper	
+上床	0	to go to bed	
+平安	0	safe and well	
+常常	0	often	
+左手	0	the left hand	
+河岸	0	a riverbank	
+三岁	0	three years old	
+屋子	0	a room	
+一层	0	one layer	
+尽量	0	as much as one can	
+尽头	0	the far end	0=jin4
+客人	0	a guest	
+实在	0	really; solid	
+孩子	0	a child	
+嫌少	0	to think it too little	
+不够	0	not enough	
+外面	0	outside	
+士人	0	a scholar	
+坚固	0	solid and firm	
+四周围	0	all around	
+花园	0	a garden	
+因为	0	because	
+四个	0	four of them	
+张嘴	0	to open the mouth	
+嗜好	0	a fondness	
+啼哭	0	to cry out	
+四周	0	all around	
+吾人	0	we; I	
+吹风	0	to be in the wind	
+走吧	0	let us go	
+酒吧	0	a bar	1=ba1
+向前	0	forwards	
+叶子	0	a leaf	
+叶韵	0	to rhyme	0=xie2
+右手	0	the right hand	
+只有	0	only	
+另外	0	besides	
+发现	0	to discover	
+头发	0	hair	1=fa4
+南方	0	the south	
+南无	0	a Buddhist invocation	0=na1
+卖出	0	to sell off	
+书包	0	a schoolbag	
+势力	0	power	
+力气	0	physical strength	
+一副	0	a set of	
+出来	0	to come out	
+很冷	0	very cold	
+冀求	0	to hope for	
+养分	0	nourishment	
+关门	0	to shut the door	
+全部	0	the whole lot	
+一倍	0	twice as much	
+依山	0	to lean against the hills	
+侍立	0	to stand in attendance	
+天亮	0	daybreak	
+亦然	0	so it is too	
+于是	0	and so	
+二月	0	February	
+故乡	0	one's home village	
+不亦乐乎	0	is that not a joy	
+为人	0	to conduct oneself	0=wei2
+世上	0	in the world	
+七个	0	seven of them	
+过分	0	excessive	1=fen4
+一世	0	a lifetime	
+一刻	0	a moment	
+一周	0	one week	
+一家人	0	one family	
+一对	0	a pair	
+一株树	0	one tree	
+丈夫	0	a husband	
+三点	0	three o'clock	
+下车	0	to get off a vehicle	
+不行	0	will not do	
+丢掉	0	to throw away	
+书写	0	to write	
+人才	0	a talented person	
+低声	0	in a low voice	
+住所	0	a dwelling	
+你和我	0	you and I	
+光头	0	a bare head	
+关心	0	to care about	
+几天	0	a few days	
+出产	0	to produce	
+出现	0	to appear	
+分开	0	to separate	
+利益	0	a benefit	
+包住	0	to wrap up	
+原因	0	a cause	
+发出	0	to send out	
+发芽	0	to sprout	
+号码	0	a number	
+听闻	0	to hear of	
+图画	0	a picture	
+对着	0	facing	
+居住	0	to dwell	
+山头	0	a hilltop	
+市场	0	a market	
+希望	0	to hope	
+平原	0	a plain	
+平地	0	level ground	
+当时	0	at that time	
+很早	0	very early	
+思考	0	to think over	
+想要	0	to want	
+成事	0	to get something done	
+房间	0	a room	
+所见	0	what one sees	
+把住	0	to hold firmly	
+把门关上	0	shut the door	
+折纸	0	to fold paper	
+掌管	0	to be in charge of	
+排好	0	to arrange in order	
+故此	0	for this reason	
+整理	0	to tidy up	
+方形	0	a square shape	
+日光	0	sunlight	
+明月	0	a bright moon	
+根本	0	the root of it	
+死水	0	still water	
+比你高	0	taller than you	
+河流	0	a river	
+滑下	0	to slide down	
+滴水	0	to drip water	
+牛奶	0	cow's milk	
+画像	0	a portrait	
+留住	0	to keep hold of	
+知晓	0	to know	
+种类	0	a kind	
+空气	0	air	
+空白	0	a blank	
+穿过	0	to pass through	
+等级	0	a grade	
+米饭	0	cooked rice	
+经过	0	to pass by	
+考试	0	an examination	
+背上	0	on the back	
+自古	0	since ancient times	
+苦水	0	bitter water	
+装作	0	to pretend	
+见面	0	to meet	
+角落	0	a corner	
+解释	0	to explain	
+记下	0	to write down	
+请客	0	to treat someone	
+赶快	0	to hurry up	
+跟从	0	to follow	
+进食	0	to take food	
+重要	0	important	
+野外	0	the open country	
+锄地	0	to hoe the ground	
+长者	0	an elder	
+闪光	0	a flash of light	
+露出	0	to show	
+面前	0	in front of	
+顶着	0	carrying on the head	
+颈项	0	the neck	
+鱼刺	0	a fish bone	
+黑点	0	a black dot	
+两旁	0	on both sides	
+乡下	0	the countryside	
+依次	0	in order	
+兴趣	0	an interest	
+农田	0	farmland	
+副手	0	an assistant	
+又高又大	0	both tall and big	
+反复	0	over and over	
+契刻	0	to carve	
+完全	0	completely	
+小时	0	an hour	
+屋里	0	in the room	
+平常	0	ordinary	
+往来	0	to come and go	
+很忙	0	very busy	
+很轻	0	very light	
+急忙	0	in a hurry	
+惑人	0	to mislead people	
+打破	0	to break	
+打结	0	to tie a knot	
+方向	0	a direction	
+无穷	0	without end	
+楼层	0	a floor of a building	
+欲求	0	to desire	
+然而	0	and yet	
+状态	0	a state	
+用尽	0	to use up	1=jin4
+盘起	0	to coil up	
+眼镜	0	spectacles	
+笔直	0	perfectly straight	
+等候	0	to wait for	
+结绳	0	to tie a cord	
+花样	0	a variety	
+荒山	0	a barren hill	
+誓言	0	an oath	
+走势	0	a trend	
+还在	0	is still there	
+适合	0	to suit	
+门口	0	a doorway	
+阳光	0	sunshine	
+高楼	0	a tall building	
