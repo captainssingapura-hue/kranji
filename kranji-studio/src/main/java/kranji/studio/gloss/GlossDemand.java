@@ -1,9 +1,9 @@
 package kranji.studio.gloss;
 
 import kranji.reading.content.Articles;
-import kranji.reading.content.DemoLibrary;
 import kranji.reading.library.ArticleCollection;
 import kranji.reading.library.ArticleRef;
+import kranji.reading.library.Libraries;
 import kranji.reading.model.ArticleCensus;
 import kranji.simple.gloss.SoundGloss;
 import kranji.simple.gloss.ZiGloss;
@@ -45,7 +45,7 @@ public final class GlossDemand {
     /** Every (codepoint, reading) the bundled articles use, in reading order. */
     public static Set<String> pairs() {
         var out = new LinkedHashSet<String>();
-        for (ArticleCollection c : DemoLibrary.INSTANCE.tree().collections()) {
+        for (ArticleCollection c : Libraries.mounted().tree().collections()) {
             for (ArticleRef ref : c.articles()) {
                 Articles.read(c.address(ref.id()), ref).ifPresent(parsed ->
                         parsed.article().ifPresent(a ->

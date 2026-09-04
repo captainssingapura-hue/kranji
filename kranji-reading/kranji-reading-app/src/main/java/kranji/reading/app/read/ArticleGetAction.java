@@ -7,11 +7,11 @@ import hue.captains.singapura.tao.http.action.Param;
 import hue.captains.singapura.tao.http.action.ParamMarshaller;
 import io.vertx.ext.web.RoutingContext;
 import kranji.reading.content.Articles;
-import kranji.reading.content.DemoLibrary;
 import kranji.reading.content.ParsedArticle;
 import kranji.reading.model.Article;
 import kranji.reading.library.ArticleAddress;
 import kranji.reading.library.CollectionId;
+import kranji.reading.library.Libraries;
 import kranji.reading.library.LocalId;
 import kranji.reading.model.Block;
 import kranji.reading.model.Lines;
@@ -90,7 +90,7 @@ public final class ArticleGetAction
         } catch (RuntimeException e) {
             return errorModule("not an article address: '" + rawAddress + "'");
         }
-        Optional<ParsedArticle> found = Articles.read(DemoLibrary.INSTANCE, address);
+        Optional<ParsedArticle> found = Articles.read(Libraries.mounted(), address);
         if (found.isEmpty()) return errorModule("no article '" + address + "'");
         ParsedArticle parsed = found.get();
         if (parsed.article().isEmpty()) {

@@ -6,9 +6,9 @@ import hue.captains.singapura.tao.http.action.GetAction;
 import hue.captains.singapura.tao.http.action.Param;
 import hue.captains.singapura.tao.http.action.ParamMarshaller;
 import io.vertx.ext.web.RoutingContext;
-import kranji.reading.content.DemoLibrary;
 import kranji.reading.library.ArticleCollection;
 import kranji.reading.library.ArticleRef;
+import kranji.reading.library.Libraries;
 import kranji.reading.library.LibraryTree;
 
 import java.util.List;
@@ -23,7 +23,8 @@ import java.util.concurrent.CompletableFuture;
  *
  * <h2>Collections are the leaves the author wrote</h2>
  *
- * <p>Branches and collections are declared in {@link DemoLibrary}; the articles
+ * <p>Branches and collections are declared by whichever root {@link Libraries}
+ * mounted — this action never names one; the articles
  * beneath a collection are <em>not</em> — they travel with it. That is why
  * rearranging the tree cannot lose or duplicate an article: the tree never held
  * one.</p>
@@ -61,7 +62,7 @@ public final class ArticleTreeGetAction
 
     /** Visible for testing — the whole tree. */
     public static String treeJson() {
-        LibraryTree tree = DemoLibrary.INSTANCE.tree();
+        LibraryTree tree = Libraries.mounted().tree();
         int articles = tree.collections().stream().mapToInt(c -> c.articles().size()).sum();
 
         var js = new StringBuilder();

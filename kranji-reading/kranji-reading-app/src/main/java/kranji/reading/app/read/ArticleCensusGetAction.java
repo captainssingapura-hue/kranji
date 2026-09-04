@@ -7,10 +7,10 @@ import hue.captains.singapura.tao.http.action.Param;
 import hue.captains.singapura.tao.http.action.ParamMarshaller;
 import io.vertx.ext.web.RoutingContext;
 import kranji.reading.content.Articles;
-import kranji.reading.content.DemoLibrary;
 import kranji.reading.content.ParsedArticle;
 import kranji.reading.library.ArticleCollection;
 import kranji.reading.library.ArticleRef;
+import kranji.reading.library.Libraries;
 import kranji.reading.model.ArticleCensus;
 
 import java.util.Map;
@@ -80,7 +80,7 @@ public final class ArticleCensusGetAction
         js.append("export const articles = {\n");
 
         boolean first = true;
-        for (ArticleCollection collection : DemoLibrary.INSTANCE.tree().collections()) {
+        for (ArticleCollection collection : Libraries.mounted().tree().collections()) {
             for (ArticleRef ref : collection.articles()) {
                 var address = collection.address(ref.id());
                 // An article that will not parse is a content defect, caught by the
