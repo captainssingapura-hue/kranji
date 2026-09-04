@@ -7,11 +7,13 @@ import kranji.simple.gloss.EgKey;
 import kranji.simple.gloss.ZiCollection;
 import kranji.simple.gloss.ZiGloss;
 import kranji.zi.ZiCharUTF8;
+import kranji.zi.ZiPartition;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +45,30 @@ import java.util.Optional;
  */
 public final class HandCrafted implements ZiCollection {
 
-    private static final String SENSES = "/kranji/gloss/senses.tsv";
+    /**
+     * One file per partition, mirroring kranji-gloss-seed exactly.
+     *
+     * <p>101 files, the same cut and the same columns, so a partition can be
+     * reviewed with both sides open — the seeded guess on the left and what
+     * somebody wrote on the right. This was one {@code senses.tsv}; a single
+     * file made "review partition 41" a search rather than a file to open.</p>
+     *
+     * <p>Every one of the 101 exists, including {@code p013} which currently
+     * holds no rows. That is the strict one-to-one: an absent file here is a
+     * FAILURE, where in the seed it is normal — the seed is generated a
+     * partition at a time and may legitimately be incomplete, while this side
+     * is complete by construction and a gap means a file went missing.</p>
+     */
+    private static final String SENSES = "/kranji/gloss/p%03d.tsv";
+
+    /**
+     * Phrases are NOT partitioned, and cannot be.
+     *
+     * <p>刺猬 spans two characters that fall in different partitions, so a
+     * phrase has no partition of its own — filing it under one of its
+     * characters would make the other one's file incomplete. The seed has no
+     * phrases at all, so nothing on that side needs mirroring here.</p>
+     */
     private static final String PHRASES = "/kranji/gloss/phrases.tsv";
 
     public static final HandCrafted INSTANCE = new HandCrafted();
@@ -54,8 +79,20 @@ public final class HandCrafted implements ZiCollection {
     @Override public String name()    { return "Kranji hand-crafted"; }
     @Override public String licence() { return "project-authored; no third-party licence"; }
 
-    private static final List<ZiGloss> GLOSSES =
-            demand(GlossTsv.readSenses(SENSES, read(SENSES)));
+    private static final List<ZiGloss> GLOSSES = senses();
+
+    private static List<ZiGloss> senses() {
+        var out = new ArrayList<ZiGloss>();
+        for (int p = 0; p < ZiPartition.COUNT; p++) {
+            String resource = SENSES.formatted(p);
+            // read() already refuses an absent resource, which is the whole
+            // difference from the seed: there, a missing partition means "not
+            // generated yet"; here it means one of the 101 has gone.
+            out.addAll(demand(GlossTsv.readSenses(resource, read(resource))));
+        }
+        return List.copyOf(out);
+    }
+
     private static final List<ExampleEntry> PHRASE_ENTRIES =
             demand(GlossTsv.readPhrases(PHRASES, read(PHRASES)));
 

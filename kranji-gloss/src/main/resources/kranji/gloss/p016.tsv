@@ -1,0 +1,24 @@
+# Kranji hand-crafted glosses - partition 16 of 101
+# Source: project-authored; no third-party licence
+#
+# One file for one file against kranji-gloss-seed, so a partition can be
+# reviewed with both sides open. The cut is ZiPartition: codepoint modulo
+# 101, computed from the CHARACTER, so all of a character's readings are
+# in the same file.
+#
+# A row is one meaning of one reading. Priority is the rank within that
+# reading, written out rather than left to row position - sorting this
+# file in a spreadsheet would otherwise re-rank every meaning silently.
+# Examples are phrase keys separated by |; a #n suffix names a phrase
+# sense other than its first, and is silent otherwise.
+#
+# Rows: 8
+# codepoint	glyph	reading	priority	meaning	examples	because
+26377	有	you3	P	to have	有的	
+26377	有	you3	S	there is	有人	
+40517	鹅	e2	P	a goose	白鹅	
+35265	见	jian4	P	to see	看见	
+35265	见	jian4	S	to meet	见面	
+25165	才	cai2	P	only then	刚才	
+25165	才	cai2	S	talent	人才	
+29609	玩	wan2	P	to play	玩水	
