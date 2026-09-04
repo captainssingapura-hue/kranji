@@ -100,7 +100,10 @@ public final class PhonicPartitionMain {
         // build cannot model is still data, and the reader reports it rather
         // than the partitioner hiding it. Parsing is only used here to decide
         // which partition the character belongs in.
-        List<String> readings = values(fields.get(STANDARD));
+        // Corrected first, so a reading the source spelled in a notation the
+        // standard replaced is written out in the form everything downstream
+        // reads. Two characters; SourceCorrections says which and why.
+        List<String> readings = SourceCorrections.apply(codePoint, values(fields.get(STANDARD)));
         List<String> parseable = parseable(readings);
         if (parseable.isEmpty()) return null;
 

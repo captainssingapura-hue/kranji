@@ -78,8 +78,8 @@ public final class GlossPlan implements Plan {
                         "The key is byte-identical to the known set's and the article census's, "
                       + "so all three join without translation - a pane holds one map and "
                       + "answers three questions. Costs 8% more entries than a per-character "
-                      + "key: 8,764 pairs against 8,100 characters. The extra 664 come from "
-                      + "594 polyphonic characters - the two numbers are easy to confuse and "
+                      + "key: 8,763 pairs against 8,100 characters. The extra 664 come from "
+                      + "593 polyphonic characters - the two numbers are easy to confuse and "
                       + "this line used to, calling 664 the polyphone count.\n\n"
                       + "Byte-identity is not a nicety, and the flip to the canonical form "
                       + "demonstrated it: a saved known set left in the old diacritic form "
@@ -105,7 +105,7 @@ public final class GlossPlan implements Plan {
                       + "gloss is a per-reading gloss unambiguously. Measured against the "
                       + "corpus: 7,506 of 8,100 characters are monophonic, and kDefinition "
                       + "covers 7,752 of 8,100. The hand-splitting the old answer feared is "
-                      + "594 characters, not 8,100 - and those 594 need a person whatever the "
+                      + "593 characters, not 8,100 - and those 593 need a person whatever the "
                       + "source, because no per-character dictionary can say which sense "
                       + "belongs to which reading.\n\n"
                       + "Unihan is also the source already vendored, already parsed, and "
@@ -322,7 +322,7 @@ public final class GlossPlan implements Plan {
                                 new Task("Declare the project's own licence first", false),
                                 new Task("Seed monophonic characters: one reading, one gloss, unambiguous", false),
                                 new Task("Mark every seeded row's provenance, so unchecked is visible", false),
-                                new Task("Queue the 594 polyphones for hand-splitting rather than guessing", false),
+                                new Task("Queue the 593 polyphones for hand-splitting rather than guessing", false),
                                 new Task("Queue the 348 with no kDefinition for authoring", false),
                                 new Task("Regeneration is a no-op diff when inputs are unchanged", false)),
                         List.of(new Dependency("gp2", "The coverage tool is how its output is judged.")),
@@ -339,7 +339,7 @@ public final class GlossPlan implements Plan {
                       + "it. That rendering is now the system's internal form and had to "
                       + "become correct on its own account; it shares its spelling rules with "
                       + "the diacritic renderer, and the collapses iou→iu, uei→ui, üen→un "
-                      + "round-trip across all 1,284 corpus syllables. Seeding from Unihan "
+                      + "round-trip across all 1,288 corpus syllables. Seeding from Unihan "
                       + "needs none of it - the readings are already ours - but the hazard it "
                       + "guarded against is the same one, and gp2's validity check is what "
                       + "catches it: a reading that matches nothing produces a gloss that "

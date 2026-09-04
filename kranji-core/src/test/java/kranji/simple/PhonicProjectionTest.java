@@ -68,9 +68,12 @@ class PhonicProjectionTest {
                 "a pinyin table prints them last, after the consonants");
 
         // What is left under zero is only what is written with no onset letter.
+        // "ei" joined the list when SourceCorrections respelt 欸's four ê
+        // interjection readings as ēi/éi/ěi/èi - the final was always legal
+        // pinyin, and until then no character in the corpus was written with it.
         var bare = P.branchFor(Initial.ZERO).children().stream()
                 .map(ZiTreeNode::label).toList();
-        assertEquals(List.of("a", "ai", "an", "ang", "ao", "e", "en", "er", "o", "ou"), bare);
+        assertEquals(List.of("a", "ai", "an", "ang", "ao", "e", "ei", "en", "er", "o", "ou"), bare);
     }
 
     @Test

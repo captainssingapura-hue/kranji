@@ -76,8 +76,8 @@ public final class PhonicCoveragePlan implements Plan {
                         "Measured against the vendored file rather than assumed. kTGHZ2013 is "
                       + "keyed to the Table of General Standard Chinese Characters and carries "
                       + "exactly 8,105 entries, so it supplies both the universe and the "
-                      + "readings: 8,759 appearances over 1,284 distinct toned syllables, with "
-                      + "592 polyphonic characters. Every one of the 8,105 also has a kMandarin "
+                      + "readings: 8,763 appearances over 1,288 distinct toned syllables, with "
+                      + "593 polyphonic characters. Every one of the 8,105 also has a kMandarin "
                       + "value, so no character lacks a principal-reading candidate.\n\n"
                       + "The tempting move is to union in kXHC1983 and kHanyuPinyin for wider "
                       + "coverage. Measuring what they actually add shows that would be a "
@@ -185,7 +185,7 @@ public final class PhonicCoveragePlan implements Plan {
                       + "data can produce.",
                         "The review this implies is bounded, and the bound was measured rather "
                       + "than hoped for. 7,513 of the 8,105 are monophonic - there is no choice "
-                      + "to make at all. Of the 592 polyphonic, 370 carry frequency data, and "
+                      + "to make at all. Of the 593 polyphonic, 370 carry frequency data, and "
                       + "for 355 of those kMandarin already agrees with the most frequent "
                       + "reading. So the whole editorial review is 15 frequency disagreements "
                       + "plus the 26 below: 41 characters, an hour of work, not a data-entry "
@@ -253,7 +253,7 @@ public final class PhonicCoveragePlan implements Plan {
                                 new Task("Report conflicts as findings, not exceptions", true),
                                 new Task("Serve a partition as an ES module, data literals only", true),
                                 new Task("Render it on a RelationGrid, partition-switchable", true),
-                                new Task("Pin the counts: 8,100 characters, 8,759 appearances, 1,284 syllables, 592 polyphonic", true)),
+                                new Task("Pin the counts: 8,100 characters, 8,763 appearances, 1,288 syllables, 593 polyphonic", true)),
                         List.of(),
                         "8,100 characters load, the 5 unservable are named, and the grid shows "
                       + "any partition on demand. 211 tests green in kranji-core, 23 in the app.",
@@ -386,7 +386,7 @@ public final class PhonicCoveragePlan implements Plan {
                         "Both problems were found by measuring rather than by hitting them, so "
                       + "they can be fixed before the corpus lands rather than after.\n\n"
                       + "This is also the one phase that could grow. The served tree is "
-                      + "currently 21 KB for 77 terminals; at 1,284 terminals the same shape "
+                      + "currently 21 KB for 77 terminals; at 1,288 terminals the same shape "
                       + "extrapolates to roughly 350 KB in a single payload. Capping the note "
                       + "should take a large bite out of that, since notes are most of the "
                       + "per-terminal bytes. If it does not, the tree needs lazily loaded "
@@ -449,7 +449,7 @@ public final class PhonicCoveragePlan implements Plan {
 
                 new Acceptance("The tree stayed bounded",
                         "The projection holds under 2,000 nodes at full coverage - measured at "
-                      + "1,284 distinct toned syllables for the entire 8,105-character standard "
+                      + "1,288 distinct toned syllables for the entire 8,105-character standard "
                       + "set, against 77 today. This is the design claim of the phonic "
                       + "catalogue and the one number that would falsify it.",
                         false),
@@ -482,8 +482,8 @@ public final class PhonicCoveragePlan implements Plan {
     public List<Metric> metrics() {
         return List.of(
                 new Metric("Characters covered", "79", "8,100", "+8,021"),
-                new Metric("Appearances in the tree", "83", "8,759", "+8,676"),
-                new Metric("Terminals (toned syllables)", "77", "1,284", "+1,207"),
+                new Metric("Appearances in the tree", "83", "8,763", "+8,676"),
+                new Metric("Terminals (toned syllables)", "77", "1,288", "+1,211"),
                 new Metric("Partition files", "22", "22", "unchanged"),
                 new Metric("Chars in the heaviest syllable", "4", "74", "+70"),
                 new Metric("Polyphonic characters", "3", "592", "+589"));
