@@ -27,6 +27,14 @@
             <artifactId>kranji-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+
+        <!-- The seeder writes through GlossTsv, so its output is correct by
+             construction rather than by careful string building. -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-gloss</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-json</artifactId>
