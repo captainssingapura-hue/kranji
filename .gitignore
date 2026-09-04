@@ -44,3 +44,12 @@ output/
 
 ### Local working notes ###
 /docs/
+
+### Local working data ###
+# Generator inputs and scratch output. `input/` holds the vendored Unihan
+# extract the codegen defaults to (8MB) plus a pile of one-shot debug dumps;
+# it has never been tracked, and the generators take an explicit path.
+/input/
+/workspace/
+/.temp/
+/block-audit-result.txt
