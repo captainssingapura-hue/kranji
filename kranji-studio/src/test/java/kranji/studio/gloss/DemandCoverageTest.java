@@ -143,11 +143,20 @@ class DemandCoverageTest {
         // the hand-crafted set wins every collision by precedence, so it is
         // the only place a bad seed CAN be overridden.
         //
-        // A character in neither demand nor the seed is still drift.
+        // And a THIRD, which is the corpus work itself: answering something
+        // the seeder LOGGED. That began as "queued polyphones" and grew a
+        // clause within the hour, when 岷 arrived - unseeded rather than
+        // queued, because its only definition is 71 characters and Meaning
+        // takes 60. Two clauses for one idea is a rule drifting toward a list,
+        // so it is stated once: the seeder wrote this character down as work,
+        // and writing the gloss is doing it.
+        //
+        // A character in none of the three is still drift.
         Set<String> demand = demand();
         var demandedCharacters = demand.stream()
                 .map(p -> p.substring(0, p.indexOf(':'))).collect(Collectors.toSet());
         Set<String> seededCharacters = seeded();
+        Set<String> loggedCharacters = logged();
 
         var stray = new ArrayList<String>();
         for (String pair : handAuthored()) {
@@ -155,13 +164,24 @@ class DemandCoverageTest {
             String character = pair.substring(0, pair.indexOf(':'));
             if (demandedCharacters.contains(character)) continue;
             if (seededCharacters.contains(character)) continue;
+            if (loggedCharacters.contains(character)) continue;
             stray.add(pair);
         }
 
         assertEquals(List.of(), stray,
-                "glossed at a character the library never reads and the seed never "
-              + "guessed at: " + stray + " - completing a polyphone and overriding a "
-              + "seeded gloss are both deliberate; anything else is drift");
+                "glossed at a character the library never reads, the seed never guessed "
+              + "at, and the seeder never queued: " + stray + " - completing a polyphone, "
+              + "overriding a seeded gloss and answering a queued one are all deliberate; "
+              + "anything else is drift");
+    }
+
+    /** Every character the seeder wrote down as work, whatever kind. */
+    private static Set<String> logged() {
+        var out = new LinkedHashSet<String>();
+        for (SeedProblems.Row row : SeedProblems.rows()) {
+            out.add(String.valueOf(row.codePoint()));
+        }
+        return out;
     }
 
     /** Every character some machine-seeded collection has a gloss for. */
