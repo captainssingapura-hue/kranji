@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * How many characters this reader can read, and what that is called.
  *
- * <p>Three lines and nothing else: the name of where they have got to, the
- * count, and how far to the next name. {@link KnownProgressModule} holds the
- * bands and every word of the wording.</p>
+ * <p>A mark, the name of where they have got to, the count, and how far to the
+ * next name. Nothing else. {@link KnownProgressModule} holds the bands, their
+ * icons and every word of the wording.</p>
  *
  * <h2>What is deliberately not here</h2>
  *
@@ -90,7 +90,11 @@ public final class KnownProgressWidget
                 "        return el;",
                 "    }",
                 "",
-                "    // The band first. A count is a fact and a band is a place to be,",
+                "    // The mark on its own line, big. It is the part somebody sees",
+                "    // change before they have read anything.",
+                "    var bandIcon = line('icon', kr_title);",
+                "",
+                "    // Then the band. A count is a fact and a band is a place to be,",
                 "    // and the place is what somebody remembers a week later.",
                 "    var bandName = line('band', kr_title);",
                 "    var countLine = line('count', kr_body);",
@@ -114,6 +118,7 @@ public final class KnownProgressWidget
                 "",
                 "    function render() {",
                 "        var n = progress.count(__known);",
+                "        bandIcon.textContent = progress.icon(n);",
                 "        bandName.textContent = progress.headline(n);",
                 "        countLine.textContent = progress.line(n);",
                 "        nextLine.textContent = progress.nextLine(n);",

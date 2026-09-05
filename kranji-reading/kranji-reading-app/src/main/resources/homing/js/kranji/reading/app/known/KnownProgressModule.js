@@ -19,25 +19,40 @@
 // Pure - no DOM, no fetch, no clock.
 // =============================================================================
 
-// Where the boundaries come from. The top two are borrowed rather than
-// invented: 2,500 and 3,500 are the two standard everyday-character lists, so
-// reaching them means something outside this app. Below that each band is
-// roughly double the last, which puts the names close together early and far
-// apart later - the right shape, because the encouragement is needed most in
-// the first weeks and least once somebody is plainly reading.
+// Where the boundaries come from. The four at the top are borrowed rather
+// than invented, and they are the reason the ladder does not stop at 3,500:
+//
+//   2,500  the frequently-used set
+//   3,500  the first level of the standard list
+//   6,500  the first and second levels together
+//   8,000  all but the last hundred of this corpus, which holds 8,100
+//
+// Everything above 3,500 used to be one band, which said that the difference
+// between a reader of 3,600 characters and a reader of 8,000 was nothing worth
+// naming. It is most of a decade.
+//
+// Below 2,500 each band is roughly double the last, so the names come quickly
+// at first and slowly later. That is the right shape: the encouragement is
+// wanted most in the first weeks and least once somebody is plainly reading.
+//
+// The icons are one journey on foot and then above it, in step with the names.
+// A mixed metaphor here would read as decoration; this one is meant to be
+// noticed changing.
 var CHARACTER_BANDS = [
-    { from: 3500, name: 'Reading freely' },
-    { from: 2000, name: 'The everyday characters' },
-    { from: 1000, name: 'Well on your way' },
-    { from: 500,  name: 'Hitting your stride' },
-    { from: 200,  name: 'Reading along' },
-    { from: 50,   name: 'Getting going' },
-    { from: 1,    name: 'First characters' },
-    { from: 0,    name: 'Ready when you are' }
+    { from: 8000, name: 'The whole list',          icon: '🌄' },
+    { from: 6500, name: 'Into the rare ones',      icon: '🦅' },
+    { from: 3500, name: 'Reading freely',          icon: '🏔' },
+    { from: 2500, name: 'The everyday characters', icon: '⛰' },
+    { from: 1000, name: 'Well on your way',        icon: '🧭' },
+    { from: 500,  name: 'Hitting your stride',     icon: '🏃' },
+    { from: 200,  name: 'Reading along',           icon: '🥾' },
+    { from: 50,   name: 'Getting going',           icon: '🚶' },
+    { from: 1,    name: 'First characters',        icon: '👣' },
+    { from: 0,    name: 'Ready when you are',      icon: '🚩' }
 ];
 
 /**
- * Returns { bands, count, bandOf, next, headline, line, nextLine }.
+ * Returns { bands, count, bandOf, next, headline, icon, line, nextLine }.
  *
  * @param knownSet createKnownSet() - so what counts as a character is decided
  *                 in one place rather than by picking keys apart here
@@ -76,6 +91,11 @@ function createKnownProgress(knownSet) {
         return bandOf(n).name;
     }
 
+    /** The band's mark. Kept apart from the name so a later look can place it. */
+    function icon(n) {
+        return bandOf(n).icon;
+    }
+
     /** The number, plainly, with no denominator. */
     function line(n) {
         if (n === 0) {
@@ -110,6 +130,7 @@ function createKnownProgress(knownSet) {
         bandOf: bandOf,
         next: next,
         headline: headline,
+        icon: icon,
         line: line,
         nextLine: nextLine
     };

@@ -51,6 +51,10 @@ class KnownProgressModuleTest extends JsModuleTestBase {
         return progress.getMember("nextLine").execute(n).asString();
     }
 
+    private String icon(int n) {
+        return progress.getMember("icon").execute(n).asString();
+    }
+
     // ── The one number ─────────────────────────────────────────────────
 
     @Test
@@ -75,24 +79,68 @@ class KnownProgressModuleTest extends JsModuleTestBase {
         assertEquals("Reading along", headline(200));
         assertEquals("Hitting your stride", headline(500));
         assertEquals("Well on your way", headline(1000));
-        assertEquals("The everyday characters", headline(2000));
+        assertEquals("The everyday characters", headline(2500));
         assertEquals("Reading freely", headline(3500));
-        assertEquals("Reading freely", headline(9000));
+        assertEquals("Into the rare ones", headline(6500));
+        assertEquals("The whole list", headline(8000));
+        assertEquals("The whole list", headline(8100));
     }
 
     @Test
-    void theBandsRiseAndNeverRepeatAName() {
+    void theClimbAboveTheStandardListIsNamedAndNotOneLongBand() {
+        // 3,500 to 8,000 used to be a single band, which said the difference
+        // between a reader of 3,600 characters and one of 8,000 was nothing
+        // worth naming. It is most of a decade.
+        assertFalse(headline(4000).equals(headline(7000)), "4,000 and 7,000 are not the same place");
+        assertFalse(headline(7000).equals(headline(8050)), "7,000 and 8,050 are not the same place");
+    }
+
+    @Test
+    void theTopBandIsInsideThisCorpus() {
+        // A band nobody can reach is a promise the app cannot keep. Checked
+        // against the corpus itself rather than a number copied into a comment,
+        // because the corpus is what would move.
+        int counted = 0;
+        for (kranji.phonic.SourceReadings row : kranji.phonic.PhonicPartitions.loadAll()) {
+            if (row != null) counted++;
+        }
+        final int corpus = counted;
         Value bands = progress.getMember("bands");
-        var seen = new java.util.HashSet<String>();
+        final int top = bands.getArrayElement(0).getMember("from").asInt();
+        assertTrue(top <= corpus,
+                () -> "the top band opens at " + top + " and the corpus holds " + corpus);
+    }
+
+    @Test
+    void theBandsRiseAndNeverRepeatANameOrAMark() {
+        Value bands = progress.getMember("bands");
+        var names = new java.util.HashSet<String>();
+        var icons = new java.util.HashSet<String>();
         int previous = Integer.MAX_VALUE;
         for (int i = 0; i < bands.getArraySize(); i++) {
             int from = bands.getArrayElement(i).getMember("from").asInt();
             String name = bands.getArrayElement(i).getMember("name").asString();
+            String icon = bands.getArrayElement(i).getMember("icon").asString();
             assertTrue(from < previous, () -> "bands must descend: " + from);
-            assertTrue(seen.add(name), () -> "two bands are called " + name);
+            assertTrue(names.add(name), () -> "two bands are called " + name);
+            // A repeated mark makes two different places look like one, which
+            // is exactly what somebody glancing at the pane would read it as.
+            assertTrue(icons.add(icon), () -> "two bands are marked " + icon);
+            assertFalse(icon.isBlank(), () -> name + " has no mark");
             previous = from;
         }
         assertEquals(0, previous, "the lowest band has to catch a reader at zero");
+    }
+
+    @Test
+    void everyCountHasAMarkAndItChangesWithTheBand() {
+        assertEquals(icon(0), icon(0));
+        assertFalse(icon(0).equals(icon(1)), "crossing into a band changes the mark");
+        assertFalse(icon(2499).equals(icon(2500)));
+        assertFalse(icon(8000).equals(icon(7999)));
+        for (int n : new int[] { 0, 1, 49, 250, 2600, 4000, 7000, 9000 }) {
+            assertFalse(icon(n).isBlank(), () -> "no mark at " + n);
+        }
     }
 
     @Test
@@ -106,9 +154,13 @@ class KnownProgressModuleTest extends JsModuleTestBase {
     @Test
     void theTopBandDoesNotDangleAPromise() {
         // There is nothing above it, and inventing one would be a lie a reader
-        // eventually notices.
-        assertFalse(nextLine(4000).contains("more and"), nextLine(4000));
-        assertTrue(progress.getMember("next").execute(4000).isNull());
+        // eventually notices. Below it there always is something.
+        assertFalse(nextLine(8050).contains("more and"), nextLine(8050));
+        assertTrue(progress.getMember("next").execute(8050).isNull());
+
+        assertTrue(nextLine(4000).contains("more and"),
+                "4,000 is no longer the top - there is a name above it now");
+        assertFalse(progress.getMember("next").execute(4000).isNull());
     }
 
     // ── The wording ────────────────────────────────────────────────────
@@ -128,6 +180,8 @@ class KnownProgressModuleTest extends JsModuleTestBase {
 
     @Test
     void theDenominatorNeverAppears() {
+        // 8,100 is the corpus. It is the number that makes a term of work look
+        // like nothing, so it never reaches the page.
         // 248 of 8,100 is 3%, and a page that says 3% has told a child their
         // term's work rounds to nothing.
         for (int n : new int[] { 0, 1, 50, 248, 1000, 3500, 9000 }) {
