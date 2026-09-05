@@ -21,8 +21,7 @@
  * opts = {
  *   branch, css, btnClass, hiddenClass,
  *   transfer,      // createKnownTransfer() - parses and describes
- *   tell,          // fn(msg) - sends on the known-set party
- *   knownCount,    // fn() -> how many readings are claimed right now
+ *   apply,         // fn(keys) -> Promise<addedCount> - puts them on the device
  *   say            // fn(text) - writes the pane's note line
  * }
  * Returns { controls: [element], showUndo(n) }.
@@ -64,13 +63,13 @@ function createKnownImportControls(opts) {
                         + ' lines could not be read.' : '.'));
                 return;
             }
-            // Counted across the tell, because the party decides what was
-            // actually new - a file listing readings already claimed adds
-            // none, and saying otherwise would be a lie about their record.
-            var before = opts.knownCount();
-            opts.tell({ kind: 'ImportKnown', known: read.keys });
-            opts.say(transfer.describeImport(
-                    read, opts.knownCount() - before, file.name));
+            // The count comes back from whoever applied it, because only
+            // they know what was actually new - a file listing readings
+            // already claimed adds none, and saying otherwise would be a lie
+            // about somebody's record.
+            return opts.apply(read.keys).then(function (added) {
+                opts.say(transfer.describeImport(read, added, file.name));
+            });
         }).catch(function (err) {
             opts.say('Could not read ' + file.name + ': '
                 + (err && err.message ? err.message : String(err)));
