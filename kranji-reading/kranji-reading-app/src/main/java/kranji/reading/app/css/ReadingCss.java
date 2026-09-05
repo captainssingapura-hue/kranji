@@ -892,14 +892,69 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
         }
     }
 
-    /** What a band's cell reads, in both designs. */
+    /**
+     * Wide: a band is a tile — the mark above the name.
+     *
+     * <p>Square-ish and fixed, so eleven of them read as eleven equal places
+     * rather than as columns sized by how long each name happens to be. The
+     * mark is what the eye finds first and the name is what it confirms, which
+     * is the order they are stacked in.</p>
+     */
     public record kr_pb_cell() implements CssClass<ReadingCss> {
         @Override public String body() { return """
-                display: block;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                box-sizing: border-box;
+                width: 92px;
+                height: 92px;
+                padding: 6px 4px;
+                text-align: center;
+                color: var(--color-text-secondary);
+                """;
+        }
+    }
+
+    /** Narrow: a band is a line, because the column has width and not height. */
+    public record kr_pb_line() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: var(--space-2, 8px);
+                padding: 2px 0;
+                color: var(--color-text-secondary);
+                """;
+        }
+    }
+
+    /** The mark. */
+    public record kr_pb_badge() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-size: 22px;
+                line-height: 1;
+                """;
+        }
+    }
+
+    /** The name under a tile: small, and allowed to wrap onto two lines. */
+    public record kr_pb_name() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-size: 12px;
+                line-height: 1.25;
+                overflow-wrap: anywhere;
+                """;
+        }
+    }
+
+    /** The name beside a mark, on a line. */
+    public record kr_pb_name_line() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                color: var(--color-text-secondary);
                 """;
         }
     }
@@ -907,10 +962,6 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
     /** A band already passed. */
     public record kr_pb_past() implements CssClass<ReadingCss> {
         @Override public String body() { return """
-                display: block;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
                 color: var(--color-text-primary);
                 """;
         }
@@ -925,10 +976,6 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
      */
     public record kr_pb_here() implements CssClass<ReadingCss> {
         @Override public String body() { return """
-                display: block;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
                 font-weight: 700;
                 color: var(--color-accent);
                 """;
@@ -949,6 +996,10 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
         return List.of(
                 new kr_pb_grid(),
                 new kr_pb_cell(),
+                new kr_pb_line(),
+                new kr_pb_badge(),
+                new kr_pb_name(),
+                new kr_pb_name_line(),
                 new kr_pb_past(),
                 new kr_pb_here(),
                 new kr_pb_detail(),
