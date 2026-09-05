@@ -45,7 +45,7 @@ import java.util.List;
  * selection, because arrowing down a list would otherwise fire an import per
  * row passed.</p>
  *
- * <p>Read-only, like Known. A claim is made in the Character pane beside the
+ * <p>Read-only, like Known. A claim is made in the reader, beside the
  * character's other readings; here a whole syllable sits under the cursor, and
  * what an accidental edit would destroy is somebody's afternoon.</p>
  *
