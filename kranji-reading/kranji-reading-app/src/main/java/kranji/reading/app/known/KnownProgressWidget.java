@@ -96,13 +96,7 @@ public final class KnownProgressWidget
                         KnownSetModule.INSTANCE),
                 new ModuleImports<>(
                         List.of(new KnownProgressModule.createKnownProgress()),
-                        KnownProgressModule.INSTANCE),
-                new ModuleImports<>(
-                        List.of(new KnownStoreModule.createKnownStore()),
-                        KnownStoreModule.INSTANCE),
-                new ModuleImports<>(
-                        List.of(new KnownPersistenceModule.createKnownPersistence()),
-                        KnownPersistenceModule.INSTANCE));
+                        KnownProgressModule.INSTANCE));
     }
 
     @Override
@@ -312,14 +306,14 @@ public final class KnownProgressWidget
                 "        new ResizeObserver(function () { render(); }).observe(root);",
                 "    }",
                 "",
-                "    var __knownParty = (workspaceCtx && workspaceCtx.knownParty)",
-                "                     ? workspaceCtx.knownParty : null;",
+                "    var __knownParty = (workspaceCtx && workspaceCtx.knownEventParty)",
+                "                     ? workspaceCtx.knownEventParty : null;",
                 "    var __knownActorId = null;",
                 "    if (__knownParty) {",
                 "        __knownActorId = 'known/prog-' + Math.random().toString(36).slice(2, 8);",
                 "        __knownParty.joinActor({",
                 "            id: __knownActorId,",
-                "            parentSecretary: 'knownSet',",
+                "            parentSecretary: 'knownEvents',",
                 "            reactors: {",
                 "                KnownChanged: function (msg) {",
                 "                    __known = (msg && msg.known) ? msg.known : [];",
@@ -328,18 +322,6 @@ public final class KnownProgressWidget
                 "            }",
                 "        });",
                 "        __knownParty.tellFrom(__knownActorId, { kind: 'WhatIsKnown' });",
-                "        // Seeded from the device, never written to it.",
-                "        createKnownPersistence({",
-                "            store: createKnownStore(),",
-                "            tell: function (msg) {",
-                "                __knownParty.tellFrom(__knownActorId, msg);",
-                "            },",
-                "            onProblem: function (broken) {",
-                "                if (broken) {",
-                "                    say('Could not read what is saved on this device.');",
-                "                }",
-                "            }",
-                "        }).start();",
                 "    }",
                 "",
                 "    render();",

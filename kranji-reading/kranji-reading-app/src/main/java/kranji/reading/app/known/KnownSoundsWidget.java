@@ -86,13 +86,7 @@ public final class KnownSoundsWidget
                         ReadingCss.INSTANCE),
                 new ModuleImports<>(
                         List.of(new KnownSoundsModule.createKnownSounds()),
-                        KnownSoundsModule.INSTANCE),
-                new ModuleImports<>(
-                        List.of(new KnownStoreModule.createKnownStore()),
-                        KnownStoreModule.INSTANCE),
-                new ModuleImports<>(
-                        List.of(new KnownPersistenceModule.createKnownPersistence()),
-                        KnownPersistenceModule.INSTANCE));
+                        KnownSoundsModule.INSTANCE));
     }
 
     @Override
@@ -290,14 +284,14 @@ public final class KnownSoundsWidget
                 "        });",
                 "    }",
                 "",
-                "    var __knownParty = (workspaceCtx && workspaceCtx.knownParty)",
-                "                     ? workspaceCtx.knownParty : null;",
+                "    var __knownParty = (workspaceCtx && workspaceCtx.knownEventParty)",
+                "                     ? workspaceCtx.knownEventParty : null;",
                 "    var __knownActorId = null;",
                 "    if (__knownParty) {",
                 "        __knownActorId = 'known/idx-' + Math.random().toString(36).slice(2, 8);",
                 "        __knownParty.joinActor({",
                 "            id: __knownActorId,",
-                "            parentSecretary: 'knownSet',",
+                "            parentSecretary: 'knownEvents',",
                 "            reactors: {",
                 "                KnownChanged: function (msg) {",
                 "                    __known = (msg && msg.known) ? msg.known : [];",
@@ -306,21 +300,6 @@ public final class KnownSoundsWidget
                 "            }",
                 "        });",
                 "        __knownParty.tellFrom(__knownActorId, { kind: 'WhatIsKnown' });",
-                "        // Seeded from the device, never written to it. Opened on its own",
-                "        // this would otherwise show an empty record on a device that has",
-                "        // been read on for months.",
-                "        createKnownPersistence({",
-                "            store: createKnownStore(),",
-                "            tell: function (msg) {",
-                "                __knownParty.tellFrom(__knownActorId, msg);",
-                "            },",
-                "            onProblem: function (broken) {",
-                "                if (broken) {",
-                "                    status.textContent =",
-                "                        'Could not read what is saved on this device.';",
-                "                }",
-                "            }",
-                "        }).start();",
                 "    }",
                 "",
                 "    render();",

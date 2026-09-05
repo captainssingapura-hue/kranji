@@ -7,9 +7,7 @@ import hue.captains.singapura.js.homing.grid.StockCellsModule;
 import hue.captains.singapura.js.homing.workspace.LifecycleHint;
 import hue.captains.singapura.js.homing.workspace.WorkspaceWidget;
 import kranji.reading.app.css.ReadingCss;
-import kranji.reading.app.known.KnownPersistenceModule;
 import kranji.reading.app.known.KnownSetModule;
-import kranji.reading.app.known.KnownStoreModule;
 import kranji.reading.app.ui.PinyinSwfModule;
 
 import java.util.List;
@@ -103,12 +101,6 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                         List.of(new KnownSetModule.createKnownSet()),
                         KnownSetModule.INSTANCE),
                 new ModuleImports<>(
-                        List.of(new KnownStoreModule.createKnownStore()),
-                        KnownStoreModule.INSTANCE),
-                new ModuleImports<>(
-                        List.of(new KnownPersistenceModule.createKnownPersistence()),
-                        KnownPersistenceModule.INSTANCE),
-                new ModuleImports<>(
                         List.of(new PinyinSwfModule.createPinyinSwf()),
                         PinyinSwfModule.INSTANCE));
     }
@@ -170,8 +162,8 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "",
                 "    // ── The record ────────────────────────────────────────────",
                 "",
-                "    var __knownParty = (workspaceCtx && workspaceCtx.knownParty)",
-                "                     ? workspaceCtx.knownParty : null;",
+                "    var __knownParty = (workspaceCtx && workspaceCtx.knownEventParty)",
+                "                     ? workspaceCtx.knownEventParty : null;",
                 "    var __knownActorId = null;",
                 "",
                 "    function tellKnown(msg) {",
@@ -339,12 +331,11 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "        __knownActorId = 'known/zi-' + Math.random().toString(36).slice(2, 8);",
                 "        __knownParty.joinActor({",
                 "            id: __knownActorId,",
-                "            parentSecretary: 'knownSet',",
+                "            parentSecretary: 'knownEvents',",
                 "            reactors: {",
                 "                KnownChanged: function (msg) {",
                 "                    __known = (msg && msg.known) ? msg.known : [];",
                 "                    __lastImport = (msg && msg.lastImport) ? msg.lastImport : [];",
-                "                    store.changed(__known, __lastImport);",
                 "                    // The cells read isKnown() as they paint, so the grid is",
                 "                    // redrawn rather than told which row moved. Four rows at",
                 "                    // most - the bookkeeping would cost more than the redraw.",
@@ -354,16 +345,8 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "        });",
                 "    }",
                 "",
-                "    // This pane writes, so it persists. The order rule - never write",
-                "    // before the device has answered - lives in the persistence module.",
-                "    var store = createKnownPersistence({",
-                "        store: createKnownStore(),",
-                "        tell: function (msg) { tellKnown(msg); },",
-                "        onProblem: function (broken) { __storeProblem = broken; say(null); }",
-                "    });",
                 "    if (__knownParty) {",
                 "        tellKnown({ kind: 'WhatIsKnown' });",
-                "        store.start();",
                 "    }",
                 "",                "",
                 "    return {",

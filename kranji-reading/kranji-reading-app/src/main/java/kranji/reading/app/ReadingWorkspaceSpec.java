@@ -12,7 +12,9 @@ import kranji.reading.app.phonic.PhonicSourceWidget;
 import kranji.reading.app.read.ArticleCatalogueWidget;
 import kranji.reading.app.read.ArticleReaderWidget;
 import kranji.reading.app.known.KnownProgressWidget;
-import kranji.reading.app.known.KnownSecretaryModule;
+import kranji.reading.app.known.KnownCommandSecretaryModule;
+import kranji.reading.app.known.KnownEventSecretaryModule;
+import kranji.reading.app.known.KnownServiceWidget;
 import kranji.reading.app.known.KnownTransferWidget;
 import kranji.reading.app.known.KnownZiWidget;
 import kranji.reading.app.read.ArticleSelectionSecretaryModule;
@@ -96,9 +98,37 @@ public final class ReadingWorkspaceSpec implements WorkspaceSpec {
                         .withGroup(known),
                 WidgetEntry.of(PhonicSourceWidget.class, WidgetLabel.of("Phonic Source"))
                         .withIcon(new WidgetIcon.Emoji("\uD83D\uDCCA"))   // bar chart
-                        .withGroup(source)
+                        .withGroup(source),
+                // The record service. Ordinary picker entry for now - see the
+                // note below on why it is not pinned.
+                WidgetEntry.of(KnownServiceWidget.class, WidgetLabel.of("Record"))
+                        .withIcon(new WidgetIcon.Emoji("\uD83D\uDDC4"))   // file cabinet
+                        .withGroup(known)
         );
     }
+
+    /**
+     * The record service, started at boot and impossible to close.
+     *
+     * <p>It owns the set, the device and the failure, so it cannot be something
+     * a reader opts into. A workspace where marking silently fails to save
+     * because nobody opened the right pane is the exact fault this arrangement
+     * removes, and leaving the owner in the picker would have preserved it in a
+     * politer form.</p>
+     *
+     * <p>Pinning is the shell's way of saying <em>always there, not in the
+     * picker, no close button</em>. It costs one tab, which the pane earns back
+     * by being where a failed save is announced.</p>
+     */
+    // pinnedSpawns() is deliberately NOT overridden.
+    //
+    // It is the right mechanism and it does not work in this shell: the
+    // chrome seeds pinned widgets only from its onEmpty hook, and opening a
+    // workspace records SessionStarted before replay runs, so the log is
+    // never empty and the hook never fires. Naming the service there removed
+    // it from the picker as well, leaving it spawned by nothing and openable
+    // by nobody - an owner that does not exist is worse than one a reader has
+    // to open. Until the shell can start it, it is an ordinary SINGLETON entry.
 
     @Override
     public List<PartyDecl> parties() {
@@ -118,12 +148,16 @@ public final class ReadingWorkspaceSpec implements WorkspaceSpec {
                              "ArticleSelectionSecretary")
                          .exposedAs("articleParty")
                          .build(),
-                // What the reader already knows. Unlike the other three this
-                // bus holds state rather than relaying a selection, and every
-                // broadcast carries the whole set - a pane that mounted late
-                // is correct on the next change rather than needing a resync.
-                PartyDecl.of("knownSet", KnownSecretaryModule.INSTANCE, "KnownSecretary")
-                         .exposedAs("knownParty")
+                // What the reader already knows. A relay like the other three:
+                // KnownService owns the set, the device and the failure, and
+                // this only carries the words between the panes and it.
+                PartyDecl.of("knownCommands", KnownCommandSecretaryModule.INSTANCE,
+                             "KnownCommandSecretary")
+                         .exposedAs("knownCommandParty")
+                         .build(),
+                PartyDecl.of("knownEvents", KnownEventSecretaryModule.INSTANCE,
+                             "KnownEventSecretary")
+                         .exposedAs("knownEventParty")
                          .build()
         );
     }

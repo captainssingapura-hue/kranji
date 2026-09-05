@@ -1,114 +1,150 @@
 // =============================================================================
-// KnownWatchModule — following the known set without changing it.
+// KnownWatchModule — following the known set without owning it.
 //
-// Everything a pane needs to ANSWER AGAINST the set, and nothing it would need
-// to alter one. The reader hides pinyin for readings already claimed; the
-// character panel will flag which components are familiar. Neither marks
-// anything, and neither should be able to.
+// A pane's mirror of the service's record, kept current by facts from the READ
+// channel. It answers questions in constant time and it writes nothing: no
+// store, no save, no device. This module used to construct a persistence
+// engine of its own, with an empty failure handler, in every pane that
+// watched - which is how a failed save came to be invisible in the two panes
+// most likely to be open.
 //
-// One call joins the party, asks for the current set, seeds from the device,
-// and keeps the answer up to date. Written out longhand in each pane, that was
-// thirty lines each of party plumbing whose only interesting part - "and then
-// repaint" - was buried in it.
+//   read channel  in : KnownSnapshot { keys }  -> rebuild the mirror
+//                      KnownAdded    { key }   -> add one
+//                      KnownRemoved  { key }   -> remove one
+//   read channel  out: WhatIsKnown            -> ask, on mounting
+//   write channel out: MarkKnown / UnmarkKnown -> only with claims: true
 //
-// Read-only BY DEFAULT, and read-only is still enforced by what is not there:
-// a caller that does not ask for claims gets no mark, no unmark, and no save,
-// so it cannot write to the device even by accident.
+// A snapshot REPLACES rather than unions, which is the opposite of the
+// service's own seed rule and right for the same reason: the service is the
+// authority, this is a copy of it, and a copy that could only grow would keep
+// showing a reading the reader had just taken back.
 //
-// `claims: true` is the opt-in. It exists because the reader earned it: a child
-// meeting a character in a sentence is the moment they know whether they can
-// read it, and sending them to another pane to say so costs more than the claim
-// is worth. The flag is deliberate and greppable - one call site asking for
-// write access is a thing you can find, which is what "enforced by absence"
-// was protecting in the first place.
+// NOTHING IS UPDATED WHEN A COMMAND IS SENT. toggle() asks and returns, and
+// the badge changes when - and only when - the fact comes back on the read
+// channel. The set lives on the device, the device can refuse, and a cell that
+// changed on the request would be telling a child something that had not
+// happened. It also makes the two channels worth having: with one bus a pane
+// hears its own request and cannot tell it from a confirmation.
+//
+// Read-only is structural, not conventional. A pane that is handed no write
+// party has nothing to write with - not an object with a method left off, but
+// no channel at all.
 // =============================================================================
 
 /**
  * opts = {
- *   party    : the knownSet party, or null when the workspace has none
- *   onChanged: fn()      // the set moved; repaint
+ *   events   : the knownEvents party - facts in, questions out
+ *   commands : the knownCommands party, or null - requests out. Required for
+ *              claims; a pane that omits it cannot change the set.
+ *   onChanged: fn()      // the mirror moved; restyle
  *   id       : string    // actor id prefix, e.g. 'reader'
- *   claims   : boolean   // opt in to mark/unmark/toggle; omit for read-only
+ *   claims   : boolean   // opt in to toggle; omit for read-only
  * }
  *
- * Returns { annotates, isKnown, set, leave } and, with claims, { toggle }.
+ * Returns { annotates, isKnown, record, size, leave } and, with claims and a
+ * command party, { toggle }.
  */
 function createKnownWatch(opts) {
 
     var set = createKnownSet();
-    var known = [];
-    var party = opts.party || null;
+    var record = createKnownRecord();
+    var events = opts.events || null;
+    var commands = opts.commands || null;
     var actorId = null;
+    var writerId = null;
 
-    if (party) {
+    function moved() { if (opts.onChanged) opts.onChanged(); }
+
+    if (events) {
         actorId = 'known/' + (opts.id || 'watch') + '-'
                 + Math.random().toString(36).slice(2, 8);
-        party.joinActor({
+        events.joinActor({
             id: actorId,
-            parentSecretary: 'knownSet',
+            parentSecretary: 'knownEvents',
             reactors: {
-                KnownChanged: function (msg) {
-                    known = (msg && msg.known) ? msg.known : [];
-                    if (opts.onChanged) opts.onChanged();
+                KnownSnapshot: function (msg) {
+                    record = createKnownRecord((msg && msg.keys) ? msg.keys : []);
+                    moved();
+                },
+                KnownAdded: function (msg) {
+                    if (msg && msg.key && record.add(msg.key)) moved();
+                },
+                KnownRemoved: function (msg) {
+                    if (msg && msg.key && record.remove(msg.key)) moved();
                 }
             }
         });
 
-        // Joined late? Ask, rather than waiting for somebody else to change it.
-        party.tellFrom(actorId, { kind: "WhatIsKnown" });
+        // Joined late? Ask. The service answers with a snapshot, so a pane
+        // opened after a morning's marking is correct immediately rather than
+        // on the next change.
+        events.tellFrom(actorId, { kind: 'WhatIsKnown' });
+    }
 
-        // Then the device. A union at the secretary, so this races nothing -
-        // and opened alone, a watching pane would otherwise behave as though
-        // nothing had ever been learnt on a device read on for months.
-        createKnownPersistence({
-            store: createKnownStore(),
-            tell: function (m) { party.tellFrom(actorId, m); },
-            onProblem: function () {}
-        }).start();
+    // A separate membership, because it is a separate channel. A pane holds
+    // this only if it was given somewhere to write.
+    if (opts.claims && commands) {
+        writerId = 'known/' + (opts.id || 'watch') + '-w-'
+                 + Math.random().toString(36).slice(2, 8);
+        commands.joinActor({
+            id: writerId,
+            parentSecretary: 'knownCommands',
+            reactors: {}          // it speaks here; it does not listen here
+        });
     }
 
     var api = {
 
         /**
          * Should this character carry its reading? The rule itself is
-         * KnownSetModule's; this only supplies the set.
+         * KnownSetModule's; this only supplies the mirror.
          */
         annotates: function (mode, zi, reading) {
-            return set.annotates(mode, known, zi, reading);
+            return set.annotates(mode, record, zi, reading);
         },
 
         /** Is this exact pair claimed? A read, so every caller gets it. */
         isKnown: function (zi, reading) {
-            return set.has(known, zi, reading);
+            var key = set.keyOf(zi, reading);
+            return !!key && record.has(key);
         },
 
-        /** The set as it stands, for a pane that wants to count or list it. */
-        set: function () { return known; },
+        /** The mirror itself, for a pane that wants to ask it many times. */
+        record: function () { return record; },
+
+        size: function () { return record.size(); },
 
         leave: function () {
-            if (!actorId || !party) return;
-            try { party.leave(actorId); } catch (e) {}
-            actorId = null;
+            if (actorId && events) {
+                try { events.leave(actorId); } catch (e) {}
+                actorId = null;
+            }
+            if (writerId && commands) {
+                try { commands.leave(writerId); } catch (e) {}
+                writerId = null;
+            }
         }
     };
 
-    // The opt-in. Absent unless asked for, so a pane that did not ask has
-    // nothing to call - which is the guarantee the read-only note describes.
-    if (opts.claims) {
+    if (writerId) {
         /**
-         * Claim it, or give it back. One entry point rather than two, because
-         * the caller is a toggle and splitting it would only move the "which
-         * way is it going" question into the caller.
+         * Ask for it, or ask for it back. One entry point rather than two,
+         * because the caller is a toggle and splitting it would only move the
+         * "which way is it going" question into the caller.
          *
-         * The set is the source of truth for which way that is - never a
-         * remembered flag, which would go stale the moment another pane
-         * marked the same reading.
+         * The mirror decides which way to ask; the service decides whether the
+         * question meant anything. It ignores a claim it already holds and a
+         * release of something it does not, so a stale mirror costs one wasted
+         * message and never a wrong set.
+         *
+         * Returns nothing, and changes nothing. The cell moves when the fact
+         * arrives.
          */
         api.toggle = function (zi, reading) {
             var key = set.keyOf(zi, reading);
-            if (!key || !party || !actorId) return;
-            party.tellFrom(actorId, {
-                kind: set.has(known, zi, reading) ? 'UnmarkKnown' : 'MarkKnown',
+            if (!key) return;
+            commands.tellFrom(writerId, {
+                kind: record.has(key) ? 'UnmarkKnown' : 'MarkKnown',
                 key: key
             });
         };

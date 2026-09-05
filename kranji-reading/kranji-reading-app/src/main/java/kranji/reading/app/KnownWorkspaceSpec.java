@@ -7,7 +7,9 @@ import hue.captains.singapura.js.homing.workspace.WidgetIcon;
 import hue.captains.singapura.js.homing.workspace.WidgetLabel;
 import hue.captains.singapura.js.homing.workspace.shell.PartyDecl;
 import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpec;
-import kranji.reading.app.known.KnownSecretaryModule;
+import kranji.reading.app.known.KnownCommandSecretaryModule;
+import kranji.reading.app.known.KnownEventSecretaryModule;
+import kranji.reading.app.known.KnownServiceWidget;
 import kranji.reading.app.known.KnownProgressWidget;
 import kranji.reading.app.known.KnownSoundsWidget;
 import kranji.reading.app.known.KnownTransferWidget;
@@ -58,7 +60,7 @@ import java.util.List;
  *
  * <h2>No article party</h2>
  *
- * <p>Three buses, not four. Nothing here reads an article, so declaring the
+ * <p>Four buses, not five. Nothing here reads an article, so declaring the
  * article bus would advertise a producer that never speaks and a consumer that
  * never arrives.</p>
  */
@@ -108,15 +110,37 @@ public final class KnownWorkspaceSpec implements WorkspaceSpec {
                         .withGroup(record),
                 WidgetEntry.of(KnownTransferWidget.class, WidgetLabel.of("Import / Export"))
                         .withIcon(new WidgetIcon.Emoji("💾"))
+                        .withGroup(record),
+                // The record service. Ordinary picker entry for now - see the
+                // note below on why it is not pinned.
+                WidgetEntry.of(KnownServiceWidget.class, WidgetLabel.of("Record"))
+                        .withIcon(new WidgetIcon.Emoji("🗄"))   // file cabinet
                         .withGroup(record));
     }
 
     /**
-     * The same three buses the reading workspace declares, under the same
+     * The record service, in both workspaces and for the same reason.
+     *
+     * <p>Two workspaces, one device. Whichever the reader opens has to be the
+     * one that owns the record while it is open, because a claim made here and
+     * a claim made while reading are the same claim on the same machine.</p>
+     */
+    // pinnedSpawns() is deliberately NOT overridden.
+    //
+    // It is the right mechanism and it does not work in this shell: the
+    // chrome seeds pinned widgets only from its onEmpty hook, and opening a
+    // workspace records SessionStarted before replay runs, so the log is
+    // never empty and the hook never fires. Naming the service there removed
+    // it from the picker as well, leaving it spawned by nothing and openable
+    // by nobody - an owner that does not exist is worse than one a reader has
+    // to open. Until the shell can start it, it is an ordinary SINGLETON entry.
+
+    /**
+     * The same buses the reading workspace declares, under the same
      * exposed names.
      *
      * <p>Load-bearing rather than tidy: every pane here reads {@code navParty},
-     * {@code ziParty} or {@code knownParty} off the workspace context by name,
+     * {@code ziParty} or the two known channels off the workspace context by name,
      * so a workspace that called them anything else would mount widgets that
      * join nothing and silently never scope.</p>
      */
@@ -130,8 +154,13 @@ public final class KnownWorkspaceSpec implements WorkspaceSpec {
                              "ZiSelectionSecretary")
                          .exposedAs("ziParty")
                          .build(),
-                PartyDecl.of("knownSet", KnownSecretaryModule.INSTANCE, "KnownSecretary")
-                         .exposedAs("knownParty")
+                PartyDecl.of("knownCommands", KnownCommandSecretaryModule.INSTANCE,
+                             "KnownCommandSecretary")
+                         .exposedAs("knownCommandParty")
+                         .build(),
+                PartyDecl.of("knownEvents", KnownEventSecretaryModule.INSTANCE,
+                             "KnownEventSecretary")
+                         .exposedAs("knownEventParty")
                          .build());
     }
 }

@@ -44,7 +44,16 @@ function createReadability() {
         bandOf: bandOf,
 
         /**
-         * One article against one known set.
+         * One article against one reader's claims.
+         *
+         * `claimed` is anything answering has(key) - a KnownRecord, or the
+         * pane's mirror of one. It used to be the raw array, and this function
+         * indexed it itself on every call; the catalogue calls it once per
+         * article, so ranking 475 articles rebuilt the same 2,000-entry index
+         * 475 times and cost 23ms at 2,000 readings known. Taking the
+         * membership rather than the list is the whole of that fix, and it is
+         * not a hoist: there was no set to hoist, only an array everybody
+         * re-indexed.
          *
          * Returns { total, known, ratio, unknown, band }, where `unknown` is
          * the number of DISTINCT readings not yet claimed - the count of things
@@ -53,18 +62,15 @@ function createReadability() {
          * An article of no Han characters reads as fully readable rather than
          * dividing by zero. There is nothing in it to be unable to read.
          */
-        of: function (census, known) {
+        of: function (census, claimed) {
             if (!census) return null;
-            var claimed = {};
-            var k = known || [];
-            for (var i = 0; i < k.length; i++) claimed[k[i]] = true;
 
             var total = census.total || 0;
             var hit = 0;
             var unknown = 0;
             var pairs = census.pairs || {};
             for (var key in pairs) {
-                if (claimed[key]) hit += pairs[key];
+                if (claimed && claimed.has(key)) hit += pairs[key];
                 else unknown++;
             }
 

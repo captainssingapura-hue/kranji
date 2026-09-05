@@ -11,7 +11,8 @@ import kranji.reading.app.read.ArticleReaderWidget;
 import kranji.reading.app.read.ArticleReadingsModule;
 import kranji.reading.app.read.ReaderCellStyleModule;
 import kranji.reading.app.read.ArticleSelectionSecretaryModule;
-import kranji.reading.app.known.KnownSecretaryModule;
+import kranji.reading.app.known.KnownCommandSecretaryModule;
+import kranji.reading.app.known.KnownEventSecretaryModule;
 import kranji.reading.app.known.KnownProgressModule;
 import kranji.reading.app.known.KnownProgressWidget;
 import kranji.reading.app.known.KnownSoundsModule;
@@ -20,7 +21,9 @@ import kranji.reading.app.known.KnownZiWidget;
 import kranji.reading.app.known.KnownSetModule;
 import kranji.reading.app.known.KnownWatchModule;
 import kranji.reading.app.known.KnownStoreModule;
-import kranji.reading.app.known.KnownPersistenceModule;
+import kranji.reading.app.known.KnownRecordModule;
+import kranji.reading.app.known.KnownServiceModule;
+import kranji.reading.app.known.KnownServiceWidget;
 import kranji.reading.app.known.KnownImportControlsModule;
 import kranji.reading.app.known.KnownTransferModule;
 import kranji.reading.app.known.KnownTransferWidget;
@@ -77,9 +80,12 @@ public final class ReadingCrate implements Crate {
                 CrateEntry.of(KnownStoreModule.INSTANCE),
                 CrateEntry.of(KnownTransferModule.INSTANCE),
                 CrateEntry.of(KnownImportControlsModule.INSTANCE),
-                CrateEntry.of(KnownPersistenceModule.INSTANCE),
+                CrateEntry.of(KnownRecordModule.INSTANCE),
+                CrateEntry.of(KnownServiceModule.INSTANCE),
+                CrateEntry.of(KnownServiceWidget.INSTANCE),
                 CrateEntry.of(KnownWatchModule.INSTANCE),
-                CrateEntry.of(KnownSecretaryModule.INSTANCE),
+                CrateEntry.of(KnownCommandSecretaryModule.INSTANCE),
+                CrateEntry.of(KnownEventSecretaryModule.INSTANCE),
                 CrateEntry.of(KnownZiWidget.INSTANCE),
                 CrateEntry.of(KnownSoundsModule.INSTANCE),
                 CrateEntry.of(KnownProgressModule.INSTANCE),
