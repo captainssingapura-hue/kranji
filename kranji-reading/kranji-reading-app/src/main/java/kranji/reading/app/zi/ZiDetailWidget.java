@@ -15,7 +15,7 @@ import kranji.reading.app.ui.PinyinSwfModule;
 import java.util.List;
 
 /**
- * One character, in full — and where its readings are claimed.
+ * One character, in full.
  *
  * <h2>Two panes that were the same pane</h2>
  *
@@ -26,15 +26,13 @@ import java.util.List;
  * both had to be kept in step by hand.</p>
  *
  * <p>The merge is not just a paste. The reading list became a
- * {@link ZiReadingsGridModule} grid whose rows are (character, reading) pairs —
- * the key the whole system is grained on — with the claim as a cell. So the row
- * a person reads and the row they act on are the same row, which is what the
- * two panes could never quite manage between them.</p>
+ * {@link ZiReadingsGridModule} grid whose rows are (character, reading) senses,
+ * over the key the whole system is grained on.</p>
  *
  * <h2>Everything about a reading is in its row</h2>
  *
- * <p>The claim, the sound, the meaning, the five parts of the syllable, and how
- * many other characters share it. The parts were chips under the grid that
+ * <p>The sound, the meaning, the five parts of the syllable, and how many other
+ * characters share it. The parts were chips under the grid that
  * followed the cursor; as columns they can be compared, and two readings of one
  * character that differ only in the tone now say so at a glance — which is the
  * thing a strip showing one at a time could never do.</p>
@@ -42,21 +40,23 @@ import java.util.List;
  * <p>There is no count of how often the corpus uses a reading. It decided
  * nothing a reader does, and it cost the meaning the width it needed.</p>
  *
- * <h2>The claim is a picker, not a button</h2>
+ * <h2>It does not claim any more</h2>
  *
- * <p>Two values in one cell, so the same control both claims a reading and
- * gives it back. A button could only have gone one way: in a grid the cursor
- * lands on rows by arrow key and by stray click, and a press that destroyed a
- * deliberate claim would be one keystroke from wherever it happened to be.
- * Choosing from a picker costs two acts and only the second fires, which is
- * what lets the destructive direction live in a cell at all.</p>
+ * <p>There was a claim column here - a picker per row, saying whether the
+ * reading was known and changing it. It went when marking settled in one place.
+ * A reader meets a character in a sentence and says so there; a second control
+ * in a reference pane was a second way to do the same thing, kept in step over
+ * a bus, for the sake of being able to do it while looking something up.</p>
  *
  * <p>Every column except the meaning is fixed width. Their content is bounded
  * and the meaning's is not, so the meaning takes what is left and the control a
  * person aims at stops moving between characters.</p>
  *
- * <p>It joins two buses. Character selection says what to show; the known set
- * says what is already claimed and receives the claims made here.</p>
+ * <p>It joins two buses. Character selection says what to show. It is also
+ * still on the known-set bus, for one reason that has nothing to do with what
+ * it displays: it is one of only two panes anywhere that write the record to
+ * the device, so leaving would make saving depend on which panes are open. That
+ * is a fault waiting for an owner, not a feature of this pane.</p>
  *
  * <p>No CJK appears in this file. Characters arrive from the corpus.</p>
  */
@@ -88,7 +88,6 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                         new ReadingCss.kr_zi_hero(),
                         new ReadingCss.kr_zi_hero_glyph(),
                         new ReadingCss.kr_zi_hero_meta(),
-                        new ReadingCss.kr_kn_pick(),
                         new ReadingCss.kr_grid_host(),
                         new ReadingCss.kr_seg(),
                         new ReadingCss.kr_seg_opt(),
@@ -209,11 +208,7 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "    var readings = createZiReadingsGrid({",
                 "        branch: branch, css: css, host: host, owner: owner,",
                 "        RelationGrid: RelationGrid, TextCell: TextCell,",
-                "        pickClass: kr_kn_pick,",
-                "        swf: swf,",
-                "        isKnown: function (key) { return __known.indexOf(key) >= 0; },",
-                "        onMark:   function (key) { tellKnown({ kind: 'MarkKnown',   key: key }); },",
-                "        onUnmark: function (key) { tellKnown({ kind: 'UnmarkKnown', key: key }); },",
+                "        swf: swf",
                 "    });",
                 "",
                 "    // ── The character ─────────────────────────────────────────",
@@ -341,6 +336,18 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "            id: __knownActorId,",
                 "            parentSecretary: 'knownSet',",
                 "            reactors: {",
+                "                // Still here, and only for the last line of it.",
+                "                //",
+                "                // The claim column is gone, so nothing in this pane reads",
+                "                // the set any more. What it still does is WRITE: this is",
+                "                // one of only two panes anywhere that put the record on",
+                "                // the device - the reader loads and never saves - so",
+                "                // dropping this subscription would make saving depend on",
+                "                // Import / Export happening to be open.",
+                "                //",
+                "                // That is the wrong place for it and it stays until there",
+                "                // is a right one. A pane subscribing to a bus so that a",
+                "                // disk gets written is the fault, not the fix.",
                 "                KnownChanged: function (msg) {",
                 "                    __known = (msg && msg.known) ? msg.known : [];",
                 "                    __lastImport = (msg && msg.lastImport) ? msg.lastImport : [];",
@@ -354,8 +361,9 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "        });",
                 "    }",
                 "",
-                "    // This pane writes, so it persists. The order rule - never write",
-                "    // before the device has answered - lives in the persistence module.",
+                "    // This pane persists, which is no longer anything to do with what",
+                "    // it shows. The order rule - never write before the device has",
+                "    // answered - lives in the persistence module.",
                 "    var store = createKnownPersistence({",
                 "        store: createKnownStore(),",
                 "        tell: function (msg) { tellKnown(msg); },",
