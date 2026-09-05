@@ -1,6 +1,7 @@
 package kranji.reading.app.gloss;
 
 import kranji.pinyin.PinyinSyllable;
+import kranji.simple.gloss.EgRef;
 import kranji.simple.gloss.Glosses;
 import kranji.simple.gloss.Meaning;
 import kranji.simple.gloss.SoundGloss;
@@ -8,6 +9,7 @@ import kranji.simple.gloss.ZiCollections;
 import kranji.simple.gloss.ZiGloss;
 import kranji.zi.ZiCharUTF8;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -107,6 +109,43 @@ public final class ZiGlossary {
         return find(codePoint, reading)
                 .map(sound -> sound.orderedMeanings().stream().map(Meaning::text).toList())
                 .orElse(List.of());
+    }
+
+    /** One sense of one reading: what it means, and what shows it. */
+    public record SenseOf(String meaning, List<String> examples) {
+
+        public SenseOf {
+            examples = List.copyOf(examples);
+        }
+    }
+
+    /**
+     * Every sense of a reading, most central first, with its examples.
+     *
+     * <p>The grain {@link #meaningsOf} throws away. A reading with three senses
+     * is three things a reader could be looking at, and the phrases that show
+     * each one belong to <em>that</em> sense rather than to the reading — 行
+     * xíng meaning "to walk" and meaning "all right" are not illustrated by the
+     * same words, and a list that pooled them would teach the wrong pairing.</p>
+     *
+     * <p>A phrase is named by its own text. Where a gloss cites a particular
+     * sense of a phrase, the index rides along as {@code 东西#1}: 东西 is two
+     * different words, and dropping the index would show a reader the one the
+     * gloss did not mean.</p>
+     */
+    public static List<SenseOf> sensesOf(int codePoint, String reading) {
+        return find(codePoint, reading).map(sound -> {
+            var out = new ArrayList<SenseOf>();
+            for (Meaning meaning : sound.orderedMeanings()) {
+                var shown = new ArrayList<String>();
+                for (EgRef ref : sound.senseOf(meaning).orderedExamples()) {
+                    shown.add(ref.sense() == 0 ? ref.phrase().phrase()
+                                               : ref.phrase().phrase() + "#" + ref.sense());
+                }
+                out.add(new SenseOf(meaning.text(), shown));
+            }
+            return List.copyOf(out);
+        }).orElse(List.of());
     }
 
     /**

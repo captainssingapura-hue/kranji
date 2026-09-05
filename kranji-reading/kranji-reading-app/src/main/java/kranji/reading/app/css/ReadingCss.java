@@ -892,6 +892,58 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
         }
     }
 
+    // ── A binary choice, drawn as one ──────────────────────────────────
+    //
+    // Two segments in a track, one lit. A button whose label changed to say
+    // what pressing it would do next made a reader work out the current state
+    // from the name of the other one; both states are named here and the lit
+    // one is the answer.
+
+    /** The track holding the two halves. */
+    public record kr_seg() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: inline-flex;
+                border: 1px solid var(--color-border);
+                border-radius: 999px;
+                overflow: hidden;
+                margin: var(--space-2, 8px) 0;
+                """;
+        }
+    }
+
+    /** One half, unlit. */
+    public record kr_seg_opt() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                appearance: none;
+                border: 0;
+                background: transparent;
+                padding: 4px 14px;
+                font: inherit;
+                font-size: 12px;
+                line-height: 1.6;
+                color: var(--color-text-secondary);
+                cursor: pointer;
+                """;
+        }
+    }
+
+    /** The half that is the case. */
+    public record kr_seg_on() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                appearance: none;
+                border: 0;
+                padding: 4px 14px;
+                font: inherit;
+                font-size: 12px;
+                line-height: 1.6;
+                cursor: default;
+                font-weight: 600;
+                background: var(--color-accent);
+                color: var(--color-surface);
+                """;
+        }
+    }
+
     /**
      * Wide: a band is a tile — the mark above the name.
      *
@@ -1016,6 +1068,9 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
     @Override
     public List<CssClass<ReadingCss>> cssClasses() {
         return List.of(
+                new kr_seg(),
+                new kr_seg_opt(),
+                new kr_seg_on(),
                 new kr_pb_grid(),
                 new kr_pb_cell(),
                 new kr_pb_line(),
