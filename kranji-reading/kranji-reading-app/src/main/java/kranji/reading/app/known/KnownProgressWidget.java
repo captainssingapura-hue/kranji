@@ -45,6 +45,13 @@ import java.util.List;
  * band on a span <em>inside</em> the cell keeps it clear of the grid's own
  * selection painting, so the two never fight.</p>
  *
+ * <h2>One widget, one surface</h2>
+ *
+ * <p>No card and no borders inside. The ladder and the line under it are one
+ * statement — where you are, and what the cursor is resting on — and a box
+ * round either half invites the eye to read them as two things that happen to
+ * share a pane.</p>
+ *
  * <p>No CJK appears in this file.</p>
  */
 public final class KnownProgressWidget
@@ -73,10 +80,7 @@ public final class KnownProgressWidget
                 new ModuleImports<>(List.of(
                         new ReadingCss.kr_widget_root(),
                         new ReadingCss.kr_status(),
-                        new ReadingCss.kr_card(),
                         new ReadingCss.kr_title(),
-                        new ReadingCss.kr_body(),
-                        new ReadingCss.kr_grid_host(),
                         new ReadingCss.kr_pb_grid(),
                         new ReadingCss.kr_pb_cell(),
                         new ReadingCss.kr_pb_past(),
@@ -116,21 +120,20 @@ public final class KnownProgressWidget
                 "    var root = branch.createElement('root', 'div');",
                 "    css.setClass(root, kr_widget_root);",
                 "",
-                "    var card = branch.createElement('card', 'div');",
-                "    css.setClass(card, kr_card);",
-                "    root.appendChild(card);",
-                "",
+                "    // No card. This is one widget saying one thing, and a border round",
+                "    // part of it invites the eye to read the parts as separate - the",
+                "    // ladder and what the cursor found on it are the same sentence.",
                 "    var host = branch.createElement('host', 'div');",
                 "    css.setClass(host, kr_pb_grid);",
-                "    card.appendChild(host);",
+                "    root.appendChild(host);",
                 "",
                 "    var mark = branch.createElement('mark', 'div');",
                 "    css.setClass(mark, kr_title);",
-                "    card.appendChild(mark);",
+                "    root.appendChild(mark);",
                 "",
                 "    var detail = branch.createElement('detail', 'div');",
                 "    css.setClass(detail, kr_pb_detail);",
-                "    card.appendChild(detail);",
+                "    root.appendChild(detail);",
                 "",
                 "    var status = branch.createElement('status', 'div');",
                 "    css.setClass(status, kr_status);",
