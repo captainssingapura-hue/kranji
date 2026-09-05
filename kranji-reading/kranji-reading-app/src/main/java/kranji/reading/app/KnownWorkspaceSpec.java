@@ -8,6 +8,7 @@ import hue.captains.singapura.js.homing.workspace.WidgetLabel;
 import hue.captains.singapura.js.homing.workspace.shell.PartyDecl;
 import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpec;
 import kranji.reading.app.known.KnownSecretaryModule;
+import kranji.reading.app.known.KnownProgressWidget;
 import kranji.reading.app.known.KnownSoundsWidget;
 import kranji.reading.app.known.KnownTransferWidget;
 import kranji.reading.app.known.KnownZiWidget;
@@ -95,6 +96,13 @@ public final class KnownWorkspaceSpec implements WorkspaceSpec {
                 WidgetEntry.of(ZiDetailWidget.class, WidgetLabel.of("Character"))
                         .withIcon(new WidgetIcon.Emoji("🔎"))
                         .withGroup(character),
+                // First in the group, and the pane somebody opens for its own
+                // sake. The rest of the record answers "what is on it"; this
+                // one answers "how am I doing", which is the question that
+                // brings anybody back.
+                WidgetEntry.of(KnownProgressWidget.class, WidgetLabel.of("Progress"))
+                        .withIcon(new WidgetIcon.Emoji("🌱"))
+                        .withGroup(record),
                 WidgetEntry.of(KnownZiWidget.class, WidgetLabel.of("Known"))
                         .withIcon(new WidgetIcon.Emoji("🏅"))
                         .withGroup(record),
