@@ -869,9 +869,156 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
         }
     }
 
+    // ── Progress: two designs, not one design rotated ──────────────────
+    //
+    // A wide pane gets a bar; a narrow one gets a named list. They share no
+    // markup, because the first attempt shared it - one row of segments with
+    // the flex direction swapped - and that is the thing worth not doing. A
+    // vertical bar is a horizontal bar turned on its side, which wastes the
+    // one thing a narrow column has plenty of, and it made a pane whose shape
+    // depended on a class applied in the right order at the right moment.
+    //
+    // Both are segmented by band rather than filled by proportion, and that is
+    // a design decision before it is a styling one: a continuous bar would be
+    // drawn against the corpus, and 248 characters of 8,100 is a sliver saying
+    // a term's work came to nothing. Bands say something truer - eleven places
+    // to stand, and you are at the fourth.
+
+    /** Wide: the ladder as one strip across the top. */
+    public record kr_pb() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-direction: row;
+                gap: 3px;
+                height: 12px;
+                margin-bottom: var(--space-4, 16px);
+                """;
+        }
+    }
+
+    /** One band's worth of strip. */
+    public record kr_pb_seg() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                flex: 1;
+                border-radius: 3px;
+                background: var(--color-border);
+                """;
+        }
+    }
+
+    /** A band already passed. */
+    public record kr_pb_done() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                background: var(--color-success, var(--color-accent));
+                """;
+        }
+    }
+
+    /**
+     * Where the reader is standing.
+     *
+     * <p>Marked by colour rather than by size: a segment that grew would shift
+     * every other one along each time somebody crossed a band, and a ladder
+     * that moves under you is hard to read progress from.</p>
+     */
+    public record kr_pb_now() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                background: var(--color-accent);
+                """;
+        }
+    }
+
+    // Narrow: every band gets a line of its own. The column has room for
+    // words and no room for eleven segments side by side, so it shows the
+    // names instead of asking somebody to hover a sliver to learn them.
+
+    /** The list of bands. */
+    public record kr_pb_list() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                """;
+        }
+    }
+
+    /** One band, as a line. */
+    public record kr_pb_row() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                align-items: baseline;
+                gap: var(--space-2, 8px);
+                padding: 6px 8px;
+                border-radius: 6px;
+                border-left: 3px solid transparent;
+                color: var(--color-text-muted);
+                """;
+        }
+    }
+
+    /** A band already passed. */
+    public record kr_pb_row_done() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                border-left-color: var(--color-success, var(--color-accent));
+                color: var(--color-text-secondary);
+                """;
+        }
+    }
+
+    /** The band the reader is in. */
+    public record kr_pb_row_now() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                border-left-color: var(--color-accent);
+                background: var(--color-surface-raised, var(--color-surface));
+                color: var(--color-text-primary);
+                font-weight: 600;
+                """;
+        }
+    }
+
+    /** The mark, in a fixed column so the names line up. */
+    public record kr_pb_mark() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                flex: none;
+                width: 1.6em;
+                text-align: center;
+                """;
+        }
+    }
+
+    /** The band's name. */
+    public record kr_pb_name() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                flex: 1;
+                min-width: 0;
+                """;
+        }
+    }
+
+    /** The count and the distance, under the current band only. */
+    public record kr_pb_detail() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                padding: 0 8px 8px calc(1.6em + var(--space-2, 8px) + 11px);
+                color: var(--color-text-secondary);
+                font-size: 13px;
+                """;
+        }
+    }
+
     @Override
     public List<CssClass<ReadingCss>> cssClasses() {
         return List.of(
+                new kr_pb(),
+                new kr_pb_seg(),
+                new kr_pb_done(),
+                new kr_pb_now(),
+                new kr_pb_list(),
+                new kr_pb_row(),
+                new kr_pb_row_done(),
+                new kr_pb_row_now(),
+                new kr_pb_mark(),
+                new kr_pb_name(),
+                new kr_pb_detail(),
                 new kr_widget_root(),
                 new kr_bar(),
                 new kr_btn(),
