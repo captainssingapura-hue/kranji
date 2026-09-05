@@ -89,6 +89,21 @@
             <artifactId>kranji-reading-content</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+
+        <!--
+            The published library, which is what the bench must weigh against.
+
+            Without it the demo root is the only one discovered and the Impact
+            widget measures 23 articles - numbers that look like an answer and
+            are about a library nobody reads. Runtime scope: the studio names
+            no root, it asks Libraries which one is mounted.
+        -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-library-all</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-reading-model</artifactId>

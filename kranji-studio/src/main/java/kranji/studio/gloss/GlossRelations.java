@@ -190,6 +190,19 @@ public final class GlossRelations {
             // have two parents, and neither question is the other one.
             case "issue"       -> "partition";
             case "curated"     -> "partition";
+
+            // Impact is the third view of a partition, and the one that
+            // answers which partition to open. It hangs off partition like the
+            // other two rather than becoming a fourth root, because unscoped
+            // it already shows everything ranked - the bus tells a widget
+            // "never selected" apart from "selected nothing", so browsing the
+            // whole worklist by weight and narrowing it to one file are the
+            // same widget in two states.
+            case "impact"       -> "partition";
+            // And the breakdown hangs off a weighed problem: one row per
+            // article that reads it. A number is not actionable until you can
+            // see which articles it is made of.
+            case "impactArticle" -> "impact";
             default            -> null;      // sound, phrase, partition
         };
     }
@@ -197,7 +210,7 @@ public final class GlossRelations {
     /** The relations, in the order a picker should offer them. */
     public static List<String> relations() {
         return List.of("sound", "demand", "sense", "phrase", "phraseSense", "problem",
-                       "partition", "issue", "curated");
+                       "partition", "issue", "curated", "impact", "impactArticle");
     }
 
     public static List<String> columnsOf(String relation) {
@@ -216,6 +229,11 @@ public final class GlossRelations {
             case "issue"       -> List.of("glyph", "reading", "kind", "doubts",
                                           "state", "verdict", "kept", "source");
             case "curated"     -> List.of("glyph", "reading", "priority", "meaning", "examples");
+            // blind before read, because that is the sort order and a reader of
+            // the grid should meet the number it is ranked by first.
+            case "impact"      -> List.of("glyph", "reading", "kind", "state",
+                                          "blind", "read", "articles", "part", "groups");
+            case "impactArticle" -> List.of("article", "group", "reading", "times", "status");
             default            -> List.of();
         };
     }
@@ -336,6 +354,32 @@ public final class GlossRelations {
                     // carrying refs would advertise a link the module denies.
                     List.of(r.glyph(), r.reading(), r.priority().code(),
                             r.meaning(), r.examples())))
+                    .toList();
+
+            // The same problems again, weighed against what the library reads.
+            // Keyed like "issue" - on the pair - so a row selected in one grid
+            // addresses the same problem in the other.
+            //
+            // Everything, including the 701 nothing reads, for the reason the
+            // problem relation shows everything: a grid that quietly held back
+            // three quarters of the queue while reporting a total would be the
+            // honest-looking lie this file avoids. They sort to the bottom on
+            // their own, since their weight is zero.
+            case "impact" -> GlossImpact.rows(glosses).stream().map(r -> new Row(
+                    r.pairKey(), "p%03d".formatted(r.partition()), r.glyph(),
+                    List.of(r.glyph(), r.reading(), r.kind(), r.state(),
+                            r.blind(), r.read(), r.articles(),
+                            "p%03d".formatted(r.partition()), r.groups())))
+                    .toList();
+
+            // One row per article that reads the problem's character. The pk
+            // carries the reading as well as the address: a polyphone met at
+            // two readings in one article is two facts, and one of them can be
+            // answered while the other is not.
+            case "impactArticle" -> GlossImpact.places(glosses).stream().map(r -> new Row(
+                    r.problem() + "@" + r.address() + "#" + r.reading(), r.problem(),
+                    r.article(),
+                    List.of(r.article(), r.group(), r.reading(), r.times(), r.status())))
                     .toList();
 
             default -> List.of();
