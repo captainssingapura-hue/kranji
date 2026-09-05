@@ -12,6 +12,8 @@ import kranji.reading.app.read.ArticleReadingsModule;
 import kranji.reading.app.read.ReaderCellStyleModule;
 import kranji.reading.app.read.ArticleSelectionSecretaryModule;
 import kranji.reading.app.known.KnownSecretaryModule;
+import kranji.reading.app.known.KnownSoundsModule;
+import kranji.reading.app.known.KnownSoundsWidget;
 import kranji.reading.app.known.KnownZiWidget;
 import kranji.reading.app.known.KnownSetModule;
 import kranji.reading.app.known.KnownWatchModule;
@@ -77,6 +79,8 @@ public final class ReadingCrate implements Crate {
                 CrateEntry.of(KnownWatchModule.INSTANCE),
                 CrateEntry.of(KnownSecretaryModule.INSTANCE),
                 CrateEntry.of(KnownZiWidget.INSTANCE),
+                CrateEntry.of(KnownSoundsModule.INSTANCE),
+                CrateEntry.of(KnownSoundsWidget.INSTANCE),
                 CrateEntry.of(KnownTransferWidget.INSTANCE),
                 CrateEntry.of(ArticleBoardModule.INSTANCE),
                 CrateEntry.of(ArticleReadingsModule.INSTANCE),

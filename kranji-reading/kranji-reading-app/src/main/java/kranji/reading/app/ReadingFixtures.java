@@ -14,6 +14,7 @@ import kranji.reading.app.gloss.ZiGlossGetAction;
 import kranji.reading.app.read.ArticleCensusGetAction;
 import kranji.reading.app.read.ArticleTreeGetAction;
 import kranji.reading.app.zi.ZiDataGetAction;
+import kranji.reading.app.zi.SyllableIndexGetAction;
 import kranji.reading.app.zi.SyllableMapGetAction;
 import kranji.reading.app.zi.ZiDetailGetAction;
 import kranji.reading.app.zi.ZiTreeGetAction;
@@ -42,6 +43,9 @@ public record ReadingFixtures(Umbrella<ReadingStudio> umbrella)
         if (WorkspaceSpecRegistry.INSTANCE.get(ReadingWorkspaceSpec.INSTANCE.kind()).isEmpty()) {
             WorkspaceSpecRegistry.INSTANCE.register(ReadingWorkspaceSpec.INSTANCE);
         }
+        if (WorkspaceSpecRegistry.INSTANCE.get(KnownWorkspaceSpec.INSTANCE.kind()).isEmpty()) {
+            WorkspaceSpecRegistry.INSTANCE.register(KnownWorkspaceSpec.INSTANCE);
+        }
     }
 
     private DefaultFixtures<ReadingStudio> defaults() {
@@ -66,6 +70,7 @@ public record ReadingFixtures(Umbrella<ReadingStudio> umbrella)
         actions.put(ArticleTreeGetAction.PATH, new ArticleTreeGetAction());
         actions.put(ArticleCensusGetAction.PATH, new ArticleCensusGetAction());
         actions.put(SyllableMapGetAction.PATH, new SyllableMapGetAction());
+        actions.put(SyllableIndexGetAction.PATH, new SyllableIndexGetAction());
         actions.put(ZiGlossGetAction.PATH, new ZiGlossGetAction());
         return Map.copyOf(actions);
     }
