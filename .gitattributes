@@ -1,0 +1,16 @@
+# Line endings are content in this repository.
+#
+# kranji-gloss-seed is content-addressed: SeedIsImmutableTest hashes the bytes
+# of every seeded partition and compares them against a digest committed
+# beside the data. Git for Windows ships core.autocrlf=true in its system
+# config, so without this file a fresh checkout rewrites every seed file as
+# CRLF, the digest stops matching, and the build fails on a machine where
+# nothing is wrong with the code. `git status` stays clean the whole time,
+# because git converts back on read - which is what makes it expensive to
+# find rather than merely annoying.
+#
+# text=auto lets git normalise to LF on commit; eol=lf makes every checkout
+# LF whatever the platform would otherwise do. Nothing tracked here is
+# binary, so one rule covers all of it.
+
+* text=auto eol=lf
