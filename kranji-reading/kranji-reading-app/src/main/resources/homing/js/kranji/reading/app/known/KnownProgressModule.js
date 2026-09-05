@@ -62,10 +62,12 @@ var CHARACTER_BANDS = [
 /**
  * Returns { bands, count, bandOf, next, headline, icon, line, nextLine }.
  *
- * @param knownSet createKnownSet() - so what counts as a character is decided
- *                 in one place rather than by picking keys apart here
+ * No collaborator any more. It used to take createKnownSet() so that "what
+ * counts as a character" was decided in one place; that place is now the
+ * record, which knows its own contents and can answer without being handed
+ * them.
  */
-function createKnownProgress(knownSet) {
+function createKnownProgress() {
 
     /**
      * Characters, not readings.
@@ -73,9 +75,13 @@ function createKnownProgress(knownSet) {
      * A character claimed at one of its two readings counts: the reader can
      * read it where they meet it, which is the question this page asks. The
      * per-reading picture is what the Known pane is for.
+     *
+     * `record` is a KnownRecord, or anything with characters(). A missing one
+     * reads as an empty record rather than throwing, so a pane that renders
+     * before the first snapshot shows nought rather than nothing.
      */
-    function count(known) {
-        return knownSet.characters(known || []).length;
+    function count(record) {
+        return record ? record.characters().length : 0;
     }
 
     function bandOf(n) {
