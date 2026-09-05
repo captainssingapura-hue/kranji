@@ -55,6 +55,13 @@ class KnownProgressModuleTest extends JsModuleTestBase {
         return progress.getMember("icon").execute(n).asString();
     }
 
+    /** The wording for the band at {@code index} counting up, at count {@code n}. */
+    private String detail(int index, int n) {
+        Value bands = progress.getMember("bands");
+        Value band = bands.getArrayElement(bands.getArraySize() - 1 - index);
+        return progress.getMember("detailFor").execute(band, n).asString();
+    }
+
     // ── The one number ─────────────────────────────────────────────────
 
     @Test
@@ -154,6 +161,54 @@ class KnownProgressModuleTest extends JsModuleTestBase {
         for (int n : new int[] { 0, 1, 49, 250, 2600, 4000, 7000, 9000 }) {
             assertFalse(icon(n).isBlank(), () -> "no mark at " + n);
         }
+    }
+
+    // ── What the grid is built from ────────────────────────────────────
+
+    @Test
+    void everyBandHasItsOwnKeyAndItsOwnLabel() {
+        // The grid addresses a band by key and a cell finds its band back by
+        // the label it was handed, so both have to be unique. A shared label
+        // would paint the wrong cell as the one being stood on.
+        Value bands = progress.getMember("bands");
+        var keys = new java.util.HashSet<String>();
+        var labels = new java.util.HashSet<String>();
+        for (int i = 0; i < bands.getArraySize(); i++) {
+            Value band = bands.getArrayElement(i);
+            String key = progress.getMember("keyOf").execute(band).asString();
+            String label = progress.getMember("labelOf").execute(band).asString();
+            assertTrue(keys.add(key), () -> "two bands share the key " + key);
+            assertTrue(labels.add(label), () -> "two bands share the label " + label);
+            assertTrue(label.contains(band.getMember("name").asString()), label);
+            assertTrue(label.contains(band.getMember("icon").asString()), label);
+        }
+    }
+
+    @Test
+    void aBandBehindIsDescribedByWhatItTook() {
+        // Not by a count. A place already passed is a place, and quoting a
+        // score at somebody standing further on is noise.
+        String said = detail(2, 600);
+        assertTrue(said.startsWith("Behind you"), said);
+        assertTrue(said.contains("50"), said);
+    }
+
+    @Test
+    void theFirstBandBehindIsNotDescribedAsAThresholdOfZero() {
+        assertEquals("Where everybody starts.", detail(0, 600));
+    }
+
+    @Test
+    void aBandAheadIsDescribedByWhatItNeeds() {
+        assertEquals("One character away.", detail(3, 199));
+        assertTrue(detail(3, 150).startsWith("50 characters away"), detail(3, 150));
+    }
+
+    @Test
+    void theBandBeingStoodInGetsTheCountItself() {
+        String said = detail(3, 250);
+        assertTrue(said.contains("250 characters you can read."), said);
+        assertTrue(said.contains("more and this becomes"), said);
     }
 
     @Test

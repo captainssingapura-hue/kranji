@@ -2,6 +2,8 @@ package kranji.reading.app.known;
 
 import hue.captains.singapura.js.homing.core.Importable;
 import hue.captains.singapura.js.homing.core.ModuleImports;
+import hue.captains.singapura.js.homing.grid.RelationGridModule;
+import hue.captains.singapura.js.homing.grid.StockCellsModule;
 import hue.captains.singapura.js.homing.workspace.LifecycleHint;
 import hue.captains.singapura.js.homing.workspace.WorkspaceWidget;
 import kranji.reading.app.css.ReadingCss;
@@ -12,33 +14,36 @@ import java.util.List;
  * How many characters this reader can read, and what that is called.
  *
  * <p>{@link KnownProgressModule} holds the bands, their marks and every word of
- * the wording. This draws them, in one of two ways.</p>
+ * the wording. This draws them as a grid and lets somebody walk it.</p>
  *
- * <h2>Two designs, not one design rotated</h2>
+ * <h2>The ladder is a relation, so it gets the grid</h2>
  *
- * <p>A wide pane gets a <b>bar</b>: eleven segments across the top, then the
- * mark, the name, the count and the distance to the next name. A narrow pane
- * gets a <b>list</b>: every band on a line of its own with its mark and name,
- * the passed ones ruled off, the current one lit, and the two sentences tucked
- * under it.</p>
+ * <p>Eleven bands, each with a mark and a name — that is a relation, and this
+ * app already has one thing that draws relations properly. The earlier bar was
+ * eleven anonymous slivers a reader had to hover to identify; a grid cell has
+ * room to say which band it is, and the cursor that comes with it turns the
+ * ladder from a picture into something you can look through.</p>
  *
- * <p>They share no markup. The first attempt did — one row of segments with the
- * flex direction swapped by a class — and it was wrong twice over. A vertical
- * bar is just a horizontal bar on its side, which wastes the one thing a narrow
- * column has plenty of; and making the shape depend on a class applied at the
- * right moment produced a pane that quietly stayed horizontal when it should
- * not have. Crossing the threshold now throws the markup away and builds the
- * other one, which is a thing that either happened or did not.</p>
+ * <h2>Two designs: the same grid, transposed</h2>
  *
- * <p>The measurement is the pane's width, not the window's: this widget lives
- * in a tile a reader can drag to any size, so a wide screen says nothing about
- * the room actually available.</p>
+ * <p>Wide, the bands are the <b>columns</b> of a single row. Narrow, they are
+ * the <b>rows</b> of a single column. One adapter builds either, because a
+ * transpose is all the difference amounts to once the ladder is a relation —
+ * which is the argument for using the grid rather than drawing two shapes by
+ * hand.</p>
  *
- * <h2>Bands, not a filled proportion</h2>
+ * <p>Crossing the threshold rebuilds, rather than restyling. A shape that
+ * depends on a class landing at the right moment can quietly not change, and
+ * did.</p>
  *
- * <p>A continuous bar would have to be drawn against the corpus, and 248
- * characters of 8,100 is a sliver that says a term's work came to nothing — the
- * exact number the bands exist to keep off the page.</p>
+ * <h2>Standing and looking are different</h2>
+ *
+ * <p>Where the reader stands is painted into the cell and does not move. The
+ * cursor is theirs to walk wherever they like, and what it rests on is
+ * described underneath — a band behind them by what it took, a band ahead by
+ * what it needs, the one they are in by the count itself. Painting the standing
+ * band on a span <em>inside</em> the cell keeps it clear of the grid's own
+ * selection painting, so the two never fight.</p>
  *
  * <p>No CJK appears in this file.</p>
  */
@@ -59,22 +64,23 @@ public final class KnownProgressWidget
     @Override
     protected List<ModuleImports<? extends Importable>> bodyImports() {
         return List.of(
+                new ModuleImports<>(
+                        List.of(new RelationGridModule.RelationGrid()),
+                        RelationGridModule.INSTANCE),
+                new ModuleImports<>(
+                        List.of(new StockCellsModule.TextCell()),
+                        StockCellsModule.INSTANCE),
                 new ModuleImports<>(List.of(
                         new ReadingCss.kr_widget_root(),
                         new ReadingCss.kr_status(),
                         new ReadingCss.kr_card(),
                         new ReadingCss.kr_title(),
                         new ReadingCss.kr_body(),
-                        new ReadingCss.kr_pb(),
-                        new ReadingCss.kr_pb_seg(),
-                        new ReadingCss.kr_pb_done(),
-                        new ReadingCss.kr_pb_now(),
-                        new ReadingCss.kr_pb_list(),
-                        new ReadingCss.kr_pb_row(),
-                        new ReadingCss.kr_pb_row_done(),
-                        new ReadingCss.kr_pb_row_now(),
-                        new ReadingCss.kr_pb_mark(),
-                        new ReadingCss.kr_pb_name(),
+                        new ReadingCss.kr_grid_host(),
+                        new ReadingCss.kr_pb_grid(),
+                        new ReadingCss.kr_pb_cell(),
+                        new ReadingCss.kr_pb_past(),
+                        new ReadingCss.kr_pb_here(),
                         new ReadingCss.kr_pb_detail()),
                         ReadingCss.INSTANCE),
                 new ModuleImports<>(
@@ -99,9 +105,13 @@ public final class KnownProgressWidget
                 "    // Low band first. Both designs read in the order a reader travels.",
                 "    var BANDS = progress.bands.slice().reverse();",
                 "",
-                "    // Under this a bar of eleven segments is eleven slivers, and the",
-                "    // column has room for the names instead.",
+                "    // Under this, eleven cells across are eleven slivers; the bands",
+                "    // become rows instead and the names get their room back.",
                 "    var NARROW = 420;",
+                "",
+                "    // Borrowed off a stock cell rather than built: the type that gates",
+                "    // bulk edit is not exported, and this grid never edits anything.",
+                "    var TEXT_TYPE = (new TextCell()).effectiveType();",
                 "",
                 "    var root = branch.createElement('root', 'div');",
                 "    css.setClass(root, kr_widget_root);",
@@ -110,7 +120,18 @@ public final class KnownProgressWidget
                 "    css.setClass(card, kr_card);",
                 "    root.appendChild(card);",
                 "",
-                "    // Attached only while it has something to say.",
+                "    var host = branch.createElement('host', 'div');",
+                "    css.setClass(host, kr_pb_grid);",
+                "    card.appendChild(host);",
+                "",
+                "    var mark = branch.createElement('mark', 'div');",
+                "    css.setClass(mark, kr_title);",
+                "    card.appendChild(mark);",
+                "",
+                "    var detail = branch.createElement('detail', 'div');",
+                "    css.setClass(detail, kr_pb_detail);",
+                "    card.appendChild(detail);",
+                "",
                 "    var status = branch.createElement('status', 'div');",
                 "    css.setClass(status, kr_status);",
                 "",
@@ -125,105 +146,147 @@ public final class KnownProgressWidget
                 "",
                 "    var owner = Object.freeze({ toString: function () { return 'knownProgress'; } });",
                 "    var __known = [];",
-                "    var __design = null;   // 'bar' | 'list'",
-                "    var __paint = null;",
+                "    var __design = null;      // 'wide' | 'tall'",
+                "    var __grid = null;",
+                "    var __cells = [];",
+                "    var __looking = null;     // the band the cursor rests on",
+                "    var __spanSeq = 0;",
                 "",
-                "    // A fresh branch for whichever design is being built: a branch",
-                "    // registers names, and reusing one would collide.",
-                "    function freshView() {",
-                "        if (branch.getBranch('view')) branch.dissolveBranch('view');",
-                "        var b = branch.createBranch('view');",
+                "    function labelAt(key) {",
+                "        for (var i = 0; i < BANDS.length; i++) {",
+                "            if (progress.keyOf(BANDS[i]) === key) return progress.labelOf(BANDS[i]);",
+                "        }",
+                "        return '';",
+                "    }",
+                "",
+                "    function bandFor(key) {",
+                "        for (var i = 0; i < BANDS.length; i++) {",
+                "            if (progress.keyOf(BANDS[i]) === key) return BANDS[i];",
+                "        }",
+                "        return null;",
+                "    }",
+                "",
+                "    // A cell is handed its value, not its address, so it finds its band",
+                "    // by the label it was given. The labels are distinct by construction",
+                "    // - no two bands share a name - and a test holds them that way.",
+                "    function bandLabelled(label) {",
+                "        for (var i = 0; i < BANDS.length; i++) {",
+                "            if (progress.labelOf(BANDS[i]) === label) return BANDS[i];",
+                "        }",
+                "        return null;",
+                "    }",
+                "",
+                "    // ── One cell, which knows whether it is being stood on ────────",
+                "",
+                "    function bandCell(cellsBranch) {",
+                "        var self = {",
+                "            span: null, value: null,",
+                "            render: function (place, value) {",
+                "                self.span = cellsBranch.createElement('s' + (++__spanSeq), 'span');",
+                "                place.appendChild(self.span);",
+                "                __cells.push(self);",
+                "                return self.update(value);",
+                "            },",
+                "            update: function (value) {",
+                "                self.value = value;",
+                "                self.repaint();",
+                "                return self;",
+                "            },",
+                "            repaint: function () {",
+                "                if (!self.span) return;",
+                "                self.span.textContent = self.value == null ? '' : String(self.value);",
+                "                var band = bandLabelled(String(self.value));",
+                "                var here = progress.bandOf(progress.count(__known));",
+                "                var klass = kr_pb_cell;",
+                "                if (band) {",
+                "                    if (band.from === here.from)     klass = kr_pb_here;",
+                "                    else if (band.from < here.from)  klass = kr_pb_past;",
+                "                }",
+                "                css.setClass(self.span, klass);",
+                "            },",
+                "            onSelect: function () {},",
+                "            preview: function () { return self; },",
+                "            effectiveType: function () { return TEXT_TYPE; }",
+                "        };",
+                "        return self;",
+                "    }",
+                "",
+                "    // ── The relation, and its transpose ───────────────────────────",
+                "",
+                "    /**",
+                "     * Wide: one row, a column per band. Narrow: one column, a row per",
+                "     * band. The values are the same either way, which is the whole",
+                "     * reason the two designs cost one adapter rather than two.",
+                "     */",
+                "    function adapter(design) {",
+                "        var keys = BANDS.map(function (b) { return progress.keyOf(b); });",
+                "        var wide = design === 'wide';",
+                "        return {",
+                "            pks:     function () { return wide ? ['ladder'] : keys.slice(); },",
+                "            columns: function () { return wide ? keys.slice() : ['band']; },",
+                "            get:     function (pk, col) { return labelAt(wide ? col : pk); },",
+                "            subscribe: function () {},",
+                "            unsubscribe: function () {},",
+                "            update: function () {},",
+                "            deleteRows: function () {}",
+                "        };",
+                "    }",
+                "",
+                "    function freshCells() {",
+                "        if (branch.getBranch('cells')) branch.dissolveBranch('cells');",
+                "        var b = branch.createBranch('cells');",
                 "        b.activate(owner);",
                 "        return b;",
                 "    }",
                 "",
-                "    function el(b, name, tag, klass, parent) {",
-                "        var node = b.createElement(name, tag);",
-                "        if (klass) css.setClass(node, klass);",
-                "        parent.appendChild(node);",
-                "        return node;",
-                "    }",
-                "",
-                "    // ── The wide design: a strip, then the words ──────────────────",
-                "",
-                "    function buildBar() {",
-                "        var b = freshView();",
-                "        var strip = el(b, 'strip', 'div', kr_pb, card);",
-                "        var segs = [];",
-                "        for (var i = 0; i < BANDS.length; i++) {",
-                "            var seg = el(b, 'seg' + i, 'div', kr_pb_seg, strip);",
-                "            seg.title = BANDS[i].name;",
-                "            segs.push(seg);",
-                "        }",
-                "        var mark = el(b, 'mark', 'div', kr_title, card);",
-                "        var name = el(b, 'name', 'div', kr_title, card);",
-                "        var count = el(b, 'count', 'div', kr_body, card);",
-                "        var next = el(b, 'next', 'div', kr_body, card);",
-                "",
-                "        return function paintBar(n) {",
-                "            var here = progress.bandOf(n);",
-                "            for (var i = 0; i < segs.length; i++) {",
-                "                if (BANDS[i].from === here.from)     css.setClass(segs[i], kr_pb_seg, kr_pb_now);",
-                "                else if (BANDS[i].from < here.from)  css.setClass(segs[i], kr_pb_seg, kr_pb_done);",
-                "                else                                css.setClass(segs[i], kr_pb_seg);",
+                "    function build(design) {",
+                "        var cellsBranch = freshCells();",
+                "        if (__grid) { __grid.destroy(); __grid = null; }",
+                "        __cells = [];",
+                "        __grid = new RelationGrid({",
+                "            container: host,",
+                "            branch: cellsBranch,",
+                "            adapter: adapter(design),",
+                "            label: 'The bands, and where you are on them',",
+                "            // The names are in the cells; a header would say them twice.",
+                "            header: { show: false },",
+                "            cellFactory: function () { return bandCell(cellsBranch); },",
+                "            onCursorMoved: function (pk, column) {",
+                "                __looking = bandFor(design === 'wide' ? column : pk);",
+                "                showDetail();",
                 "            }",
-                "            mark.textContent = progress.icon(n);",
-                "            name.textContent = progress.headline(n);",
-                "            count.textContent = progress.line(n);",
-                "            next.textContent = progress.nextLine(n);",
-                "        };",
+                "        });",
                 "    }",
                 "",
-                "    // ── The narrow design: every band on its own line ─────────────",
+                "    // ── What the cursor is resting on ─────────────────────────────",
                 "",
-                "    function buildList() {",
-                "        var b = freshView();",
-                "        var list = el(b, 'list', 'div', kr_pb_list, card);",
-                "        var rows = [];",
-                "        for (var i = 0; i < BANDS.length; i++) {",
-                "            var row = el(b, 'row' + i, 'div', kr_pb_row, list);",
-                "            el(b, 'mark' + i, 'span', kr_pb_mark, row).textContent = BANDS[i].icon;",
-                "            el(b, 'name' + i, 'span', kr_pb_name, row).textContent = BANDS[i].name;",
-                "            // The two sentences live under the band they are about, so",
-                "            // the eye does not have to carry a number down the list.",
-                "            var detail = el(b, 'detail' + i, 'div', kr_pb_detail, list);",
-                "            rows.push({ row: row, detail: detail, from: BANDS[i].from });",
-                "        }",
-                "",
-                "        return function paintList(n) {",
-                "            var here = progress.bandOf(n);",
-                "            for (var i = 0; i < rows.length; i++) {",
-                "                var at = rows[i];",
-                "                if (at.from === here.from)     css.setClass(at.row, kr_pb_row, kr_pb_row_now);",
-                "                else if (at.from < here.from)  css.setClass(at.row, kr_pb_row, kr_pb_row_done);",
-                "                else                           css.setClass(at.row, kr_pb_row);",
-                "                at.detail.textContent = at.from === here.from",
-                "                    ? progress.line(n) + ' ' + progress.nextLine(n)",
-                "                    : '';",
-                "            }",
-                "        };",
+                "    function showDetail() {",
+                "        var n = progress.count(__known);",
+                "        var band = __looking || progress.bandOf(n);",
+                "        mark.textContent = band.icon + '  ' + band.name;",
+                "        detail.textContent = progress.detailFor(band, n);",
                 "    }",
-                "",
-                "    // ── Which one, and when it changes ────────────────────────────",
                 "",
                 "    function wanted() {",
                 "        var width = root.clientWidth;",
-                "        if (!width) return __design || 'bar';",
-                "        return width < NARROW ? 'list' : 'bar';",
+                "        if (!width) return __design || 'wide';",
+                "        return width < NARROW ? 'tall' : 'wide';",
                 "    }",
                 "",
                 "    function render() {",
                 "        var design = wanted();",
                 "        if (design !== __design) {",
                 "            __design = design;",
-                "            __paint = design === 'list' ? buildList() : buildBar();",
+                "            __looking = null;",
+                "            build(design);",
+                "        } else {",
+                "            for (var i = 0; i < __cells.length; i++) __cells[i].repaint();",
                 "        }",
-                "        __paint(progress.count(__known));",
+                "        showDetail();",
                 "    }",
                 "",
-                "    // Rebuilt when the tile is dragged across the threshold, not on",
-                "    // every frame: render() only throws markup away when the answer",
-                "    // to wanted() actually changed.",
+                "    // Rebuilt only when the answer to wanted() changes, so dragging the",
+                "    // tile costs a comparison per frame rather than a rebuild.",
                 "    if (typeof ResizeObserver !== 'undefined') {",
                 "        new ResizeObserver(function () { render(); }).observe(root);",
                 "    }",
@@ -244,9 +307,7 @@ public final class KnownProgressWidget
                 "            }",
                 "        });",
                 "        __knownParty.tellFrom(__knownActorId, { kind: 'WhatIsKnown' });",
-                "        // Seeded from the device, never written to it. Seeding matters",
-                "        // here: opened on its own, this would otherwise say nobody has",
-                "        // read anything on a device read on for months.",
+                "        // Seeded from the device, never written to it.",
                 "        createKnownPersistence({",
                 "            store: createKnownStore(),",
                 "            tell: function (msg) {",

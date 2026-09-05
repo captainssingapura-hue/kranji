@@ -132,6 +132,41 @@ function createKnownProgress(knownSet) {
         return togo + ' more and this becomes ' + up.name + '.';
     }
 
+    /** A band's address in a grid. Stable, and never shown. */
+    function keyOf(band) {
+        return 'b' + band.from;
+    }
+
+    /** What a band's cell reads. The mark and the name, nothing else. */
+    function labelOf(band) {
+        return band.icon + '  ' + band.name;
+    }
+
+    /**
+     * What to say about a band somebody has moved the cursor onto.
+     *
+     * <p>Three cases, and the one they are standing in is the only one that
+     * gets the count: the others are places, not scores. A band behind them is
+     * described by what it took, which is a thing they did; a band ahead by
+     * what it needs, which is a thing they can do.</p>
+     */
+    function detailFor(band, n) {
+        if (!band) return '';
+        var here = bandOf(n);
+        if (band.from === here.from) {
+            return line(n) + ' ' + nextLine(n);
+        }
+        if (band.from < here.from) {
+            return band.from === 0
+                ? 'Where everybody starts.'
+                : 'Behind you. It began at ' + band.from + ' characters.';
+        }
+        var togo = band.from - n;
+        return togo === 1
+            ? 'One character away.'
+            : togo + ' characters away.';
+    }
+
     return {
         bands: CHARACTER_BANDS,
         count: count,
@@ -140,6 +175,9 @@ function createKnownProgress(knownSet) {
         headline: headline,
         icon: icon,
         line: line,
-        nextLine: nextLine
+        nextLine: nextLine,
+        keyOf: keyOf,
+        labelOf: labelOf,
+        detailFor: detailFor
     };
 }
