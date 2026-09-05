@@ -19,29 +19,37 @@
 // Pure - no DOM, no fetch, no clock.
 // =============================================================================
 
-// Where the boundaries come from. The four at the top are borrowed rather
-// than invented, and they are the reason the ladder does not stop at 3,500:
+// TWO KINDS OF NAME, and the change is deliberate. Up to 2,500 the names are
+// about moving - getting going, reading along, well on your way - because that
+// is what those months are, and nobody wants a rank for still being on the
+// road. From 3,500 the reader has arrived somewhere and the names say what
+// they are rather than what they are doing.
+//
+// Where the boundaries come from. The five at the top are borrowed rather than
+// invented, so passing one means something outside this app:
 //
 //   2,500  the frequently-used set
 //   3,500  the first level of the standard list
+//   5,000  midway through the second level
 //   6,500  the first and second levels together
 //   8,000  all but the last hundred of this corpus, which holds 8,100
 //
-// Everything above 3,500 used to be one band, which said that the difference
-// between a reader of 3,600 characters and a reader of 8,000 was nothing worth
-// naming. It is most of a decade.
+// 3,500 upwards was one band once, which said the difference between a reader
+// of 3,600 characters and one of 8,000 was nothing worth naming. It is most of
+// a decade, and it is the stretch where nothing else can show movement - the
+// stories all read easily by then.
 //
 // Below 2,500 each band is roughly double the last, so the names come quickly
 // at first and slowly later. That is the right shape: the encouragement is
 // wanted most in the first weeks and least once somebody is plainly reading.
 //
-// The icons are one journey on foot and then above it, in step with the names.
-// A mixed metaphor here would read as decoration; this one is meant to be
-// noticed changing.
+// The marks climb with the names and never turn into medals. A trophy shelf is
+// what this pane was cut back from, and rank names are quite enough of it.
 var CHARACTER_BANDS = [
-    { from: 8000, name: 'The whole list',          icon: '🌄' },
-    { from: 6500, name: 'Into the rare ones',      icon: '🦅' },
-    { from: 3500, name: 'Reading freely',          icon: '🏔' },
+    { from: 8000, name: 'Guru',                    icon: '🐉' },
+    { from: 6500, name: 'Pro plus',                icon: '🌄' },
+    { from: 5000, name: 'Pro',                     icon: '🦅' },
+    { from: 3500, name: 'Semi-pro',                icon: '🏔' },
     { from: 2500, name: 'The everyday characters', icon: '⛰' },
     { from: 1000, name: 'Well on your way',        icon: '🧭' },
     { from: 500,  name: 'Hitting your stride',     icon: '🏃' },

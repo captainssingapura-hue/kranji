@@ -80,19 +80,32 @@ class KnownProgressModuleTest extends JsModuleTestBase {
         assertEquals("Hitting your stride", headline(500));
         assertEquals("Well on your way", headline(1000));
         assertEquals("The everyday characters", headline(2500));
-        assertEquals("Reading freely", headline(3500));
-        assertEquals("Into the rare ones", headline(6500));
-        assertEquals("The whole list", headline(8000));
-        assertEquals("The whole list", headline(8100));
+        assertEquals("Semi-pro", headline(3500));
+        assertEquals("Pro", headline(5000));
+        assertEquals("Pro plus", headline(6500));
+        assertEquals("Guru", headline(8000));
+        assertEquals("Guru", headline(8100));
     }
 
     @Test
-    void theClimbAboveTheStandardListIsNamedAndNotOneLongBand() {
-        // 3,500 to 8,000 used to be a single band, which said the difference
+    void theClimbAboveTheStandardListIsFourBandsAndNotOne() {
+        // 3,500 upwards was a single band once, which said the difference
         // between a reader of 3,600 characters and one of 8,000 was nothing
-        // worth naming. It is most of a decade.
-        assertFalse(headline(4000).equals(headline(7000)), "4,000 and 7,000 are not the same place");
-        assertFalse(headline(7000).equals(headline(8050)), "7,000 and 8,050 are not the same place");
+        // worth naming. It is most of a decade, and it is the stretch where
+        // nothing else can show movement.
+        var named = new java.util.HashSet<String>();
+        for (int n : new int[] { 3600, 5200, 7000, 8050 }) named.add(headline(n));
+        assertEquals(4, named.size(), () -> "the pro range collapsed into " + named);
+    }
+
+    @Test
+    void theNamesTurnFromMovingToStandingAtTheProRange() {
+        // Below the standard list the names are about being on the road, which
+        // is what those months are; nobody wants a rank for still walking. From
+        // 3,500 they say what somebody is rather than what they are doing.
+        assertTrue(headline(2499).contains(" "), "the road names are phrases");
+        assertEquals("Semi-pro", headline(3500));
+        assertEquals("Guru", headline(9000));
     }
 
     @Test
