@@ -57,11 +57,17 @@ public record KranjiCatalogue()
                         new GenericWorkspace.Params(GlossWorkspaceSpec.KIND),
                         "Gloss Workbench",
                         "The gloss tier as relations - one grid per relation, several at once.");
+        Navigable<GenericWorkspace.Params, GenericWorkspace> curated =
+                new Navigable<>(GenericWorkspace.INSTANCE,
+                        new GenericWorkspace.Params(CuratedWorkspaceSpec.KIND),
+                        "Curated Workbench",
+                        "One partition at a time - the issues beside what has been written.");
         return List.of(
                 Entry.of(this, DocReader.INSTANCE,
                         new DocReader.Params(KranjiIntroDoc.INSTANCE.uuid().toString()),
                         KranjiIntroDoc.INSTANCE),
-                Entry.of(this, workbench)
+                Entry.of(this, workbench),
+                Entry.of(this, curated)
         );
     }
 

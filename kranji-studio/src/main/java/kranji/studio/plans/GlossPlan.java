@@ -78,8 +78,9 @@ public final class GlossPlan implements Plan {
                         "The key is byte-identical to the known set's and the article census's, "
                       + "so all three join without translation - a pane holds one map and "
                       + "answers three questions. Costs 8% more entries than a per-character "
-                      + "key: 8,764 pairs against 8,100 characters, of which only 664 are "
-                      + "polyphonic.\n\n"
+                      + "key: 8,763 pairs against 8,100 characters. The extra 664 come from "
+                      + "593 polyphonic characters - the two numbers are easy to confuse and "
+                      + "this line used to, calling 664 the polyphone count.\n\n"
                       + "Byte-identity is not a nicety, and the flip to the canonical form "
                       + "demonstrated it: a saved known set left in the old diacritic form "
                       + "stopped intersecting the census, and the only symptom was every "
@@ -88,25 +89,44 @@ public final class GlossPlan implements Plan {
 
                 new Decision("g2",
                         "Where does the data come from?",
-                        "Hand-crafted first, CC-CEDICT for the tail later, never in one module.",
-                        "Split by provenance, module by module",
+                        "Hand-crafted for the demanded set; Unihan kDefinition seeds the tail. "
+                      + "CC-CEDICT is out of scope.",
+                        "One permissive source, corrected by hand",
                         DecisionStatus.RESOLVED,
-                        "Most per-reading sources are share-alike - CC-CEDICT, the original "
-                      + "CEDICT, Wiktionary. Unihan is differently licensed but glosses per "
-                      + "CHARACTER, so it cannot fill this key without hand-splitting all 664 "
-                      + "polyphones. There is no permissive per-reading corpus to take.\n\n"
-                      + "Hand-crafting the set the library actually needs is 447 pairs, which "
-                      + "is a weekend rather than a project, carries no third-party licence at "
-                      + "all, and is a learning exercise worth having.",
-                        "kranji-gloss holds project-authored data under the project's own "
-                      + "licence. A later kranji-gloss-cedict would hold ported data under CC "
-                      + "BY-SA with its own LICENSE and attribution. A COLLECTION of separately "
-                      + "licensed modules is not an adaptation, so keeping them apart is the "
-                      + "difference between 'Kranji is permissive, one data module is BY-SA' "
-                      + "and a claim nobody can check.\n\n"
-                      + "Note for the README when it is written: share-alike IS copyleft. A "
-                      + "build without the ported module is fully permissive; a build with it "
-                      + "is not, and saying otherwise would be wrong."),
+                        "SUPERSEDED ITS OWN EARLIER ANSWER. This decision used to read "
+                      + "'hand-crafted first, CC-CEDICT for the tail later', on the reasoning "
+                      + "that Unihan glosses per CHARACTER and so cannot fill a per-READING key "
+                      + "without hand-splitting every polyphone. That reasoning was wrong in a "
+                      + "way worth recording, because it contradicted CD-002 - which had "
+                      + "measured the question and answered it the other way - and the "
+                      + "contradiction sat in the repo unnoticed.\n\n"
+                      + "The cardinality objection only bites on POLYPHONES. For a monophonic "
+                      + "character its one reading is its only reading, so a per-character "
+                      + "gloss is a per-reading gloss unambiguously. Measured against the "
+                      + "corpus: 7,506 of 8,100 characters are monophonic, and kDefinition "
+                      + "covers 7,752 of 8,100. The hand-splitting the old answer feared is "
+                      + "593 characters, not 8,100 - and those 593 need a person whatever the "
+                      + "source, because no per-character dictionary can say which sense "
+                      + "belongs to which reading.\n\n"
+                      + "Unihan is also the source already vendored, already parsed, and "
+                      + "already the origin of every reading in the corpus. Adding a second "
+                      + "upstream to gloss what the first one already glosses buys nothing "
+                      + "except a licence to reason about.",
+                        "Unicode's terms are permissive, so kranji-gloss stays one module "
+                      + "under the project's own licence and the build has no share-alike in "
+                      + "it. There is no kranji-gloss-cedict, and the module split that "
+                      + "existed to keep provenances apart is not needed.\n\n"
+                      + "CC-CEDICT is set aside rather than ruled out. If it ever comes back "
+                      + "it comes back as a CHECKER - agree/disagree flags produced by a local "
+                      + "tool whose output is not committed - never as data ported into the "
+                      + "build. CC BY-SA 4.0 attaches share-alike to a database that includes "
+                      + "a substantial portion of the licensed contents; a cross-check that "
+                      + "retains no entry text includes none. That is a real distinction and "
+                      + "it is also one nobody has to defend if the tool's output stays out "
+                      + "of the repo.\n\n"
+                      + "348 characters have no kDefinition at all. Those are authored by "
+                      + "hand, like the 447 were - roughly three or four per partition, so "
+                      + "every partition carries a few."),
 
                 new Decision("g3",
                         "How is the data authored?",
@@ -291,44 +311,46 @@ public final class GlossPlan implements Plan {
                         "S",
                         ""),
 
-                new Phase("gp5", "The ported tail",
-                        "Coverage beyond what the library needs - if it is ever wanted.",
-                        "A generator reading CC-CEDICT into TSV partitions, in kranji-gloss-"
-                      + "cedict under CC BY-SA with attribution. Deliberately last: the "
-                      + "hand-crafted set proves the facility, and the licence decision should "
-                      + "be made when there is a reason for it rather than in advance.",
+                new Phase("gp5", "The seeded tail",
+                        "Coverage beyond what the library needs, from the source already in "
+                      + "the tree.",
+                        "A generator reading Unihan kDefinition into the existing senses.tsv "
+                      + "shape, partition by partition, into kranji-gloss. One module, one "
+                      + "licence, no second upstream - see the rewritten g2.",
                         PhaseStatus.NOT_STARTED,
                         List.of(
                                 new Task("Declare the project's own licence first", false),
-                                new Task("Confirm CC-CEDICT's terms from the source", false),
-                                new Task("u: to ü and tone 5 to 0, tested", false),
-                                new Task("Sense-selection policy", false),
-                                new Task("kranji-gloss-cedict with LICENSE and attribution", false)),
+                                new Task("Seed monophonic characters: one reading, one gloss, unambiguous", false),
+                                new Task("Mark every seeded row's provenance, so unchecked is visible", false),
+                                new Task("Queue the 593 polyphones for hand-splitting rather than guessing", false),
+                                new Task("Queue the 348 with no kDefinition for authoring", false),
+                                new Task("Regeneration is a no-op diff when inputs are unchanged", false)),
                         List.of(new Dependency("gp2", "The coverage tool is how its output is judged.")),
-                        "Corpus coverage is a number, and every ported gloss is attributable.",
+                        "Corpus coverage is a number, and every seeded gloss says it was "
+                      + "seeded.",
                         "Hand-craft on demand as articles are added.",
                         "L",
-                        "The conversion got much cheaper while this phase sat unstarted, and "
-                      + "that is worth recording rather than rediscovering. It was the real "
-                      + "work here: CC-CEDICT writes numbered pinyin, and our own numbered "
-                      + "rendering used to emit the UNDERLYING spelling - jüen1 for jūn, liou2 "
-                      + "for liú - so importing meant reimplementing pinyin orthography "
-                      + "underneath the import.\n\n"
-                      + "That rendering is now the system's internal form, so it had to be "
-                      + "made correct on its own account: it shares its spelling rules with the "
-                      + "diacritic renderer, and the collapses iou→iu, uei→ui, üen→un are "
-                      + "checked to round-trip across all 1,284 corpus syllables. What is left "
-                      + "of the conversion is u: to ü and tone 5 to 0 - and 5 is already "
-                      + "accepted on input.\n\n"
-                      + "The hazard it guarded against is unchanged: a mis-converted reading "
-                      + "produces a gloss that silently matches nothing. It is now gp2's "
-                      + "validity check that catches it rather than care during import.\n\n"
-                      + "Sense selection is the other half. CC-CEDICT slots mix distinct "
-                      + "senses, near-synonyms, register notes and machinery, so 'the first "
-                      + "two' can return two synonyms of one meaning. Filter the machinery, "
-                      + "then fill a length budget, and flag high-slot-count entries for "
-                      + "review - the count is a good proxy for mechanical selection having "
-                      + "failed.")
+                        "This phase used to describe a CC-CEDICT importer, and most of what it "
+                      + "recorded went with it. Two things did not, and are worth keeping.\n\n"
+                      + "The first is that the numbered-pinyin work is done. It was the "
+                      + "expensive half of any import: our numbered rendering used to emit the "
+                      + "UNDERLYING spelling - jüen1 for jūn, liou2 for liú - so matching an "
+                      + "external source meant reimplementing pinyin orthography underneath "
+                      + "it. That rendering is now the system's internal form and had to "
+                      + "become correct on its own account; it shares its spelling rules with "
+                      + "the diacritic renderer, and the collapses iou→iu, uei→ui, üen→un "
+                      + "round-trip across all 1,288 corpus syllables. Seeding from Unihan "
+                      + "needs none of it - the readings are already ours - but the hazard it "
+                      + "guarded against is the same one, and gp2's validity check is what "
+                      + "catches it: a reading that matches nothing produces a gloss that "
+                      + "silently belongs to no pair.\n\n"
+                      + "The second is that sense selection is still the difficulty, only "
+                      + "against a different source. kDefinition packs several senses into one "
+                      + "field, in a scholarly register - 'to reach; to arrive; up to; until' "
+                      + "- and this model wants a few ranked senses a child reads. The old "
+                      + "note's tactic still applies: filter the machinery, fill a length "
+                      + "budget, and flag entries whose sense count suggests mechanical "
+                      + "selection has failed, because that count is a good proxy for it.")
         );
     }
 

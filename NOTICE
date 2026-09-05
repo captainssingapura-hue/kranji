@@ -1,0 +1,58 @@
+Kranji
+======
+
+This product includes data derived from the Unicode Character Database.
+
+
+Unicode Character Database
+--------------------------
+
+    Unicode Character Database
+    © 2025 Unicode®, Inc.
+    Unicode and the Unicode Logo are registered trademarks of Unicode, Inc.
+    in the U.S. and other countries.
+    For terms of use and license, see https://www.unicode.org/terms_of_use.html
+
+Reproduced from the header of Unihan_Readings.txt, Unicode 17.0.0, dated
+2025-07-24 — the drop this build was generated from.
+
+
+What in this repository is derived from it
+------------------------------------------
+
+Two datasets, in two modules. Both are DERIVED — filtered, reformatted and
+re-keyed — rather than copied, which is use under the same terms rather than
+outside them.
+
+  kranji-core
+    kranji/phonic/*.tsv          22 files, 8,100 characters, 8,763 readings.
+                                 Built from the fields kTGHZ2013, kMandarin
+                                 and kHanyuPinlu. Each file repeats this
+                                 attribution in its own header.
+
+  kranji-gloss-seed
+    kranji/seed/pNNN.tsv         101 files, 7,146 seeded (character, reading)
+    kranji/seed/pNNN.flags.tsv   glosses, built from the field kDefinition,
+                                 plus the log of what could not be seeded
+                                 cleanly.
+
+The raw Unihan drop itself is NOT redistributed: it is read from input/ during
+generation, and input/ is not tracked.
+
+Everything else under kranji-gloss — the hand-written glosses and the phrases
+that show them — is authored for this project and derives from no third-party
+source. That separation is the reason kranji-gloss and kranji-gloss-seed are
+different modules, and it is checkable from the dependency graph rather than
+from this file.
+
+
+Kranji's own licence
+--------------------
+
+NOT YET DECLARED. This file records what Kranji owes to others; it does not
+grant anyone rights to Kranji. Until a licence is chosen, this repository
+confers none — which blocks redistribution for a reason that has nothing to do
+with Unicode, whose terms permit it.
+
+Tracked as an open task in GlossPlan gp5 and GlossCoveragePlan gc-1, and as
+open decision pc2 in PhonicCoveragePlan.

@@ -1,0 +1,4 @@
+# Discovered by kranji.reading.library.Libraries.
+#
+# Precedence 10: served only when no published root is on the classpath.
+kranji.reading.content.DemoLibrary

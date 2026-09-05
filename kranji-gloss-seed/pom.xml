@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+        <artifactId>Kranji</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>kranji-gloss-seed</artifactId>
+
+    <description>
+        Machine-seeded glosses - the corpus tail, one definition per monophonic
+        (character, reading), generated from Unihan and NOT YET CHECKED BY
+        ANYBODY.
+
+        PROVENANCE: seeded from the Unicode Han Database (Unihan), (c) Unicode,
+        Inc., under the Unicode Terms of Use, which permit redistribution.
+
+        SEPARATE FROM kranji-gloss ON PURPOSE. That module is written for the
+        project and reviewed against the articles that use it; this one is a
+        machine's first guess at 7,121 characters. The boundary is what makes
+        "how much of this build has a person read?" a question the dependency
+        graph answers rather than one somebody has to remember. It also means a
+        build can drop the seed entirely - the reader degrades to no gloss,
+        which it already handles - and that dropping it is one line.
+
+        Depends on kranji-core alone, never on kranji-gloss. A seed that could
+        not be shipped without the hand-crafted set would not be separate in
+        the way that matters.
+    </description>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

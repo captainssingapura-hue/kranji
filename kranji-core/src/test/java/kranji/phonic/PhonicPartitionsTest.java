@@ -1,6 +1,7 @@
 package kranji.phonic;
 
 import kranji.pinyin.Initial;
+import kranji.pinyin.PinyinSyllable;
 import kranji.zi.ZiCharUTF8Codec;
 import org.junit.jupiter.api.Test;
 
@@ -49,9 +50,15 @@ class PhonicPartitionsTest {
         long syllables = ALL.stream().flatMap(r -> r.all().stream()).distinct().count();
         long polyphonic = ALL.stream().filter(SourceReadings::isPolyphonic).count();
 
-        assertEquals(8759, appearances);
-        assertEquals(1284, syllables, "the tree is bounded by phonology, and this is the bound");
-        assertEquals(592, polyphonic);
+        // These agree with a comma-count of the partition files themselves.
+        // They did not before: 哼 listed hng and 欸 listed four ê forms, which
+        // the files carried and the model could not read, so the corpus
+        // measured 8,759 here and 8,764 on disk. SourceCorrections closed
+        // that - one reading dropped, four respelled - and the two counts are
+        // now the same number for the same reason.
+        assertEquals(8763, appearances);
+        assertEquals(1288, syllables, "the tree is bounded by phonology, and this is the bound");
+        assertEquals(593, polyphonic);
     }
 
     // ── The readings themselves ────────────────────────────────────────
@@ -80,12 +87,25 @@ class PhonicPartitionsTest {
     }
 
     @Test
-    void unparseableReadingsAreKeptRatherThanDropped() {
+    void readingsTheSourceMisspeltAreCorrectedRatherThanDropped() {
+        // Both of these used to arrive in a notation the standard replaced,
+        // and the reader could only hold them as unparseable text. That made
+        // 欸 look monophonic when it is not, and a per-character gloss then
+        // covered all five of its readings at once - the wrong split that
+        // looks finished. The generator corrects the spelling instead.
         SourceReadings heng = find("哼");
-
-        assertEquals(List.of("hng"), heng.unparseable());
+        assertEquals(List.of(), heng.unparseable());
         assertEquals("hēng", heng.principal().toDiacritic());
-        assertFalse(heng.isPolyphonic(), "the modellable part is a single reading");
+        assertFalse(heng.isPolyphonic(), "hng was notation, not a second reading");
+
+        // ēi hail, éi surprise, ěi disagreement, èi assent - one per tone,
+        // which is why respelling them and dropping them are not the same
+        // decision at all.
+        SourceReadings ai = find("欸");
+        assertEquals(List.of(), ai.unparseable());
+        assertEquals("ǎi", ai.principal().toDiacritic());
+        assertEquals(List.of("ēi", "éi", "ěi", "èi"),
+                ai.alternates().stream().map(PinyinSyllable::toDiacritic).toList());
     }
 
     // ── Evidence and disagreement ──────────────────────────────────────
@@ -114,10 +134,13 @@ class PhonicPartitionsTest {
                 SourceFindings.Kind.MANDARIN_NOT_IN_STANDARD).size());
         assertEquals(9, SourceFindings.of(findings,
                 SourceFindings.Kind.FREQUENCY_DISAGREES).size());
-        // Only 哼 (hng) and 欸 (ê̄ ế ê̌ ề) keep an unmodellable reading beside a
-        // usable one. Five more had nothing else and never reached a partition,
-        // so seven characters in the standard set are touched in all.
-        assertEquals(2, SourceFindings.of(findings,
+        // None. 哼 (hng) and 欸 (ê̄ ế ê̌ ề) were the only two, and both were a
+        // spelling the standard replaced rather than a reading this build
+        // cannot hold - so they are corrected in the generator and no longer
+        // arrive as findings. The mechanism stays: five characters still have
+        // nothing parseable at all and never reach a partition, and a future
+        // source can reintroduce the case.
+        assertEquals(0, SourceFindings.of(findings,
                 SourceFindings.Kind.UNPARSEABLE_READING).size());
     }
 

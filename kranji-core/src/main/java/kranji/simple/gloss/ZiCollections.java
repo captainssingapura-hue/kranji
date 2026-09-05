@@ -1,6 +1,7 @@
 package kranji.simple.gloss;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ServiceLoader;
 
@@ -29,6 +30,18 @@ public final class ZiCollections {
     private static List<ZiCollection> load() {
         var out = new ArrayList<ZiCollection>();
         for (ZiCollection c : ServiceLoader.load(ZiCollection.class)) out.add(c);
+        // Sorted, because Glosses.of keeps the first entry it sees for a
+        // character and ServiceLoader does not specify what order it hands
+        // them over - that follows the classpath, which differs between a jar,
+        // an IDE and a shaded build. Unsorted, a character glossed both by
+        // hand and by machine would show whichever the classpath happened to
+        // yield, and the same build could answer differently elsewhere.
+        //
+        // Name breaks ties so the order is total: two collections at the same
+        // precedence still load in one fixed order rather than in whichever
+        // one the loader felt like.
+        out.sort(Comparator.comparingInt(ZiCollection::precedence)
+                           .thenComparing(ZiCollection::name));
         return List.copyOf(out);
     }
 

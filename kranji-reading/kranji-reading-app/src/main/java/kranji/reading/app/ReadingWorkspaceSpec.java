@@ -11,6 +11,7 @@ import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpec;
 import kranji.reading.app.phonic.PhonicSourceWidget;
 import kranji.reading.app.read.ArticleCatalogueWidget;
 import kranji.reading.app.read.ArticleReaderWidget;
+import kranji.reading.app.known.KnownProgressWidget;
 import kranji.reading.app.known.KnownSecretaryModule;
 import kranji.reading.app.known.KnownTransferWidget;
 import kranji.reading.app.known.KnownZiWidget;
@@ -74,6 +75,16 @@ public final class ReadingWorkspaceSpec implements WorkspaceSpec {
                 // Mark Known was here. It is now the Character pane above:
                 // claiming a reading and looking at one were the same list with
                 // one control's difference between them.
+                //
+                // First of the three, because it is the one that gets opened
+                // during ordinary reading: a child who has just claimed a
+                // reading wants to see where that puts them, not a list of
+                // everything they have ever claimed. The same class as in the
+                // Known workspace - a claim made while reading shows up there
+                // and here, because both are reading one device.
+                WidgetEntry.of(KnownProgressWidget.class, WidgetLabel.of("Progress"))
+                        .withIcon(new WidgetIcon.Emoji("\uD83C\uDF31"))   // seedling
+                        .withGroup(known),
                 WidgetEntry.of(KnownZiWidget.class, WidgetLabel.of("Known"))
                         .withIcon(new WidgetIcon.Emoji("\uD83C\uDFC5"))   // medal
                         .withGroup(known),

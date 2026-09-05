@@ -133,10 +133,29 @@ class ZiDetailGetActionTest {
     }
 
     @Test
-    void anUnmodelledReadingIsNamedRatherThanHidden() {
-        // 哼 keeps hēng; hng is beyond what this build can parse.
-        String js = ZiDetailGetAction.moduleFor("U+54FC");
-        assertTrue(js.contains("export const unmodelled = \"hng\""));
+    void aCorrectedReadingReachesTheReaderInsteadOfBeingNamedUnmodelled() {
+        // This used to assert unmodelled = "hng" for 哼, and 欸 used to serve
+        // one reading where the standard has five. Both were notations
+        // kTGHZ2013 uses and the standard replaced, so SourceCorrections fixes
+        // them in the corpus and the reader has nothing left to apologise for.
+        // The field stays - a later source can reintroduce the case, and
+        // naming a reading this build cannot hold still beats hiding it.
+        String heng = ZiDetailGetAction.moduleFor("U+54FC");
+        assertTrue(heng.contains("export const unmodelled = \"\";"),
+                "hng was notation, not a reading beyond this build");
+        assertTrue(heng.contains("export const polyphonic = false;"));
+
+        // 欸 is the one this mattered for: ēi hail, éi surprise, ěi
+        // disagreement, èi assent, beside ǎi. One gloss covering all five is
+        // the wrong split that looks finished, and it was the seeded state.
+        String ai = ZiDetailGetAction.moduleFor("U+6B38");
+        assertTrue(ai.contains("export const unmodelled = \"\";"));
+        assertTrue(ai.contains("export const polyphonic = true;"),
+                "five readings, one per interjection tone");
+        for (String reading : new String[] {"ai3", "ei1", "ei2", "ei3", "ei4"}) {
+            assertTrue(ai.contains("reading: \"" + reading + "\""),
+                    () -> reading + " is missing from the character's readings");
+        }
     }
 
     // ── Unknown input ──────────────────────────────────────────────────

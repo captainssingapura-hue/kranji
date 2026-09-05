@@ -1,0 +1,20 @@
+# Readings kTGHZ2013 writes in a notation the standard replaced.
+#
+# The generator applies these before anything tries to parse a reading, so the
+# corpus files carry the corrected form and every consumer downstream - the
+# reader, the studio, the gloss seeder - sees one story.
+#
+# An empty "standard" column means DROP: the source should not have listed the
+# reading at all. Anything else replaces it in place, keeping source order.
+#
+# This is not a place for disagreements with the standard. A reading that is
+# merely surprising belongs in SourceFindings, where a person sees it and
+# decides. Only a reading that is WRITTEN WRONGLY belongs here, and every row
+# owes a reason.
+#
+# Columns: codepoint	glyph	as written	standard	why
+21756	哼	hng		syllabic nasal, no vowel; standard pinyin does not write it, and the character reads heng1
+27448	欸	ê̄	ēi	interjection shared with 誒: ēi, a hail
+27448	欸	ế	éi	interjection shared with 誒: éi, surprise
+27448	欸	ê̌	ěi	interjection shared with 誒: ěi, disagreement
+27448	欸	ề	èi	interjection shared with 誒: èi, assent

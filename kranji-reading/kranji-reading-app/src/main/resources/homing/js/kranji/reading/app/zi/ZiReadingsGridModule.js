@@ -143,7 +143,7 @@ var NOT_YET = "";
 // There is no "seen" column. How often the corpus happens to use a reading
 // decides nothing a reader does with it.
 var ZI_READING_COLUMNS = [
-    "known", "reading", "meaning",
+    "known", "reading", "meaning", "examples",
     "initial", "medial", "nucleus", "coda", "tone", "homophones"
 ];
 
@@ -156,8 +156,12 @@ var ZI_READING_COLUMNS = [
 // on a part column is one the only unbounded column does not have, and this
 // pane is often half a window wide. The parts hold one to three letters; the
 // headers are what needed the room, and the labels below give it back.
+// Examples are bounded in practice - a sense cites a few short phrases - so
+// they take a fixed column and the meaning keeps the remainder. Letting both
+// grow would put the claim column back in motion between characters, which is
+// the one thing these widths exist to prevent.
 var ZI_READING_WIDTHS = {
-    "known": 96, "reading": 88,
+    "known": 96, "reading": 88, "examples": 150,
     "initial": 52, "medial": 52, "nucleus": 56, "coda": 48, "tone": 44,
     "homophones": 60
 };
@@ -270,26 +274,47 @@ function createZiReadingsGrid(opts) {
             rows = [];
             for (var i = 0; i < readings.length; i++) {
                 var r = readings[i];
-                rows.push({
-                    pk: keyOf(codePoint, r.reading),
-                    // The picker's value is the key, which is how a cell knows
-                    // which row it is on - see KnownPickerCell.
-                    "known":   keyOf(codePoint, r.reading),
-                    // The display boundary. The pk above stays canonical.
-                    "reading": opts.swf.toSWF(r.reading)
-                             + (r.principal ? "" : "  (also)"),
-                    "meaning": (r.meanings && r.meanings.length)
-                             ? r.meanings.join("  |  ") : "",
-                    // Already decomposed by the server, and an absent part
-                    // already reads as "-" rather than as a blank that could be
-                    // missing data.
-                    "initial": r.initial,
-                    "medial":  r.medial,
-                    "nucleus": r.nucleus,
-                    "coda":    r.coda,
-                    "tone":    r.tone,
-                    "homophones": r.homophones
-                });
+                var key = keyOf(codePoint, r.reading);
+                // A row per SENSE. A reading that means three things is three
+                // things a reader could be looking at, and pooling them into
+                // one cell separated by bars made the commonest case - one
+                // sense - pay for the rarest, while giving no sense a place to
+                // put its own examples.
+                //
+                // A reading nothing has glossed still gets its one row: it is
+                // a reading somebody can claim, and a claim is what this grid
+                // is for before it is a dictionary.
+                var senses = (r.senses && r.senses.length) ? r.senses
+                           : [{ meaning: "", examples: [] }];
+                for (var j = 0; j < senses.length; j++) {
+                    rows.push({
+                        // Identity is (character, reading, meaning) now. The
+                        // claim below is NOT: it stays the pair, because a
+                        // reader claims a reading and not one of its senses,
+                        // so every row of a reading shows the same claim and
+                        // any of them can make it.
+                        pk: key + "/" + senses[j].meaning,
+                        // The picker's value is the pair key, which is how a
+                        // cell knows which reading it claims - see
+                        // KnownPickerCell.
+                        "known":   key,
+                        // The display boundary. The keys above stay canonical.
+                        "reading": opts.swf.toSWF(r.reading)
+                                 + (r.principal ? "" : "  (also)"),
+                        "meaning": senses[j].meaning,
+                        "examples": (senses[j].examples || []).join("  ")
+                        ,
+                        // Already decomposed by the server, and an absent part
+                        // already reads as "-" rather than as a blank that could
+                        // be missing data.
+                        "initial": r.initial,
+                        "medial":  r.medial,
+                        "nucleus": r.nucleus,
+                        "coda":    r.coda,
+                        "tone":    r.tone,
+                        "homophones": r.homophones
+                    });
+                }
             }
             draw();
         },

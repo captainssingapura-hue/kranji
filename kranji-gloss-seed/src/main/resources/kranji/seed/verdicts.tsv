@@ -1,0 +1,28 @@
+# What a person decided about a seeded row the generator was unsure of.
+#
+# HAND-MAINTAINED. GlossSeedMain never writes this file - that is the whole
+# reason it is separate from pNNN.flags.tsv, which is regenerated on every run
+# and would eat a review kept inside it.
+#
+# The key is (codepoint, reading). The kind and doubts columns record WHAT WAS
+# REVIEWED, not just that something was: if the generator later raises a
+# different problem for the same pair, the workbench shows the verdict as stale
+# rather than counting it as done. A verdict that outlives its subject is worse
+# than no verdict, because it reads as finished.
+#
+# verdict:
+#   OK       checked, the seeded gloss stands as it is
+#   FIXED    a TSV was edited; the problem is dealt with
+#   WONTFIX  reviewed, and there is nothing worth doing
+#
+# Three values on purpose. Decision gc4 - "what can a reviewer say about a
+# row?" - is open, and a vocabulary invented before anyone has reviewed a
+# partition would be guessing at the categories.
+#
+# Columns: codepoint	reading	kind	doubts	verdict	note
+19978	shang4	QUEUED		WONTFIX	one sound is enough; shang3 needs no gloss for this reader
+27663	shi4	QUEUED		FIXED	split taken: zhi1 added with the example 月氏
+25226	ba3	QUEUED		FIXED	split taken: ba4 "a handle" added with the example 刀把
+29484	wei4	FLAGGED	TRUNCATED	FIXED	the cut dropped the only living sense; "a hedgehog" written by hand as P, which shadows the seeded row
+14616	zhou4	FLAGGED	TRUNCATED	FIXED	the pointer was inside a leading bracket and rode into the meaning; unbracket now strips it
+24530	tui1	FLAGGED	TRUNCATED	FIXED	tui1 and tei1 are one meaning; "to err / to mistake" belong to te4, which the standard does not list. One row written by hand

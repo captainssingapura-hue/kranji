@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * One relation of the gloss model, as a data-only JS module.
+ * One relation of the gloss model, as JSON.
  *
  * <p>Six relations, served from the same route by name — the flattening the
  * grid needs already exists in {@link GlossRelations}, so this only decides
  * which one and writes it out. Data only: no behaviour crosses the wire, which
- * is what lets the module be cached and read by a person.</p>
+ * is what lets it be fetched, cached and read by a person.</p>
  *
  * <p>Whole, not partitioned. The phonic source browser pages its 8,105 rows
  * because it has to; the gloss data is small enough to send at once, and a
@@ -32,7 +32,17 @@ public final class GlossRelationGetAction
 
     public static final String PATH = "/gloss-relation";
 
-    private static final String JS = "text/javascript; charset=utf-8";
+    /**
+     * JSON, not an ES module.
+     *
+     * <p>It was a module, imported with {@code import(url)}, and that memoises
+     * on the URL and never re-evaluates - so re-asking for a relation returned
+     * the copy the browser already had, and a Refresh button could not work
+     * without a cache-busting parameter that left one dead module behind per
+     * press. Fetching data is data; nothing about this response was ever
+     * behaviour, and saying so in the Content-Type costs nothing.</p>
+     */
+    private static final String JS = "application/json; charset=utf-8";
 
     /**
      * {@code parent} repeats, one per key.
@@ -105,7 +115,8 @@ public final class GlossRelationGetAction
             // A bare `parent=` is one empty value: the caller is saying
             // "nothing is selected", which must show nothing. No `parent` at
             // all is a different statement and leaves the relation whole.
-            List<String> keys = parents.stream().filter(k -> !k.isEmpty()).toList();
+            List<String> keys = GlossRelations.scopeKeysFor(name,
+                    parents.stream().filter(k -> !k.isEmpty()).toList());
             rows = (from == null || from.isEmpty())
                     ? GlossRelations.under(rows, keys)
                     : GlossRelations.withPks(rows,
@@ -130,41 +141,42 @@ public final class GlossRelationGetAction
     private static String module(String name, List<String> columns,
                                  List<GlossRelations.Row> rows) {
         var js = new StringBuilder();
-        js.append("// Generated from the Kranji gloss tier. Data only - no behaviour.\n");
-        js.append("export const relation = ").append(quote(name)).append(";\n");
+        js.append("{\n");
+        js.append("  \"relation\": ").append(quote(name)).append(",\n");
         String up = GlossRelations.upstreamOf(name);
         String refSource = GlossRelations.refSourceOf(name);
-        js.append("export const upstream = ")
-          .append(up == null ? "null" : quote(up)).append(";\n");
-        js.append("export const refSource = ")
-          .append(refSource == null ? "null" : quote(refSource)).append(";\n");
-        js.append("export const columns = [");
+        js.append("  \"upstream\": ")
+          .append(up == null ? "null" : quote(up)).append(",\n");
+        js.append("  \"refSource\": ")
+          .append(refSource == null ? "null" : quote(refSource)).append(",\n");
+        js.append("  \"columns\": [");
         for (int i = 0; i < columns.size(); i++) {
             js.append(i > 0 ? ", " : "").append(quote(columns.get(i)));
         }
-        js.append("];\n");
-        js.append("export const rows = [\n");
+        js.append("],\n");
+        js.append("  \"rows\": [\n");
         for (int r = 0; r < rows.size(); r++) {
             GlossRelations.Row row = rows.get(r);
-            js.append("  { pk: ").append(quote(row.pk()))
-              .append(", up: ").append(quote(row.up()))
-              .append(", label: ").append(quote(row.label()));
+            js.append("    { \"pk\": ").append(quote(row.pk()))
+              .append(", \"up\": ").append(quote(row.up()))
+              .append(", \"label\": ").append(quote(row.label()));
             for (int c = 0; c < columns.size(); c++) {
                 js.append(", ").append(quote(columns.get(c))).append(": ")
                   .append(value(row.values().get(c)));
             }
             js.append(" }").append(r + 1 < rows.size() ? "," : "").append("\n");
         }
-        js.append("];\n");
+        js.append("  ]\n}\n");
         return js.toString();
     }
 
     private static String problem(String name) {
-        return "// Generated from the Kranji gloss tier. Data only - no behaviour.\n"
-             + "export const relation = " + quote(String.valueOf(name)) + ";\n"
-             + "export const columns = [];\n"
-             + "export const rows = [];\n"
-             + "export const problem = " + quote("no relation named '" + name + "'") + ";\n";
+        return "{\n"
+             + "  \"relation\": " + quote(String.valueOf(name)) + ",\n"
+             + "  \"columns\": [],\n"
+             + "  \"rows\": [],\n"
+             + "  \"problem\": " + quote("no relation named '" + name + "'") + "\n"
+             + "}\n";
     }
 
     private static String value(Object v) {

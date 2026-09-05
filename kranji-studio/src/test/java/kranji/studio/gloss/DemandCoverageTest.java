@@ -6,6 +6,8 @@ import kranji.reading.library.ArticleCollection;
 import kranji.reading.library.ArticleRef;
 import kranji.reading.model.ArticleCensus;
 import kranji.simple.gloss.SoundGloss;
+import kranji.simple.gloss.ZiCollection;
+import kranji.simple.gloss.ZiCollections;
 import kranji.simple.gloss.ZiGloss;
 import org.junit.jupiter.api.Test;
 
@@ -78,6 +80,28 @@ class DemandCoverageTest {
         return out;
     }
 
+    /**
+     * The same, restricted to what a person wrote.
+     *
+     * <p>Selected by {@link ZiCollection#precedence()} rather than by naming the
+     * class, because 0 is exactly the property being tested: somebody decided
+     * this row. A machine-seeded collection covers the whole 8,100-character
+     * corpus by design and has no business being measured against the reading
+     * demand of a dozen articles.</p>
+     */
+    private static Set<String> handAuthored() {
+        var out = new LinkedHashSet<String>();
+        for (ZiCollection c : ZiCollections.discovered()) {
+            for (ZiCollection layer : c.layers()) {
+                if (layer.precedence() != 0) continue;
+                for (ZiGloss g : layer.characters().all()) {
+                    for (SoundGloss s : g.sounds()) out.add(s.key());
+                }
+            }
+        }
+        return out;
+    }
+
     @Test
     void coverageOfTheBundledLibraryHasNotGoneBackwards() {
         Set<String> demand = demand();
@@ -95,7 +119,7 @@ class DemandCoverageTest {
     }
 
     @Test
-    void everyGlossBeyondDemandCompletesAPolyphone() {
+    void everyHandAuthoredGlossBeyondDemandCompletesAPolyphone() {
         // A gloss the library never reaches is not automatically waste: a
         // polyphone glossed at some readings and not others implies the rest
         // are meaningless, so completing one is required rather than optional.
@@ -106,20 +130,72 @@ class DemandCoverageTest {
         // work that was correct. What matters is not how many there are but
         // that each one has a reason, so the reason is what gets asserted:
         // the CHARACTER must be demanded, even where this reading is not.
+        //
+        // Hand-authored only. This is a rule about drift in work somebody chose
+        // to do, and a seeded collection makes no such choice - it covers the
+        // corpus, which is thousands of pairs the bundled articles never reach,
+        // every one of them intended.
+        // A SECOND reason arrived with the seed, and 猬 is it. The seeder bands
+        // by the order the source happened to use, and for 猬 that ordering is
+        // backwards: it kept vulgar, wanton, low, many, varied and cut "a
+        // hedgehog", which is the only sense a child will ever meet. Writing
+        // that by hand is not drift, it is the correction mechanism working -
+        // the hand-crafted set wins every collision by precedence, so it is
+        // the only place a bad seed CAN be overridden.
+        //
+        // And a THIRD, which is the corpus work itself: answering something
+        // the seeder LOGGED. That began as "queued polyphones" and grew a
+        // clause within the hour, when 岷 arrived - unseeded rather than
+        // queued, because its only definition is 71 characters and Meaning
+        // takes 60. Two clauses for one idea is a rule drifting toward a list,
+        // so it is stated once: the seeder wrote this character down as work,
+        // and writing the gloss is doing it.
+        //
+        // A character in none of the three is still drift.
         Set<String> demand = demand();
         var demandedCharacters = demand.stream()
                 .map(p -> p.substring(0, p.indexOf(':'))).collect(Collectors.toSet());
+        Set<String> seededCharacters = seeded();
+        Set<String> loggedCharacters = logged();
 
         var stray = new ArrayList<String>();
-        for (String pair : glossed().keySet()) {
+        for (String pair : handAuthored()) {
             if (demand.contains(pair)) continue;
             String character = pair.substring(0, pair.indexOf(':'));
-            if (!demandedCharacters.contains(character)) stray.add(pair);
+            if (demandedCharacters.contains(character)) continue;
+            if (seededCharacters.contains(character)) continue;
+            if (loggedCharacters.contains(character)) continue;
+            stray.add(pair);
         }
 
         assertEquals(List.of(), stray,
-                "glossed at a character the library never reads at all: " + stray
-              + " - completing a polyphone is deliberate; a stray character is drift");
+                "glossed at a character the library never reads, the seed never guessed "
+              + "at, and the seeder never queued: " + stray + " - completing a polyphone, "
+              + "overriding a seeded gloss and answering a queued one are all deliberate; "
+              + "anything else is drift");
+    }
+
+    /** Every character the seeder wrote down as work, whatever kind. */
+    private static Set<String> logged() {
+        var out = new LinkedHashSet<String>();
+        for (SeedProblems.Row row : SeedProblems.rows()) {
+            out.add(String.valueOf(row.codePoint()));
+        }
+        return out;
+    }
+
+    /** Every character some machine-seeded collection has a gloss for. */
+    private static Set<String> seeded() {
+        var out = new LinkedHashSet<String>();
+        for (ZiCollection c : ZiCollections.discovered()) {
+            for (ZiCollection layer : c.layers()) {
+                if (layer.precedence() == 0) continue;
+                for (ZiGloss g : layer.characters().all()) {
+                    out.add(String.valueOf(g.zi().codePoint()));
+                }
+            }
+        }
+        return out;
     }
 
     /**

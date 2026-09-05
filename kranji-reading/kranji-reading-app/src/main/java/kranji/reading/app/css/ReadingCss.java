@@ -869,9 +869,217 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
         }
     }
 
+    // ── Progress: two designs, not one design rotated ──────────────────
+    //
+    // A wide pane gets a bar; a narrow one gets a named list. They share no
+    // markup, because the first attempt shared it - one row of segments with
+    // the flex direction swapped - and that is the thing worth not doing. A
+    // vertical bar is a horizontal bar turned on its side, which wastes the
+    // one thing a narrow column has plenty of, and it made a pane whose shape
+    // depended on a class applied in the right order at the right moment.
+    //
+    // Both are segmented by band rather than filled by proportion, and that is
+    // a design decision before it is a styling one: a continuous bar would be
+    // drawn against the corpus, and 248 characters of 8,100 is a sliver saying
+    // a term's work came to nothing. Bands say something truer - eleven places
+    // to stand, and you are at the fourth.
+
+    /** The ladder grid: a row of bands when wide, a column of them when narrow. */
+    public record kr_pb_grid() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                margin-bottom: var(--space-4, 16px);
+                """;
+        }
+    }
+
+    // ── A binary choice, drawn as one ──────────────────────────────────
+    //
+    // Two segments in a track, one lit. A button whose label changed to say
+    // what pressing it would do next made a reader work out the current state
+    // from the name of the other one; both states are named here and the lit
+    // one is the answer.
+
+    /** The track holding the two halves. */
+    public record kr_seg() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: inline-flex;
+                border: 1px solid var(--color-border);
+                border-radius: 999px;
+                overflow: hidden;
+                margin: var(--space-2, 8px) 0;
+                """;
+        }
+    }
+
+    /** One half, unlit. */
+    public record kr_seg_opt() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                appearance: none;
+                border: 0;
+                background: transparent;
+                padding: 4px 14px;
+                font: inherit;
+                font-size: 12px;
+                line-height: 1.6;
+                color: var(--color-text-secondary);
+                cursor: pointer;
+                """;
+        }
+    }
+
+    /** The half that is the case. */
+    public record kr_seg_on() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                appearance: none;
+                border: 0;
+                padding: 4px 14px;
+                font: inherit;
+                font-size: 12px;
+                line-height: 1.6;
+                cursor: default;
+                font-weight: 600;
+                background: var(--color-accent);
+                color: var(--color-surface);
+                """;
+        }
+    }
+
+    /**
+     * Wide: a band is a tile — the mark above the name.
+     *
+     * <p>Square-ish and fixed, so eleven of them read as eleven equal places
+     * rather than as columns sized by how long each name happens to be. The
+     * mark is what the eye finds first and the name is what it confirms, which
+     * is the order they are stacked in.</p>
+     */
+    public record kr_pb_cell() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                box-sizing: border-box;
+                width: 92px;
+                height: 92px;
+                padding: 6px 4px;
+                text-align: center;
+                color: var(--color-text-secondary);
+                """;
+        }
+    }
+
+    /**
+     * Narrow: a band is a line, because the column has width and not height.
+     *
+     * <p>The horizontal padding is there for the standing band's background to
+     * sit in. Without it the tint would hug the text and read as a highlighter
+     * stroke rather than as a place.</p>
+     */
+    public record kr_pb_line() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: var(--space-2, 8px);
+                padding: 3px 8px;
+                color: var(--color-text-secondary);
+                """;
+        }
+    }
+
+    /** The mark. */
+    public record kr_pb_badge() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-size: 22px;
+                line-height: 1;
+                """;
+        }
+    }
+
+    /** The name under a tile: small, and allowed to wrap onto two lines. */
+    public record kr_pb_name() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-size: 12px;
+                line-height: 1.25;
+                overflow-wrap: anywhere;
+                """;
+        }
+    }
+
+    /** The name beside a mark, on a line. */
+    public record kr_pb_name_line() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                """;
+        }
+    }
+
+    /** A band already passed. */
+    public record kr_pb_past() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                color: var(--color-text-primary);
+                """;
+        }
+    }
+
+    /**
+     * The band the reader is standing in.
+     *
+     * <p>Painted on a span inside the cell rather than on the cell itself, so
+     * it cannot fight with the grid's own selection painting. The cursor is a
+     * separate thing that moves; this does not.</p>
+     *
+     * <h2>The background is a hint, not a highlight</h2>
+     *
+     * <p>A tenth of the accent, which is enough to find at a glance and quiet
+     * enough that the cursor's own box still reads as the louder of the two —
+     * it has to, because the cursor is the thing a reader is moving and this is
+     * the thing they are not.</p>
+     *
+     * <p>Two background declarations, and the order is the fallback. A browser
+     * without {@code color-mix} drops the second and keeps the raised surface,
+     * which is duller but still says "this one"; one with it gets the tint. No
+     * {@code @supports} needed — an unparsable declaration is simply
+     * skipped.</p>
+     */
+    public record kr_pb_here() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-weight: 700;
+                color: var(--color-accent);
+                border-radius: 8px;
+                background: var(--color-surface-raised, var(--color-surface));
+                background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+                """;
+        }
+    }
+
+    /** What the cursor is resting on, said underneath. */
+    public record kr_pb_detail() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                color: var(--color-text-secondary);
+                min-height: 1.4em;
+                """;
+        }
+    }
+
     @Override
     public List<CssClass<ReadingCss>> cssClasses() {
         return List.of(
+                new kr_seg(),
+                new kr_seg_opt(),
+                new kr_seg_on(),
+                new kr_pb_grid(),
+                new kr_pb_cell(),
+                new kr_pb_line(),
+                new kr_pb_badge(),
+                new kr_pb_name(),
+                new kr_pb_name_line(),
+                new kr_pb_past(),
+                new kr_pb_here(),
+                new kr_pb_detail(),
                 new kr_widget_root(),
                 new kr_bar(),
                 new kr_btn(),

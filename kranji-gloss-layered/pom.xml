@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+        <artifactId>Kranji</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>kranji-gloss-layered</artifactId>
+
+    <description>
+        The one gloss collection the classpath offers: the hand-curated set
+        read OVER the machine-seeded one.
+
+        This is the only module allowed to depend on both, and the only one
+        that registers a ZiCollection. kranji-gloss and kranji-gloss-seed no
+        longer register themselves - they are data, and this decides how the
+        data stacks.
+
+        LAYERED PER (CHARACTER, READING), not per character. The composition
+        underneath shadows a whole character when two sources both have it, so
+        a curated gloss of 把 at ba3 used to take the seed's ba4 down with it.
+        That was invisible while the seed held monophones only, and stops being
+        invisible the moment a reading is curated on its own.
+
+        THE COST, STATED: dropping kranji-gloss-seed now breaks this module
+        rather than degrading it, because the dependency is a compile-time one.
+        Which layers a build has is a pom edit, not a fact about the classpath.
+    </description>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-gloss</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-gloss-seed</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -3,10 +3,16 @@ package kranji.studio;
 import hue.captains.singapura.js.homing.core.Crate;
 import hue.captains.singapura.js.homing.core.CrateEntry;
 import hue.captains.singapura.js.homing.grid.RelationGridCrate;
+import kranji.studio.gloss.CuratedEntityWidget;
 import kranji.studio.gloss.DemandEntityWidget;
+import kranji.studio.gloss.ImpactArticleEntityWidget;
+import kranji.studio.gloss.ImpactEntityWidget;
+import kranji.studio.gloss.IssueEntityWidget;
+import kranji.studio.gloss.PartitionEntityWidget;
 import kranji.studio.gloss.GlossCss;
 import kranji.studio.gloss.GlossSelectionSecretaryModule;
 import kranji.studio.gloss.PhraseEntityWidget;
+import kranji.studio.gloss.ProblemEntityWidget;
 import kranji.studio.gloss.PhraseSenseEntityWidget;
 import kranji.studio.gloss.SenseEntityWidget;
 import kranji.studio.gloss.SoundEntityWidget;
@@ -39,7 +45,13 @@ public final class KranjiStudioCrate implements Crate {
                 CrateEntry.of(DemandEntityWidget.INSTANCE),
                 CrateEntry.of(SenseEntityWidget.INSTANCE),
                 CrateEntry.of(PhraseEntityWidget.INSTANCE),
-                CrateEntry.of(PhraseSenseEntityWidget.INSTANCE));
+                CrateEntry.of(PhraseSenseEntityWidget.INSTANCE),
+                CrateEntry.of(ProblemEntityWidget.INSTANCE),
+                CrateEntry.of(PartitionEntityWidget.INSTANCE),
+                CrateEntry.of(IssueEntityWidget.INSTANCE),
+                CrateEntry.of(CuratedEntityWidget.INSTANCE),
+                CrateEntry.of(ImpactEntityWidget.INSTANCE),
+                CrateEntry.of(ImpactArticleEntityWidget.INSTANCE));
     }
 
     @Override

@@ -47,6 +47,7 @@ public record KnownCharactersCatalogue()
     public List<Doc> docs() {
         return List.of(
                 KnownSetDoc.INSTANCE,
+                KnownUpdatePathDoc.INSTANCE,
                 MarkingDoc.INSTANCE,
                 RemovalDoc.INSTANCE,
                 ProfileStorageDoc.INSTANCE,

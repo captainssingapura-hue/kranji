@@ -9,6 +9,7 @@ import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpec;
 import kranji.studio.gloss.DemandEntityWidget;
 import kranji.studio.gloss.GlossSelectionSecretaryModule;
 import kranji.studio.gloss.PhraseEntityWidget;
+import kranji.studio.gloss.ProblemEntityWidget;
 import kranji.studio.gloss.PhraseSenseEntityWidget;
 import kranji.studio.gloss.SenseEntityWidget;
 import kranji.studio.gloss.SoundEntityWidget;
@@ -41,6 +42,10 @@ public final class GlossWorkspaceSpec implements WorkspaceSpec {
         // picker rather than something you work out by clicking.
         WidgetGroup character = WidgetGroup.of("Character chain");
         WidgetGroup phrase = WidgetGroup.of("Phrase chain");
+        // A third group, because Problems is where the chain ENDS rather than
+        // a link in it: demand scopes it, and nothing hangs off it in turn.
+        // Filing it under "Character chain" would suggest a walk that goes on.
+        WidgetGroup review = WidgetGroup.of("Review");
         return List.of(
                 WidgetEntry.of(SoundEntityWidget.class, WidgetLabel.of("Sound"))
                         .withIcon(new WidgetIcon.Emoji("🔊"))
@@ -56,7 +61,10 @@ public final class GlossWorkspaceSpec implements WorkspaceSpec {
                         .withGroup(phrase),
                 WidgetEntry.of(PhraseSenseEntityWidget.class, WidgetLabel.of("Phrase Sense"))
                         .withIcon(new WidgetIcon.Emoji("📄"))    // 📄
-                        .withGroup(phrase));
+                        .withGroup(phrase),
+                WidgetEntry.of(ProblemEntityWidget.class, WidgetLabel.of("Problems"))
+                        .withIcon(new WidgetIcon.Emoji("🔎"))    // 🔎
+                        .withGroup(review));
     }
 
     /**

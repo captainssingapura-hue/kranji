@@ -1,7 +1,14 @@
 package kranji.reading.app.read;
 
+import kranji.reading.library.ArticleCollection;
+import kranji.reading.library.ArticleRef;
+import kranji.reading.library.Libraries;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,11 +25,24 @@ class ArticleCensusGetActionTest {
     private static final String CENSUS = ArticleCensusGetAction.censusJs();
 
     @Test
-    void carriesEveryBundledArticleUnderItsFullAddress() {
+    void carriesEveryArticleUnderItsFullAddress() {
         // collection:local, the same identity the reader and the tree use, so
         // a node's segment indexes straight into the census with no lookup.
-        assertTrue(CENSUS.contains("\"kranji.reader.demo.tangshi:jing-ye-si\""), CENSUS);
-        assertTrue(CENSUS.contains("\"kranji.reader.demo.erge:xiao-yu-dian\""), CENSUS);
+        assertTrue(CENSUS.contains("\"kranji.library.shici.libai-wuyan:libai-jing-ye-si\""),
+                "one address written out, to pin the format");
+
+        // And no article left out. censusJs skips anything that will not parse,
+        // which is the right call at run time - a broken text should not empty
+        // the catalogue - but it means a parse defect would otherwise show up
+        // as an article that silently has no readability figure.
+        var missing = new ArrayList<String>();
+        for (ArticleCollection c : Libraries.mounted().tree().collections()) {
+            for (ArticleRef ref : c.articles()) {
+                String address = c.address(ref.id()).toString();
+                if (!CENSUS.contains('"' + address + '"')) missing.add(address);
+            }
+        }
+        assertEquals(List.of(), missing, "articles the census left out: " + missing);
     }
 
     @Test
@@ -58,12 +78,19 @@ class ArticleCensusGetActionTest {
     }
 
     @Test
-    void isASmallEnoughModuleToSendWhole() {
+    void staysCheapPerArticleSoItCanBeSentWhole() {
         // Sent once for the entire library rather than per article, so its
-        // size is the thing that makes that decision defensible. A regression
-        // here means the census has started carrying something it should not.
-        assertTrue(CENSUS.length() < 64_000,
-                () -> "census grew to " + CENSUS.length() + " chars");
+        // size is what makes that decision defensible. This used to be a flat
+        // ceiling, which measured two things at once and failed the moment the
+        // library grew from 23 articles to 475 - a change that was the point,
+        // not a regression. What must not grow is the cost of one article,
+        // which is where a field nobody needs would show up.
+        int articles = Libraries.mounted().tree().collections().stream()
+                .mapToInt(c -> c.articles().size()).sum();
+        int each = CENSUS.length() / articles;
+        assertTrue(each < 900,
+                () -> "census is " + CENSUS.length() + " chars for " + articles
+                    + " articles, " + each + " each");
     }
 
     @Test

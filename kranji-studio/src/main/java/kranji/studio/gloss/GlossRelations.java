@@ -10,7 +10,9 @@ import kranji.simple.gloss.SoundGloss;
 import kranji.simple.gloss.ZiGloss;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
@@ -172,13 +174,43 @@ public final class GlossRelations {
             case "demand"      -> "sound";
             case "sense"       -> "demand";
             case "phraseSense" -> "phrase";
-            default            -> null;      // sound, phrase
+            // Problem is demand's second child, and the first place the chain
+            // branches. It scopes on the CHARACTER of the selected pair, not
+            // the pair - see scopeKeysFor.
+            case "problem"     -> "demand";
+
+            // A second chain, for the curated workbench, and it is short: pick
+            // a partition, see its issues and its written rows side by side.
+            //
+            // "issue" holds the same rows as "problem" and hangs off something
+            // else, which is the whole reason both exist. The gloss workbench
+            // asks "what is wrong with THIS character", reached by walking
+            // sounds and pairs; the curated workbench asks "what is left in
+            // THIS partition", reached by picking a file. One relation cannot
+            // have two parents, and neither question is the other one.
+            case "issue"       -> "partition";
+            case "curated"     -> "partition";
+
+            // Impact is the third view of a partition, and the one that
+            // answers which partition to open. It hangs off partition like the
+            // other two rather than becoming a fourth root, because unscoped
+            // it already shows everything ranked - the bus tells a widget
+            // "never selected" apart from "selected nothing", so browsing the
+            // whole worklist by weight and narrowing it to one file are the
+            // same widget in two states.
+            case "impact"       -> "partition";
+            // And the breakdown hangs off a weighed problem: one row per
+            // article that reads it. A number is not actionable until you can
+            // see which articles it is made of.
+            case "impactArticle" -> "impact";
+            default            -> null;      // sound, phrase, partition
         };
     }
 
     /** The relations, in the order a picker should offer them. */
     public static List<String> relations() {
-        return List.of("sound", "demand", "sense", "phrase", "phraseSense");
+        return List.of("sound", "demand", "sense", "phrase", "phraseSense", "problem",
+                       "partition", "issue", "curated", "impact", "impactArticle");
     }
 
     public static List<String> columnsOf(String relation) {
@@ -189,6 +221,19 @@ public final class GlossRelations {
             case "sense"       -> List.of("glyph", "reading", "priority", "meaning", "examples");
             case "phrase"      -> List.of("phrase", "characters", "senses", "primary meaning");
             case "phraseSense" -> List.of("phrase", "sense", "english", "pinned readings");
+            case "problem"     -> List.of("glyph", "reading", "part", "kind", "doubts",
+                                          "state", "verdict", "kept", "source");
+            case "partition"   -> List.of("partition", "curated", "seeded", "issues", "open",
+                                          "source");
+            // Same columns as "problem", minus the one that is now the parent.
+            case "issue"       -> List.of("glyph", "reading", "kind", "doubts",
+                                          "state", "verdict", "kept", "source");
+            case "curated"     -> List.of("glyph", "reading", "priority", "meaning", "examples");
+            // blind before read, because that is the sort order and a reader of
+            // the grid should meet the number it is ranked by first.
+            case "impact"      -> List.of("glyph", "reading", "kind", "state",
+                                          "blind", "read", "articles", "part", "groups");
+            case "impactArticle" -> List.of("article", "group", "reading", "times", "status");
             default            -> List.of();
         };
     }
@@ -236,11 +281,138 @@ public final class GlossRelations {
                     r.phrase() + "#" + r.senseIndex(), r.phrase(), r.english(),
                     List.of(r.phrase(), r.senseIndex(), r.english(), r.sounds()))).toList();
 
+            // The one relation that is not a projection of the aggregates. It
+            // reads the seeder's own output and the verdicts beside it, so it
+            // takes no argument from here - the others describe what the model
+            // holds, and this one describes what nobody has settled yet.
+            //
+            // "up" is the CHARACTER, not the pair. Every other relation's up is
+            // its parent's whole key; this one deliberately holds less, because
+            // a problem is a character's problem. scopeKeysFor is the other
+            // half of that.
+            // Everything, ordered by sound. Two decisions, both about the
+            // unscoped view, which is the one a person browses.
+            //
+            // Everything, because the state column already says which rows are
+            // finished and which nobody has touched - and a grid that silently
+            // held 1,365 rows while reporting 1,299 is the kind of honest-
+            // looking lie this file avoids elsewhere. Type "open" in the filter
+            // to get the worklist back.
+            //
+            // By sound, because partition order is the GENERATOR's: modulo 101
+            // scatters homophones across every file. A reviewer reads bai2
+            // after bai2, since the judgement they are making about one is
+            // usually the judgement they just made about the last.
+            case "problem" -> SeedProblems.rows().stream()
+                    .sorted(Comparator.comparing(SeedProblems.Row::reading)
+                            .thenComparingInt(SeedProblems.Row::codePoint))
+                    .map(r -> new Row(
+                            r.pairKey(), String.valueOf(r.codePoint()), r.glyph(),
+                            List.of(r.glyph(), r.reading(),
+                                    "p" + String.format("%03d", r.partition()),
+                                    r.kind(), r.doubts(),
+                                    r.state().name().toLowerCase(java.util.Locale.ROOT),
+                                    r.verdict(), r.kept(), r.detail())))
+                    .toList();
+
+            // ── The curated chain ──────────────────────────────────────
+
+            // Read fresh, so the counts and the path are what is on disk right
+            // now rather than what was on the classpath when the JVM started.
+            case "partition" -> Partitions.rows(CuratedSource.readAll()).stream()
+                    .map(r -> new Row(
+                            r.label(), "", r.label(),
+                            List.of(r.label(), r.curated(), r.seeded(), r.issues(),
+                                    r.open(), r.source())))
+                    .toList();
+
+            // The same rows "problem" serves, hung off a partition instead of
+            // a character, and ordered by sound within it for the same reason.
+            case "issue" -> SeedProblems.rows().stream()
+                    .sorted(Comparator.comparing(SeedProblems.Row::reading)
+                            .thenComparingInt(SeedProblems.Row::codePoint))
+                    .map(r -> new Row(
+                            r.pairKey(), "p%03d".formatted(r.partition()), r.glyph(),
+                            List.of(r.glyph(), r.reading(), r.kind(), r.doubts(),
+                                    r.state().name().toLowerCase(java.util.Locale.ROOT),
+                                    r.verdict(), r.kept(), r.detail())))
+                    .toList();
+
+            // What is written in that partition's file, read out of the model
+            // rather than the file - the model round-trips through GlossTsv,
+            // so it IS the file, and re-parsing would be a second reader to
+            // keep in step with the first.
+            case "curated" -> senses(CuratedSource.readAll().stream()
+                    .flatMap(p -> p.glosses().stream()).toList())
+                    .stream().map(r -> new Row(
+                    sensePk(r.codePoint(), r.reading(), r.meaning()),
+                    "p%03d".formatted(kranji.zi.ZiPartition.of(r.codePoint())),
+                    r.meaning(),
+                    // No refs. The gloss workbench walks a sense sideways to the
+                    // phrases that show it; this bench has no phrase widget, and
+                    // refTargetOf says "curated" points at nothing - so rows
+                    // carrying refs would advertise a link the module denies.
+                    List.of(r.glyph(), r.reading(), r.priority().code(),
+                            r.meaning(), r.examples())))
+                    .toList();
+
+            // The same problems again, weighed against what the library reads.
+            // Keyed like "issue" - on the pair - so a row selected in one grid
+            // addresses the same problem in the other.
+            //
+            // Everything, including the 701 nothing reads, for the reason the
+            // problem relation shows everything: a grid that quietly held back
+            // three quarters of the queue while reporting a total would be the
+            // honest-looking lie this file avoids. They sort to the bottom on
+            // their own, since their weight is zero.
+            case "impact" -> GlossImpact.rows(glosses).stream().map(r -> new Row(
+                    r.pairKey(), "p%03d".formatted(r.partition()), r.glyph(),
+                    List.of(r.glyph(), r.reading(), r.kind(), r.state(),
+                            r.blind(), r.read(), r.articles(),
+                            "p%03d".formatted(r.partition()), r.groups())))
+                    .toList();
+
+            // One row per article that reads the problem's character. The pk
+            // carries the reading as well as the address: a polyphone met at
+            // two readings in one article is two facts, and one of them can be
+            // answered while the other is not.
+            case "impactArticle" -> GlossImpact.places(glosses).stream().map(r -> new Row(
+                    r.problem() + "@" + r.address() + "#" + r.reading(), r.problem(),
+                    r.article(),
+                    List.of(r.article(), r.group(), r.reading(), r.times(), r.status())))
+                    .toList();
+
             default -> List.of();
         };
     }
 
     /** Rows whose parent is one of these keys. An empty selection shows nothing. */
+    /**
+     * The keys a relation actually scopes on, given what was selected above it.
+     *
+     * <p>Identity for every relation but one, and the exception is the point of
+     * the method existing. {@code problem} hangs off {@code demand}, whose key
+     * is a (character, reading) pair, but a problem belongs to a
+     * <b>character</b>: 地's queued split is one job whether you arrived at it
+     * through {@code de0} or {@code di4}, and scoping on the pair would show
+     * half a job and hide the reason it exists.</p>
+     *
+     * <p>Narrowed here rather than in the widget, so which keys a grid asks for
+     * stays a decision testable in Java rather than one trapped in the
+     * browser.</p>
+     */
+    public static List<String> scopeKeysFor(String relation, List<String> keys) {
+        if (!"problem".equals(relation)) return keys;
+        // A set: two readings of one character are one selection here, and
+        // leaving the duplicate in would make an "N selected" count wrong.
+        var out = new LinkedHashSet<String>();
+        for (String key : keys) {
+            int colon = key.indexOf(':');
+            out.add(colon < 0 ? key : key.substring(0, colon));
+        }
+        return List.copyOf(out);
+    }
+
     public static List<Row> under(List<Row> rows, List<String> parentPks) {
         var out = new ArrayList<Row>();
         for (Row row : rows) if (parentPks.contains(row.up())) out.add(row);

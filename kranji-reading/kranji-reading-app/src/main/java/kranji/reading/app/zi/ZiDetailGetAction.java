@@ -107,6 +107,11 @@ public final class ZiDetailGetAction
               .append(", meaning: ")
               .append(quote(meanings.isEmpty() ? "" : meanings.get(0)))
               .append(", meanings: ").append(list(meanings))
+              // The grain the grid is keyed on: a row per sense, with the
+              // phrases that show THAT sense rather than the reading's pooled
+              // list. meanings stays beside it - a caller wanting the short
+              // answer should not have to walk a structure to get it.
+              .append(", senses: ").append(senses(zi.codePoint(), s.numbered()))
               .append(" }").append(i + 1 < all.size() ? "," : "").append("\n");
         }
         js.append("];\n");
@@ -140,6 +145,26 @@ public final class ZiDetailGetAction
         var sb = new StringBuilder("[");
         for (int i = 0; i < values.size(); i++) {
             sb.append(i > 0 ? ", " : "").append(quote(values.get(i)));
+        }
+        return sb.append(']').toString();
+    }
+
+    /**
+     * A reading's senses, each with the phrases that show it.
+     *
+     * <p>Empty for a reading nothing has glossed, which is a state and not a
+     * gap: the grid still needs its row, because a reading with no meaning is
+     * still a reading somebody can claim.</p>
+     */
+    private static String senses(int codePoint, String reading) {
+        List<ZiGlossary.SenseOf> senses = ZiGlossary.sensesOf(codePoint, reading);
+        var sb = new StringBuilder("[");
+        for (int i = 0; i < senses.size(); i++) {
+            ZiGlossary.SenseOf sense = senses.get(i);
+            sb.append(i > 0 ? ", " : "")
+              .append("{ meaning: ").append(quote(sense.meaning()))
+              .append(", examples: ").append(list(sense.examples()))
+              .append(" }");
         }
         return sb.append(']').toString();
     }

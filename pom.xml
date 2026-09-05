@@ -12,6 +12,8 @@
         <module>kranji-core</module>
         <module>kranji-singulars</module>
         <module>kranji-gloss</module>
+        <module>kranji-gloss-seed</module>
+        <module>kranji-gloss-layered</module>
         <module>kranji-json</module>
         <module>kranji-json-bridge</module>
         <module>kranji-singulars-perclass</module>
@@ -26,6 +28,9 @@
         <module>kranji-ui-3d</module>
         <module>kranji-studio</module>
         <module>kranji-reading</module>
+        <module>kranji-library</module>
+        <!-- Last: it packages what every other module produces. -->
+        <module>kranji-dist</module>
     </modules>
 
     <properties>

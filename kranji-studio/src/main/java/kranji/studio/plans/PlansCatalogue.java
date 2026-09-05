@@ -35,7 +35,8 @@ public record PlansCatalogue()
                 Entry.of(this, PhonicCoveragePlan.INSTANCE),
                 Entry.of(this, ContentPlan.INSTANCE),
                 Entry.of(this, GlossPlan.INSTANCE),
-                Entry.of(this, GlossCoveragePlan.INSTANCE)
+                Entry.of(this, GlossCoveragePlan.INSTANCE),
+                Entry.of(this, KnownUpdatePathPlan.INSTANCE)
         );
     }
 }
