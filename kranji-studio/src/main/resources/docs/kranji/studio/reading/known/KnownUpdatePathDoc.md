@@ -19,9 +19,10 @@ Measured in the running app, one claim, real events.
 A frame is 16 ms. The second figure is three frames dropped on the commonest
 gesture in the app, on a desktop; the tablet a child actually holds is slower.
 
-Two separate faults produce it.
+Two faults account for the milliseconds. The sweep that followed found nine
+more that cost nothing measurable and matter more — they are inventoried below.
 
-### The claimed set is rebuilt once per article
+### There is no set, so everyone builds one
 
 `ReadabilityModule.of()` opens with
 
@@ -46,6 +47,13 @@ multipliers are live: the library went from 23 articles to 475 in one sitting,
 and a reader who sticks with it passes 2,000 readings. Extrapolating the shape,
 5,000 articles at 2,000 known is around a quarter of a second per tap.
 
+This looked at first like a hoisting mistake — a loop-invariant left inside the
+loop. It is not. The known set is a **plain array**, and `KnownSetModule.has()`
+is `known.indexOf(k) >= 0`. There is no membership structure anywhere, so every
+consumer that needs one builds it: readability per article, the toggle before it
+sends, the Secretary again to apply it. Hoisting the loop would fix one of those
+four. The array is the fault.
+
 ### The grids are rebuilt when nothing structural changed
 
 `KnownSoundsWidget.render()` destroys its grid and constructs a new one on every
@@ -64,30 +72,92 @@ arithmetic behind those rows is not the problem — measured at **1.2 ms** for a
 Nothing about the structure changed. The same 1,288 syllables are present before
 and after, in the same order, with the same columns.
 
-## The three faults are separable
+## Eleven misuses, one mistake
 
-**One.** The claimed set is rebuilt per article. An algorithm error; nothing to
-do with architecture.
+A sweep of every site that marks, watches, seeds, saves or repaints against the
+known set turned up eleven. The first two are correctness, not architecture.
 
-**Two.** Structure is rebuilt when only values changed. A misuse of the grid,
-which already offers the right call.
+### Correctness
 
-**Three.** Six subscribers each derive overlapping facts from one broadcast, on
-the main thread. An architecture question, and the only one of the three that
-needs new machinery.
+**1. Whether a mark reaches the disk depends on which panes are open.** Seven
+components start a persistence engine; exactly two ever call `store.changed(…)`
+— `KnownTransferWidget` and `ZiDetailWidget`. The Reader *claims*
+(`claims: true`) and never saves. Panes mount and unmount at runtime — they have
+`leave()` and `dispose()` — and nothing anywhere asserts that a saver is
+present. If this works today it works by coincidence of layout.
 
-They are listed in that order deliberately. Fixing three without one and two
-would move a wrong algorithm somewhere less visible and keep rebuilding the
-markup once it arrived.
+**2. The save failure is swallowed.** `createKnownWatch` starts persistence with
+`onProblem: function () {}`, in the two panes most likely to be open. That is
+invariant 5 below, already broken.
+
+### The party is the store
+
+**3.** The set lives in `KnownSecretary.initial` — party infrastructure, so
+nothing can read it without joining a bus.
+
+**4.** A write is a message (`MarkKnown`), not a call. There is no store API.
+
+**5.** A read is a message *too*: `WhatIsKnown` returns nothing and triggers a
+broadcast **to every member**. Six panes ask on join, so opening a workspace
+costs six full fan-outs before anything is marked.
+
+**6.** Seven persistence engines on one database, each with its own `loaded`,
+`pending` and `broken`, each `put`-ing the whole profile row.
+
+### The message shape
+
+**7.** A delta is published and nobody reads it. The Secretary sets
+`changed: key` on every broadcast; no subscriber references `msg.changed`. All
+six read `msg.known` and re-derive from scratch.
+
+**8.** Every broadcast carries the whole set — ~2,000 strings, per member,
+including on every join. That is what makes a late pane correct today, so it
+cannot simply be deleted.
+
+### No set
+
+**9.** It is an array, everywhere: `indexOf` in `has()`, in mark, in unmark, in
+`without()`, and an O(n·m) union in `SeedKnown`, `ImportKnown` and `UndoImport`.
+
+**10.** So each consumer builds its own index — including `toggle()`, which
+scans to decide direction before sending, after which the Secretary scans again
+to apply it. Two O(n) passes to flip one key.
+
+### Repainting
+
+**11.** `ArticleCatalogueWidget.draw()` deep-clones the tree, measures all 475
+articles — including collapsed ones — and rebuilds the DOM.
+`KnownSoundsWidget.render()` destroys and rebuilds 1,288 rows.
+
+### They are one mistake
+
+The known set is durable shared state modelled as a conversation between UI
+panes. Once that is the frame, all eleven follow: durability rides on a pane so
+it is optional; the error handler is a pane's business so a pane can decline it;
+the state lives in the bus that carries it; a read becomes a broadcast; seven
+panes each keep their own copy of the persistence rule; the delta is published
+as a courtesy and ignored, because subscribers were never given a store to apply
+it to; membership is a scan because an array is what serialises onto a message;
+and each subscriber repaints, because a message says *something happened*
+rather than *this value is now that*.
+
+The counter-example is in this codebase and it is right. The Reader's own
+handler is `onChanged: function () { … applyCells(); fit.refresh(); }`, and its
+comment says: *a change is a restyle, not a reload — applyCells repaints the
+squares in place, so pinyin leaving every 行走 cannot move the child's place on
+the page*. The pattern was already here. It just was not followed outside that
+pane.
 
 ## The shape it should have
 
 ### A claim is a store mutation, not a UI event
 
-The known set already *is* a store — `KnownSecretary` holds the authoritative
-in-memory copy, `KnownStore` holds the durable one in IndexedDB, and
-`KnownPersistence` reconciles them. What it lacks is a single place that turns a
-mutation into **derived facts**, so every pane derives its own:
+The pieces of a store exist and none of them owns anything. `KnownSecretary`
+holds an in-memory copy inside a message bus, `KnownStore` can write IndexedDB,
+and `KnownPersistence` holds the rule for reconciling them — instantiated seven
+times, by whichever panes happen to be open. What is missing is the thing that
+**owns** the set, the disk and the failure, and answers a read by returning.
+Because nothing does, every pane derives its own facts:
 
 | Pane | derives |
 |---|---|
@@ -145,10 +215,43 @@ There is no worker anywhere in this codebase today — no `Worker`, no
 `postMessage`, no `BroadcastChannel`, and no framework story for serving a
 module graph into one. That is new infrastructure, and it is why it comes last.
 
+## How we will get there: demolish, then repair
+
+The first version of this plan was six incremental phases, each revertible, each
+leaving the app working throughout. That was the wrong shape, and the inventory
+is what showed it: eleven items that are one mistake cannot be repaired eleven
+times, because each repair would be shaped by the mistake it was repairing. An
+incremental migration also needs the old frame to keep working while the new one
+arrives, so both exist at once and the bridging compromises outlive the
+migration.
+
+So: **build the store, remove all eleven at once, and let it break.**
+
+1. **Make every break loud.** Two of the eleven are already silent failures. A
+   demolition that adds more of those cannot be repaired from what it broke, so
+   this comes first and stays afterwards.
+2. **Stand up the store.** Wired to nothing — dead code at the end of the phase,
+   which is what makes the next step a removal rather than a rewrite.
+3. **Remove the misuses.** All of them. Features stop working; that is the
+   expected outcome, not a sign it went wrong. The hardest instruction in the
+   plan is *do not repair anything in this phase*.
+4. **Take stock.** Write down what actually broke, ranked by what a reader would
+   miss first. Observed, not predicted — guessing this list in advance would
+   have made the exercise pointless.
+5. **Repair from that list**, one feature per commit.
+
+The grid update path, the membership structure and the single owner are not
+phases in this plan. They are what the code looks like the second time it is
+written.
+
+The break window is one branch. Nothing between the demolition and the end of
+the repair goes near `main`.
+
 ## What must not break
 
-The reason to write this down is that the app works now. A rewrite that ends
-with a faster app that reads worse has cost more than it bought.
+Features will break here, deliberately and temporarily. These are the things
+that must survive the whole exercise — a rewrite that ends with a faster app
+that reads worse has cost more than it bought.
 
 1. **The set stays keyed on (character, reading).** No re-graining, in any
    layer. See *The Known Set*.
@@ -161,6 +264,7 @@ with a faster app that reads worse has cost more than it bought.
    joiner gets a snapshot, never a diff it missed.
 5. **A failed save is still announced unprompted.** Marking looks identical
    whether or not it persisted, and what is lost is discovered a week later.
+   Already broken — see misuse 2 — so this is a repair, not a guard.
 6. **The cursor survives an update.** A rebuilt grid resets its cursor and
    selection; a reader who has arrowed to a row and marks it should not be sent
    back to the top. Today's rebuild loses this, so it is a fix, not a risk — but
