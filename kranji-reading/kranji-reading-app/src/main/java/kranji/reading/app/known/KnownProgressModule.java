@@ -5,52 +5,53 @@ import hue.captains.singapura.js.homing.core.Exportable;
 import hue.captains.singapura.js.homing.core.ExportsOf;
 import hue.captains.singapura.js.homing.core.ImportsFor;
 import hue.captains.singapura.js.homing.core.ModuleImports;
-import kranji.reading.app.read.ReadabilityModule;
 
 import java.util.List;
 
 /**
- * What the record adds up to, and how to say it.
+ * How many characters this reader can read, and what that is called.
  *
- * <h2>Never lead with the fraction</h2>
+ * <h2>One number</h2>
  *
- * <p>The corpus is 8,763 (character, reading) pairs. A child who has learnt
- * fifty readings — weeks of work — is at 0.6%, and a tracker that opens with
- * that number has told them their effort rounds to nothing. The same fifty
- * readings can put a dozen stories within reach, and that is the true statement
- * worth making first.</p>
+ * <p>Not readings, not sounds covered, not stories unlocked. Every one of those
+ * is true and measurable and every one of them turns the page into a dashboard
+ * — the thing a learner scans instead of reads, and the reason most character
+ * apps feel like an accounting screen. The question somebody actually has is
+ * how many characters they can read, so that is the only number here.</p>
  *
- * <p>So the order is fixed: what you can read, then what is close, then the
- * counts. Counts come last because they are the least motivating true thing
- * available — not because they are unimportant, and they are still shown.</p>
+ * <h2>A count is not a place</h2>
  *
- * <h2>Nothing scolds</h2>
+ * <p>248 is a fact; "Reading along" is a place to be, and the second is what
+ * somebody remembers a week later. So the band name is the headline and the
+ * count sits under it. That is the whole design: a number, a name for where
+ * that number puts you, and how far to the next name.</p>
  *
- * <p>No "only", no "still", no red. An empty record is where everyone starts
- * and is phrased as an invitation rather than as a zero. A figure that has not
- * moved since last time is not remarked on: a tracker that notices stalling is
- * a tracker a child stops opening, and the whole value of this one is that it
- * gets opened.</p>
+ * <h2>Where the boundaries come from</h2>
  *
- * <h2>Distances, not percentages</h2>
+ * <p>The top two are borrowed rather than invented — 2,500 and 3,500 are the
+ * two standard everyday-character lists, so reaching them means something
+ * outside this app. Below that each band is roughly double the last, which puts
+ * the names close together early and far apart later. That is the right shape:
+ * the encouragement is needed most in the first weeks and least once somebody
+ * is plainly reading.</p>
  *
- * <p>The near lists are ordered by <em>how many new readings</em> each thing
- * needs, not by how close it already is. "Three readings away" is something
- * somebody can go and do; 87% is something they can only feel.</p>
+ * <p>The corpus is around 8,100 characters and that denominator never appears.
+ * 248 of them is 3%, and a page that opens with 3% has told a child their
+ * term's work rounds to nothing.</p>
  *
- * <p>Readability comes from {@link ReadabilityModule}, not from arithmetic of
- * its own, so a story this calls readable is the story the catalogue and the
- * reader call readable.</p>
+ * <p>What counts as a character is {@link KnownSetModule}'s decision, not one
+ * taken again here by picking keys apart. A character claimed at one of its two
+ * readings counts: the reader can read it where they meet it, and the
+ * per-reading picture is what the Known pane is for.</p>
  *
- * <p>Pure — no DOM, no fetch, no clock — so both the counting and the wording
- * run under GraalVM in ordinary JUnit. The wording is worth testing: it is the
- * part a reader actually receives.</p>
+ * <p>Pure — no DOM, no fetch, no clock — so the bands and the wording both run
+ * under GraalVM in ordinary JUnit.</p>
  */
 public record KnownProgressModule() implements DomModule<KnownProgressModule> {
 
     /**
-     * Yields {@code summarise}, {@code counts}, {@code nearestStories},
-     * {@code nearlyDoneSounds}, {@code headline} and {@code encouragement}.
+     * Yields {@code bands}, {@code count}, {@code bandOf}, {@code next},
+     * {@code headline}, {@code line} and {@code nextLine}.
      */
     public record createKnownProgress() implements Exportable._Constant<KnownProgressModule> {}
 
@@ -60,8 +61,8 @@ public record KnownProgressModule() implements DomModule<KnownProgressModule> {
     public ImportsFor<KnownProgressModule> imports() {
         return ImportsFor.<KnownProgressModule>builder()
                 .add(new ModuleImports<>(
-                        List.of(new ReadabilityModule.createReadability()),
-                        ReadabilityModule.INSTANCE))
+                        List.of(new KnownSetModule.createKnownSet()),
+                        KnownSetModule.INSTANCE))
                 .build();
     }
 

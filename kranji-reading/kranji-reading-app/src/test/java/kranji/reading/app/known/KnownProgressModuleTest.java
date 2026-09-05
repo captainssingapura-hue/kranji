@@ -12,165 +12,142 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * The counting, and the words the counting is delivered in.
+ * The count, the bands, and the words they are delivered in.
  *
- * <p>The wording is tested as carefully as the arithmetic, because it is the
- * part a child actually receives. A tracker that says the wrong true thing —
- * that a month of work is 0.6%, that nothing has happened — is worse than no
- * tracker, and nothing about it would throw.</p>
+ * <p>The wording is tested as carefully as the arithmetic, because the wording
+ * is the part a child actually receives. A band that says the wrong true thing
+ * — that a term's work is 3%, that nothing has happened — is worse than no
+ * band, and nothing about it would throw.</p>
  */
 class KnownProgressModuleTest extends JsModuleTestBase {
 
-    private static final String READABILITY =
-            "/homing/js/kranji/reading/app/read/ReadabilityModule.js";
+    private static final String KNOWN_SET =
+            "/homing/js/kranji/reading/app/known/KnownSetModule.js";
     private static final String MODULE =
             "/homing/js/kranji/reading/app/known/KnownProgressModule.js";
-
-    /** Three stories of ten characters each, needing different amounts. */
-    private static final String CENSUS = "{"
-            + "'c:a': { total: 10, title: 'One', pairs: { '1:yi4': 9, '2:ba1': 1 } },"
-            + "'c:b': { total: 10, title: 'Two', pairs: { '1:yi4': 5, '3:de0': 5 } },"
-            + "'c:c': { total: 10, title: 'Three', pairs: { '4:xi1': 10 } } }";
-
-    private static final String INDEX = "["
-            + "{ r: 'yi4', p: 'y.i.4', l: 'yi', i: 'y', il: 'y-', c: 2 },"
-            + "{ r: 'ba1', p: 'b.a.1', l: 'ba', i: 'b', il: 'b-', c: 1 },"
-            + "{ r: 'de0', p: 'd.e.0', l: 'de', i: 'd', il: 'd-', c: 1 },"
-            + "{ r: 'xi1', p: 'x.i.1', l: 'xi', i: 'x', il: 'x-', c: 4 }]";
 
     private Value progress;
 
     @BeforeEach
     void load() {
-        loadModule(READABILITY);
+        loadModule(KNOWN_SET);
         loadModule(MODULE);
-        progress = global("createKnownProgress").execute(global("createReadability").execute());
+        progress = global("createKnownProgress").execute(global("createKnownSet").execute());
     }
 
-    private Value summary(String known) {
-        return progress.getMember("summarise").execute(
-                js.eval("js", "(" + CENSUS + ")"),
-                js.eval("js", "(" + INDEX + ")"),
-                js.eval("js", "(" + known + ")"));
+    private int count(String known) {
+        return progress.getMember("count").execute(js.eval("js", "(" + known + ")")).asInt();
     }
 
-    private String headline(String known) {
-        return progress.getMember("headline").execute(summary(known)).asString();
+    private String headline(int n) {
+        return progress.getMember("headline").execute(n).asString();
     }
 
-    private String cheer(String known) {
-        return progress.getMember("encouragement").execute(summary(known)).asString();
+    private String line(int n) {
+        return progress.getMember("line").execute(n).asString();
     }
 
-    // ── The counting ───────────────────────────────────────────────────
+    private String nextLine(int n) {
+        return progress.getMember("nextLine").execute(n).asString();
+    }
+
+    // ── The one number ─────────────────────────────────────────────────
 
     @Test
-    void charactersAndReadingsAreDifferentNumbers() {
-        // A character read two ways that is half learnt is one character and
-        // one reading, and quoting either as the other flatters or undersells.
-        Value p = summary("['1:yi4','1:yi2','2:ba1']");
-        assertEquals(2, p.getMember("characters").asInt());
-        assertEquals(3, p.getMember("readings").asInt());
+    void countsCharactersAndNotReadings() {
+        // The whole point of the pane. A character claimed at both its readings
+        // is one character somebody can read, and counting it twice would tell
+        // a polyphone-heavy reader they are further along than they are.
+        assertEquals(1, count("['20320:yi4','20320:yi2']"));
+        assertEquals(2, count("['20320:yi4','20114:ba1']"));
+        assertEquals(0, count("[]"));
     }
 
-    @Test
-    void aStoryIsReadableAtNinetyPercentOfItsCharacters() {
-        // 'One' is nine tenths yi4. Claiming that one reading carries it.
-        Value p = summary("['1:yi4']");
-        assertEquals(1, p.getMember("ready").asInt());
-        assertEquals(3, p.getMember("stories").asInt());
-    }
+    // ── The bands ──────────────────────────────────────────────────────
 
     @Test
-    void anEmptyRecordCountsEverythingAsNotYetReadable() {
-        Value p = summary("[]");
-        assertEquals(0, p.getMember("ready").asInt());
-        assertEquals(0, p.getMember("readings").asInt());
-        assertEquals(3, p.getMember("stories").asInt());
-    }
-
-    // ── The near lists ─────────────────────────────────────────────────
-
-    @Test
-    void storiesAreOrderedByHowManyReadingsTheyNeed() {
-        // Not by how readable they already are. 'Three' needs one reading and
-        // is at 0%; 'Two' needs two and is at 50%. The one-reading job leads,
-        // because it is the one somebody can finish today.
-        Value near = progress.getMember("nearestStories").execute(summary("[]"), 5);
-        assertEquals("Three", near.getArrayElement(0).getMember("title").asString());
-        assertEquals(1, near.getArrayElement(0).getMember("unknown").asInt());
+    void everyBandBoundaryLandsInTheBandItOpens() {
+        // Off by one here renames somebody's achievement to the one below it.
+        assertEquals("Ready when you are", headline(0));
+        assertEquals("First characters", headline(1));
+        assertEquals("First characters", headline(49));
+        assertEquals("Getting going", headline(50));
+        assertEquals("Reading along", headline(200));
+        assertEquals("Hitting your stride", headline(500));
+        assertEquals("Well on your way", headline(1000));
+        assertEquals("The everyday characters", headline(2000));
+        assertEquals("Reading freely", headline(3500));
+        assertEquals("Reading freely", headline(9000));
     }
 
     @Test
-    void aReadableStoryIsNotInTheNearList() {
-        Value near = progress.getMember("nearestStories").execute(summary("['1:yi4']"), 5);
-        for (int i = 0; i < near.getArraySize(); i++) {
-            assertFalse("One".equals(near.getArrayElement(i).getMember("title").asString()),
-                    "a story already readable is not something to be near");
+    void theBandsRiseAndNeverRepeatAName() {
+        Value bands = progress.getMember("bands");
+        var seen = new java.util.HashSet<String>();
+        int previous = Integer.MAX_VALUE;
+        for (int i = 0; i < bands.getArraySize(); i++) {
+            int from = bands.getArrayElement(i).getMember("from").asInt();
+            String name = bands.getArrayElement(i).getMember("name").asString();
+            assertTrue(from < previous, () -> "bands must descend: " + from);
+            assertTrue(seen.add(name), () -> "two bands are called " + name);
+            previous = from;
         }
+        assertEquals(0, previous, "the lowest band has to catch a reader at zero");
     }
 
     @Test
-    void onlySoundsAlreadyBegunAreSuggested() {
-        // Suggesting an untouched sound would be advice about what to learn.
-        // This list is a nudge to finish something, which is a much smaller ask.
-        Value sounds = progress.getMember("nearlyDoneSounds").execute(
-                js.eval("js", "(" + INDEX + ")"), js.eval("js", "(['1:yi4'])"), 5);
-        assertEquals(1, sounds.getArraySize());
-        assertEquals("yi", sounds.getArrayElement(0).getMember("label").asString());
-        assertEquals(1, sounds.getArrayElement(0).getMember("left").asInt());
+    void theDistanceToTheNextNameIsExact() {
+        assertTrue(nextLine(48).startsWith("2 more"), nextLine(48));
+        assertTrue(nextLine(49).startsWith("One more"), nextLine(49));
+        assertTrue(nextLine(199).startsWith("One more"), nextLine(199));
+        assertTrue(nextLine(150).startsWith("50 more"), nextLine(150));
     }
 
     @Test
-    void aFinishedSoundIsNotNearlyDone() {
-        Value sounds = progress.getMember("nearlyDoneSounds").execute(
-                js.eval("js", "(" + INDEX + ")"), js.eval("js", "(['2:ba1'])"), 5);
-        assertEquals(0, sounds.getArraySize());
+    void theTopBandDoesNotDangleAPromise() {
+        // There is nothing above it, and inventing one would be a lie a reader
+        // eventually notices.
+        assertFalse(nextLine(4000).contains("more and"), nextLine(4000));
+        assertTrue(progress.getMember("next").execute(4000).isNull());
     }
 
     // ── The wording ────────────────────────────────────────────────────
 
     @Test
     void anEmptyRecordIsAnInvitationAndNotAZero() {
-        assertEquals("Ready when you are.", headline("[]"));
-        assertTrue(cheer("[]").contains("Everyone begins here"), cheer("[]"));
-        assertFalse(headline("[]").contains("0"), "a zero is not the first thing to say");
+        assertEquals("Ready when you are", headline(0));
+        assertFalse(line(0).contains("0"), "a zero is not the first thing to say");
+        assertTrue(nextLine(0).contains("First characters"), nextLine(0));
     }
 
     @Test
-    void theHeadlineLeadsWithWhatCanBeReadNotWithAFraction() {
-        String said = headline("['1:yi4']");
-        assertEquals("One story you can read on your own.", said);
-        // The corpus fraction is the thing that makes a month of work look like
-        // nothing. It must not appear in the line somebody reads first.
-        assertFalse(said.contains("%"), said);
+    void theFirstOneIsSaidInWords() {
+        assertEquals("One character you can read.", line(1));
+        assertEquals("2 characters you can read.", line(2));
+    }
+
+    @Test
+    void theDenominatorNeverAppears() {
+        // 248 of 8,100 is 3%, and a page that says 3% has told a child their
+        // term's work rounds to nothing.
+        for (int n : new int[] { 0, 1, 50, 248, 1000, 3500, 9000 }) {
+            String said = headline(n) + " " + line(n) + " " + nextLine(n);
+            assertFalse(said.contains("%"), said);
+            assertFalse(said.contains(" of 8"), said);
+            assertFalse(said.contains("8100") || said.contains("8,100"), said);
+        }
     }
 
     @Test
     void nothingScolds() {
         // No word that measures somebody against what they have not done.
-        String[] known = { "[]", "['1:yi4']", "['1:yi4','2:ba1','3:de0']" };
-        for (String k : known) {
-            String said = (headline(k) + " " + cheer(k)).toLowerCase(Locale.ROOT);
+        for (int n : new int[] { 0, 1, 49, 250, 2600, 9000 }) {
+            String said = (headline(n) + " " + line(n) + " " + nextLine(n))
+                    .toLowerCase(Locale.ROOT);
             for (String scold : new String[] { "only", "still", "fail", "behind",
-                                               "should", "must", "haven't", "not enough" }) {
-                assertFalse(said.contains(scold),
-                        () -> "'" + scold + "' appears in: " + said);
+                                               "should", "must", "not enough", "left to" }) {
+                assertFalse(said.contains(scold), () -> "'" + scold + "' appears in: " + said);
             }
         }
-    }
-
-    @Test
-    void aSingleStoryIsSaidInWordsAndNotAsOne() {
-        assertTrue(headline("['1:yi4']").startsWith("One story"),
-                "the first one is worth naming properly");
-    }
-
-    @Test
-    void pluralsAgreeAtEveryCount() {
-        // Trivial, and the kind of thing that undoes the tone of a whole pane.
-        assertTrue(headline("['1:yi4','4:xi1']").contains("2 stories"),
-                headline("['1:yi4','4:xi1']"));
-        assertFalse(headline("['1:yi4','4:xi1']").contains("2 story"));
     }
 }
