@@ -917,14 +917,20 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
         }
     }
 
-    /** Narrow: a band is a line, because the column has width and not height. */
+    /**
+     * Narrow: a band is a line, because the column has width and not height.
+     *
+     * <p>The horizontal padding is there for the standing band's background to
+     * sit in. Without it the tint would hug the text and read as a highlighter
+     * stroke rather than as a place.</p>
+     */
     public record kr_pb_line() implements CssClass<ReadingCss> {
         @Override public String body() { return """
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 gap: var(--space-2, 8px);
-                padding: 2px 0;
+                padding: 3px 8px;
                 color: var(--color-text-secondary);
                 """;
         }
@@ -973,11 +979,27 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
      * <p>Painted on a span inside the cell rather than on the cell itself, so
      * it cannot fight with the grid's own selection painting. The cursor is a
      * separate thing that moves; this does not.</p>
+     *
+     * <h2>The background is a hint, not a highlight</h2>
+     *
+     * <p>A tenth of the accent, which is enough to find at a glance and quiet
+     * enough that the cursor's own box still reads as the louder of the two —
+     * it has to, because the cursor is the thing a reader is moving and this is
+     * the thing they are not.</p>
+     *
+     * <p>Two background declarations, and the order is the fallback. A browser
+     * without {@code color-mix} drops the second and keeps the raised surface,
+     * which is duller but still says "this one"; one with it gets the tint. No
+     * {@code @supports} needed — an unparsable declaration is simply
+     * skipped.</p>
      */
     public record kr_pb_here() implements CssClass<ReadingCss> {
         @Override public String body() { return """
                 font-weight: 700;
                 color: var(--color-accent);
+                border-radius: 8px;
+                background: var(--color-surface-raised, var(--color-surface));
+                background: color-mix(in srgb, var(--color-accent) 10%, transparent);
                 """;
         }
     }
