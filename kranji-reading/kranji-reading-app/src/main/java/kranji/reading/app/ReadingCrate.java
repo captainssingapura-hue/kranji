@@ -37,7 +37,7 @@ import kranji.reading.app.zi.SyllableDetailWidget;
 import kranji.reading.app.zi.SyllableTreeWidget;
 import kranji.reading.app.zi.ZiCharactersWidget;
 import kranji.reading.app.zi.ZiDetailWidget;
-import kranji.reading.app.zi.ZiReadingsGridModule;
+import kranji.reading.app.zi.ZiReadingCardsModule;
 import kranji.reading.app.zi.ZiSelectionSecretaryModule;
 
 import java.util.List;
@@ -67,7 +67,7 @@ public final class ReadingCrate implements Crate {
                 CrateEntry.of(SyllableTreeWidget.INSTANCE),
                 CrateEntry.of(SyllableDetailWidget.INSTANCE),
                 CrateEntry.of(ZiCharactersWidget.INSTANCE),
-                CrateEntry.of(ZiReadingsGridModule.INSTANCE),
+                CrateEntry.of(ZiReadingCardsModule.INSTANCE),
                 CrateEntry.of(ZiDetailWidget.INSTANCE),
                 CrateEntry.of(ZiSelectionSecretaryModule.INSTANCE),
                 CrateEntry.of(PhonicSourceWidget.INSTANCE),

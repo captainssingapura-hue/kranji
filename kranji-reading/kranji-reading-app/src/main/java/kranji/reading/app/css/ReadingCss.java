@@ -405,6 +405,157 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
         }
     }
 
+    /**
+     * The character beside its readings, or above them.
+     *
+     * <p>A glyph is square and a reading is a line of prose, so stacking them
+     * always wastes one dimension or the other: at any usable width the hero
+     * left a band of empty pane either side of it, and the readings underneath
+     * got what was left of the height.</p>
+     *
+     * <p>Which way round is decided by measuring, not by a media query. A
+     * widget is a pane inside a workspace and can be any width at any window
+     * size, so the viewport does not know.</p>
+     */
+    public record kr_zd_split() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                gap: var(--space-4, 16px);
+                """;
+        }
+    }
+
+    /** Narrow: the character on top, its readings under it. */
+    public record kr_zd_split_narrow() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--space-3, 12px);
+                """;
+        }
+    }
+
+    /**
+     * The hero's column when the pane is wide.
+     *
+     * <p>It does not grow. The character is one glyph however much room there
+     * is, and every pixel it took past that was one the meanings did not
+     * have.</p>
+     */
+    public record kr_zd_aside() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                flex: 0 0 auto;
+                """;
+        }
+    }
+
+    /** The readings take the rest, and can be narrow without breaking. */
+    public record kr_zd_main() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                flex: 1 1 auto;
+                min-width: 0;
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-3, 12px);
+                """;
+        }
+    }
+
+    /** One reading of a character, and one of its senses. */
+    public record kr_zd_card() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-2, 8px);
+                padding: var(--space-3, 12px) var(--space-4, 16px);
+                border: 1px solid var(--color-border);
+                border-radius: 8px;
+                background: var(--color-surface);
+                """;
+        }
+    }
+
+    /** The reading, leading its card. */
+    public record kr_zd_card_head() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                align-items: baseline;
+                gap: var(--space-2, 8px);
+                """;
+        }
+    }
+
+    /** The sound itself, the one thing on the card read first. */
+    public record kr_zd_card_reading() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-size: 18px;
+                font-weight: 600;
+                color: var(--color-text-primary);
+                """;
+        }
+    }
+
+    /** What it means, as a sentence rather than a cell. */
+    public record kr_zd_card_meaning() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-size: 14px;
+                line-height: 1.45;
+                color: var(--color-text-primary);
+                """;
+        }
+    }
+
+    /** The phrases that show the sense in use. */
+    public record kr_zd_card_examples() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-size: 14px;
+                color: var(--color-text-muted);
+                """;
+        }
+    }
+
+    /**
+     * The five parts of the syllable, along the bottom.
+     *
+     * <p>Wrapping rather than fixed: they were columns to keep two readings
+     * comparable, and they still sit side by side, but a narrow card should
+     * fold them instead of scrolling sideways.</p>
+     */
+    public record kr_zd_card_parts() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--space-2, 8px) var(--space-4, 16px);
+                padding-top: var(--space-2, 8px);
+                border-top: 1px solid var(--color-border);
+                font-size: 12px;
+                color: var(--color-text-primary);
+                font-variant-numeric: tabular-nums;
+                """;
+        }
+    }
+
+    /** One part: its short heading, then its value. */
+    public record kr_zd_card_part() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                align-items: baseline;
+                gap: var(--space-1, 4px);
+                """;
+        }
+    }
+
+    /** The heading half of a part, kept quiet so the value reads. */
+    public record kr_zd_card_part_key() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                color: var(--color-text-muted);
+                """;
+        }
+    }
+
     /** The character, shown at reading size in the detail pane. */
     public record kr_zi_hero() implements CssClass<ReadingCss> {
         @Override public String body() { return """
@@ -1115,6 +1266,18 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
                 new kr_rd_settings(),
                 new kr_select(),
                 new kr_kn_pick(),
+                new kr_zd_split(),
+                new kr_zd_split_narrow(),
+                new kr_zd_aside(),
+                new kr_zd_main(),
+                new kr_zd_card(),
+                new kr_zd_card_head(),
+                new kr_zd_card_reading(),
+                new kr_zd_card_meaning(),
+                new kr_zd_card_examples(),
+                new kr_zd_card_parts(),
+                new kr_zd_card_part(),
+                new kr_zd_card_part_key(),
                 new kr_zi_hero(),
                 new kr_zi_hero_glyph(),
                 new kr_zi_hero_meta(),
