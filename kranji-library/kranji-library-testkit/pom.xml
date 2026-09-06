@@ -9,20 +9,21 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kranji-library-zhinan</artifactId>
+    <artifactId>kranji-library-testkit</artifactId>
 
     <description>
-        使用指南 — the reader's own instructions, written as something to read.
+        The article check, as a base class a group module can extend.
 
-        ITS OWN MODULE for the reason the others are: a group is the unit of
-        authorship, and this group is authored against the software rather
-        than against a subject. When a gesture changes, this is the jar that
-        is wrong, and a build that ships a different front end drops it and
-        writes its own. 科普读物 does not go stale when a keybinding moves.
+        NOT A GROUP. It declares no collections and carries no text, so it is
+        not grafted onto any root and RootLibraryTest never sees it. It exists
+        because the check every group needs - does this text actually parse -
+        is the same check, and a copy of it in each of six modules is six
+        chances to fix a bug in five places.
 
-        It is also the one group whose text is a claim about the product. A
-        reader who follows it and finds it untrue has been taught that the
-        pinyin lies too.
+        Main sources rather than a test-jar, and JUnit at compile scope, so
+        that consuming it is an ordinary test-scoped dependency. A test-jar
+        would work and is the idiom this repository does not otherwise use;
+        one new module is cheaper to understand than one new build trick.
     </description>
 
     <dependencies>
@@ -32,15 +33,13 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-reading-content</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-library-testkit</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
         </dependency>
     </dependencies>
 </project>
