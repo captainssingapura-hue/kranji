@@ -219,8 +219,8 @@ them. (It does reach anything under `homing/js/`, which you are not editing.)
 > **Check your title against §4 before you choose it.** 音乐课 reads 乐 as
 > `lè`; 请假条 reads 假 as `jiǎ`; 睡觉 reads 觉 as `jué`. None of those can be
 > fixed from here — the only move available to an author is to pick a title
-> that does not need fixing. Fourteen titles already in the library have this
-> fault, 地球 and 扫地 among them: 地's principal is `de`, which is the very
+> that does not need fixing. Twenty-eight titles already in the library have
+> this fault, 地球 and 扫地 among them: 地's principal is `de`, which is the
 > example §4 opens with.
 >
 > Fixing it properly means an override path for titles, which lives in
