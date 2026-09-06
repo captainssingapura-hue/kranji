@@ -9,6 +9,7 @@ import hue.captains.singapura.js.homing.conformance.rules.JsRulePolicy;
 import hue.captains.singapura.js.homing.conformance.rules.JsRuleSet;
 import hue.captains.singapura.js.homing.conformance.rules.MaxEffectiveLinesRule;
 import hue.captains.singapura.js.homing.conformance.rules.NoCdnImportRule;
+import hue.captains.singapura.js.homing.conformance.rules.RuleId;
 import hue.captains.singapura.js.homing.conformance.rules.RuleSetId;
 import hue.captains.singapura.js.homing.core.Crate;
 import hue.captains.singapura.js.homing.core.JsModuleType;
@@ -73,10 +74,21 @@ public final class ReadingConformance {
         return new JsRuleSet(base.id(), base.title(), List.copyOf(rules));
     }
     /**
-     * Documented, intentional exceptions. Empty - a legitimate exception is
-     * added here with a reason rather than by weakening a rule.
+     * Documented, intentional exceptions. A legitimate exception is added here
+     * with a reason rather than by weakening a rule.
      */
-    public static final List<Allowance> ALLOWANCES = List.of();
+    public static final List<Allowance> ALLOWANCES = List.of(
+            new Allowance(
+                    "kranji.reading.app.known.KnownTransferWidget",
+                    new RuleId("no-raw-href"),
+                    "The export writes a blob URL onto an anchor so the record can be saved "
+                  + "as a file. The rule routes links through HrefManager so they respect "
+                  + "the app's routing, and this is not a link: it is a handle to bytes the "
+                  + "page is already holding, alive for one click and revoked afterwards. "
+                  + "Reaching HrefManager would mean importing an unrelated app's AppLink "
+                  + "purely to obtain the injection - a dependency that would misdescribe "
+                  + "the module. The anchor is built through the branch like every other "
+                  + "element, so the href assignment is the only exceptional line."));
 
     /** Grandfathered findings, committed alongside the source. */
     public static Baseline baseline() {
