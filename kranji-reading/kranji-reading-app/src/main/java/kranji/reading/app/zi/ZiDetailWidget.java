@@ -7,7 +7,6 @@ import hue.captains.singapura.js.homing.grid.StockCellsModule;
 import hue.captains.singapura.js.homing.workspace.LifecycleHint;
 import hue.captains.singapura.js.homing.workspace.WorkspaceWidget;
 import kranji.reading.app.css.ReadingCss;
-import kranji.reading.app.known.KnownSetModule;
 import kranji.reading.app.ui.PinyinSwfModule;
 
 import java.util.List;
@@ -50,11 +49,11 @@ import java.util.List;
  * and the meaning's is not, so the meaning takes what is left and the control a
  * person aims at stops moving between characters.</p>
  *
- * <p>It joins two buses. Character selection says what to show. It is also
- * still on the known-set bus, for one reason that has nothing to do with what
- * it displays: it is one of only two panes anywhere that write the record to
- * the device, so leaving would make saving depend on which panes are open. That
- * is a fault waiting for an owner, not a feature of this pane.</p>
+ * <p>One bus, and one only: character selection, which says what to show. It
+ * kept a known-set membership for a while after the claim column went, purely
+ * so that a disk got written - it was one of two panes anywhere that saved.
+ * That was the fault rather than the fix, and it went when the reader took over
+ * keeping what the reader claims.</p>
  *
  * <p>No CJK appears in this file. Characters arrive from the corpus.</p>
  */
@@ -97,9 +96,6 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                         List.of(new ZiReadingsGridModule.createZiReadingsGrid()),
                         ZiReadingsGridModule.INSTANCE),
                 new ModuleImports<>(
-                        List.of(new KnownSetModule.createKnownSet()),
-                        KnownSetModule.INSTANCE),
-                new ModuleImports<>(
                         List.of(new PinyinSwfModule.createPinyinSwf()),
                         PinyinSwfModule.INSTANCE));
     }
@@ -107,7 +103,6 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
     @Override
     protected List<String> constructBodyJs() {
         return List.of(
-                "    var knownSet = createKnownSet();",
                 "    var swf = createPinyinSwf();",
                 "",
                 "    var root = branch.createElement('root', 'div');",
