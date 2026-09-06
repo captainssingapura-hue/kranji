@@ -99,6 +99,16 @@ public final class KePuCollections {
             a("zhi-nan-zhen", "指南针"), a("fei-ji", "飞机为什么能飞"),
             a("bing-xiang", "冰箱"));
 
+    public static final ArticleCollection QI_CHE = bundle("qiche",
+            "汽车", "The names on the road, and where each of them came from. "
+                  + "Filed by country, because that is the thing they have in common.",
+            a("da-zhong", "大众"), a("bao-ma", "宝马"),
+            a("ben-chi", "奔驰"), a("ao-di", "奥迪"),
+            a("feng-tian", "丰田"), a("ben-tian", "本田"), a("ri-chan", "日产"),
+            a("fu-te", "福特"), a("te-si-la", "特斯拉"),
+            a("xian-dai", "现代"),
+            a("bi-ya-di", "比亚迪"), a("ji-li", "吉利"));
+
     public static final ArticleCollection SHI_WU = bundle("shiwu",
             "食物与农业", "Where dinner comes from, and what happens to it on the way.",
             a("mi-fan", "米"), a("mian-bao", "面包"), a("niu-nai", "牛奶"),
@@ -119,6 +129,7 @@ public final class KePuCollections {
 
     public static List<ArticleCollection> all() {
         return List.of(KUN_CHONG, NIAO, SHOU, ZHI_WU, TIAN_WEN, DI_LI,
-                REN_TI, WU_ZHI, TIAN_QI, JI_SHU, SHI_WU, HUAN_JING, SHU_XING);
+                REN_TI, WU_ZHI, TIAN_QI, JI_SHU, QI_CHE, SHI_WU, HUAN_JING,
+                SHU_XING);
     }
 }

@@ -25,6 +25,7 @@ public final class KePuLibrary {
             LibraryTree.shelf(KePuCollections.REN_TI),
             LibraryTree.shelf(KePuCollections.WU_ZHI),
             LibraryTree.shelf(KePuCollections.JI_SHU),
+            LibraryTree.shelf(KePuCollections.QI_CHE),
             LibraryTree.shelf(KePuCollections.SHI_WU),
             LibraryTree.shelf(KePuCollections.HUAN_JING),
             LibraryTree.shelf(KePuCollections.SHU_XING));
