@@ -146,6 +146,32 @@ var KnownSecretary = {
             return changed(kept, [], null);
         }
 
+        // The record on the device was rewritten from outside this bus.
+        //
+        // An import replaced it or merged into it, and what is held here is now
+        // an old copy. The message carries no set - it is news that something
+        // happened, not the thing that happened - so this FORGETS rather than
+        // updating, and the device becomes the only account of what is claimed.
+        //
+        // Forgetting is what makes replace work. A seed is a union, so a set
+        // that kept its old keys would put back every reading the replace was
+        // meant to remove, and the next save would write them to the device.
+        // Emptied first, the union lands on nothing and reproduces the file.
+        //
+        // The event goes out as well as the reset, because a pane may want to
+        // know for its own reasons - to re-seed, to say it is behind, or to
+        // ignore it entirely.
+        if (msg.kind === "KnownRecordRewritten") {
+            return {
+                newState: {
+                    known:         [],
+                    lastImport:    [],
+                    recentUnknown: state.recentUnknown
+                },
+                actions: [{ kind: "BroadcastToMembers", message: msg }]
+            };
+        }
+
         // A member that has just joined asks for the set rather than waiting
         // for somebody else to change it.
         if (msg.kind === "WhatIsKnown") {

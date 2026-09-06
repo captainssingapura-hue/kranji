@@ -74,6 +74,15 @@ function createKnownWatch(opts) {
         });
     }
 
+    /** Read the device and hand it to the party. Union at the secretary. */
+    function seedFromDevice() {
+        return createKnownPersistence({
+            store: store,
+            tell: function (m) { party.tellFrom(actorId, m); },
+            onProblem: function (broken) { if (broken && opts.onProblem) opts.onProblem(); }
+        }).start();
+    }
+
     if (party) {
         actorId = 'known/' + (opts.id || 'watch') + '-'
                 + Math.random().toString(36).slice(2, 8);
@@ -81,6 +90,22 @@ function createKnownWatch(opts) {
             id: actorId,
             parentSecretary: 'knownSet',
             reactors: {
+                // Something rewrote the device from outside this bus.
+                //
+                // This is the one pane that has to care, and it has to care
+                // whether or not it is showing anything: it saves. A mirror
+                // that carried on holding the pre-import set would write it
+                // straight back over the import on the next claim, and nothing
+                // would say so.
+                //
+                // The secretary has already emptied itself, so re-seeding is a
+                // union onto nothing and reproduces exactly what is on the
+                // device - which is what makes replace work as well as merge.
+                KnownRecordRewritten: function () {
+                    loaded = false;
+                    seedFromDevice().then(function () { loaded = true; },
+                                          function () { loaded = true; });
+                },
                 KnownChanged: function (msg) {
                     known = (msg && msg.known) ? msg.known : [];
                     // The pane that can change the set is the pane that keeps
@@ -101,12 +126,8 @@ function createKnownWatch(opts) {
         // Then the device. A union at the secretary, so this races nothing -
         // and opened alone, a watching pane would otherwise behave as though
         // nothing had ever been learnt on a device read on for months.
-        createKnownPersistence({
-            store: store,
-            tell: function (m) { party.tellFrom(actorId, m); },
-            onProblem: function (broken) { if (broken && opts.onProblem) opts.onProblem(); }
-        }).start().then(function () { loaded = true; },
-                        function () { loaded = true; });
+        seedFromDevice().then(function () { loaded = true; },
+                              function () { loaded = true; });
     }
 
     var api = {
