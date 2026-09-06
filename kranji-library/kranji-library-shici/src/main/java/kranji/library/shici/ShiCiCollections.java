@@ -51,7 +51,48 @@ public final class ShiCiCollections {
         return ArticleRef.by(slug, title, author, res(slug));
     }
 
+    /** An introduction: no author, because the shelf itself is the subject. */
+    private static ArticleRef a(String slug, String title) {
+        return ArticleRef.of(slug, title, res(slug));
+    }
+
     // ── 汉魏 ──────────────────────────────────────────────────────────
+
+    // ── 说明 ──────────────────────────────────────────────────────────
+
+    public static final ArticleCollection SHUO_MING = bundle("shuoming",
+            "说明", "One introduction per category, in tree order. "
+                  + "A Branch holds no articles, so the group's own introduction, "
+                  + "the era and poet headings, and every shelf's all live here.",
+            a("shuoming-shici", "古诗词"),
+            a("shuoming-hanwei", "汉魏"),
+            a("shuoming-tangshi", "唐诗"),
+            a("shuoming-libai", "李白"),
+            a("shuoming-libai-wuyan", "李白 · 五言"),
+            a("shuoming-libai-qiyan", "李白 · 七言"),
+            a("shuoming-dufu", "杜甫"),
+            a("shuoming-dufu-wuyan", "杜甫 · 五言"),
+            a("shuoming-dufu-qiyan", "杜甫 · 七言"),
+            a("shuoming-wangwei", "王维"),
+            a("shuoming-wangwei-shanshui", "王维 · 山水"),
+            a("shuoming-wangwei-songbie", "王维 · 送别与怀人"),
+            a("shuoming-baijuyi", "白居易"),
+            a("shuoming-menghaoran", "孟浩然"),
+            a("shuoming-dumu", "杜牧"),
+            a("shuoming-lishangyin", "李商隐"),
+            a("shuoming-liuyuxi", "刘禹锡"),
+            a("shuoming-wangchangling", "王昌龄"),
+            a("shuoming-biansai", "边塞诗"),
+            a("shuoming-tang-qita", "唐诗 · 其他"),
+            a("shuoming-songci", "宋词与宋诗"),
+            a("shuoming-sushi", "苏轼"),
+            a("shuoming-liqingzhao", "李清照"),
+            a("shuoming-xinqiji", "辛弃疾"),
+            a("shuoming-luyou", "陆游"),
+            a("shuoming-yangwanli", "杨万里"),
+            a("shuoming-wanganshi", "王安石"),
+            a("shuoming-liyu", "李煜"),
+            a("shuoming-song-qita", "宋 · 其他"));
 
     public static final ArticleCollection HAN_WEI = bundle("hanwei",
             "汉魏", "四言, four centuries before 唐诗, and a general who wrote it.",
@@ -297,7 +338,7 @@ public final class ShiCiCollections {
 
     /** Every collection here, for a test that wants to walk them all. */
     public static List<ArticleCollection> all() {
-        return List.of(HAN_WEI,
+        return List.of(SHUO_MING, HAN_WEI,
                 LI_BAI_WUYAN, LI_BAI_QIYAN, DU_FU_WUYAN, DU_FU_QIYAN,
                 WANG_WEI_SHAN_SHUI, WANG_WEI_SONG_BIE,
                 BAI_JU_YI, MENG_HAO_RAN, DU_MU, LI_SHANG_YIN, LIU_YU_XI,

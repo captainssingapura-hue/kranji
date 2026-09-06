@@ -41,6 +41,29 @@ public final class KePuCollections {
         return ArticleRef.of(slug, title, "/kranji/articles/kepu/" + slug + ".txt");
     }
 
+    // ── 说明 ──────────────────────────────────────────────────────────
+
+    public static final ArticleCollection SHUO_MING = bundle("shuoming",
+            "说明", "One introduction per category, in tree order. "
+                  + "A Branch holds no articles, so the group's own introduction "
+                  + "and every shelf's live here together.",
+            a("shuoming-kepu", "科普读物"),
+            a("shuoming-dongwu", "动物"),
+            a("shuoming-kunchong", "昆虫"),
+            a("shuoming-niao", "鸟"),
+            a("shuoming-shou", "兽"),
+            a("shuoming-zhiwu", "植物"),
+            a("shuoming-tianwen", "天文"),
+            a("shuoming-dili", "地理"),
+            a("shuoming-tianqi", "天气"),
+            a("shuoming-renti", "人体"),
+            a("shuoming-wuzhi", "物质世界"),
+            a("shuoming-jishu", "身边的科技"),
+            a("shuoming-qiche", "汽车"),
+            a("shuoming-shiwu", "食物与农业"),
+            a("shuoming-huanjing", "环境"),
+            a("shuoming-shuxing", "数与形"));
+
     public static final ArticleCollection KUN_CHONG = bundle("kunchong",
             "昆虫", "Six legs, and more of them than everything else put together.",
             a("ma-yi", "蚂蚁"), a("mi-feng", "蜜蜂"), a("hu-die", "蝴蝶"),
@@ -128,7 +151,8 @@ public final class KePuCollections {
             a("da-xiao", "大和小"), a("cheng-liang", "怎么量"));
 
     public static List<ArticleCollection> all() {
-        return List.of(KUN_CHONG, NIAO, SHOU, ZHI_WU, TIAN_WEN, DI_LI,
+        return List.of(SHUO_MING,
+                KUN_CHONG, NIAO, SHOU, ZHI_WU, TIAN_WEN, DI_LI,
                 REN_TI, WU_ZHI, TIAN_QI, JI_SHU, QI_CHE, SHI_WU, HUAN_JING,
                 SHU_XING);
     }

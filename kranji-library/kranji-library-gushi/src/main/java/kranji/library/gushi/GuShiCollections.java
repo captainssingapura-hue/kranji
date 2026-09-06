@@ -92,6 +92,30 @@ public final class GuShiCollections {
 
     // ── 寓言故事, by where it comes from ───────────────────────────────
 
+    // ── 说明 ──────────────────────────────────────────────────────────
+
+    public static final ArticleCollection SHUO_MING = bundle("shuoming",
+            "说明", "One introduction per category, in tree order. "
+                  + "A Branch holds no articles, so the group's own introduction "
+                  + "and every shelf's live here together.",
+            s("shuoming-gushi", "故事"),
+            s("shuoming-yuyan", "寓言故事"),
+            s("shuoming-zhongguo-yuyan", "中国寓言"),
+            s("shuoming-hanfei", "韩非子"),
+            s("shuoming-zhuangzi", "庄子与列子"),
+            s("shuoming-zhanguo", "战国策"),
+            s("shuoming-waiguo-yuyan", "外国寓言"),
+            s("shuoming-yisuo", "伊索寓言"),
+            s("shuoming-chengyu", "成语故事"),
+            s("shuoming-qinxue", "成语 · 勤学"),
+            s("shuoming-zhihui", "成语 · 机智"),
+            s("shuoming-yuchun", "成语 · 糊涂"),
+            s("shuoming-pinge", "成语 · 志气"),
+            s("shuoming-shenhua", "神话传说"),
+            s("shuoming-minjian-tonghua", "民间与童话"),
+            s("shuoming-minjian", "民间故事"),
+            s("shuoming-waiguo", "外国童话"));
+
     public static final ArticleCollection HAN_FEI = bundle("hanfei",
             "韩非子", "Fables from a book about how not to govern.",
             withOriginal("shou-zhu-dai-tu", "守株待兔", "韩非子"),
@@ -237,7 +261,8 @@ public final class GuShiCollections {
             s("lv-ye-xian-zong", "绿野仙踪"));
 
     public static List<ArticleCollection> all() {
-        return List.of(HAN_FEI, ZHUANG_ZI, ZHAN_GUO, YI_SUO,
+        return List.of(SHUO_MING,
+                HAN_FEI, ZHUANG_ZI, ZHAN_GUO, YI_SUO,
                 QIN_XUE, ZHI_HUI, YU_CHUN, PIN_GE, SHEN_HUA, MIN_JIAN, WAI_GUO);
     }
 }

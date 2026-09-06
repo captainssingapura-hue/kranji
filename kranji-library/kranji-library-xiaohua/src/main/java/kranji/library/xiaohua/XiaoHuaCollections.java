@@ -44,6 +44,20 @@ public final class XiaoHuaCollections {
         return ArticleRef.of(slug, title, "/kranji/articles/xiaohua/" + slug + ".txt");
     }
 
+    // ── 说明 ──────────────────────────────────────────────────────────
+
+    public static final ArticleCollection SHUO_MING = bundle("shuoming",
+            "说明", "One introduction per category, in tree order. "
+                  + "A Branch holds no articles, so the group's own introduction "
+                  + "and every shelf's live here together.",
+            j("shuoming-xiaohua", "笑话"),
+            j("shuoming-xuexiao", "学校笑话"),
+            j("shuoming-jiali", "家里的笑话"),
+            j("shuoming-dongwu-xiaohua", "动物笑话"),
+            j("shuoming-xieyin", "谐音笑话"),
+            j("shuoming-leng", "冷笑话"),
+            j("shuoming-zhiye", "职业笑话"));
+
     public static final ArticleCollection XUE_XIAO = bundle("xuexiao",
             "学校笑话", "Classrooms, homework, and answers that are technically correct.",
             j("zuo-ye", "作业"), j("shu-xue-ke", "数学课"), j("kao-shi", "考试"),
@@ -96,6 +110,6 @@ public final class XiaoHuaCollections {
             j("xiu-biao", "修表的"));
 
     public static List<ArticleCollection> all() {
-        return List.of(XUE_XIAO, JIA_LI, DONG_WU, XIE_YIN, LENG, ZHI_YE);
+        return List.of(SHUO_MING, XUE_XIAO, JIA_LI, DONG_WU, XIE_YIN, LENG, ZHI_YE);
     }
 }

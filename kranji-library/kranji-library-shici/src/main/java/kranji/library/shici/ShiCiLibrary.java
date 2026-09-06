@@ -30,6 +30,7 @@ public final class ShiCiLibrary {
 
     /** This group, arranged, for a root to graft. See {@link kranji.reading.library.ArticleLibrary}. */
     public static final LibraryTree TREE = LibraryTree.of("古诗词",
+            LibraryTree.shelf(ShiCiCollections.SHUO_MING),
             LibraryTree.shelf(ShiCiCollections.HAN_WEI),
             LibraryTree.of("唐诗",
                     LibraryTree.branch("李白",
