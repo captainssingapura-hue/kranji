@@ -444,29 +444,67 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
      * <p>It does not grow. The character is one glyph however much room there
      * is, and every pixel it took past that was one the meanings did not
      * have.</p>
+     *
+     * <p>The reading toggle sits here too, under the glyph. It is a fixed
+     * control of two words, and in the readings column it was a flex child of
+     * a stretching row, so it drew itself across the entire pane. It also
+     * belongs with the character it re-reads rather than with the cards it
+     * swaps out.</p>
      */
     public record kr_zd_aside() implements CssClass<ReadingCss> {
         @Override public String body() { return """
                 flex: 0 0 auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
                 """;
         }
     }
 
-    /** The readings take the rest, and can be narrow without breaking. */
+    /**
+     * The readings take the rest, and wrap across it.
+     *
+     * <p>A column of full-width cards wastes a wide pane exactly the way the
+     * hero did: a card holds a reading, a short meaning and a few parts, and
+     * stretching that across a thousand pixels leaves a line of text alone in
+     * a wide box. Wrapping fills the width with cards instead of with
+     * padding.</p>
+     *
+     * <p>{@code align-content: flex-start} so that two rows of cards sit under
+     * the toggle rather than spreading down the pane.</p>
+     */
     public record kr_zd_main() implements CssClass<ReadingCss> {
         @Override public String body() { return """
                 flex: 1 1 auto;
                 min-width: 0;
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-content: flex-start;
                 gap: var(--space-3, 12px);
                 """;
         }
     }
 
-    /** One reading of a character, and one of its senses. */
+    /**
+     * One reading of a character, and one of its senses.
+     *
+     * <p>Sized to hold what it holds. The basis is what decides how many sit
+     * across a pane — around three at a wide desktop pane, two at half that,
+     * one when the pane is narrow enough that the character moves above them.
+     * It grows to share the row evenly and stops before a card is wider than
+     * its content deserves.</p>
+     *
+     * <p>A minimum height so that a reading with no gloss and one with three
+     * lines of meaning are recognisably the same kind of object; the row
+     * stretches them level with each other beyond that.</p>
+     */
     public record kr_zd_card() implements CssClass<ReadingCss> {
         @Override public String body() { return """
+                flex: 1 1 400px;
+                max-width: 460px;
+                min-height: 160px;
+                box-sizing: border-box;
                 display: flex;
                 flex-direction: column;
                 gap: var(--space-2, 8px);
@@ -526,6 +564,7 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
      */
     public record kr_zd_card_parts() implements CssClass<ReadingCss> {
         @Override public String body() { return """
+                margin-top: auto;
                 display: flex;
                 flex-wrap: wrap;
                 gap: var(--space-2, 8px) var(--space-4, 16px);
