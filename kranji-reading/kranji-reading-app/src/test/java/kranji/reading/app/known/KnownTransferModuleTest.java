@@ -211,6 +211,33 @@ class KnownTransferModuleTest extends JsModuleTestBase {
                 .execute(fromText(text), added, name).asString();
     }
 
+    private String describe(String text, int added, String name, String mode) {
+        return transfer.getMember("describeImport")
+                .execute(fromText(text), added, name, mode).asString();
+    }
+
+    @Test
+    void aReplaceReportsTheFileRatherThanWhatWasNewInIt() {
+        // Restoring a backup onto the device it came from is 0 new out of all
+        // of them, and saying so reads as though nothing happened - which is
+        // exactly what it looked like against a real 310-reading export. What
+        // the record became belongs to the pane; this reports the file.
+        String says = describe("地\tde\n月\tyuè\n", 0, "backup.tsv", "replace");
+
+        assertTrue(says.contains("Read 2 readings"), says);
+        assertTrue(says.contains("backup.tsv"), says);
+        assertFalse(says.contains("new reading"), says);
+    }
+
+    @Test
+    void aReplaceStillNamesTheLinesItCouldNotRead() {
+        // The half of the report that is useful in both modes.
+        String says = describe("地\tde\nnonsense\n", 0, "backup.tsv", "replace");
+
+        assertTrue(says.contains("line 2"), says);
+        assertTrue(says.contains("1 line could not be read"), says);
+    }
+
     @Test
     void reportsWhatWasNewAgainstWhatTheFileHeld() {
         // Both numbers, because "imported 12" against a file of 800 is the

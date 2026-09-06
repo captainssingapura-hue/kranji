@@ -94,7 +94,7 @@ function createKnownImportControls(opts) {
             // already claimed adds none, and saying otherwise would be a lie
             // about somebody's record.
             return opts.apply(read.keys, mode).then(function (added) {
-                opts.say(transfer.describeImport(read, added, file.name));
+                opts.say(transfer.describeImport(read, added, file.name, mode));
             });
         }).catch(function (err) {
             opts.say('Could not read ' + file.name + ': '
