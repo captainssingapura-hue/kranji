@@ -2,6 +2,9 @@ package kranji.library.gushi;
 
 import kranji.reading.library.ArticleCollection;
 import kranji.reading.library.ArticleRef;
+import kranji.reading.library.ArticleUmbrella;
+import kranji.reading.library.Classifier;
+import kranji.reading.library.LocalId;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
@@ -10,6 +13,7 @@ import java.util.LinkedHashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * The catalogue points at things that exist.
@@ -19,6 +23,30 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  * reference can rot without anything noticing until a reader clicks it.</p>
  */
 class CatalogueTest {
+
+    @Test
+    void aStoryWithAnOriginalIsOneEntryAndTwoArticles() {
+        // 韩非子 is the shelf named after the book, so the book's own words
+        // belong on it. The retelling keeps the slug it always had - the
+        // check that matters, because that slug is an address somebody may
+        // have bookmarked - and the original takes -yuanwen beside it.
+        var umbrellas = GuShiCollections.HAN_FEI.entries().stream()
+                .filter(e -> e instanceof ArticleUmbrella<?>)
+                .map(e -> (ArticleUmbrella<?>) e)
+                .toList();
+
+        assertEquals(3, umbrellas.size(), "three stories carry their original");
+        for (ArticleUmbrella<?> u : umbrellas) {
+            assertEquals(2, u.editions().size(), u.title() + " should have a retelling and an original");
+            assertTrue(GuShiCollections.HAN_FEI.article(u.id()).isPresent(),
+                    u.title() + ": the retelling must keep the umbrella's slug");
+            assertTrue(GuShiCollections.HAN_FEI
+                            .article(LocalId.named(u.id().value() + "-yuanwen")).isPresent(),
+                    u.title() + ": the original is addressable beside it");
+            // Retelling first: a child arrives at 文言 by way of 白话.
+            assertEquals("白话", ((Classifier) u.editions().keySet().iterator().next()).label());
+        }
+    }
 
     @Test
     void everyArticleResolvesToAResource() {

@@ -1,10 +1,15 @@
 package kranji.library.gushi;
 
 import kranji.reading.library.ArticleCollection;
+import kranji.reading.library.ArticleEntry;
 import kranji.reading.library.ArticleRef;
+import kranji.reading.library.ArticleUmbrella;
+import kranji.reading.library.Classifier;
 import kranji.reading.library.CollectionId;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 寓言故事, 成语故事 and 神话 — the three kinds of story told for their point.
@@ -21,22 +26,46 @@ import java.util.List;
  *
  * <h2>Provenance</h2>
  *
- * <p>The sources are ancient and free. Every text here is a retelling written
- * for this project in modern Chinese, short enough for a first reading — not a
- * transcription of the classical original, which is a different collection and
- * a different reading age.</p>
+ * <p>The sources are ancient and free. Every story here is a retelling written
+ * for this project in modern Chinese, short enough for a first reading.</p>
+ *
+ * <h2>Where the original is here too</h2>
+ *
+ * <p>It used to be that a classical original was "a different collection and a
+ * different reading age", so none was carried. The reading age is still
+ * different; the collection no longer has to be. Three stories on the 韩非子
+ * shelf are {@link ArticleUmbrella}s over a retelling and the passage it was
+ * retold from — which is the shelf where it belongs, since the shelf is named
+ * after the book the passage is in.</p>
+ *
+ * <p>A child meets 白话 first and 原文 when they are ready, without going
+ * looking for it on a 文言 shelf they would not have opened. The three are a
+ * sample and not a policy: an original is worth carrying where the passage is
+ * short and famous enough that a reader will one day want to have met it.</p>
  */
 public final class GuShiCollections {
 
     private GuShiCollections() {}
 
     private record Bundle(CollectionId id, String title, String summary,
-                          List<ArticleRef> articles) implements ArticleCollection {}
+                          List<? extends ArticleEntry> entries) implements ArticleCollection {
+        @Override
+        public List<ArticleRef> articles() {
+            var out = new ArrayList<ArticleRef>();
+            for (ArticleEntry e : entries) out.addAll(e.articles());
+            return List.copyOf(out);
+        }
+    }
 
+    /**
+     * A shelf of entries: single stories, and umbrellas over a story told more
+     * than one way. {@code ArticleRef} is itself an entry, so every {@code s(…)}
+     * below still fits without being wrapped in anything.
+     */
     private static ArticleCollection bundle(String id, String title, String summary,
-                                            ArticleRef... articles) {
+                                            ArticleEntry... entries) {
         return new Bundle(CollectionId.named("kranji.library.gushi." + id),
-                title, summary, List.of(articles));
+                title, summary, List.of(entries));
     }
 
     /** One story: slug doubles as the local id and the file name. */
@@ -44,14 +73,31 @@ public final class GuShiCollections {
         return ArticleRef.of(slug, title, "/kranji/articles/gushi/" + slug + ".txt");
     }
 
+    /**
+     * A story and the passage it was retold from.
+     *
+     * <p>The retelling keeps the slug it has always had, so nothing a reader
+     * bookmarked moved; the original takes {@code -yuanwen} and the author is
+     * the book. Ranked so that a child meets 白话 first and arrives at 原文 by
+     * way of it.</p>
+     */
+    private static ArticleUmbrella<Classifier.Provenance> withOriginal(
+            String slug, String title, String source) {
+        return ArticleUmbrella.of(slug, title, Map.of(
+                new Classifier.Retold(1), s(slug, title),
+                new Classifier.Original(),
+                ArticleRef.by(slug + "-yuanwen", title, source,
+                        "/kranji/articles/gushi/" + slug + "-yuanwen.txt")));
+    }
+
     // ── 寓言故事, by where it comes from ───────────────────────────────
 
     public static final ArticleCollection HAN_FEI = bundle("hanfei",
             "韩非子", "Fables from a book about how not to govern.",
-            s("shou-zhu-dai-tu", "守株待兔"),
-            s("zi-xiang-mao-dun", "自相矛盾"),
+            withOriginal("shou-zhu-dai-tu", "守株待兔", "韩非子"),
+            withOriginal("zi-xiang-mao-dun", "自相矛盾", "韩非子"),
             s("lan-yu-chong-shu", "滥竽充数"),
-            s("zheng-ren-mai-lu", "郑人买履"),
+            withOriginal("zheng-ren-mai-lu", "郑人买履", "韩非子"),
             s("mai-du-huan-zhu", "买椟还珠"),
             s("lao-ma-shi-tu", "老马识途"),
             s("hui-ji-ji-yi", "讳疾忌医"),
