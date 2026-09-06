@@ -7,15 +7,12 @@ import hue.captains.singapura.js.homing.grid.StockCellsModule;
 import hue.captains.singapura.js.homing.workspace.LifecycleHint;
 import hue.captains.singapura.js.homing.workspace.WorkspaceWidget;
 import kranji.reading.app.css.ReadingCss;
-import kranji.reading.app.known.KnownPersistenceModule;
-import kranji.reading.app.known.KnownSetModule;
-import kranji.reading.app.known.KnownStoreModule;
 import kranji.reading.app.ui.PinyinSwfModule;
 
 import java.util.List;
 
 /**
- * One character, in full — and where its readings are claimed.
+ * One character, in full.
  *
  * <h2>Two panes that were the same pane</h2>
  *
@@ -26,15 +23,13 @@ import java.util.List;
  * both had to be kept in step by hand.</p>
  *
  * <p>The merge is not just a paste. The reading list became a
- * {@link ZiReadingsGridModule} grid whose rows are (character, reading) pairs —
- * the key the whole system is grained on — with the claim as a cell. So the row
- * a person reads and the row they act on are the same row, which is what the
- * two panes could never quite manage between them.</p>
+ * {@link ZiReadingsGridModule} grid whose rows are (character, reading) senses,
+ * over the key the whole system is grained on.</p>
  *
  * <h2>Everything about a reading is in its row</h2>
  *
- * <p>The claim, the sound, the meaning, the five parts of the syllable, and how
- * many other characters share it. The parts were chips under the grid that
+ * <p>The sound, the meaning, the five parts of the syllable, and how many other
+ * characters share it. The parts were chips under the grid that
  * followed the cursor; as columns they can be compared, and two readings of one
  * character that differ only in the tone now say so at a glance — which is the
  * thing a strip showing one at a time could never do.</p>
@@ -42,21 +37,23 @@ import java.util.List;
  * <p>There is no count of how often the corpus uses a reading. It decided
  * nothing a reader does, and it cost the meaning the width it needed.</p>
  *
- * <h2>The claim is a picker, not a button</h2>
+ * <h2>It does not claim any more</h2>
  *
- * <p>Two values in one cell, so the same control both claims a reading and
- * gives it back. A button could only have gone one way: in a grid the cursor
- * lands on rows by arrow key and by stray click, and a press that destroyed a
- * deliberate claim would be one keystroke from wherever it happened to be.
- * Choosing from a picker costs two acts and only the second fires, which is
- * what lets the destructive direction live in a cell at all.</p>
+ * <p>There was a claim column here - a picker per row, saying whether the
+ * reading was known and changing it. It went when marking settled in one place.
+ * A reader meets a character in a sentence and says so there; a second control
+ * in a reference pane was a second way to do the same thing, kept in step over
+ * a bus, for the sake of being able to do it while looking something up.</p>
  *
  * <p>Every column except the meaning is fixed width. Their content is bounded
  * and the meaning's is not, so the meaning takes what is left and the control a
  * person aims at stops moving between characters.</p>
  *
- * <p>It joins two buses. Character selection says what to show; the known set
- * says what is already claimed and receives the claims made here.</p>
+ * <p>One bus, and one only: character selection, which says what to show. It
+ * kept a known-set membership for a while after the claim column went, purely
+ * so that a disk got written - it was one of two panes anywhere that saved.
+ * That was the fault rather than the fix, and it went when the reader took over
+ * keeping what the reader claims.</p>
  *
  * <p>No CJK appears in this file. Characters arrive from the corpus.</p>
  */
@@ -88,7 +85,6 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                         new ReadingCss.kr_zi_hero(),
                         new ReadingCss.kr_zi_hero_glyph(),
                         new ReadingCss.kr_zi_hero_meta(),
-                        new ReadingCss.kr_kn_pick(),
                         new ReadingCss.kr_grid_host(),
                         new ReadingCss.kr_seg(),
                         new ReadingCss.kr_seg_opt(),
@@ -100,15 +96,6 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                         List.of(new ZiReadingsGridModule.createZiReadingsGrid()),
                         ZiReadingsGridModule.INSTANCE),
                 new ModuleImports<>(
-                        List.of(new KnownSetModule.createKnownSet()),
-                        KnownSetModule.INSTANCE),
-                new ModuleImports<>(
-                        List.of(new KnownStoreModule.createKnownStore()),
-                        KnownStoreModule.INSTANCE),
-                new ModuleImports<>(
-                        List.of(new KnownPersistenceModule.createKnownPersistence()),
-                        KnownPersistenceModule.INSTANCE),
-                new ModuleImports<>(
                         List.of(new PinyinSwfModule.createPinyinSwf()),
                         PinyinSwfModule.INSTANCE));
     }
@@ -116,7 +103,6 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
     @Override
     protected List<String> constructBodyJs() {
         return List.of(
-                "    var knownSet = createKnownSet();",
                 "    var swf = createPinyinSwf();",
                 "",
                 "    var root = branch.createElement('root', 'div');",
@@ -164,21 +150,8 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "    var __asked = '';       // the reading the selection carried",
                 "    var __showAll = false;   // has somebody asked for the rest?",
                 "    var __last = null;       // the loaded module, for a re-render",
-                "    var __known = [];",
-                "    var __lastImport = [];",
-                "    var __storeProblem = false;",
                 "",
                 "    // ── The record ────────────────────────────────────────────",
-                "",
-                "    var __knownParty = (workspaceCtx && workspaceCtx.knownParty)",
-                "                     ? workspaceCtx.knownParty : null;",
-                "    var __knownActorId = null;",
-                "",
-                "    function tellKnown(msg) {",
-                "        if (__knownParty && __knownActorId) {",
-                "            __knownParty.tellFrom(__knownActorId, msg);",
-                "        }",
-                "    }",
                 "",
                 "    // The size of the whole record used to sit here. It is a fact about",
                 "    // the reader, not about this character, and the Progress pane is",
@@ -191,13 +164,12 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "    // the status line, which is the pane's one place for saying things.",
                 "    var __saying = 'Click a character to see it here.';",
                 "",
+                "    // The save warning used to be appended here, because this pane was",
+                "    // one of the two that wrote. It belongs with whoever writes, and that",
+                "    // is the reader now.",
                 "    function say(about) {",
-                "        // Held rather than read back off the element: re-reading would",
-                "        // append the warning to a line that already carries it, and it",
-                "        // would grow a tail every time the store failed again.",
                 "        if (about != null) __saying = about;",
-                "        status.textContent = __storeProblem",
-                "            ? __saying + '  \\u00b7  NOT SAVED on this device' : __saying;",
+                "        status.textContent = __saying;",
                 "    }",
                 "",
                 "    // ── The grid ──────────────────────────────────────────────",
@@ -209,11 +181,7 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "    var readings = createZiReadingsGrid({",
                 "        branch: branch, css: css, host: host, owner: owner,",
                 "        RelationGrid: RelationGrid, TextCell: TextCell,",
-                "        pickClass: kr_kn_pick,",
-                "        swf: swf,",
-                "        isKnown: function (key) { return __known.indexOf(key) >= 0; },",
-                "        onMark:   function (key) { tellKnown({ kind: 'MarkKnown',   key: key }); },",
-                "        onUnmark: function (key) { tellKnown({ kind: 'UnmarkKnown', key: key }); },",
+                "        swf: swf",
                 "    });",
                 "",
                 "    // ── The character ─────────────────────────────────────────",
@@ -335,46 +303,20 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "        });",
                 "    }",
                 "",
-                "    if (__knownParty) {",
-                "        __knownActorId = 'known/zi-' + Math.random().toString(36).slice(2, 8);",
-                "        __knownParty.joinActor({",
-                "            id: __knownActorId,",
-                "            parentSecretary: 'knownSet',",
-                "            reactors: {",
-                "                KnownChanged: function (msg) {",
-                "                    __known = (msg && msg.known) ? msg.known : [];",
-                "                    __lastImport = (msg && msg.lastImport) ? msg.lastImport : [];",
-                "                    store.changed(__known, __lastImport);",
-                "                    // The cells read isKnown() as they paint, so the grid is",
-                "                    // redrawn rather than told which row moved. Four rows at",
-                "                    // most - the bookkeeping would cost more than the redraw.",
-                "                    readings.refresh();",
-                "                }",
-                "            }",
-                "        });",
-                "    }",
+                "    // This pane no longer touches the known set at all.",
+                "    //",
+                "    // It kept a subscription after the claim column went, purely so that",
+                "    // a disk got written - it was one of only two panes anywhere that",
+                "    // saved. That was the fault rather than the fix, and it is gone now",
+                "    // that the reader keeps what the reader claims. A pane that shows a",
+                "    // character has no business holding somebody's record.",
                 "",
-                "    // This pane writes, so it persists. The order rule - never write",
-                "    // before the device has answered - lives in the persistence module.",
-                "    var store = createKnownPersistence({",
-                "        store: createKnownStore(),",
-                "        tell: function (msg) { tellKnown(msg); },",
-                "        onProblem: function (broken) { __storeProblem = broken; say(null); }",
-                "    });",
-                "    if (__knownParty) {",
-                "        tellKnown({ kind: 'WhatIsKnown' });",
-                "        store.start();",
-                "    }",
-                "",                "",
                 "    return {",
                 "        root: root,",
                 "        setActive: function (active) {},",
                 "        partyDeregister: function () {",
                 "            if (__actorId && __ziParty) {",
                 "                try { __ziParty.leave(__actorId); } catch (e) {}",
-                "            }",
-                "            if (__knownActorId && __knownParty) {",
-                "                try { __knownParty.leave(__knownActorId); } catch (e) {}",
                 "            }",
                 "        },",
                 "        dispose: function () { __seq++; readings.destroy(); }",

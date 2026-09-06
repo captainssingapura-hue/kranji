@@ -55,7 +55,8 @@ import java.util.concurrent.CompletableFuture;
  *
  * <p>Nothing here knows what any reader knows. This is the corpus half; the
  * other half never leaves the device, and the arithmetic happens where they
- * meet — the same bargain {@code /article-census} makes.</p>
+ * meet. The census used to make the same bargain over the wire and no longer
+ * needs to: the reader counts the article it is already showing.</p>
  *
  * <p>Data literals only, like the other data actions.</p>
  */

@@ -156,10 +156,28 @@ function createKnownTransfer() {
          * Names the first few bad lines rather than counting them, because a
          * count sends somebody hunting through eight hundred lines.
          */
-        describeImport: function (read, added, fileName) {
-            var says = "Imported " + added
-                + (added === 1 ? " new reading" : " new readings")
-                + " from " + read.keys.length + " in " + fileName + ".";
+        describeImport: function (read, added, fileName, mode) {
+            var held = read.keys.length;
+            var says;
+            if (mode === "replace") {
+                // After a replace, "new readings" is the wrong question and
+                // answering it reads like a failure: restoring a backup onto
+                // the device it came from is 0 new out of 310, which sounds
+                // like nothing happened when in fact the record was rewritten.
+                //
+                // What the file held is the useful half here. What the record
+                // became, and what it cost, belongs to the pane - it knows what
+                // was dropped and this does not.
+                says = "Read " + held + (held === 1 ? " reading" : " readings")
+                     + " from " + fileName + ".";
+            } else {
+                // Both numbers, because "imported 12" against a file of 800 is
+                // the difference between a restore that worked and one that
+                // did not.
+                says = "Imported " + added
+                    + (added === 1 ? " new reading" : " new readings")
+                    + " from " + held + " in " + fileName + ".";
+            }
             var bad = read.skipped;
             if (!bad.length) return says;
 
