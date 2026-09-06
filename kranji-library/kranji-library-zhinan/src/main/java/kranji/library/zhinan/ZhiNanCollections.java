@@ -24,9 +24,26 @@ import java.util.List;
  *
  * <h2>Written to be readable on day one</h2>
  *
- * <p>Short sentences, common characters, and one instruction per paragraph.
+ * <p>Short sentences, common characters, and one thing said per paragraph.
  * Every character takes the corpus principal reading — nothing here needs an
  * override, which is itself a check that the vocabulary stayed ordinary.</p>
+ *
+ * <h2>Half of it is not instruction</h2>
+ *
+ * <p>A learner opening a wall of Chinese does not stop because they cannot
+ * work out which key marks a character. They stop because not knowing the
+ * characters feels like a verdict. So the paragraphs that reassure sit at the
+ * four places a reader is most likely to close the tab: before the mechanics
+ * (not knowing is where everyone starts), at the marking step (a wrong mark
+ * costs nothing and nobody is scoring), just after the pinyin thins out (that
+ * is progress, and it is visible), and at the end.</p>
+ *
+ * <p>None of it is praise, because praise from software is worth nothing and a
+ * child can tell. Each line is a fact the reader can check: marks are
+ * reversible, no score is kept, the record is theirs, the pinyin really does
+ * go. The last line — 你已经在读了 — is the only argument that matters and it
+ * is already true by the time they reach it, which is the one advantage a
+ * guide inside the reader has over a guide outside it.</p>
  *
  * <p>The panes are not named. Their labels are the front end's and in English,
  * and a sentence that says which button to press is wrong the week the button
