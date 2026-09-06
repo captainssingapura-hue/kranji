@@ -51,6 +51,14 @@ public final class ShiCiCollections {
         return ArticleRef.by(slug, title, author, res(slug));
     }
 
+    // ── 汉魏 ──────────────────────────────────────────────────────────
+
+    public static final ArticleCollection HAN_WEI = bundle("hanwei",
+            "汉魏", "四言, four centuries before 唐诗, and a general who wrote it.",
+            p("caocao-guan-cang-hai", "观沧海", "曹操"),
+            p("caocao-gui-sui-shou", "龟虽寿", "曹操"),
+            p("caocao-duan-ge-xing", "短歌行", "曹操"));
+
     // ── 唐诗 · 李白 ────────────────────────────────────────────────────
 
     public static final ArticleCollection LI_BAI_WUYAN = bundle("libai-wuyan",
@@ -289,7 +297,8 @@ public final class ShiCiCollections {
 
     /** Every collection here, for a test that wants to walk them all. */
     public static List<ArticleCollection> all() {
-        return List.of(LI_BAI_WUYAN, LI_BAI_QIYAN, DU_FU_WUYAN, DU_FU_QIYAN,
+        return List.of(HAN_WEI,
+                LI_BAI_WUYAN, LI_BAI_QIYAN, DU_FU_WUYAN, DU_FU_QIYAN,
                 WANG_WEI_SHAN_SHUI, WANG_WEI_SONG_BIE,
                 BAI_JU_YI, MENG_HAO_RAN, DU_MU, LI_SHANG_YIN, LIU_YU_XI,
                 WANG_CHANG_LING, BIAN_SAI, TANG_QI_TA,

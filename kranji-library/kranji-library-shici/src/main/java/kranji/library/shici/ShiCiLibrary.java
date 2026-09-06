@@ -15,6 +15,13 @@ import kranji.reading.library.LibraryTree;
  * one poem each from six poets who are otherwise met once, and grouping them
  * by what they are about is more use than six shelves of one.</p>
  *
+ * <p>汉魏 sits above 唐诗 as a shelf and not as a branch. It is an era like the
+ * other two and belongs in their sequence, but it holds three poems by one man,
+ * and a heading above one shelf is a level a reader clicks through for nothing.
+ * It stays a shelf until there is a second poet on it — 曹植, 陶渊明 and the
+ * 汉乐府 all belong there, and the day one of them arrives is the day this
+ * becomes a branch.</p>
+ *
  * <p>The arrangement is a separate act from the collections, which is why it
  * lives in its own class. Adding a ninth 杜牧 poem touches no tree; deciding
  * that 杜牧 should divide by form touches only this file.</p>
@@ -23,6 +30,7 @@ public final class ShiCiLibrary {
 
     /** This group, arranged, for a root to graft. See {@link kranji.reading.library.ArticleLibrary}. */
     public static final LibraryTree TREE = LibraryTree.of("古诗词",
+            LibraryTree.shelf(ShiCiCollections.HAN_WEI),
             LibraryTree.of("唐诗",
                     LibraryTree.branch("李白",
                             ShiCiCollections.LI_BAI_WUYAN,

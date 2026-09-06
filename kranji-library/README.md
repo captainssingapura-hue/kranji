@@ -356,10 +356,23 @@ Read a dozen before writing one. The house style is short and plain.
 
 | | characters |
 |---|---|
-| shortest | 59 |
-| median | **118** |
-| 90th percentile | 188 |
-| longest | 1,387 |
+| shortest | 19 |
+| median | **38** |
+| 90th percentile | 62 |
+| longest | 451 |
+
+Verse runs shorter than the table: 古诗词 is 22 at its shortest and 32 at its
+median, and its longest is 曹操's 短歌行 at 160.
+
+> **This table was wrong until 2026-09**, and said 59 / 118 / 188 / 1,387.
+> Those are the same articles counted in *bytes*: `wc -m` counts bytes in the
+> shells this repository is built in, and a Han character is three of them.
+> Anything measured that way reads three times its real length. To count
+> characters:
+>
+> ```bash
+> sed 's/{[^}]*}//g' file.txt | tr -d '\n' | LC_ALL=C.UTF-8 grep -o . | wc -l
+> ```
 
 Written for this project. Nothing here is translated or adapted from a
 source, which is why the library modules carry no third-party licence — keep
