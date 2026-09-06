@@ -31,6 +31,7 @@ var READER_MODES = [
 
 var SIZE_KEY = 'kranji.reading.glyphSize';
 var MODE_KEY = 'kranji.reading.pinyinMode';
+var GRID_KEY = 'kranji.reading.grid';
 
 /**
  * opts = {
@@ -124,13 +125,20 @@ function createReaderControls(opts) {
 
     for (var e = 0; e < (opts.extra || []).length; e++) bar.appendChild(opts.extra[e]);
 
+    // Remembered like the mode and the size. A reader who turned the ruling
+    // off did so because squared paper is not how they want to read, and that
+    // is a preference about them rather than about this article - having to
+    // say it again every time the page opens is the app forgetting who it is
+    // talking to. Stored as a string because that is all localStorage holds.
     var grid = true;
+    try { grid = localStorage.getItem(GRID_KEY) !== 'off'; } catch (e) {}
     var gridBtn = branch.createElement('gridBtn', 'button');
     css.setClass(gridBtn, opts.btnClass);
-    gridBtn.textContent = 'Grid on';
+    gridBtn.textContent = grid ? 'Grid on' : 'Grid off';
     gridBtn.addEventListener('click', function () {
         grid = !grid;
         gridBtn.textContent = grid ? 'Grid on' : 'Grid off';
+        try { localStorage.setItem(GRID_KEY, grid ? 'on' : 'off'); } catch (e) {}
         if (opts.onChange) opts.onChange();
     });
     bar.appendChild(gridBtn);
