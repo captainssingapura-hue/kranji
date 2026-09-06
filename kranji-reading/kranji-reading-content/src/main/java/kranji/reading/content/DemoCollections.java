@@ -1,10 +1,15 @@
 package kranji.reading.content;
 
 import kranji.reading.library.ArticleCollection;
+import kranji.reading.library.ArticleEntry;
 import kranji.reading.library.ArticleRef;
+import kranji.reading.library.ArticleUmbrella;
+import kranji.reading.library.Classifier;
 import kranji.reading.library.CollectionId;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The collections the app ships with.
@@ -30,17 +35,43 @@ public final class DemoCollections {
 
     private DemoCollections() {}
 
+    /**
+     * A shelf declared as entries — solo articles and umbrellas together — with
+     * the flat article list derived from them. Derived in this direction so the
+     * two cannot disagree: {@code LibraryTree.validate()} checks that they do
+     * not, but a bundle that could not get it wrong is better than one that is
+     * caught getting it wrong.
+     */
     private record Bundle(CollectionId id, String title, String summary,
-                          List<ArticleRef> articles) implements ArticleCollection {}
+                          List<? extends ArticleEntry> entries) implements ArticleCollection {
+        @Override
+        public List<ArticleRef> articles() {
+            var out = new ArrayList<ArticleRef>();
+            for (ArticleEntry e : entries) out.addAll(e.articles());
+            return List.copyOf(out);
+        }
+    }
 
+    /** {@code ArticleRef} is an entry, so every shelf written before umbrellas existed still fits. */
     private static ArticleCollection bundle(String id, String title, String summary,
-                                            ArticleRef... articles) {
+                                            ArticleEntry... entries) {
         return new Bundle(CollectionId.named("kranji.reader.demo." + id),
-                title, summary, List.of(articles));
+                title, summary, List.of(entries));
     }
 
     private static String res(String collection, String slug) {
         return "/articles/" + collection + "/" + slug + ".txt";
+    }
+
+    /**
+     * A story with its source: the retelling a child reads first, and the
+     * classical text it is short for.
+     */
+    private static ArticleUmbrella<Classifier.Provenance> retoldAndOriginal(
+            String slug, String title, ArticleRef retold, ArticleRef original) {
+        return ArticleUmbrella.of(slug, title, Map.of(
+                new Classifier.Retold(1), retold,
+                new Classifier.Original(), original));
     }
 
     /** 唐诗启蒙 — the short poems a child meets first. */
@@ -60,10 +91,19 @@ public final class DemoCollections {
             ArticleRef.of("xiao-xing-xing", "小星星", res("erge", "xiao-xing-xing")),
             ArticleRef.of("shu-ya-zi", "数鸭子", res("erge", "shu-ya-zi")));
 
-    /** 寓言故事 — a short story that exists for its last sentence. */
+    /**
+     * 寓言故事 — a short story that exists for its last sentence.
+     *
+     * <p>守株待兔 is an umbrella: the retelling keeps the address it always
+     * had, and the 韩非子 original sits under the same title as a second
+     * telling rather than on a shelf of its own two headings away.</p>
+     */
     public static final ArticleCollection YU_YAN = bundle("yuyan",
             "寓言故事", "Fables retold in modern Chinese.",
-            ArticleRef.of("shou-zhu-dai-tu", "守株待兔", res("yuyan", "shou-zhu-dai-tu")),
+            retoldAndOriginal("shou-zhu-dai-tu", "守株待兔",
+                    ArticleRef.of("shou-zhu-dai-tu", "守株待兔", res("yuyan", "shou-zhu-dai-tu")),
+                    ArticleRef.by("shou-zhu-dai-tu-yuanwen", "守株待兔", "韩非子",
+                            res("wenyan", "shou-zhu-dai-tu"))),
             ArticleRef.of("ba-miao-zhu-zhang", "拔苗助长", res("yuyan", "ba-miao-zhu-zhang")),
             ArticleRef.of("wang-yang-bu-lao", "亡羊补牢", res("yuyan", "wang-yang-bu-lao")));
 
@@ -72,7 +112,10 @@ public final class DemoCollections {
             "成语故事", "The stories behind four-character idioms.",
             ArticleRef.of("hua-she-tian-zu", "画蛇添足", res("chengyu", "hua-she-tian-zu")),
             ArticleRef.of("zi-xiang-mao-dun", "自相矛盾", res("chengyu", "zi-xiang-mao-dun")),
-            ArticleRef.of("ke-zhou-qiu-jian", "刻舟求剑", res("chengyu", "ke-zhou-qiu-jian")));
+            retoldAndOriginal("ke-zhou-qiu-jian", "刻舟求剑",
+                    ArticleRef.of("ke-zhou-qiu-jian", "刻舟求剑", res("chengyu", "ke-zhou-qiu-jian")),
+                    ArticleRef.by("ke-zhou-qiu-jian-yuanwen", "刻舟求剑", "吕氏春秋",
+                            res("wenyan", "ke-zhou-qiu-jian"))));
 
     /** 生活记叙 — prose that tells what happened, in the order it happened. */
     public static final ArticleCollection SHENG_HUO = bundle("shenghuo",
@@ -91,10 +134,12 @@ public final class DemoCollections {
     /**
      * 文言启蒙 — older grammar, denser characters, readings worth checking.
      *
-     * <p>Note that 守株待兔 and 刻舟求剑 appear here as their classical originals
-     * and elsewhere as modern retellings. The same local id in two collections
-     * is legitimate — the collection is the uniqueness boundary — and reading
-     * the two side by side is the point.</p>
+     * <p>守株待兔 and 刻舟求剑 used to be here as well, as the classical
+     * originals of retellings on other shelves, on the reasoning that reading
+     * the two side by side is the point. It is — and an umbrella is what
+     * "side by side" actually looks like, so each original now hangs under
+     * its own story's title as its second telling. The resource files stay in
+     * {@code /articles/wenyan/}; only the refs moved.</p>
      *
      * <p><b>施氏食狮史 is 赵元任's, and he died in 1982.</b> It is in copyright in
      * most jurisdictions until the 2050s. Fine as a local demo; it should not
@@ -103,10 +148,6 @@ public final class DemoCollections {
      */
     public static final ArticleCollection WEN_YAN = bundle("wenyan",
             "文言启蒙", "Classical Chinese, short enough to read in one sitting.",
-            ArticleRef.by("shou-zhu-dai-tu", "守株待兔", "韩非子",
-                    res("wenyan", "shou-zhu-dai-tu")),
-            ArticleRef.by("ke-zhou-qiu-jian", "刻舟求剑", "吕氏春秋",
-                    res("wenyan", "ke-zhou-qiu-jian")),
             ArticleRef.by("shi-shi-shi-shi-shi", "施氏食狮史", "赵元任",
                     res("wenyan", "shi-shi-shi-shi-shi")));
 

@@ -28,8 +28,26 @@ public interface ArticleCollection {
     /** Why a reader would open this set rather than another. */
     default String summary() { return ""; }
 
-    /** The articles, in the order the collection wants them listed. */
+    /**
+     * Every addressable article, in the order the collection wants them read.
+     *
+     * <p>Flat: an umbrella's editions appear here as themselves, one after
+     * another, and the umbrella does not. This is what address resolution, the
+     * catalogue checks and the article count all walk, and none of them need
+     * to know that two of these are tellings of one work.</p>
+     */
     List<ArticleRef> articles();
+
+    /**
+     * What the shelf lists, in order: solo articles and umbrellas.
+     *
+     * <p>Defaults to {@link #articles()} unchanged — every {@link ArticleRef}
+     * is already an {@link ArticleEntry} — so a collection that has never heard
+     * of umbrellas lists exactly what it always did. A collection that groups
+     * tellings under one name overrides this and derives {@code articles()}
+     * from it, which is the direction that cannot let the two disagree.</p>
+     */
+    default List<? extends ArticleEntry> entries() { return articles(); }
 
     /** The illustrations these articles use. */
     default List<ImageRef> illustrations() { return List.of(); }
