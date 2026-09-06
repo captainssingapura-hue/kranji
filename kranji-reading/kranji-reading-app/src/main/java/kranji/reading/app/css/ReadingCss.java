@@ -405,6 +405,196 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
         }
     }
 
+    /**
+     * The character beside its readings, or above them.
+     *
+     * <p>A glyph is square and a reading is a line of prose, so stacking them
+     * always wastes one dimension or the other: at any usable width the hero
+     * left a band of empty pane either side of it, and the readings underneath
+     * got what was left of the height.</p>
+     *
+     * <p>Which way round is decided by measuring, not by a media query. A
+     * widget is a pane inside a workspace and can be any width at any window
+     * size, so the viewport does not know.</p>
+     */
+    public record kr_zd_split() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                gap: var(--space-4, 16px);
+                """;
+        }
+    }
+
+    /** Narrow: the character on top, its readings under it. */
+    public record kr_zd_split_narrow() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--space-3, 12px);
+                """;
+        }
+    }
+
+    /**
+     * The hero's column when the pane is wide.
+     *
+     * <p>It does not grow. The character is one glyph however much room there
+     * is, and every pixel it took past that was one the meanings did not
+     * have.</p>
+     *
+     * <p>The reading toggle sits here too, under the glyph. It is a fixed
+     * control of two words, and in the readings column it was a flex child of
+     * a stretching row, so it drew itself across the entire pane. It also
+     * belongs with the character it re-reads rather than with the cards it
+     * swaps out.</p>
+     */
+    public record kr_zd_aside() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                flex: 0 0 auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                """;
+        }
+    }
+
+    /**
+     * The readings take the rest, and wrap across it.
+     *
+     * <p>A column of full-width cards wastes a wide pane exactly the way the
+     * hero did: a card holds a reading, a short meaning and a few parts, and
+     * stretching that across a thousand pixels leaves a line of text alone in
+     * a wide box. Wrapping fills the width with cards instead of with
+     * padding.</p>
+     *
+     * <p>{@code align-content: flex-start} so that two rows of cards sit under
+     * the toggle rather than spreading down the pane.</p>
+     */
+    public record kr_zd_main() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                flex: 1 1 auto;
+                min-width: 0;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-content: flex-start;
+                gap: var(--space-3, 12px);
+                """;
+        }
+    }
+
+    /**
+     * One reading of a character, and one of its senses.
+     *
+     * <p>Sized to hold what it holds. The basis is what decides how many sit
+     * across a pane — around three at a wide desktop pane, two at half that,
+     * one when the pane is narrow enough that the character moves above them.
+     * It grows to share the row evenly and stops before a card is wider than
+     * its content deserves.</p>
+     *
+     * <p>A minimum height so that a reading with no gloss and one with three
+     * lines of meaning are recognisably the same kind of object; the row
+     * stretches them level with each other beyond that.</p>
+     */
+    public record kr_zd_card() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                flex: 1 1 400px;
+                max-width: 460px;
+                min-height: 160px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-2, 8px);
+                padding: var(--space-3, 12px) var(--space-4, 16px);
+                border: 1px solid var(--color-border);
+                border-radius: 8px;
+                background: var(--color-surface);
+                """;
+        }
+    }
+
+    /** The reading, leading its card. */
+    public record kr_zd_card_head() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                align-items: baseline;
+                gap: var(--space-2, 8px);
+                """;
+        }
+    }
+
+    /** The sound itself, the one thing on the card read first. */
+    public record kr_zd_card_reading() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-size: 18px;
+                font-weight: 600;
+                color: var(--color-text-primary);
+                """;
+        }
+    }
+
+    /** What it means, as a sentence rather than a cell. */
+    public record kr_zd_card_meaning() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-size: 14px;
+                line-height: 1.45;
+                color: var(--color-text-primary);
+                """;
+        }
+    }
+
+    /** The phrases that show the sense in use. */
+    public record kr_zd_card_examples() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-size: 14px;
+                color: var(--color-text-muted);
+                """;
+        }
+    }
+
+    /**
+     * The five parts of the syllable, along the bottom.
+     *
+     * <p>Wrapping rather than fixed: they were columns to keep two readings
+     * comparable, and they still sit side by side, but a narrow card should
+     * fold them instead of scrolling sideways.</p>
+     */
+    public record kr_zd_card_parts() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                margin-top: auto;
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--space-2, 8px) var(--space-4, 16px);
+                padding-top: var(--space-2, 8px);
+                border-top: 1px solid var(--color-border);
+                font-size: 12px;
+                color: var(--color-text-primary);
+                font-variant-numeric: tabular-nums;
+                """;
+        }
+    }
+
+    /** One part: its short heading, then its value. */
+    public record kr_zd_card_part() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                display: flex;
+                align-items: baseline;
+                gap: var(--space-1, 4px);
+                """;
+        }
+    }
+
+    /** The heading half of a part, kept quiet so the value reads. */
+    public record kr_zd_card_part_key() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                color: var(--color-text-muted);
+                """;
+        }
+    }
+
     /** The character, shown at reading size in the detail pane. */
     public record kr_zi_hero() implements CssClass<ReadingCss> {
         @Override public String body() { return """
@@ -501,6 +691,55 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
                 font-weight: 600;
                 margin-bottom: var(--space-4, 16px);
                 color: var(--color-text-primary);
+                line-height: 1.9;
+                """;
+        }
+    }
+
+    /**
+     * One character of the title, with room over it for its reading.
+     *
+     * <p>{@code ruby} rather than a bracketed reading after the word. A title
+     * is short and is read as a name, and {@code 从(cóng)这(zhè)里(lǐ)} is not a
+     * name any more — the brackets are longer than the thing they gloss. Over
+     * the character, the reading takes no width at all and the title still
+     * reads as one phrase.</p>
+     *
+     * <p>The line-height above is what pays for it. Ruby that has to find its
+     * own room pushes the paragraph under it down the first time a reading
+     * appears, and the title's job is to be the thing that does not move.</p>
+     */
+    public record kr_read_title_zi() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                ruby-position: over;
+                ruby-align: center;
+                """;
+        }
+    }
+
+    /**
+     * The reading over one character of the title.
+     *
+     * <p>Italic and lighter, because a reading is not part of the name. In the
+     * article the annotation is told apart by its row; a title has no grid, so
+     * the face has to do it.</p>
+     *
+     * <p>A sans face, never the reader's chosen CJK typeface. Kaiti's Latin is
+     * an afterthought and pinyin set in it is harder to read than the character
+     * it is helping with.</p>
+     *
+     * <p>Hidden with {@code visibility}, like the annotation in the article and
+     * for the same reason: a reading leaving must not move the title, or the
+     * page shifts under a child as a reward for having learnt something.</p>
+     */
+    public record kr_read_title_rt() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-family: system-ui, sans-serif;
+                font-size: 11px;
+                font-style: italic;
+                font-weight: 400;
+                letter-spacing: 0;
+                color: var(--color-text-muted);
                 """;
         }
     }
@@ -1115,6 +1354,18 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
                 new kr_rd_settings(),
                 new kr_select(),
                 new kr_kn_pick(),
+                new kr_zd_split(),
+                new kr_zd_split_narrow(),
+                new kr_zd_aside(),
+                new kr_zd_main(),
+                new kr_zd_card(),
+                new kr_zd_card_head(),
+                new kr_zd_card_reading(),
+                new kr_zd_card_meaning(),
+                new kr_zd_card_examples(),
+                new kr_zd_card_parts(),
+                new kr_zd_card_part(),
+                new kr_zd_card_part_key(),
                 new kr_zi_hero(),
                 new kr_zi_hero_glyph(),
                 new kr_zi_hero_meta(),
@@ -1123,6 +1374,8 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
                 new kr_reading_meaning(),
                 new kr_reading_parts(),
                 new kr_read_title(),
+                new kr_read_title_zi(),
+                new kr_read_title_rt(),
                 new kr_read_verse(),
                 new kr_read_line(),
                 new kr_read_ann(),
@@ -1145,7 +1398,6 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
                 new kr_gr_ann(),
                 new kr_gr_zi(),
                 new kr_gr_grid(),
-                new kr_gr_known(),
                 new kr_gr_host(),
                 new kr_gr_ruled(),
                 new kr_gr_quiet());
@@ -1160,14 +1412,13 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
     /**
      * One square: annotation stacked over the character.
      *
-     * <p>{@code position: relative} because the mastery mark hangs off it. The
-     * mark cannot live inside the character box: that box has its textContent
-     * rewritten on every repaint, and assigning textContent replaces every
-     * child.</p>
+     * <p>It was {@code position: relative} for the mastery tick, which hung off
+     * its bottom-right. The tick is gone and so is the declaration: the
+     * punctuation mark is the only other thing positioned inside a square and
+     * it anchors to {@link kr_gr_zi}, which is relative in its own right.</p>
      */
     public record kr_gr_cell() implements CssClass<ReadingCss> {
         @Override public String body() { return """
-                position: relative;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -1263,49 +1514,6 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
     public record kr_gr_ruled() implements CssClass<ReadingCss> {
         @Override public String body() { return """
                 border: 1px solid var(--color-border);
-                """;
-        }
-    }
-
-    /**
-     * The mastery mark: this reading is already claimed.
-     *
-     * <p>A green tick. It began as a small accent dot, on the reasoning that a
-     * mark competing with the character makes the page harder to read — true in
-     * principle, and in practice the dot was so quiet that the one moment worth
-     * celebrating did not register at all. A tick is read as <em>done</em>
-     * without having to be learnt, and green says it in a way no amount of
-     * accent colour does.</p>
-     *
-     * <p>Its own font, not the reader's. The character box may be set in Kaiti
-     * or Fangsong, and a tick rendered from a calligraphic CJK face is a
-     * different shape on every typeface the picker offers.</p>
-     *
-     * <p>The halo is {@code --color-surface}, so the tick stays legible where
-     * it overlaps a dense character's strokes and does so in whichever theme is
-     * running. The green is a token with a fallback: no theme defines
-     * {@code --color-success} yet, and when one does it should win.</p>
-     *
-     * <p>Absolutely positioned, so appearing and disappearing cannot move a
-     * square. That is the same rule the annotation follows: earning a mark must
-     * never shift the page under the child who earned it.</p>
-     *
-     * <p>Bottom-right, where the practice-book rule is quietest and where a
-     * character's own strokes are least likely to reach.</p>
-     */
-    public record kr_gr_known() implements CssClass<ReadingCss> {
-        @Override public String body() { return """
-                position: absolute;
-                right: 3px;
-                bottom: 1px;
-                font-family: system-ui, sans-serif;
-                font-size: 13px;
-                font-weight: 700;
-                line-height: 1;
-                color: var(--color-success, #2f9e44);
-                text-shadow: 0 0 2px var(--color-surface),
-                             0 0 2px var(--color-surface);
-                pointer-events: none;
                 """;
         }
     }

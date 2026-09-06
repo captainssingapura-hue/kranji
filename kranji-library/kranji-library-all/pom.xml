@@ -12,17 +12,17 @@
     <artifactId>kranji-library-all</artifactId>
 
     <description>
-        The root library: one tree grafting all five groups, and the only
+        The root library: one tree grafting all six groups, and the only
         module here that is discovered.
 
         THE ROOT IS THE UNIT OF DEPLOYMENT. A build says which library it
         serves by putting one root jar on the classpath; the groups underneath
         are grafted in Java, because where 古诗词 hangs and what sits beside it
         is an editorial judgement and not something a classpath should be
-        making. A school that wants the same five groups under a different
-        arrangement writes its own root and depends on the same five jars.
+        making. A school that wants the same six groups under a different
+        arrangement writes its own root and depends on the same six jars.
 
-        Compile scope on all five, unlike a gloss module: this names them.
+        Compile scope on all six, unlike a gloss module: this names them.
     </description>
 
     <dependencies>
@@ -55,6 +55,11 @@
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-library-kouyu</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-library-zhinan</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 

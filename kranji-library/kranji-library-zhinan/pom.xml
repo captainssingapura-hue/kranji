@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+        <artifactId>kranji-library</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>kranji-library-zhinan</artifactId>
+
+    <description>
+        使用指南 — the reader's own instructions, written as something to read.
+
+        ITS OWN MODULE for the reason the others are: a group is the unit of
+        authorship, and this group is authored against the software rather
+        than against a subject. When a gesture changes, this is the jar that
+        is wrong, and a build that ships a different front end drops it and
+        writes its own. 科普读物 does not go stale when a keybinding moves.
+
+        It is also the one group whose text is a claim about the product. A
+        reader who follows it and finds it untrue has been taught that the
+        pinyin lies too.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-reading-model</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

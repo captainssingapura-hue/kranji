@@ -5,11 +5,12 @@ import kranji.library.kepu.KePuLibrary;
 import kranji.library.kouyu.KouYuLibrary;
 import kranji.library.shici.ShiCiLibrary;
 import kranji.library.xiaohua.XiaoHuaLibrary;
+import kranji.library.zhinan.ZhiNanLibrary;
 import kranji.reading.library.ArticleLibrary;
 import kranji.reading.library.LibraryTree;
 
 /**
- * The root: five groups, grafted under one arrangement.
+ * The root: six groups, grafted under one arrangement.
  *
  * <h2>What this class decides, and what it does not</h2>
  *
@@ -28,6 +29,13 @@ import kranji.reading.library.LibraryTree;
  * lands or does not, a 绕口令 is a drill — and putting them together says
  * something true about how they are used.</p>
  *
+ * <h2>The guide comes first</h2>
+ *
+ * <p>使用指南 is a shelf at the top of the root rather than a group among the
+ * others, and it sits above 文学 because a reader who does not yet know how
+ * the pinyin behaves gets less out of everything under it. It is the one
+ * thing here that is about the reader rather than about the reading.</p>
+ *
  * <p>科普读物 hangs off the root directly. A 科学 heading above it would hold
  * exactly one thing, and a level with nothing to distinguish is a level a
  * reader has to click through for no reason. When a second factual group
@@ -38,6 +46,7 @@ public final class KranjiLibrary implements ArticleLibrary {
     public static final KranjiLibrary INSTANCE = new KranjiLibrary();
 
     private static final LibraryTree TREE = LibraryTree.of("读物",
+            ZhiNanLibrary.TREE,
             LibraryTree.of("文学",
                     ShiCiLibrary.TREE,
                     GuShiLibrary.TREE),

@@ -29,6 +29,15 @@ import java.util.concurrent.CompletableFuture;
  * rearranging the tree cannot lose or duplicate an article: the tree never held
  * one.</p>
  *
+ * <h2>What a node says about itself</h2>
+ *
+ * <p>Its name, sounded — see {@link PinyinLabel}. A shelf used to carry its
+ * curator's summary as well, a sentence of English about the class of
+ * literature on it. It was the wrong aid in the wrong place: a reader who
+ * cannot read 唐诗 cannot use a sentence explaining what 唐诗 is, and it wanted
+ * a column the tree does not have, so it wrapped and pushed the shelves
+ * apart. The reading goes where the difficulty is, on the name itself.</p>
+ *
  * <p>An article node carries its full address, {@code collection:local}, which
  * is what the reader needs and all it needs. Built from the Java catalogue, so
  * listing the whole library opens no files.</p>
@@ -74,19 +83,20 @@ public final class ArticleTreeGetAction
                                    String badge, String note, String kind) {
         switch (node) {
             case LibraryTree.Branch b -> {
-                open(js, level, segment(b.title()), b.title(), badge, note, kind);
+                open(js, level, segment(b.title()), PinyinLabel.sounded(b.title()),
+                     badge, note, kind);
                 List<LibraryTree> children = b.children();
                 for (int i = 0; i < children.size(); i++) {
                     if (i > 0) js.append(',');
                     LibraryTree child = children.get(i);
-                    appendNode(js, child, level + 1, countOf(child), noteOf(child), kindOf(child));
+                    appendNode(js, child, level + 1, countOf(child), "", kindOf(child));
                 }
                 js.append("]}");
             }
             case LibraryTree.Shelf s -> {
                 ArticleCollection c = s.collection();
-                open(js, level, c.id().value(), c.title(),
-                     String.valueOf(c.articles().size()), c.summary(), "shelf");
+                open(js, level, c.id().value(), PinyinLabel.sounded(c.title()),
+                     String.valueOf(c.articles().size()), "", "shelf");
                 List<ArticleRef> articles = c.articles();
                 for (int i = 0; i < articles.size(); i++) {
                     if (i > 0) js.append(',');
@@ -103,9 +113,9 @@ public final class ArticleTreeGetAction
         // an article is addressed the same way wherever its collection hangs.
         js.append("{\"level\":\"L").append(level).append("\",\"segment\":")
           .append(quote(c.address(ref.id()).toString()))
-          .append(",\"display\":{\"label\":").append(quote(ref.title()))
+          .append(",\"display\":{\"label\":").append(quote(PinyinLabel.sounded(ref.title())))
           .append(",\"badge\":").append(quote(""))
-          .append(",\"note\":").append(quote(ref.author()))
+          .append(",\"note\":").append(quote(PinyinLabel.sounded(ref.author())))
           .append(",\"kind\":\"article\"},\"dimensions\":[],\"children\":[]}");
     }
 
@@ -124,10 +134,6 @@ public final class ArticleTreeGetAction
             case LibraryTree.Branch b -> String.valueOf(
                     b.collections().stream().mapToInt(c -> c.articles().size()).sum());
         };
-    }
-
-    private static String noteOf(LibraryTree node) {
-        return node instanceof LibraryTree.Shelf s ? s.collection().summary() : "";
     }
 
     private static String kindOf(LibraryTree node) {

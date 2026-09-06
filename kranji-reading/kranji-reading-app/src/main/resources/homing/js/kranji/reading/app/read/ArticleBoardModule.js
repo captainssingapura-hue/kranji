@@ -34,7 +34,7 @@ function createArticleCell(opts) {
     var swf = createPinyinSwf();
 
     return function () {
-        var host = null, annEl = null, ziEl = null, knEl = null;
+        var host = null, annEl = null, ziEl = null;
         var value = null, id = seq++;
 
         function paint(v) {
@@ -85,28 +85,6 @@ function createArticleCell(opts) {
             }
             css.setClass.apply(css, classes);
 
-            // The mastery mark. Out of flow, so it can appear and disappear
-            // without moving a square - the same rule the annotation above
-            // follows, and for the same reason: earning a mark must not shift
-            // the page under the child who earned it.
-            //
-            // kr_gr_known is applied in BOTH states and kr_read_hidden layered
-            // over it, exactly as the annotation does. Swapping one class for
-            // the other looked equivalent and was not: kr_read_hidden sets
-            // visibility and nothing else, so an unmarked badge fell back to
-            // static and took a line of its own at the foot of the cell. Marked
-            // squares were then a line shorter than unmarked ones, and a row
-            // containing both had its characters at two different heights.
-            //
-            // Only on a real character. A punctuation square or a gap has
-            // nothing to master, and a mark there would read as decoration.
-            if (knEl) {
-                var mark = [knEl, kr_gr_known];
-                if (!(v && v.z && opts.mastered && opts.mastered(v))) {
-                    mark.push(kr_read_hidden);
-                }
-                css.setClass.apply(css, mark);
-            }
 
             // The widget needs one painted square to measure the font from, and
             // may not go looking for it in the DOM.
@@ -119,22 +97,8 @@ function createArticleCell(opts) {
                 css.addClass(host, kr_gr_cell);
                 annEl = opts.branch.createElement('gann' + id, 'div');
                 ziEl = opts.branch.createElement('gzi' + id, 'div');
-                // A SIBLING of the character box, never a child of it.
-                //
-                // paint() sets ziEl.textContent on every repaint, and assigning
-                // textContent replaces every child - so a badge inside the box
-                // is created once and silently destroyed by the first repaint.
-                // The cell is positioned instead, and the mark hangs off its
-                // bottom-right, which is the box's bottom-right too.
-                knEl = opts.branch.createElement('gkn' + id, 'div');
-                // Written once: the mark never changes shape, only whether it
-                // is shown. A tick is not a Han character, so it is the one
-                // glyph this file may carry - and it is drawn in the badge's
-                // own sans face, never the reader's chosen CJK typeface.
-                knEl.textContent = '✓';
                 host.appendChild(annEl);
                 host.appendChild(ziEl);
-                host.appendChild(knEl);
                 paint(v);
             },
 
@@ -153,7 +117,7 @@ function createArticleCell(opts) {
                 return (value.lp || '') + (value.z || value.t || '') + (value.p || '');
             },
 
-            dispose: function () { host = null; annEl = null; ziEl = null; knEl = null; }
+            dispose: function () { host = null; annEl = null; ziEl = null; }
         };
     };
 }

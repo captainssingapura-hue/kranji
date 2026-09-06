@@ -2,8 +2,6 @@ package kranji.reading.app.zi;
 
 import hue.captains.singapura.js.homing.core.Importable;
 import hue.captains.singapura.js.homing.core.ModuleImports;
-import hue.captains.singapura.js.homing.grid.RelationGridModule;
-import hue.captains.singapura.js.homing.grid.StockCellsModule;
 import hue.captains.singapura.js.homing.workspace.LifecycleHint;
 import hue.captains.singapura.js.homing.workspace.WorkspaceWidget;
 import kranji.reading.app.css.ReadingCss;
@@ -22,17 +20,16 @@ import java.util.List;
  * character in one pane and claimed it in another, and every field shown in
  * both had to be kept in step by hand.</p>
  *
- * <p>The merge is not just a paste. The reading list became a
- * {@link ZiReadingsGridModule} grid whose rows are (character, reading) senses,
- * over the key the whole system is grained on.</p>
+ * <p>The merge is not just a paste. The reading list became
+ * {@link ZiReadingCardsModule} cards, one per sense of one reading.</p>
  *
- * <h2>Everything about a reading is in its row</h2>
+ * <h2>Everything about a reading is on its card</h2>
  *
- * <p>The sound, the meaning, the five parts of the syllable, and how many other
- * characters share it. The parts were chips under the grid that
- * followed the cursor; as columns they can be compared, and two readings of one
- * character that differ only in the tone now say so at a glance — which is the
- * thing a strip showing one at a time could never do.</p>
+ * <p>The sound, the meaning, its examples, the five parts of the syllable, and
+ * how many other characters share it. The parts sit along the bottom, still
+ * side by side, so two readings of one character differing only in the tone say
+ * so at a glance — which was the one thing the columns were genuinely good
+ * for.</p>
  *
  * <p>There is no count of how often the corpus uses a reading. It decided
  * nothing a reader does, and it cost the meaning the width it needed.</p>
@@ -45,9 +42,12 @@ import java.util.List;
  * in a reference pane was a second way to do the same thing, kept in step over
  * a bus, for the sake of being able to do it while looking something up.</p>
  *
- * <p>Every column except the meaning is fixed width. Their content is bounded
- * and the meaning's is not, so the meaning takes what is left and the control a
- * person aims at stops moving between characters.</p>
+ * <h2>It reacts to its own width</h2>
+ *
+ * <p>Wide, the character sits beside its readings; narrow, above them. A glyph
+ * is square and a reading is a line of prose, so one arrangement always wastes
+ * a dimension. Measured rather than a media query: a widget is a pane inside a
+ * workspace and can be any width at any window size.</p>
  *
  * <p>One bus, and one only: character selection, which says what to show. It
  * kept a known-set membership for a while after the claim column went, purely
@@ -73,19 +73,24 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
     @Override
     protected List<ModuleImports<? extends Importable>> bodyImports() {
         return List.of(
-                new ModuleImports<>(
-                        List.of(new RelationGridModule.RelationGrid()),
-                        RelationGridModule.INSTANCE),
-                new ModuleImports<>(
-                        List.of(new StockCellsModule.TextCell()),
-                        StockCellsModule.INSTANCE),
                 new ModuleImports<>(List.of(
                         new ReadingCss.kr_widget_root(),
                         new ReadingCss.kr_status(),
                         new ReadingCss.kr_zi_hero(),
                         new ReadingCss.kr_zi_hero_glyph(),
                         new ReadingCss.kr_zi_hero_meta(),
-                        new ReadingCss.kr_grid_host(),
+                        new ReadingCss.kr_zd_split(),
+                        new ReadingCss.kr_zd_split_narrow(),
+                        new ReadingCss.kr_zd_aside(),
+                        new ReadingCss.kr_zd_main(),
+                        new ReadingCss.kr_zd_card(),
+                        new ReadingCss.kr_zd_card_head(),
+                        new ReadingCss.kr_zd_card_reading(),
+                        new ReadingCss.kr_zd_card_meaning(),
+                        new ReadingCss.kr_zd_card_examples(),
+                        new ReadingCss.kr_zd_card_parts(),
+                        new ReadingCss.kr_zd_card_part(),
+                        new ReadingCss.kr_zd_card_part_key(),
                         new ReadingCss.kr_seg(),
                         new ReadingCss.kr_seg_opt(),
                         new ReadingCss.kr_seg_on(),
@@ -93,8 +98,8 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                         new ReadingCss.kr_font_kai()),
                         ReadingCss.INSTANCE),
                 new ModuleImports<>(
-                        List.of(new ZiReadingsGridModule.createZiReadingsGrid()),
-                        ZiReadingsGridModule.INSTANCE),
+                        List.of(new ZiReadingCardsModule.createZiReadingCards()),
+                        ZiReadingCardsModule.INSTANCE),
                 new ModuleImports<>(
                         List.of(new PinyinSwfModule.createPinyinSwf()),
                         PinyinSwfModule.INSTANCE));
@@ -113,22 +118,42 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "    status.textContent = 'Click a character to see it here.';",
                 "    root.appendChild(status);",
                 "",
+                "    // The character beside its readings, or above them.",
+                "    //",
+                "    // A glyph is square and a reading is a line of prose, so stacking",
+                "    // them always wastes one dimension: at any usable width the hero",
+                "    // left a band of empty pane either side of it and the readings got",
+                "    // what was left of the height.",
+                "    var split = branch.createElement('split', 'div');",
+                "    css.setClass(split, kr_zd_split);",
+                "    root.appendChild(split);",
+                "",
+                "    var aside = branch.createElement('aside', 'div');",
+                "    css.setClass(aside, kr_zd_aside);",
+                "    split.appendChild(aside);",
+                "",
+                "    var main = branch.createElement('main', 'div');",
+                "    css.setClass(main, kr_zd_main);",
+                "    split.appendChild(main);",
+                "",
                 "    // The hero is rebuilt per character rather than cleared. Emptying an",
                 "    // element is a wholesale wipe; dissolving the branch that made it is",
                 "    // how this codebase takes DOM away.",
                 "    var heroHost = branch.createElement('heroHost', 'div');",
-                "    root.appendChild(heroHost);",
+                "    aside.appendChild(heroHost);",
                 "",
-                "    // Between the character and its rows, because that is what it",
-                "    // divides: it does not change the character above it and it changes",
-                "    // every row below it.",
+                "    // Under the character, not over the cards. It is a fixed control of",
+                "    // two words; as a flex child of the readings column it was stretched",
+                "    // the full width of the pane. It also reads better where it belongs:",
+                "    // it does not change the character, it changes how the character is",
+                "    // read, so it sits with the character rather than with the cards.",
                 "    //",
                 "    // Both states are named and the one that is the case is lit. A single",
                 "    // button whose label said what pressing it would do made a reader work",
                 "    // out where they were from the name of where they were not.",
                 "    var seg = branch.createElement('seg', 'div');",
                 "    css.setClass(seg, kr_seg, kr_kn_hidden);",
-                "    root.appendChild(seg);",
+                "    aside.appendChild(seg);",
                 "",
                 "    var segOne = branch.createElement('segOne', 'button');",
                 "    segOne.type = 'button';",
@@ -140,10 +165,31 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "    segAll.textContent = 'All readings';",
                 "    seg.appendChild(segAll);",
                 "",
-                "    var host = branch.createElement('host', 'div');",
-                "    css.setClass(host, kr_grid_host);",
-                "    root.appendChild(host);",
+                "    // Which way round is decided by measuring, not by a media query. A",
+                "    // widget is a pane inside a workspace and can be any width at any",
+                "    // window size, so the viewport does not know.",
+                "    //",
+                "    // One class swap, not two builds. The parts that would have differed",
+                "    // are a flex direction and a gap; nothing is transposed and nothing",
+                "    // is rebuilt, so there is no shape here for a stale class to hide in.",
+                "    var NARROW = 520;",
+                "    var __narrow = null;",
                 "",
+                "    function fit() {",
+                "        var narrow = root.clientWidth > 0 && root.clientWidth < NARROW;",
+                "        if (narrow === __narrow) return;",
+                "        __narrow = narrow;",
+                "        css.setClass(split, narrow ? kr_zd_split_narrow : kr_zd_split);",
+                "    }",
+                "",
+                "    // Measured at three moments, not one. A ResizeObserver is the",
+                "    // right instrument for a pane being dragged, and it is not always",
+                "    // the one that fires first - a widget can be mounted at its final",
+                "    // size, in which case there is no resize to observe. So the two",
+                "    // points where the pane knows it is visible and sized ask as well.",
+                "    if (typeof ResizeObserver !== 'undefined') {",
+                "        new ResizeObserver(function () { fit(); }).observe(root);",
+                "    }",
                 "",
                 "    var owner = Object.freeze({ toString: function () { return 'ziDetail'; } });",
                 "    var __seq = 0;",
@@ -178,10 +224,13 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "    // of the character's readings are true and, at the moment somebody",
                 "    // tapped one square in one sentence, they are noise - so the toggle",
                 "    // swaps the rows rather than stacking a second grid underneath.",
-                "    var readings = createZiReadingsGrid({",
-                "        branch: branch, css: css, host: host, owner: owner,",
-                "        RelationGrid: RelationGrid, TextCell: TextCell,",
-                "        swf: swf",
+                "    var readings = createZiReadingCards({",
+                "        branch: branch, css: css, host: main, owner: owner,",
+                "        swf: swf,",
+                "        cardClass: kr_zd_card, headClass: kr_zd_card_head,",
+                "        readingClass: kr_zd_card_reading, meaningClass: kr_zd_card_meaning,",
+                "        examplesClass: kr_zd_card_examples, partsClass: kr_zd_card_parts,",
+                "        partClass: kr_zd_card_part, partKeyClass: kr_zd_card_part_key",
                 "    });",
                 "",
                 "    // ── The character ─────────────────────────────────────────",
@@ -231,6 +280,7 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "        var narrowed = focused.length > 0 && focused.length < all.length;",
                 "",
                 "        readings.show(cp, (narrowed && !__showAll) ? focused : all);",
+                "        fit();",
                 "",
                 "        // The control only exists when it would change something. A button",
                 "        // that swaps a list for the same list is a button that teaches",
@@ -313,7 +363,7 @@ public final class ZiDetailWidget extends WorkspaceWidget<WorkspaceWidget._None,
                 "",
                 "    return {",
                 "        root: root,",
-                "        setActive: function (active) {},",
+                "        setActive: function (active) { if (active) fit(); },",
                 "        partyDeregister: function () {",
                 "            if (__actorId && __ziParty) {",
                 "                try { __ziParty.leave(__actorId); } catch (e) {}",
