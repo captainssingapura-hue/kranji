@@ -5,6 +5,7 @@ import kranji.library.kepu.KePuLibrary;
 import kranji.library.kouyu.KouYuLibrary;
 import kranji.library.shici.ShiCiLibrary;
 import kranji.library.xiaohua.XiaoHuaLibrary;
+import kranji.library.zhinan.ZhiNanLibrary;
 import kranji.reading.library.ArticleCollection;
 import kranji.reading.library.ArticleLibrary;
 import kranji.reading.library.ArticleRef;
@@ -25,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * The root grafts every group, once, and is the one that gets mounted.
  *
- * <p>Grafting is the fault this file exists for. Five trees written apart and
+ * <p>Grafting is the fault this file exists for. Six trees written apart and
  * joined here can lose a group silently — nothing fails to compile when a
  * branch is left out of the root — and can collide, because two jars released
  * separately have no way to see each other's collection ids.</p>
@@ -38,7 +39,8 @@ class RootLibraryTest {
     void everyGroupIsGrafted() {
         var grafted = ROOT.collections().stream().map(c -> c.id().toString()).toList();
         for (LibraryTree group : List.of(ShiCiLibrary.TREE, GuShiLibrary.TREE,
-                KePuLibrary.TREE, XiaoHuaLibrary.TREE, KouYuLibrary.TREE)) {
+                KePuLibrary.TREE, XiaoHuaLibrary.TREE, KouYuLibrary.TREE,
+                ZhiNanLibrary.TREE)) {
             for (ArticleCollection c : group.collections()) {
                 assertTrue(grafted.contains(c.id().toString()),
                         group.title() + " holds " + c.title()
@@ -99,7 +101,7 @@ class RootLibraryTest {
     void theArrangementIsTheOneWritten() {
         assertEquals("读物", ROOT.title());
         var top = ((LibraryTree.Branch) ROOT).children().stream().map(LibraryTree::title).toList();
-        assertEquals(List.of("文学", "科普读物", "语言游戏"), top);
+        assertEquals(List.of("使用指南", "文学", "科普读物", "语言游戏"), top);
         assertFalse(ROOT.collections().isEmpty());
     }
 }
