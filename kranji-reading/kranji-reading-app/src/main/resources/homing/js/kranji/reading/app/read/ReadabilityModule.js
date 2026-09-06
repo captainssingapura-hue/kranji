@@ -3,9 +3,10 @@
 //
 //   readability = known Han tokens / total Han tokens
 //
-// Simple arithmetic over two things already in hand: the article's census,
-// which the server sent once, and the known set, which never left the device.
-// No request, and none needed when the set changes.
+// A comparison between two things, and it owns neither. ArticleCensusModule
+// says what an article asks; the known set says what the reader brings. This
+// is only the arithmetic between them, which is why the counting moved out:
+// a census is a property of an article and has nothing to do with a reader.
 //
 // TWO NUMBERS, NOT ONE. The ratio counts repeats, because that is the reading
 // experience - a character met forty times is forty moments of support. The
@@ -95,30 +96,36 @@ function createReadability() {
 /**
  * The fit line: how much of THIS article this reader can already read.
  *
- * Owns the census as well as the arithmetic. The census arrives once for the
- * whole library and is cached by the browser, so keeping the figure current as
- * readings are marked costs nothing - but the fetch, the "not yet" state and
- * the sentence were three more things in a reader that had enough of them.
- *
- * Length always; the fit only once it can be told truthfully. A percentage
- * shown before the census has landed would be a number the reader has no
- * reason to distrust and every reason to.
+ * It counts the article in front of it. There is no fetch and nothing to wait
+ * for, so there is no state where the length is known and the percentage is
+ * not - which is what the "only once it can be told truthfully" rule below was
+ * protecting against when the figure came from a 274KB download of every
+ * article in the library.
  *
  * opts = {
  *   known : fn -> the claimed keys
- *   onText: fn(string)   // where the sentence goes
+ *   lines  : fn(mod)  -> [string]     // the article's lines
+ *   cellsOf: fn(line) -> [{ z, r }] // a line, scanned and filled
+ *   onText: fn(string)              // where the sentence goes
  * }
  * Returns { showing(mod), refresh() }.
  */
 function createArticleFit(opts) {
     var readability = createReadability();
+    var counter = createArticleCensus();
     var census = null;
     var current = null;
+
+    /** The article in front of it, counted once when it arrives. */
+    function countArticle(mod) {
+        if (!mod || !mod.id || !opts.lines || !opts.cellsOf) return null;
+        return counter.ofLines(opts.lines(mod), opts.cellsOf);
+    }
 
     function say() {
         if (!current || !current.id) return;
         var says = current.length + ' characters.';
-        var fit = census && readability.of(census[current.id], opts.known());
+        var fit = census && readability.of(census, opts.known());
         if (fit) {
             says += '  You can read ' + Math.round(fit.ratio * 100) + '%'
                  + ' \u00b7 ' + fit.band.label;
@@ -130,12 +137,14 @@ function createArticleFit(opts) {
         opts.onText(says);
     }
 
-    import('/article-census')
-        .then(function (m) { census = m.articles; say(); })
-        .catch(function () { census = null; });
-
     return {
-        showing: function (mod) { current = mod; say(); },
+        showing: function (mod) {
+            current = mod;
+            census = countArticle(mod);
+            say();
+        },
+        // The census does not move when a claim does - it is a property of the
+        // article - so this recounts nothing and only re-reads the set.
         refresh: say
     };
 }

@@ -4,6 +4,8 @@ import hue.captains.singapura.js.homing.core.DomModule;
 import hue.captains.singapura.js.homing.core.Exportable;
 import hue.captains.singapura.js.homing.core.ExportsOf;
 import hue.captains.singapura.js.homing.core.ImportsFor;
+import hue.captains.singapura.js.homing.core.ModuleImports;
+
 
 import java.util.List;
 
@@ -47,7 +49,11 @@ public record ReadabilityModule() implements DomModule<ReadabilityModule> {
 
     @Override
     public ImportsFor<ReadabilityModule> imports() {
-        return ImportsFor.<ReadabilityModule>builder().build();
+        return ImportsFor.<ReadabilityModule>builder()
+                .add(new ModuleImports<>(
+                        List.of(new ArticleCensusModule.createArticleCensus()),
+                        ArticleCensusModule.INSTANCE))
+                .build();
     }
 
     @Override
