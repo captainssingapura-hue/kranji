@@ -79,6 +79,19 @@ public final class ReadingConformance {
      */
     public static final List<Allowance> ALLOWANCES = List.of(
             new Allowance(
+                    "kranji.reading.app.KranjiLogo",
+                    new RuleId("no-literal-color"),
+                    "A brand mark is the one thing on the page that must not be a function "
+                  + "of the theme. The rule is right about everything else - the text has to "
+                  + "stay legible in whichever theme a child's device is using, so it takes "
+                  + "its colours from the theme - but a logo that changes colour with the "
+                  + "theme is not a logo. This app is also gaining open themes, which means "
+                  + "the background the mark sits on is unknowable: a token would resolve to "
+                  + "whatever a stranger's theme happens to define, including the same green "
+                  + "as the ground behind it. The framework's own mark makes the same call "
+                  + "and hardcodes its amber. Two literals, both the Kranji green, in a file "
+                  + "that is nothing but the mark."),
+            new Allowance(
                     "kranji.reading.app.known.KnownTransferWidget",
                     new RuleId("no-raw-href"),
                     "The export writes a blob URL onto an anchor so the record can be saved "

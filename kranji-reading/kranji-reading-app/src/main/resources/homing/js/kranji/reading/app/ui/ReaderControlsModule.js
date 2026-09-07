@@ -1,9 +1,9 @@
 // =============================================================================
 // ReaderControlsModule — the reader's control bar.
 //
-// Which article, how much pinyin, how big, and whether the practice grid is
-// drawn. Owns the controls and what they remember; the reader asks what is
-// currently chosen.
+// Which article, how much pinyin, how big, whether the practice grid is
+// drawn and whether a claimed reading is ticked. Owns the controls and what
+// they remember; the reader asks what is currently chosen.
 //
 // The typeface picker arrives already built, so the two stay independent -
 // the Characters pane wants that picker without any of this.
@@ -32,6 +32,7 @@ var READER_MODES = [
 var SIZE_KEY = 'kranji.reading.glyphSize';
 var MODE_KEY = 'kranji.reading.pinyinMode';
 var GRID_KEY = 'kranji.reading.grid';
+var MARKS_KEY = 'kranji.reading.marks';
 
 /**
  * opts = {
@@ -42,7 +43,7 @@ var GRID_KEY = 'kranji.reading.grid';
  *   onChange: fn,                        // any styling control moved
  *   onToggle: fn(open)                   // the panel opened or closed
  * }
- * Returns { element, mode(), size(), grid() }.
+ * Returns { element, mode(), size(), grid(), marks() }.
  *
  * `element` is the HEADER STRIP, not the controls: a Settings button, and the
  * panel that folds out beneath it. The caller puts its own status line in the
@@ -143,12 +144,40 @@ function createReaderControls(opts) {
     });
     bar.appendChild(gridBtn);
 
+    // The tick on a reading already claimed.
+    //
+    // On by default, and the default is the whole argument for keeping it: a
+    // child who has just marked a character wants to see that something
+    // happened, and the pinyin leaving is a subtraction - the one moment worth
+    // celebrating is marked by something going away. The tick is the only part
+    // of the page that says well done.
+    //
+    // Off is for the reader that outgrows it. Once most of a page is claimed,
+    // a tick under nearly every square stops distinguishing anything and
+    // becomes texture over the characters; a reader at that point is looking
+    // for the few remaining annotations, not for confirmation. That is a
+    // different reader rather than a different mood, which is why it is a
+    // setting and not a default that changes with progress.
+    var marks = true;
+    try { marks = localStorage.getItem(MARKS_KEY) !== 'off'; } catch (e) {}
+    var marksBtn = branch.createElement('marksBtn', 'button');
+    css.setClass(marksBtn, opts.btnClass);
+    marksBtn.textContent = marks ? 'Ticks on' : 'Ticks off';
+    marksBtn.addEventListener('click', function () {
+        marks = !marks;
+        marksBtn.textContent = marks ? 'Ticks on' : 'Ticks off';
+        try { localStorage.setItem(MARKS_KEY, marks ? 'on' : 'off'); } catch (e) {}
+        if (opts.onChange) opts.onChange();
+    });
+    bar.appendChild(marksBtn);
+
     paint();
 
     return {
         element: head,
         mode: function () { return mode; },
         grid: function () { return grid; },
+        marks: function () { return marks; },
         size: function () {
             for (var i = 0; i < opts.sizes.length; i++) {
                 if (opts.sizes[i].id === sizeId) return opts.sizes[i];

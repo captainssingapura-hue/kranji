@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="100%" height="100%"
+     viewBox="0 0 24 24"
+     preserveAspectRatio="xMidYMid meet"
+     aria-hidden="true">
+    <!-- K, on the skeleton of Homing's H: the same stem at x=4, the same
+         18-high box from y=3 to y=21, the same right edge at x=20. The two
+         products should read as siblings, and sharing the construction is
+         what does that rather than sharing a colour.
+
+         The arm endpoints are chosen so their butt caps land on that box:
+         cut perpendicular to a 4-wide stroke, (18.9, 4.7) puts the outer
+         corner at (19.95, 3.00). Green rather than Homing's amber, and
+         hardcoded rather than tokenised - the mark has to hold on themes
+         nobody has written yet. -->
+    <rect x="4" y="3" width="4" height="18" fill="#2F9E4F"/>
+    <path d="M7,12 L18.9,4.7"  stroke="#2F9E4F" stroke-width="4" fill="none"/>
+    <path d="M7,12 L18.9,19.3" stroke="#2F9E4F" stroke-width="4" fill="none"/>
+</svg>

@@ -1397,6 +1397,7 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
                 new kr_gr_cell(),
                 new kr_gr_ann(),
                 new kr_gr_zi(),
+                new kr_gr_known(),
                 new kr_gr_grid(),
                 new kr_gr_host(),
                 new kr_gr_ruled(),
@@ -1412,13 +1413,14 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
     /**
      * One square: annotation stacked over the character.
      *
-     * <p>It was {@code position: relative} for the mastery tick, which hung off
-     * its bottom-right. The tick is gone and so is the declaration: the
-     * punctuation mark is the only other thing positioned inside a square and
-     * it anchors to {@link kr_gr_zi}, which is relative in its own right.</p>
+     * <p>{@code position: relative} because the mastery tick hangs off its
+     * bottom-right. The tick cannot live inside the character box: that box has
+     * its textContent rewritten on every repaint, and assigning textContent
+     * replaces every child.</p>
      */
     public record kr_gr_cell() implements CssClass<ReadingCss> {
         @Override public String body() { return """
+                position: relative;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -1517,6 +1519,50 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
                 """;
         }
     }
+
+    /**
+     * The mastery mark: this reading is already claimed.
+     *
+     * <p>A green tick. It began as a small accent dot, on the reasoning that a
+     * mark competing with the character makes the page harder to read — true in
+     * principle, and in practice the dot was so quiet that the one moment worth
+     * celebrating did not register at all. A tick is read as <em>done</em>
+     * without having to be learnt, and green says it in a way no amount of
+     * accent colour does.</p>
+     *
+     * <p>Its own font, not the reader's. The character box may be set in Kaiti
+     * or Fangsong, and a tick rendered from a calligraphic CJK face is a
+     * different shape on every typeface the picker offers.</p>
+     *
+     * <p>The halo is {@code --color-surface}, so the tick stays legible where
+     * it overlaps a dense character's strokes and does so in whichever theme is
+     * running. The green is a token with a fallback: no theme defines
+     * {@code --color-success} yet, and when one does it should win.</p>
+     *
+     * <p>Absolutely positioned, so appearing and disappearing cannot move a
+     * square. That is the same rule the annotation follows: earning a mark must
+     * never shift the page under the child who earned it.</p>
+     *
+     * <p>Bottom-right, where the practice-book rule is quietest and where a
+     * character's own strokes are least likely to reach.</p>
+     */
+    public record kr_gr_known() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                position: absolute;
+                right: 3px;
+                bottom: 1px;
+                font-family: system-ui, sans-serif;
+                font-size: 13px;
+                font-weight: 700;
+                line-height: 1;
+                color: var(--color-success, #2f9e44);
+                text-shadow: 0 0 2px var(--color-surface),
+                             0 0 2px var(--color-surface);
+                pointer-events: none;
+                """;
+        }
+    }
+
 
     /** The practice-book rule, on the character box rather than the whole cell. */
     public record kr_gr_grid() implements CssClass<ReadingCss> {

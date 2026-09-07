@@ -64,6 +64,7 @@ public record ArticleBoardModule() implements DomModule<ArticleBoardModule> {
                         new ReadingCss.kr_gr_cell(),
                         new ReadingCss.kr_gr_ann(),
                         new ReadingCss.kr_gr_zi(),
+                        new ReadingCss.kr_gr_known(),
                         new ReadingCss.kr_gr_grid(),
                         new ReadingCss.kr_read_punct(),
                         new ReadingCss.kr_read_punct_lead(),
