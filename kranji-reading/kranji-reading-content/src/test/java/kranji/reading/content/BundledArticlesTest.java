@@ -2,14 +2,15 @@ package kranji.reading.content;
 
 import kranji.reading.library.ArticleCollection;
 import kranji.reading.library.ArticleRef;
+import kranji.reading.library.ArticleUmbrella;
 import kranji.reading.library.LibraryTree;
+import kranji.reading.library.LocalId;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -131,18 +132,35 @@ class BundledArticlesTest {
     }
 
     @Test
-    void theSameSlugMayAppearInTwoCollections() {
-        // 守株待兔 is a modern retelling in 寓言故事 and its 韩非子 original in
-        // 文言启蒙. The collection is the uniqueness boundary, so both are
-        // legitimate - and reading them side by side is the point.
+    void aStoryAndItsOriginalHangUnderOneTitle() {
+        // 守株待兔 used to be two unrelated articles two shelves apart - the
+        // retelling in 寓言故事, the 韩非子 original in 文言启蒙 - on the reasoning
+        // that reading them side by side is the point. It is, and an umbrella
+        // is what side by side looks like: one entry, two tellings, one shelf.
+        //
+        // The retelling keeps the slug it always had, so its address did not
+        // move; the original has a slug of its own in the same collection.
+        ArticleCollection yuyan = TREE.byId().get(DemoCollections.YU_YAN.id());
+        var umbrella = yuyan.entries().stream()
+                .filter(e -> e instanceof ArticleUmbrella<?>)
+                .map(e -> (ArticleUmbrella<?>) e)
+                .filter(u -> u.id().value().equals("shou-zhu-dai-tu"))
+                .findFirst().orElseThrow(() -> new AssertionError("守株待兔 is not an umbrella"));
+
+        assertEquals(2, umbrella.editions().size(), "a retelling and the original");
+        assertTrue(yuyan.article(LocalId.named("shou-zhu-dai-tu")).isPresent(),
+                "the retelling's address is unchanged");
+        assertTrue(yuyan.article(LocalId.named("shou-zhu-dai-tu-yuanwen")).isPresent(),
+                "the original is addressable on the same shelf");
+
+        // And it is nowhere else: one work, listed once.
         var holders = new ArrayList<String>();
         for (ArticleCollection c : collections()) {
-            if (c.articles().stream().anyMatch(a -> a.id().value().equals("shou-zhu-dai-tu"))) {
+            if (c.articles().stream().anyMatch(a -> a.id().value().startsWith("shou-zhu-dai-tu"))) {
                 holders.add(c.id().value());
             }
         }
-        assertEquals(2, holders.size(), () -> "expected two, got " + holders);
-        assertFalse(holders.get(0).equals(holders.get(1)));
+        assertEquals(List.of(yuyan.id().value()), holders);
     }
 
     @Test

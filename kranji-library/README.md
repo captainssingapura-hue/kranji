@@ -230,6 +230,100 @@ the next curator, or pass `""`. Nothing shows it to a reader.
 
 ---
 
+## 6b. One work, several tellings — the umbrella
+
+Some works are worth having more than one way. A 成语 story has the
+classical text it is short for and a retelling a child can read first. A
+科普 piece can be told at three depths — the same ants, with more or less
+said about them. Those are **one work**, and the tree should say so rather
+than scattering three similarly-named articles across a shelf.
+
+An **umbrella** is one entry with one title and, under it, a map from a
+**classifier** to the article that is that telling:
+
+```java
+private static ArticleUmbrella<Classifier.Provenance> retoldAndOriginal(
+        String slug, String title, ArticleRef retold, ArticleRef original) {
+    return ArticleUmbrella.of(slug, title, Map.of(
+            new Classifier.Retold(1), retold,
+            new Classifier.Original(), original));
+}
+
+public static final ArticleCollection CHENG_YU = bundle("chengyu",
+        "成语故事", "",
+        a("hua-she-tian-zu", "画蛇添足"),
+        retoldAndOriginal("ke-zhou-qiu-jian", "刻舟求剑",
+                a("ke-zhou-qiu-jian", "刻舟求剑"),
+                ArticleRef.by("ke-zhou-qiu-jian-yuanwen", "刻舟求剑", "吕氏春秋",
+                        "/kranji/articles/chengyu/ke-zhou-qiu-jian-yuanwen.txt")));
+```
+
+The tree then draws:
+
+```
+▾ 成语故事(chéng yǔ gù shi)
+    画蛇添足(huà shé tiān zú)
+  ▾ 刻舟求剑(kè zhōu qiú jiàn)
+      白话(bái huà)
+      原文(yuán wén)                吕氏春秋
+```
+
+### The classifiers
+
+Two families exist. **Pick the one whose axis your work varies along**; an
+umbrella is typed on one family and the compiler will not let you mix them.
+
+| Family | Cases | For |
+|---|---|---|
+| `Classifier.Provenance` | `Original`, `Retold(n)` | a work with a source text — fables, idioms, poems |
+| `Classifier.Depth` | `Level(n)` | the same subject told with more or less — 科普 |
+
+Levels start at 1, the plainest. Editions are **shown in rank order
+regardless of how you declare them**: `Retold(1)`, `Retold(2)`, … then
+`Original` last, because a reader arrives at 文言 by way of the retelling.
+
+The labels a reader sees — 白话, 原文, 第一级 — come from the classifier, not
+from you. If your work needs a third axis, that is a new family in
+`Classifier`, which is outside your boundary: say so.
+
+### The three rules
+
+1. **Every telling is still an ordinary `ArticleRef`** with its own slug, its
+   own `.txt`, and its own address `collection:local`. The umbrella holds
+   no text and is not something a reader opens.
+2. **All editions of one work live in one collection.** The address is
+   `collection:local`, so a work cannot span shelves.
+3. **Turning a solo article into an umbrella must not move its address.** Give
+   the umbrella the article's slug, and keep that slug on the telling a reader
+   was already opening. Bookmarks survive; only the tree gains a level. The
+   new telling gets a new slug (`-yuanwen`, `-2`, …).
+
+### What your `bundle()` needs
+
+Your group's `…Collections.java` has a `bundle(…, ArticleRef...)`. It needs
+to take entries and derive the flat list — the demo library's is the model:
+
+```java
+private record Bundle(CollectionId id, String title, String summary,
+                      List<? extends ArticleEntry> entries) implements ArticleCollection {
+    @Override public List<ArticleRef> articles() {
+        var out = new ArrayList<ArticleRef>();
+        for (ArticleEntry e : entries) out.addAll(e.articles());
+        return List.copyOf(out);
+    }
+}
+private static ArticleCollection bundle(String id, String title, String summary,
+                                        ArticleEntry... entries) { … }
+```
+
+Every existing `a(…)` still compiles against it — `ArticleRef` *is* an
+`ArticleEntry` — so this is a change to one record and one signature, not to
+the shelves. `LibraryTree.validate()` refuses a collection whose `entries()`
+and `articles()` disagree, so a bundle that derives one from the other is the
+one that cannot be caught.
+
+---
+
 ## 7. Adding a shelf, or a group
 
 **A new shelf** is one more `bundle(…)` plus a line in `all()` plus a

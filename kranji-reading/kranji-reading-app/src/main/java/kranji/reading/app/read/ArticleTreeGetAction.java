@@ -7,11 +7,15 @@ import hue.captains.singapura.tao.http.action.Param;
 import hue.captains.singapura.tao.http.action.ParamMarshaller;
 import io.vertx.ext.web.RoutingContext;
 import kranji.reading.library.ArticleCollection;
+import kranji.reading.library.ArticleEntry;
 import kranji.reading.library.ArticleRef;
+import kranji.reading.library.ArticleUmbrella;
+import kranji.reading.library.Classifier;
 import kranji.reading.library.Libraries;
 import kranji.reading.library.LibraryTree;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -69,9 +73,13 @@ public final class ArticleTreeGetAction
         return CompletableFuture.completedFuture(new DocContent(treeJson(), JSON));
     }
 
-    /** Visible for testing — the whole tree. */
+    /** The mounted library, whole. */
     public static String treeJson() {
-        LibraryTree tree = Libraries.mounted().tree();
+        return treeJson(Libraries.mounted().tree());
+    }
+
+    /** Visible for testing — any tree, so a test can hand in one it built. */
+    static String treeJson(LibraryTree tree) {
         int articles = tree.collections().stream().mapToInt(c -> c.articles().size()).sum();
 
         var js = new StringBuilder();
@@ -97,10 +105,37 @@ public final class ArticleTreeGetAction
                 ArticleCollection c = s.collection();
                 open(js, level, c.id().value(), PinyinLabel.sounded(c.title()),
                      String.valueOf(c.articles().size()), "", "shelf");
-                List<ArticleRef> articles = c.articles();
-                for (int i = 0; i < articles.size(); i++) {
+                // Entries, not articles: a shelf lists solo articles and
+                // umbrellas, and an umbrella is a node with its tellings
+                // under it. Everything that counts or resolves still walks
+                // the flat articles(); only the drawing sees the grouping.
+                List<? extends ArticleEntry> entries = c.entries();
+                for (int i = 0; i < entries.size(); i++) {
                     if (i > 0) js.append(',');
-                    appendArticle(js, level + 1, c, articles.get(i));
+                    appendEntry(js, level + 1, c, entries.get(i));
+                }
+                js.append("]}");
+            }
+        }
+    }
+
+    private static void appendEntry(StringBuilder js, int level,
+                                    ArticleCollection c, ArticleEntry entry) {
+        switch (entry) {
+            case ArticleRef r -> appendArticle(js, level, c, r, PinyinLabel.sounded(r.title()));
+            case ArticleUmbrella<?> u -> {
+                // The work is a node, not an article: its segment is its own
+                // id, it carries no address, and activating it expands it. A
+                // reader chooses which telling to open one level down, where
+                // each edition is an ordinary article row labelled by what
+                // distinguishes it - 白话, 原文, 第二级 - rather than by the
+                // title it shares with its siblings.
+                open(js, level, u.id().value(), PinyinLabel.sounded(u.title()), "", "", "work");
+                int i = 0;
+                for (Map.Entry<? extends Classifier, ArticleRef> e : u.editions().entrySet()) {
+                    if (i++ > 0) js.append(',');
+                    appendArticle(js, level + 1, c, e.getValue(),
+                                  PinyinLabel.sounded(e.getKey().label()));
                 }
                 js.append("]}");
             }
@@ -108,12 +143,12 @@ public final class ArticleTreeGetAction
     }
 
     private static void appendArticle(StringBuilder js, int level,
-                                      ArticleCollection c, ArticleRef ref) {
+                                      ArticleCollection c, ArticleRef ref, String label) {
         // The segment is the full address. The reader needs nothing else, and
         // an article is addressed the same way wherever its collection hangs.
         js.append("{\"level\":\"L").append(level).append("\",\"segment\":")
           .append(quote(c.address(ref.id()).toString()))
-          .append(",\"display\":{\"label\":").append(quote(PinyinLabel.sounded(ref.title())))
+          .append(",\"display\":{\"label\":").append(quote(label))
           .append(",\"badge\":").append(quote(""))
           .append(",\"note\":").append(quote(PinyinLabel.sounded(ref.author())))
           .append(",\"kind\":\"article\"},\"dimensions\":[],\"children\":[]}");

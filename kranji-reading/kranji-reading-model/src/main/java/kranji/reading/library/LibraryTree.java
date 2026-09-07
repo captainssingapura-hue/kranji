@@ -124,6 +124,28 @@ public sealed interface LibraryTree {
                             + clash + " and " + a.title());
                 }
             }
+            // Entries are the tree's nodes, so their ids must be unique too -
+            // separately from the articles', because an umbrella and the
+            // telling it opens on may legitimately share a slug.
+            var seenEntries = new HashMap<LocalId, String>();
+            for (ArticleEntry e : c.entries()) {
+                String clash = seenEntries.putIfAbsent(e.id(), e.title());
+                if (clash != null) {
+                    throw new IllegalStateException("collection '" + c.id()
+                            + "' lists two entries with the id '" + e.id() + "': "
+                            + clash + " and " + e.title());
+                }
+            }
+            // The flat list and the listed entries must be the same articles.
+            // A collection that overrides entries() and forgets articles()
+            // would resolve addresses for tellings the tree never shows.
+            var flattened = new ArrayList<ArticleRef>();
+            for (ArticleEntry e : c.entries()) flattened.addAll(e.articles());
+            if (!flattened.equals(c.articles())) {
+                throw new IllegalStateException("collection '" + c.id()
+                        + "' lists " + flattened.size() + " article(s) through its entries but "
+                        + c.articles().size() + " through articles(); they must agree");
+            }
             var seenImages = new HashMap<LocalId, String>();
             for (ImageRef i : c.illustrations()) {
                 String clash = seenImages.putIfAbsent(i.id(), i.alt());
