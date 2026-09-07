@@ -1,5 +1,6 @@
 package kranji.reading.app;
 
+import hue.captains.singapura.js.homing.core.SvgRef;
 import hue.captains.singapura.js.homing.studio.base.Studio;
 import hue.captains.singapura.js.homing.studio.base.app.StudioBrand;
 
@@ -20,6 +21,7 @@ public record ReadingStudio() implements Studio<ReadingLandingCatalogue> {
 
     @Override
     public StudioBrand standaloneBrand() {
-        return new StudioBrand("Kranji · Reading", ReadingLandingCatalogue.class);
+        return new StudioBrand("Kranji · Reading", ReadingLandingCatalogue.class,
+                new SvgRef<>(KranjiLogo.INSTANCE, new KranjiLogo.logo()));
     }
 }

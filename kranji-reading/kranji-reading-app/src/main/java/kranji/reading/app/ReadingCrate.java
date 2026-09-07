@@ -66,6 +66,7 @@ public final class ReadingCrate implements Crate {
         return List.of(
                 CrateEntry.of(ReadingHomeWidget.INSTANCE),
                 CrateEntry.of(ReadingCss.INSTANCE),
+                CrateEntry.of(KranjiLogo.INSTANCE),
                 CrateEntry.of(SyllableTreeWidget.INSTANCE),
                 CrateEntry.of(SyllableDetailWidget.INSTANCE),
                 CrateEntry.of(ZiCharactersWidget.INSTANCE),
