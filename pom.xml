@@ -28,7 +28,6 @@
         <module>kranji-ui-3d</module>
         <module>kranji-studio</module>
         <module>kranji-reading</module>
-        <module>kranji-library</module>
         <!-- Last: it packages what every other module produces. -->
         <module>kranji-dist</module>
     </modules>

@@ -100,12 +100,6 @@
         -->
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-library-all</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
             <artifactId>kranji-reading-model</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
