@@ -17,6 +17,7 @@ public final class KouYuLibrary {
 
     /** This group, arranged, for a root to graft. See {@link kranji.reading.library.ArticleLibrary}. */
     public static final LibraryTree TREE = LibraryTree.of("绕口令与顺口溜",
+            LibraryTree.shelf(KouYuCollections.SHUO_MING),
             LibraryTree.branch("绕口令",
                     KouYuCollections.S_SH,
                     KouYuCollections.Z_ZH,

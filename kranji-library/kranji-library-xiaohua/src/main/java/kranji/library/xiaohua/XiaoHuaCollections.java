@@ -44,13 +44,29 @@ public final class XiaoHuaCollections {
         return ArticleRef.of(slug, title, "/kranji/articles/xiaohua/" + slug + ".txt");
     }
 
+    // ── 说明 ──────────────────────────────────────────────────────────
+
+    public static final ArticleCollection SHUO_MING = bundle("shuoming",
+            "说明", "One introduction per category, in tree order. "
+                  + "A Branch holds no articles, so the group's own introduction "
+                  + "and every shelf's live here together.",
+            j("shuoming-xiaohua", "笑话"),
+            j("shuoming-xuexiao", "学校笑话"),
+            j("shuoming-jiali", "家里的笑话"),
+            j("shuoming-dongwu-xiaohua", "动物笑话"),
+            j("shuoming-xieyin", "谐音笑话"),
+            j("shuoming-leng", "冷笑话"),
+            j("shuoming-zhiye", "职业笑话"));
+
     public static final ArticleCollection XUE_XIAO = bundle("xuexiao",
             "学校笑话", "Classrooms, homework, and answers that are technically correct.",
             j("zuo-ye", "作业"), j("shu-xue-ke", "数学课"), j("kao-shi", "考试"),
             j("ju-shou", "举手"), j("zuo-wen", "作文"), j("chi-dao", "迟到"),
             j("di-li-ke", "地理课"), j("ti-yu-ke", "体育课"),
             j("zi-dian", "查字典"), j("jia-zhang-hui", "家长会"),
-            j("tong-zhuo", "同桌"), j("bi-ji", "笔记"));
+            j("tong-zhuo", "同桌"), j("bi-ji", "笔记"),
+            j("xiang-pi", "橡皮"), j("shui-xie-de", "谁写的"),
+            j("chang-ge", "唱歌"));
 
     public static final ArticleCollection JIA_LI = bundle("jiali",
             "家里的笑话", "Parents, dinner, and being sent to bed.",
@@ -58,34 +74,42 @@ public final class XiaoHuaCollections {
             j("sao-di", "扫地"), j("xi-wan", "洗碗"), j("kan-dian-shi", "看电视"),
             j("mai-dong-xi", "买东西"), j("sheng-ri", "生日"),
             j("chuang-huo", "闯祸"), j("zhao-dong-xi", "找东西"),
-            j("ye-ye-de-hua", "爷爷的话"), j("di-di", "弟弟"));
+            j("ye-ye-de-hua", "爷爷的话"), j("di-di", "弟弟"),
+            j("qi-chuang", "起床"), j("xi-zao", "洗澡"),
+            j("ling-hua-qian", "零花钱"));
 
     public static final ArticleCollection DONG_WU = bundle("dongwu",
             "动物笑话", "Animals who talk, and are no wiser for it.",
             j("xiao-gou", "小狗"), j("mao-he-yu", "猫和鱼"), j("da-xiang", "大象"),
             j("wu-gui", "乌龟"), j("xiao-niao", "小鸟"), j("qi-e", "企鹅"),
             j("jin-yu", "金鱼"), j("mian-yang", "绵羊"),
-            j("ying-wu", "鹦鹉"), j("zhang-yu", "章鱼"));
+            j("ying-wu", "鹦鹉"), j("zhang-yu", "章鱼"),
+            j("wo-niu", "蜗牛"), j("pang-xie", "螃蟹"), j("bian-fu", "蝙蝠"));
 
     public static final ArticleCollection XIE_YIN = bundle("xieyin",
             "谐音笑话", "Jokes that only work if you hear the tone.",
             j("mai-mai", "买卖"), j("shi-shi", "十四和四十"), j("shui-jiao-2", "水饺和睡觉"),
             j("ma-ma", "妈妈骂马"), j("bei-zi", "杯子和被子"),
-            j("li-zi", "梨子和栗子"), j("yan-jing-2", "眼镜和眼睛"));
+            j("li-zi", "梨子和栗子"), j("yan-jing-2", "眼镜和眼睛"),
+            j("bao-zi", "包子和抱"), j("lao-shi-he-shi-zi", "老师和狮子"),
+            j("tang-he-tang", "汤和糖"));
 
     public static final ArticleCollection LENG = bundle("leng",
             "冷笑话", "The ones that work by not being funny.",
             j("shu-ya-zi-leng", "数鸭子"), j("men", "门"), j("xiang-jiao", "香蕉"),
             j("shi-tou", "石头"), j("dian-ti", "电梯"), j("wen-lu", "问路"),
-            j("shu-mian", "书面"), j("deng", "等"));
+            j("shu-mian", "书面"), j("deng", "等"),
+            j("ying-zi", "影子"), j("jing-zi", "镜子"), j("shi-jian", "时间"));
 
     public static final ArticleCollection ZHI_YE = bundle("zhiye",
             "职业笑话", "Doctors, waiters and barbers, being unhelpful.",
             j("yi-sheng", "医生"), j("fu-wu-yuan", "服务员"), j("li-fa", "理发"),
             j("si-ji", "司机"), j("hua-jia", "画家"), j("jing-cha", "警察"),
-            j("mu-jiang", "木匠"), j("lao-ban", "老板"));
+            j("mu-jiang", "木匠"), j("lao-ban", "老板"),
+            j("chu-shi", "厨师"), j("you-di-yuan", "邮递员"),
+            j("xiu-biao", "修表的"));
 
     public static List<ArticleCollection> all() {
-        return List.of(XUE_XIAO, JIA_LI, DONG_WU, XIE_YIN, LENG, ZHI_YE);
+        return List.of(SHUO_MING, XUE_XIAO, JIA_LI, DONG_WU, XIE_YIN, LENG, ZHI_YE);
     }
 }

@@ -51,6 +51,55 @@ public final class ShiCiCollections {
         return ArticleRef.by(slug, title, author, res(slug));
     }
 
+    /** An introduction: no author, because the shelf itself is the subject. */
+    private static ArticleRef a(String slug, String title) {
+        return ArticleRef.of(slug, title, res(slug));
+    }
+
+    // ── 汉魏 ──────────────────────────────────────────────────────────
+
+    // ── 说明 ──────────────────────────────────────────────────────────
+
+    public static final ArticleCollection SHUO_MING = bundle("shuoming",
+            "说明", "One introduction per category, in tree order. "
+                  + "A Branch holds no articles, so the group's own introduction, "
+                  + "the era and poet headings, and every shelf's all live here.",
+            a("shuoming-shici", "古诗词"),
+            a("shuoming-hanwei", "汉魏"),
+            a("shuoming-tangshi", "唐诗"),
+            a("shuoming-libai", "李白"),
+            a("shuoming-libai-wuyan", "李白 · 五言"),
+            a("shuoming-libai-qiyan", "李白 · 七言"),
+            a("shuoming-dufu", "杜甫"),
+            a("shuoming-dufu-wuyan", "杜甫 · 五言"),
+            a("shuoming-dufu-qiyan", "杜甫 · 七言"),
+            a("shuoming-wangwei", "王维"),
+            a("shuoming-wangwei-shanshui", "王维 · 山水"),
+            a("shuoming-wangwei-songbie", "王维 · 送别与怀人"),
+            a("shuoming-baijuyi", "白居易"),
+            a("shuoming-menghaoran", "孟浩然"),
+            a("shuoming-dumu", "杜牧"),
+            a("shuoming-lishangyin", "李商隐"),
+            a("shuoming-liuyuxi", "刘禹锡"),
+            a("shuoming-wangchangling", "王昌龄"),
+            a("shuoming-biansai", "边塞诗"),
+            a("shuoming-tang-qita", "唐诗 · 其他"),
+            a("shuoming-songci", "宋词与宋诗"),
+            a("shuoming-sushi", "苏轼"),
+            a("shuoming-liqingzhao", "李清照"),
+            a("shuoming-xinqiji", "辛弃疾"),
+            a("shuoming-luyou", "陆游"),
+            a("shuoming-yangwanli", "杨万里"),
+            a("shuoming-wanganshi", "王安石"),
+            a("shuoming-liyu", "李煜"),
+            a("shuoming-song-qita", "宋 · 其他"));
+
+    public static final ArticleCollection HAN_WEI = bundle("hanwei",
+            "汉魏", "四言, four centuries before 唐诗, and a general who wrote it.",
+            p("caocao-guan-cang-hai", "观沧海", "曹操"),
+            p("caocao-gui-sui-shou", "龟虽寿", "曹操"),
+            p("caocao-duan-ge-xing", "短歌行", "曹操"));
+
     // ── 唐诗 · 李白 ────────────────────────────────────────────────────
 
     public static final ArticleCollection LI_BAI_WUYAN = bundle("libai-wuyan",
@@ -73,7 +122,9 @@ public final class ShiCiCollections {
             p("libai-huang-he-lou-song", "黄鹤楼送孟浩然之广陵", "李白"),
             p("libai-ke-zhong-xing", "客中行", "李白"),
             p("libai-e-mei-shan-yue-ge", "峨眉山月歌", "李白"),
-            p("libai-shan-zhong-wen-da", "山中问答", "李白"));
+            p("libai-shan-zhong-wen-da", "山中问答", "李白"),
+            p("libai-chun-ye-luo-cheng-wen-di", "春夜洛城闻笛", "李白"),
+            p("libai-wen-wangchangling", "闻王昌龄左迁龙标遥有此寄", "李白"));
 
     // ── 唐诗 · 杜甫 ────────────────────────────────────────────────────
 
@@ -93,7 +144,8 @@ public final class ShiCiCollections {
             p("dufu-jiang-nan-feng-li", "江南逢李龟年", "杜甫"),
             p("dufu-wen-guan-jun", "闻官军收河南河北", "杜甫"),
             p("dufu-jiang-pan-du-bu", "江畔独步寻花", "杜甫"),
-            p("dufu-deng-gao", "登高", "杜甫"));
+            p("dufu-deng-gao", "登高", "杜甫"),
+            p("dufu-zeng-hua-qing", "赠花卿", "杜甫"));
 
     // ── 唐诗 · 王维 ────────────────────────────────────────────────────
 
@@ -124,7 +176,8 @@ public final class ShiCiCollections {
             p("baijuyi-wen-liu-shi-jiu", "问刘十九", "白居易"),
             p("baijuyi-da-lin-si-tao-hua", "大林寺桃花", "白居易"),
             p("baijuyi-you-zi-yin", "邯郸冬至夜思家", "白居易"),
-            p("baijuyi-cao-tang", "村夜", "白居易"));
+            p("baijuyi-cao-tang", "村夜", "白居易"),
+            p("baijuyi-qian-tang-hu-chun-xing", "钱塘湖春行", "白居易"));
 
     public static final ArticleCollection MENG_HAO_RAN = bundle("menghaoran",
             "孟浩然", "Mornings, rivers, and not getting up.",
@@ -193,7 +246,14 @@ public final class ShiCiCollections {
             p("zhangzhihe-yu-ge-zi", "渔歌子", "张志和"),
             p("wangjian-shi-wu-ye", "十五夜望月", "王建"),
             p("zujing-zhong-nan", "终南望余雪", "祖咏"),
-            p("jiadao-xun-yin-zhe", "寻隐者不遇", "贾岛"));
+            p("jiadao-xun-yin-zhe", "寻隐者不遇", "贾岛"),
+            p("mengjiao-you-zi-yin", "游子吟", "孟郊"),
+            p("chenziang-deng-you-zhou-tai", "登幽州台歌", "陈子昂"),
+            p("liuchangqing-feng-xue-su", "逢雪宿芙蓉山主人", "刘长卿"),
+            p("weiyingwu-chu-zhou-xi-jian", "滁州西涧", "韦应物"),
+            p("cuihu-ti-du-cheng-nan-zhuang", "题都城南庄", "崔护"),
+            p("liqiao-feng", "风", "李峤"),
+            p("hulingneng-xiao-er-chui-diao", "小儿垂钓", "胡令能"));
 
     // ── 宋 ─────────────────────────────────────────────────────────────
 
@@ -273,11 +333,13 @@ public final class ShiCiCollections {
             p("linsheng-ti-lin-an-di", "题临安邸", "林升"),
             p("yekaishao-you-yuan-bu-zhi", "游园不值", "叶绍翁"),
             p("zenggong-cheng-nan", "城南", "曾巩"),
-            p("qinguan-que-qiao-xian", "鹊桥仙 · 纤云弄巧", "秦观"));
+            p("qinguan-que-qiao-xian", "鹊桥仙 · 纤云弄巧", "秦观"),
+            p("zhaoshixiu-yue-ke", "约客", "赵师秀"));
 
     /** Every collection here, for a test that wants to walk them all. */
     public static List<ArticleCollection> all() {
-        return List.of(LI_BAI_WUYAN, LI_BAI_QIYAN, DU_FU_WUYAN, DU_FU_QIYAN,
+        return List.of(SHUO_MING, HAN_WEI,
+                LI_BAI_WUYAN, LI_BAI_QIYAN, DU_FU_WUYAN, DU_FU_QIYAN,
                 WANG_WEI_SHAN_SHUI, WANG_WEI_SONG_BIE,
                 BAI_JU_YI, MENG_HAO_RAN, DU_MU, LI_SHANG_YIN, LIU_YU_XI,
                 WANG_CHANG_LING, BIAN_SAI, TANG_QI_TA,

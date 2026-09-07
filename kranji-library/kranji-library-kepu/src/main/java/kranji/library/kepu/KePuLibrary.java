@@ -14,6 +14,7 @@ public final class KePuLibrary {
 
     /** This group, arranged, for a root to graft. See {@link kranji.reading.library.ArticleLibrary}. */
     public static final LibraryTree TREE = LibraryTree.of("科普读物",
+            LibraryTree.shelf(KePuCollections.SHUO_MING),
             LibraryTree.branch("动物",
                     KePuCollections.KUN_CHONG,
                     KePuCollections.NIAO,
@@ -25,6 +26,7 @@ public final class KePuLibrary {
             LibraryTree.shelf(KePuCollections.REN_TI),
             LibraryTree.shelf(KePuCollections.WU_ZHI),
             LibraryTree.shelf(KePuCollections.JI_SHU),
+            LibraryTree.shelf(KePuCollections.QI_CHE),
             LibraryTree.shelf(KePuCollections.SHI_WU),
             LibraryTree.shelf(KePuCollections.HUAN_JING),
             LibraryTree.shelf(KePuCollections.SHU_XING));

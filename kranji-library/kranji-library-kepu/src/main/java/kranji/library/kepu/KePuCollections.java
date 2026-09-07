@@ -41,6 +41,29 @@ public final class KePuCollections {
         return ArticleRef.of(slug, title, "/kranji/articles/kepu/" + slug + ".txt");
     }
 
+    // ── 说明 ──────────────────────────────────────────────────────────
+
+    public static final ArticleCollection SHUO_MING = bundle("shuoming",
+            "说明", "One introduction per category, in tree order. "
+                  + "A Branch holds no articles, so the group's own introduction "
+                  + "and every shelf's live here together.",
+            a("shuoming-kepu", "科普读物"),
+            a("shuoming-dongwu", "动物"),
+            a("shuoming-kunchong", "昆虫"),
+            a("shuoming-niao", "鸟"),
+            a("shuoming-shou", "兽"),
+            a("shuoming-zhiwu", "植物"),
+            a("shuoming-tianwen", "天文"),
+            a("shuoming-dili", "地理"),
+            a("shuoming-tianqi", "天气"),
+            a("shuoming-renti", "人体"),
+            a("shuoming-wuzhi", "物质世界"),
+            a("shuoming-jishu", "身边的科技"),
+            a("shuoming-qiche", "汽车"),
+            a("shuoming-shiwu", "食物与农业"),
+            a("shuoming-huanjing", "环境"),
+            a("shuoming-shuxing", "数与形"));
+
     public static final ArticleCollection KUN_CHONG = bundle("kunchong",
             "昆虫", "Six legs, and more of them than everything else put together.",
             a("ma-yi", "蚂蚁"), a("mi-feng", "蜜蜂"), a("hu-die", "蝴蝶"),
@@ -99,6 +122,16 @@ public final class KePuCollections {
             a("zhi-nan-zhen", "指南针"), a("fei-ji", "飞机为什么能飞"),
             a("bing-xiang", "冰箱"));
 
+    public static final ArticleCollection QI_CHE = bundle("qiche",
+            "汽车", "The names on the road, and where each of them came from. "
+                  + "Filed by country, because that is the thing they have in common.",
+            a("da-zhong", "大众"), a("bao-ma", "宝马"),
+            a("ben-chi", "奔驰"), a("ao-di", "奥迪"),
+            a("feng-tian", "丰田"), a("ben-tian", "本田"), a("ri-chan", "日产"),
+            a("fu-te", "福特"), a("te-si-la", "特斯拉"),
+            a("xian-dai", "现代"),
+            a("bi-ya-di", "比亚迪"), a("ji-li", "吉利"));
+
     public static final ArticleCollection SHI_WU = bundle("shiwu",
             "食物与农业", "Where dinner comes from, and what happens to it on the way.",
             a("mi-fan", "米"), a("mian-bao", "面包"), a("niu-nai", "牛奶"),
@@ -118,7 +151,9 @@ public final class KePuCollections {
             a("da-xiao", "大和小"), a("cheng-liang", "怎么量"));
 
     public static List<ArticleCollection> all() {
-        return List.of(KUN_CHONG, NIAO, SHOU, ZHI_WU, TIAN_WEN, DI_LI,
-                REN_TI, WU_ZHI, TIAN_QI, JI_SHU, SHI_WU, HUAN_JING, SHU_XING);
+        return List.of(SHUO_MING,
+                KUN_CHONG, NIAO, SHOU, ZHI_WU, TIAN_WEN, DI_LI,
+                REN_TI, WU_ZHI, TIAN_QI, JI_SHU, QI_CHE, SHI_WU, HUAN_JING,
+                SHU_XING);
     }
 }

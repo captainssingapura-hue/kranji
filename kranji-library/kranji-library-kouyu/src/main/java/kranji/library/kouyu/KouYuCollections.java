@@ -48,6 +48,28 @@ public final class KouYuCollections {
 
     // ── 绕口令, by the contrast it drills ──────────────────────────────
 
+    // ── 说明 ──────────────────────────────────────────────────────────
+
+    public static final ArticleCollection SHUO_MING = bundle("shuoming",
+            "说明", "One introduction per category, in tree order. "
+                  + "A Branch holds no articles, so the group's own introduction "
+                  + "and every shelf's live here together.",
+            k("shuoming-kouyu", "绕口令与顺口溜"),
+            k("shuoming-raokouling", "绕口令"),
+            k("shuoming-s-sh", "绕口令 · s 和 sh"),
+            k("shuoming-z-zh", "绕口令 · z c s 和 zh ch sh"),
+            k("shuoming-n-l", "绕口令 · n 和 l"),
+            k("shuoming-b-p", "绕口令 · b p f"),
+            k("shuoming-an-ang", "绕口令 · 前鼻音和后鼻音"),
+            k("shuoming-j-q-x", "绕口令 · j q x"),
+            k("shuoming-changju", "绕口令 · 长句"),
+            k("shuoming-shunkouliu", "顺口溜"),
+            k("shuoming-shuzi", "顺口溜 · 数字"),
+            k("shuoming-jieqi", "顺口溜 · 节气与月份"),
+            k("shuoming-shenghuo", "顺口溜 · 生活"),
+            k("shuoming-ziran", "顺口溜 · 自然"),
+            k("shuoming-xuexi", "顺口溜 · 学习"));
+
     public static final ArticleCollection S_SH = bundle("s-sh",
             "绕口令 · s 和 sh", "The pair most speakers merge, drilled hardest.",
             k("si-shi-si", "四是四"), k("shan-shang-si-si", "山上四十四"),
@@ -125,7 +147,8 @@ public final class KouYuCollections {
             k("wen-wei-shen-me", "问为什么"), k("shou-hao-shu", "爱护书"));
 
     public static List<ArticleCollection> all() {
-        return List.of(S_SH, Z_ZH, N_L, B_P, AN_ANG, J_Q_X,
+        return List.of(SHUO_MING,
+                S_SH, Z_ZH, N_L, B_P, AN_ANG, J_Q_X,
                 SHU_ZI, JIE_QI, SHENG_HUO, ZI_RAN, CHANG_JU, XUE_XI);
     }
 }

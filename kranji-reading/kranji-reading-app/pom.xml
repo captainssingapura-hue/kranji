@@ -99,6 +99,18 @@
             <version>${homing.core.version}</version>
         </dependency>
 
+        <!--
+            The article check, as a base class. Test scope: nothing the app
+            ships knows this exists. The per-group subclasses live in the
+            library modules; this one is the only place every root on one
+            classpath is asked at once.
+        -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-library-testkit</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>

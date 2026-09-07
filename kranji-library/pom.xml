@@ -37,6 +37,7 @@
     </properties>
 
     <modules>
+        <module>kranji-library-testkit</module>
         <module>kranji-library-shici</module>
         <module>kranji-library-gushi</module>
         <module>kranji-library-kepu</module>

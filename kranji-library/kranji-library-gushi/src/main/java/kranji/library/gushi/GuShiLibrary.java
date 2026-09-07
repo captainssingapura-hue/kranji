@@ -16,6 +16,7 @@ public final class GuShiLibrary {
 
     /** This group, arranged, for a root to graft. See {@link kranji.reading.library.ArticleLibrary}. */
     public static final LibraryTree TREE = LibraryTree.of("故事",
+            LibraryTree.shelf(GuShiCollections.SHUO_MING),
             LibraryTree.of("寓言故事",
                     LibraryTree.branch("中国寓言",
                             GuShiCollections.HAN_FEI,

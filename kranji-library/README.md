@@ -23,6 +23,7 @@ kranji-library/
   kranji-library-kouyu/     口语     — tongue-twisters, spoken drills
   kranji-library-zhinan/    使用指南 — the reader's own instructions
   kranji-library-all/       the root: arrangement only, no text
+  kranji-library-testkit/   the article check, as a base class - no text
 ```
 
 Do **not** edit `kranji-reading/**`, `kranji-core/**`, `kranji-singulars/**`,
@@ -208,6 +209,23 @@ CJK in `…Collections.java` is fine — these are ordinary server classes, not
 served JS modules, and the no-inline-glyph conformance rule does not reach
 them. (It does reach anything under `homing/js/`, which you are not editing.)
 
+> **A title cannot carry a reading override, and nothing warns you.**
+> `ArticleParser` never parses the title — it takes it as a string and hands
+> it through, and the readings are worked out in the browser from the raw
+> text, where `{…}` means nothing and would be shown as literal braces. So
+> every Han character in a title takes the corpus principal, whatever your
+> title means.
+>
+> **Check your title against §4 before you choose it.** 音乐课 reads 乐 as
+> `lè`; 请假条 reads 假 as `jiǎ`; 睡觉 reads 觉 as `jué`. None of those can be
+> fixed from here — the only move available to an author is to pick a title
+> that does not need fixing. Twenty-eight titles already in the library have
+> this fault, 地球 and 扫地 among them: 地's principal is `de`, which is the
+> example §4 opens with.
+>
+> Fixing it properly means an override path for titles, which lives in
+> `kranji-reading/**`. Say so rather than reaching for it.
+
 ### `summary` is no longer displayed
 
 The library tree stopped rendering shelf summaries — they were an English
@@ -333,11 +351,13 @@ because a shelf nobody can reach is indistinguishable from one nobody wrote.
 
 **A new group** is a Maven module. Copy `kranji-library-zhinan`, which is the
 smallest complete example: `pom.xml`, `…Library.java` (the tree),
-`…Collections.java`, one article, and a `CatalogueTest`. Then:
+`…Collections.java`, one article, a `CatalogueTest` and an `ArticlesTest`.
+Then:
 
 - add `<module>` to `kranji-library/pom.xml`
 - add the dependency to `kranji-library-all/pom.xml`
 - graft the tree in `KranjiLibrary.java`
+- point the new `ArticlesTest` at the new tree — four lines, §9
 - update `RootLibraryTest.theArrangementIsTheOneWritten`, which asserts the
   top-level order exactly
 
@@ -353,10 +373,23 @@ Read a dozen before writing one. The house style is short and plain.
 
 | | characters |
 |---|---|
-| shortest | 59 |
-| median | **118** |
-| 90th percentile | 188 |
-| longest | 1,387 |
+| shortest | 19 |
+| median | **38** |
+| 90th percentile | 62 |
+| longest | 451 |
+
+Verse runs shorter than the table: 古诗词 is 22 at its shortest and 32 at its
+median, and its longest is 曹操's 短歌行 at 160.
+
+> **This table was wrong until 2026-09**, and said 59 / 118 / 188 / 1,387.
+> Those are the same articles counted in *bytes*: `wc -m` counts bytes in the
+> shells this repository is built in, and a Han character is three of them.
+> Anything measured that way reads three times its real length. To count
+> characters:
+>
+> ```bash
+> sed 's/{[^}]*}//g' file.txt | tr -d '\n' | LC_ALL=C.UTF-8 grep -o . | wc -l
+> ```
 
 Written for this project. Nothing here is translated or adapted from a
 source, which is why the library modules carry no third-party licence — keep
@@ -368,14 +401,25 @@ it that way, and keep the facts the plain ones a reader can check.
 
 ### The inner loop — run this constantly
 
+Your group, which is the one you are editing:
+
+```bash
+mvn -o -pl kranji-library/kranji-library-shici -am test
+```
+
+A second or two. It parses **every article of that group**, one test case per
+article, and fails on anything a reader would be shown an error for: a
+character outside the corpus, an override that is not one of that character's
+readings, an unclosed brace, an empty body. The count is the size of your
+shelf, and a broken poem is one red case naming that poem rather than one red
+method with the damage buried in its message.
+
+The whole library — every root on one classpath, which is what the
+application actually serves:
+
 ```bash
 mvn -o -pl kranji-reading/kranji-reading-app -am test -Dtest=LibraryArticlesTest -Dsurefire.failIfNoSpecifiedTests=false
 ```
-
-About six seconds. It parses **every article of every library on the
-classpath** and fails on anything a reader would be shown an error for: a
-character outside the corpus, an override that is not one of that
-character's readings, an unclosed brace, an empty body.
 
 > **`-am` is not optional.** Without it, `-pl` resolves the library jars from
 > `~/.m2` and your edit is not in them — the test passes against the last
@@ -384,8 +428,13 @@ character's readings, an unclosed brace, an empty body.
 > older surefire wants; the short `-DfailIfNoTests=false` fails in
 > `kranji-core`.
 
-It also writes **`kranji-reading/kranji-reading-app/target/article-warnings.txt`**,
-which lists every reading that was chosen for you without an override:
+Both are the same check. It lives in `kranji-library/kranji-library-testkit`
+as `LibraryArticlesTestBase`; each group module has a short `ArticlesTest`
+naming its own tree, and the application has one naming every discovered
+root. Adding a group means adding that subclass — §7.
+
+Each writes **`target/article-warnings.txt`** under its own module, listing
+every reading that was chosen for you without an override:
 
 ```
 kranji.library.zhinan.shiyong:cong-zhe-li-kai-shi  (/kranji/articles/zhinan/…)
@@ -394,25 +443,30 @@ kranji.library.zhinan.shiyong:cong-zhe-li-kai-shi  (/kranji/articles/zhinan/…)
     …
 ```
 
-An article listed there is **not wrong — it is unreviewed**. 497 of 499
+So `kranji-library/kranji-library-shici/target/article-warnings.txt` holds
+only 古诗词, and `kranji-reading/kranji-reading-app/target/article-warnings.txt`
+holds all of it. The group's is the one to read while writing; they say the
+same thing about the same article.
+
+An article listed there is **not wrong — it is unreviewed**. 511 of 514
 articles appear, because 的 and 不 and 一 are polyphonic and in every
 sentence ever written. Find your own address in the file and read its lines.
 That is step 4 of §6, and it is not optional.
 
 ### The catalogue checks
 
-The inner loop skips these, because `-Dtest=` selects one class. Run them
-when you have added or moved a shelf, and always before you push.
+Your group's `CatalogueTest` runs with the inner loop above — same module,
+same command, no extra run. What that does not cover is the graft:
 
 ```bash
-mvn -o -pl kranji-library/kranji-library-kepu test        # your group
 mvn -o -pl kranji-library/kranji-library-all test          # the graft
 ```
 
-The group's `CatalogueTest` checks that every ref resolves to a file that
-exists, that every declared collection is mounted, and that no resource is
-mounted twice. `RootLibraryTest` checks the same across all jars, plus id
-uniqueness and the top-level arrangement.
+`CatalogueTest` checks that every ref resolves to a file that exists, that
+every declared collection is mounted, and that no resource is mounted twice.
+`RootLibraryTest` checks the same across all jars, plus id uniqueness and the
+top-level arrangement. Run it when you have added or moved a shelf, and
+always before you push.
 
 ### Everything, before you push
 
@@ -478,5 +532,5 @@ files to read:
 | What is served to the reader | `kranji-reading-app/…/read/ArticleGetAction.java` |
 | The tree the Library pane draws | `kranji-reading-app/…/read/ArticleTreeGetAction.java` |
 | Ids, refs, collections, tree | `kranji-reading-model/…/library/` |
-| The check that gates your work | `kranji-reading-app/src/test/…/read/LibraryArticlesTest.java` |
+| The check that gates your work | `kranji-library-testkit/…/LibraryArticlesTestBase.java`, plus each group’s `ArticlesTest` |
 | The smallest complete group | `kranji-library/kranji-library-zhinan/` |
