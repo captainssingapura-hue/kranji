@@ -1,6 +1,6 @@
 package kranji.reading.app.read;
 
-import kranji.library.testkit.LibraryArticlesTestBase;
+import kranji.reading.testkit.LibraryArticlesTestBase;
 import kranji.reading.library.ArticleLibrary;
 import kranji.reading.library.Libraries;
 import kranji.reading.library.LibraryTree;
@@ -8,25 +8,24 @@ import kranji.reading.library.LibraryTree;
 import java.util.List;
 
 /**
- * Every article of every root on the classpath, one case each.
+ * Every article of every root on this classpath, one case each.
  *
- * <h2>Why this survives the per-group tests</h2>
+ * <h2>What this can still see, now the collections have moved out</h2>
  *
- * <p>Each library module now runs {@link LibraryArticlesTestBase} over its own
- * tree, which is where an author wants the failure. This is not that check
- * repeated: it is the only module where every discovered root is present at
- * once - the published library and the demonstration set together - so it is
- * the only place the question can be asked of the arrangement a reader
- * actually gets.</p>
+ * <p>The published library lives in its own repository and reaches a reader as
+ * a second jar, discovered through {@code META-INF/services}. It is not on this
+ * module's classpath and this test can no longer speak for it — that check
+ * belongs to the build that produces it, where {@link LibraryArticlesTestBase}
+ * now runs per group.</p>
  *
- * <p>It also catches what a group cannot see from inside itself: an article
- * that parses against its own module's classpath and not against the one the
- * application assembles.</p>
+ * <p>What is left here is the demonstration set, and it is worth keeping: it is
+ * what a reader gets when no collections jar is present, so it is the library
+ * every deployment has. An article that will not parse in it is a broken page
+ * in the default install.</p>
  *
- * <p>The warning report this writes, {@code target/article-warnings.txt}, is
- * the whole-library one that {@code kranji-library/README.md} sends authors to.
- * Each group module now writes its own alongside it, holding only that group's
- * articles.</p>
+ * <p>The wider question — that the app and a collections jar agree once they
+ * are put together — cannot be asked in either repository alone. It is a
+ * property of the pair, and the place to ask it is whatever assembles them.</p>
  */
 class LibraryArticlesTest extends LibraryArticlesTestBase {
 
@@ -36,10 +35,14 @@ class LibraryArticlesTest extends LibraryArticlesTestBase {
     }
 
     /**
-     * The libraries not loading is the failure this number exists for: a
-     * classpath with no content jar yields no cases, and no cases would
-     * otherwise read as a pass.
+     * The demonstration set, and no fewer.
+     *
+     * <p>The number exists for the case where nothing loads at all: a classpath
+     * with no library on it yields no cases, and no cases would otherwise read
+     * as a pass. It was 100 while the published library was here; it is the
+     * demo set's size now, and a drop means the fallback library is missing
+     * rather than that a collections jar is absent.</p>
      */
     @Override
-    protected int fewestArticlesExpected() { return 100; }
+    protected int fewestArticlesExpected() { return 20; }
 }

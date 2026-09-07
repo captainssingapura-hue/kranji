@@ -69,13 +69,27 @@ class GlossImpactTest {
     }
 
     @Test
-    void theHeaviestRowIsBlindNotMerelyBusy() {
-        // The bug this ranking exists to avoid: 的 is read 366 times and is
-        // glossed, so it must not lead. Whatever leads must have nothing
-        // written for it.
-        GlossImpact.Row first = ROWS.get(0);
-        assertTrue(first.blind() > 0,
-                () -> "the worklist opens on " + first.glyph() + ", which costs a reader nothing");
+    void aBusyButCoveredRowNeverOutranksABlindOne() {
+        // The bug this ranking exists to avoid: 的 is read hundreds of times
+        // and is glossed, so it must not lead. Whatever leads must have
+        // something unwritten.
+        //
+        // Stated as an ordering rather than as a fact about the first row,
+        // because what is in the queue at all now depends on which library is
+        // mounted. The published collections moved to their own repository and
+        // reach a reader as a second jar; this module sees only the
+        // demonstration set, which is small enough that every reading in it may
+        // already be glossed. That is a legitimate state of the world and it
+        // used to fail here - the ranking was fine, the library was just
+        // smaller than the assertion assumed.
+        int lastBlind = Integer.MAX_VALUE;
+        for (GlossImpact.Row r : ROWS) {
+            if (r.blind() == 0) { lastBlind = 0; continue; }
+            assertTrue(lastBlind > 0,
+                    () -> "the worklist puts " + r.glyph() + ", which a reader cannot read,"
+                        + " below a row that costs a reader nothing");
+            lastBlind = r.blind();
+        }
     }
 
     @Test

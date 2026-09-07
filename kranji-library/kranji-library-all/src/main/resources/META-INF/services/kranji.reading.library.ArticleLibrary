@@ -1,5 +1,0 @@
-# Discovered by kranji.reading.library.Libraries.
-#
-# Only roots are registered. The five group modules are grafted by
-# KranjiLibrary in Java, not found on the classpath.
-kranji.library.all.KranjiLibrary

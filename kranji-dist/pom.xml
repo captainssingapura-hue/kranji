@@ -22,6 +22,26 @@
 
         It holds no code of its own beyond the launcher: a module that shipped
         behaviour would be a third place where the apps differ.
+
+        THE READING LIBRARY IS NOT IN HERE. It has its own repository and ships
+        as its own jar, discovered at startup through
+        META-INF/services/kranji.reading.library.ArticleLibrary. Run this jar
+        alone and the reader serves the demonstration set - 23 articles, the
+        fallback every deployment has. Run it beside a collections jar and that
+        one wins, because it declares precedence 0 against the demo set's 10:
+
+            java -jar kranji.jar reader 9102
+
+            java -cp "kranji.jar;kranji-reading-collections.jar" \
+                 kranji.dist.KranjiApp reader 9102
+
+        The second form is -cp rather than -jar because -jar ignores the
+        classpath entirely - a jar launched that way cannot see a second one,
+        and the library would be silently absent with the reader working
+        perfectly otherwise. The separator is ';' on Windows and ':' elsewhere;
+        note that a Git Bash shell rewrites a ';'-separated list and drops
+        everything after the first entry, which produces exactly that silent
+        absence. Use PowerShell or cmd on Windows.
     </description>
 
     <dependencies>

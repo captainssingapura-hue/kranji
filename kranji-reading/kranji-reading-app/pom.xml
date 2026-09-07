@@ -42,12 +42,6 @@
             classpath here and the reader gets this one, because DemoLibrary
             ranks above 0 and yields - see kranji.reading.library.Libraries.
         -->
-        <dependency>
-            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-library-all</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>runtime</scope>
-        </dependency>
 
         <!--
             The glosses, as an SPI implementation rather than an API.
@@ -107,7 +101,7 @@
         -->
         <dependency>
             <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
-            <artifactId>kranji-library-testkit</artifactId>
+            <artifactId>kranji-reading-testkit</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
