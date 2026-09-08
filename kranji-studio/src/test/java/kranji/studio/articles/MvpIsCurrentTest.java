@@ -99,6 +99,36 @@ class MvpIsCurrentTest {
     }
 
     @Test
+    void theTreeNestsSubsectionsUnderTheirSection() {
+        // The shape TreeRenderer draws, and the reason the reader gets arrow
+        // keys without anybody writing an arrow key.
+        var tree = new JsonObject(MvpSectionGetAction.tree());
+
+        assertEquals("L0", tree.getString("level"));
+        assertEquals("雨", tree.getJsonObject("display").getString("label"));
+
+        var children = tree.getJsonArray("children");
+        assertEquals(5, children.size(), "the document's prose and four sections");
+
+        var yangZi = children.getJsonObject(2);
+        assertEquals("yang-zi", yangZi.getString("segment"));
+        assertEquals(1, yangZi.getJsonArray("children").size(), "二之一 sits under it");
+        assertEquals("qian-hou",
+                yangZi.getJsonArray("children").getJsonObject(0).getString("segment"));
+    }
+
+    @Test
+    void nothingInTheTreeCountsCharacters() {
+        // A count is a fact about the arrangement, not about the thing being
+        // chosen. It belongs in the workbench, where it is.
+        String tree = MvpSectionGetAction.tree();
+
+        assertTrue(tree.contains("\"badge\":\"\""), tree);
+        assertTrue(tree.contains("\"note\":\"\""), tree);
+        assertFalse(tree.contains("chars"), tree);
+    }
+
+    @Test
     void aSectionComesBackArrangedAndNeverAsMarkdown() {
         // The whole path: a resource holding structure, read and laid into
         // rows. Nothing between the source and here has seen markdown.

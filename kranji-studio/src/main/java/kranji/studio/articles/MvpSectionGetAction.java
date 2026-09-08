@@ -71,14 +71,78 @@ public final class MvpSectionGetAction
     public CompletableFuture<DocContent> execute(Query query, EmptyParam.NoHeaders headers) {
         String id = query.id();
         String body = (id == null || id.isBlank())
-                ? index()
+                ? tree()
                 : section(id, columns(query.columns()));
         return CompletableFuture.completedFuture(new DocContent(body, JSON));
     }
 
-    /** Visible for testing — what there is to read. */
+    /** Visible for testing — the generated index, as written. */
     static String index() {
         return read("index.json");
+    }
+
+    /**
+     * Visible for testing — what there is to read, as a tree.
+     *
+     * <p>The substrate's canonical {@code TreeNode} shape, which is what buys
+     * the reader arrow keys: {@code TreeRenderer} draws any conforming tree and
+     * owns the key semantics, so a second tree with a second idea of what
+     * ArrowDown means never gets written.</p>
+     *
+     * <p>Built here rather than generated, because it is a rendering of the
+     * index and not a fact about the document. The index carries the levels;
+     * turning a list with levels into a nest is one pass and belongs to
+     * whatever is about to draw it.</p>
+     *
+     * <p>A section's {@code segment} is its id, so the last element of the
+     * renderer's {@code namePath} is the whole address — no lookup and no
+     * second request, which is the trick the library's catalogue already
+     * uses.</p>
+     */
+    static String tree() {
+        var documents = new JsonObject(index()).getJsonArray("documents");
+        if (documents.isEmpty()) return node(0, "", "", List.of());
+
+        var document = documents.getJsonObject(0);
+        var sections = document.getJsonArray("sections");
+        var children = new java.util.ArrayList<String>();
+        var under = new java.util.ArrayList<String>();   // the open level-2's children
+        String pending = null;                           // that level-2, unclosed
+
+        for (int i = 0; i < sections.size(); i++) {
+            var s = sections.getJsonObject(i);
+            String id = s.getString("id");
+            String title = s.getString("title");
+            if (s.getInteger("level", 2) >= 3) {
+                under.add(node(2, id, title, List.of()));
+                continue;
+            }
+            if (pending != null) { children.add(close(pending, under)); under.clear(); }
+            pending = node(1, id, title, List.of());
+        }
+        if (pending != null) children.add(close(pending, under));
+
+        return node(0, document.getString("id", ""), document.getString("title", ""), children);
+    }
+
+    /**
+     * One node.
+     *
+     * <p>{@code badge} and {@code note} are empty on purpose. A count of
+     * characters is a fact about the arrangement, not about the thing being
+     * chosen — it belongs in a workbench, where it is, and a reader picking
+     * something to read has no use for it.</p>
+     */
+    private static String node(int level, String segment, String label, List<String> children) {
+        return "{\"level\":\"L" + level + "\",\"segment\":" + MdJson.quote(segment)
+             + ",\"display\":{\"label\":" + MdJson.quote(label)
+             + ",\"badge\":\"\",\"note\":\"\",\"kind\":\"section\"}"
+             + ",\"dimensions\":[],\"children\":[" + String.join(",", children) + "]}";
+    }
+
+    /** Puts a level-2 node's subsections inside it. */
+    private static String close(String open, List<String> children) {
+        return open.substring(0, open.length() - 2) + String.join(",", children) + "]}";
     }
 
     /**
