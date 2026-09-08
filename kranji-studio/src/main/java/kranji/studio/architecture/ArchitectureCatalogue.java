@@ -35,12 +35,15 @@ public record ArchitectureCatalogue()
                         LayoutPipelineDoc.INSTANCE),
                 Entry.of(this, DocReader.INSTANCE,
                         new DocReader.Params(GlossModelDoc.INSTANCE.uuid().toString()),
-                        GlossModelDoc.INSTANCE)
+                        GlossModelDoc.INSTANCE),
+                Entry.of(this, DocReader.INSTANCE,
+                        new DocReader.Params(MarkdownArticlesDoc.INSTANCE.uuid().toString()),
+                        MarkdownArticlesDoc.INSTANCE)
         );
     }
 
     @Override public List<Doc> docs() {
         return List.of(TypeHierarchyDoc.INSTANCE, LayoutPipelineDoc.INSTANCE,
-                       GlossModelDoc.INSTANCE);
+                       GlossModelDoc.INSTANCE, MarkdownArticlesDoc.INSTANCE);
     }
 }
