@@ -7,29 +7,28 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * What an article asks of a reader, counted.
+ * What an article contains, counted by reading.
  *
- * <p>Everything needed to work out how much of an article somebody can read,
- * and nothing about any particular reader. That split is what makes it useful:
- * a census is a property of the article alone, so it is computed once on the
- * server, cached by the browser, and answered against a known set that never
- * leaves the device.</p>
+ * <p>A property of the article alone, with nothing about any reader in it.
+ * That is what it was built for and it is why it survived the thing it was
+ * built for: a measure that graded a reader against an article has been
+ * retired, and this — which only ever counted the article — is now what tells
+ * the gloss worklist which readings the library actually demands.</p>
  *
  * <h2>Counted by reading, not by character</h2>
  *
- * <p>Because that is how the set is keyed, and because it is the truthful
- * count. An article using 行 as háng asks nothing of a reader who has learnt
- * xíng — treating the two as one would report a readability the child cannot
- * actually achieve.</p>
+ * <p>Because that is how the known set is keyed, and because it is the
+ * truthful count. An article using 行 as háng asks nothing of a reader who has
+ * learnt xíng, and a gloss written for one is not a gloss for the other —
+ * folding them together would report a demand that is already met.</p>
  *
  * <h2>Two numbers, not one</h2>
  *
- * <p>{@link #total} counts every Han token including repeats, so the ratio
- * reflects the reading experience — a character met forty times is forty
- * moments of support. {@link #pairs} counts distinct readings, which gives the
- * other figure the catalogue needs: an article at 94% with eight distinct
- * unknown readings is a different proposition from 94% with one repeated forty
- * times, and the second is the better lesson.</p>
+ * <p>{@link #total} counts every Han token including repeats, so a character
+ * met forty times weighs forty times. {@link #pairs} counts distinct readings.
+ * The gloss worklist wants both: how often a reading appears is how much a
+ * missing meaning costs, and how many distinct readings are missing is how
+ * much work is left.</p>
  *
  * <p>Punctuation, spaces, Latin and digits are not counted at all. They are
  * {@link Token.Plain}, never annotated, and including them would quietly

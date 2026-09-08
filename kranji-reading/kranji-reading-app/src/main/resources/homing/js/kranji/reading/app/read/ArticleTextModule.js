@@ -3,10 +3,9 @@
 //
 // Three questions that all have the same subject and none of which are about
 // the pane: which lines an article is made of, what squares a line becomes,
-// and how a paragraph's first line is set in. Four callers wanted them - the
-// board, the title, the readability line and the loader - and while they were
-// closures inside the widget they were four callers reaching into one
-// function's scope.
+// and how a paragraph's first line is set in. Three callers wanted them -
+// the board, the title and the loader - and while they were closures inside
+// the widget they were three callers reaching into one function's scope.
 //
 // Nothing here touches the DOM, so it can be asked these questions under
 // GraalVM with no browser: the scan rule is ArticleScannerModule's and the
@@ -48,7 +47,7 @@ function createArticleText(opts) {
          *
          * <p>The body and only the body. The title is on the screen too, but it
          * is not part of what the article asks of a reader, and this is what
-         * the readability count is taken over.</p>
+         * the article is counted over.</p>
          */
         textsOf: function (mod) {
             var out = [];

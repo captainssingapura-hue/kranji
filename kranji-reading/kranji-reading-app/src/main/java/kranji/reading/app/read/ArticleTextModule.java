@@ -14,8 +14,8 @@ import java.util.List;
  * which lines an article is made of, what squares a line becomes, and how a
  * paragraph's first line is set in.</p>
  *
- * <p>They were closures inside {@link ArticleReaderWidget}, which four things
- * reached into — the board, the title, the readability line and the loader.
+ * <p>They were closures inside {@link ArticleReaderWidget}, which three things
+ * reached into — the board, the title and the loader.
  * Out here they are one object with one owner, and the widget is back under
  * its line budget, which is what the limit is for.</p>
  *

@@ -84,7 +84,7 @@ public final class ArticleCatalogueWidget
                 "",
                 "    var owner = Object.freeze({ toString: function () { return 'library'; } });",
                 "",
-                "    // No known set here, and no readability.",
+                "    // No known set here, and no measure of the reader.",
                 "    //",
                 "    // The figures were worth having and cost more than they were worth.",
                 "    // Keeping them true meant measuring all 475 articles and rebuilding",

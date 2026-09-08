@@ -22,7 +22,7 @@ import java.util.List;
  * in the tree, because the known set never leaves the device and the server
  * therefore cannot have computed it.</p>
  *
- * <p>So the two halves meet here, the same way readability does: the corpus
+ * <p>So the two halves meet here, the same way the census does: the corpus
  * arrives as {@code /syllable-index}, the set arrives over the party, and
  * {@link KnownSoundsModule} intersects them in the browser.</p>
  *
