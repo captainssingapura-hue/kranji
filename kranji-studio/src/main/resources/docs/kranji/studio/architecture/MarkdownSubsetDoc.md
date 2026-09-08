@@ -56,7 +56,7 @@ changes it silently unless you know.
 | Syntax | Verdict | Becomes |
 |---|---|---|
 | `字{dì}` | keep — **E1** | the reading of that character |
-| `` `text` `` | keep — **E3** | a plain run that flows |
+| `` `text` `` | keep — **E3** | a run marked *not Chinese to be practised* |
 | `**bold**` | **drop, warn** | the text, unemphasised |
 | `*italic*` | **drop, warn** | the text, unemphasised |
 | `[text](url)` | **error** | a link the reader cannot follow is a lie |
@@ -120,21 +120,52 @@ checked rather than recomputed.
 
 ### E3 — Plain run: `` `Apartments` ``
 
-Backticks mean **"this is not Chinese to be practised — let it flow"**.
+Backticks mean exactly one thing: **this run is not Chinese to be practised.**
 
 ```
 警察出生点在`Tunnel`附近。
 ```
 
-This is the one extension that solves a bug rather than adding a capability.
-`ArticleScannerModule` puts an entire non-Han run into a single cell, so
-`Apartments` becomes one square holding ten letters. The published library has
-exactly one Latin run and it is one character long (`U字形`), and no test covers
-the multi-letter case; the sample document has 37 of them.
+It settles *intent* first — it separates Latin the author wants inline
+from Latin that arrived by accident, and gives the renderer something to switch
+on. How such a run is then drawn is a separate question, settled below.
 
-Marking a run plain says explicitly that it leaves the grid, rather than leaving
-the scanner to guess from a rule nobody has exercised. It also gives inline code
-a real meaning instead of a rejection.
+The problem it exists for is measured. `ArticleScannerModule.flushPlain` pushes
+an entire non-Han run into a **single cell**, and a cell's character box is
+fixed — `width: 62px; font-size: 42px` at medium, centred, with no `overflow`
+rule. Ten letters at 42px is roughly 230px of text in a 62px box: about 3.7×
+over, spilling across both neighbours. The published library has exactly one
+Latin run and it is one character long (`U字形`), so nothing has ever exercised
+this; the sample document has 37 runs.
+
+#### How it renders
+
+| | `Apartments` becomes | keeps the grid | verdict |
+|---|---|---|---|
+| **A** one cell per letter | 10 squares | yes | **wrong** |
+| **B** one cell, scaled to fit | 1 square, small text | yes | **take this** |
+| **C** spans *k* cells | ~4 columns, normal size | — | **not available** |
+| **D** leaves the grid | inline text between two boards | no | later, if B proves not enough |
+
+**A is wrong** despite being cheapest: ten Latin letters each in a practice
+square says *learn these*, which is the opposite of what the mark means.
+
+**C would have been the one to want** — the Chinese keeps its rhythm and the
+Latin reads at a normal size — and it is not available. `RelGridCellsModule`
+builds one `div` per column and `RelGridLayoutModule` sizes columns through
+`<col>` elements; there is no span or merge concept anywhere in the grid. Having
+it would mean changing the framework, which is a different repository and a much
+larger ask than this feature earns.
+
+**So B.** One cell, its content scaled to fit, with `overflow: hidden` so a run
+can never spill across its neighbours the way it silently would today. It is
+adequate for the common case — the sample's runs are mostly `T`, `CT`, `Mid`,
+`CS2` — and only a run as long as `Apartments` becomes uncomfortably small.
+
+**D stays on the table** for the day a document is mostly Latin. It is the
+semantically right answer and the structurally expensive one: a block is
+currently one board, and this makes it board / text / board. Not worth it for 37
+runs in one article.
 
 ### E4 — Verse fence
 
@@ -190,6 +221,6 @@ the author wrote?* A dropped bold run does not. A dropped table does.
 ```
 
 One title checked against the catalogue, two pinned ids, one reading override,
-one plain run that leaves the grid, a list, and two lines whose breaks survive.
+one run marked as not-Chinese, a list, and two lines whose breaks survive.
 Everything else in the file would be an error or a warning, and the author is
 told which.
