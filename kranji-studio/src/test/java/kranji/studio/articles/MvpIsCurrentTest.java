@@ -111,9 +111,9 @@ class MvpIsCurrentTest {
         assertEquals(5, children.size(), "the document's prose and four sections");
 
         var yangZi = children.getJsonObject(2);
-        assertEquals("yang-zi", yangZi.getString("segment"));
+        assertEquals("yu.yang-zi", yangZi.getString("segment"));
         assertEquals(1, yangZi.getJsonArray("children").size(), "二之一 sits under it");
-        assertEquals("qian-hou",
+        assertEquals("yu.yang-zi.qian-hou",
                 yangZi.getJsonArray("children").getJsonObject(0).getString("segment"));
     }
 
@@ -132,7 +132,7 @@ class MvpIsCurrentTest {
     void aSectionComesBackArrangedAndNeverAsMarkdown() {
         // The whole path: a resource holding structure, read and laid into
         // rows. Nothing between the source and here has seen markdown.
-        String served = MvpSectionGetAction.section("gu-ren", 20);
+        String served = MvpSectionGetAction.section("yu.gu-ren", 20);
 
         assertTrue(served.contains("\"plan\":"), served);
         assertTrue(served.contains("\"columns\":20"), served);
@@ -150,8 +150,8 @@ class MvpIsCurrentTest {
 
     @Test
     void aNarrowerPageIsADifferentArrangementOfTheSameSection() {
-        String wide = MvpSectionGetAction.section("yang-zi", 20);
-        String narrow = MvpSectionGetAction.section("yang-zi", 10);
+        String wide = MvpSectionGetAction.section("yu.yang-zi", 20);
+        String narrow = MvpSectionGetAction.section("yu.yang-zi", 10);
 
         assertFalse(wide.equals(narrow), "the arrangement depends on the reader");
         assertTrue(narrow.contains("\"columns\":10"));
