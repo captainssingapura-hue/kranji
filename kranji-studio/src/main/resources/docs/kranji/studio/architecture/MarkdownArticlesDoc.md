@@ -1,6 +1,8 @@
 # Markdown Articles
 
-*A design, not an implementation. Written against one real document —
+*A design, not an implementation. The constructs an article may use are specified
+separately, in **The Markdown Kranji Reads**; this is the shape of the thing that
+reads them. Written against one real document —
 `CS2地图简介-Italy详细版.md`, 8,470 characters — and every number below is
 measured from it rather than estimated.*
 
@@ -125,24 +127,19 @@ somebody improves a title.
 
 ## The subset
 
-Not "markdown support" but *the markdown Kranji reads*, with anything outside it
-a **parse error** — the same treatment a bad reading override gets. Silence is
-what this codebase consistently refuses.
+**Specified in [The Markdown Kranji Reads](#), and only there.** Every construct
+with a verdict, the four extensions, and the rule that anything unlisted is an
+error rather than a silent omission.
 
-| | |
-|---|---|
-| **Keep** | `#`/`##`/`###`, paragraphs, `- ` bullets, `1.` numbered, `> ` quotes |
-| **Drop, with a warning** | `**bold**` — 24 in the sample |
-| **Reject** | tables, code fences, links, images, inline HTML, nested lists |
-| **Ignore** | `---`, redundant once headings exist |
+It is kept in one document on purpose. A subset described in two places is a
+subset that will eventually be described two ways, and the one an author reads
+will not be the one the parser implements.
 
-Bold is the interesting case. It is far too common to reject outright and
-meaningless to render: a bold run inside a square practice grid is one heavier
-square, competing with the pinyin above it. Dropping it silently is the thing
-this codebase hates, so it drops with a warning in the same report as the
-readings.
-
-The `{dì}` override syntax survives untouched — braces are not markdown.
+The design consequence worth repeating here is the shape of the error policy:
+**an error means the article does not serve.** That is a strong choice and it is
+deliberate — a file accepted with its tables quietly missing is a page that is
+not what was written, and the author has no way to find out. Warnings are
+reserved for decoration that has no meaning in a practice grid.
 
 ## Headings are already built
 
