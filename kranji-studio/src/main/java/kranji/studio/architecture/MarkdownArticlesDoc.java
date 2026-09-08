@@ -16,7 +16,7 @@ public record MarkdownArticlesDoc() implements ClasspathMarkdownDoc {
     @Override public String summary() {
         return "A long document becomes a tree of segments rather than one article: where to "
              + "cut it, which markdown the reader accepts, and the two rules the design "
-             + "collides with. Measured against one real 8,470-character document.";
+             + "collides with. Measured against one real 3,232-character document.";
     }
     @Override public String category(){ return "DOC"; }
     @Override public List<Reference> references() { return List.of(); }

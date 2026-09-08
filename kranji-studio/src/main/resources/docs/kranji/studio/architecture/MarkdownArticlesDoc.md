@@ -3,7 +3,7 @@
 *A design, not an implementation. The constructs an article may use are specified
 separately, in **The Markdown Kranji Reads**; this is the shape of the thing that
 reads them. Written against one real document —
-`CS2地图简介-Italy详细版.md`, 8,470 characters — and every number below is
+`CS2地图简介-Italy详细版.md`, 3,232 characters — and every number below is
 measured from it rather than estimated.*
 
 ## Why the current format has a ceiling
@@ -48,31 +48,62 @@ becomes decoration and the guarantee behind it quietly stops being true.
 A long document should not be one article. It should be a **tree of segments**,
 each the size of a thing somebody sits down to read.
 
-Where to cut, measured three ways against the library's own distribution:
+Where to cut, measured three ways against the library's own distribution.
+
+> **These figures were wrong once and are worth not getting wrong again.** An
+> earlier revision quoted them 2.6× too large, because `wc -m` counts *bytes*
+> unless the locale says otherwise and a Han character is three of them. Every
+> number here is now characters, cross-checked against the parser's own count.
+> The conclusions did not change — the ratio between a segment and an article
+> is what the argument rests on, and that survived — but "8,470 characters" was
+> a byte count wearing a character's name.
 
 | | segments | median | p90 | max |
 |---|---|---|---|---|
-| Whole document | 1 | — | — | **8,470** |
-| Split at headings (`##`/`###`) | 14 | 471 | 795 | 1,257 |
-| Split at paragraph blocks | 30 | 219 | 447 | 541 |
-| **The published library** | 608 | **143** | **200** | 1,387 |
+| Whole document | 1 | — | — | **3,232** |
+| Split at headings (`##`/`###`) | 14 | 185 | 299 | 461 |
+| Split at paragraph blocks | 30 | 80 | 168 | 216 |
+| **The published library** | 608 | **51** | **71** | 489 |
 
 This separates two problems that look like one.
 
 **Display.** The board builds roughly one cell widget per character — 462
 measured for a 392-character article. The whole document is ~2,300 cells.
-Splitting at headings fixes this outright: the largest segment is 1,257,
-already under the 1,387 that renders today. **For display, headings alone are
+Splitting at headings fixes this outright: the largest segment is 461,
+already under the 489 that renders today. **For display, headings alone are
 sufficient and no size policy is needed.**
 
-**Reading session.** Here they are not. A median segment of 471 is 3.3× the
-library's median of 143. That is not a broken page, it is a different kind of
+**Reading session.** Here they are not. A median segment of 185 is 3.6× the
+library's median of 51. That is not a broken page, it is a different kind of
 sitting.
+
+### What it actually did
+
+`Segments` is built and the figures above were estimates worth checking. Run
+over the same document, now that the subset requires its Latin to be wrapped:
+
+| | leaves | median | p90 | max |
+|---|---|---|---|---|
+| Split at headings | **14** | 172 | 349 | 443 |
+| Budget 70, at paragraph boundaries | **41** | **64** | 111 | 183 |
+
+Fourteen sections against fourteen predicted, and forty-one leaves against
+"roughly forty". The median lands at 64 against the library's 51 — a segment is
+now the size of an article, which was the whole claim.
+
+**One number moved and it is worth saying why.** The document measures 2,740
+characters here, not 3,232. Both are right: 3,232 is the *file*, and 2,740 is
+what the parser hands over — the difference is the markdown itself, the `##` and
+the `**` and the readings inside `{…}`, none of which a reader ever sees. The
+figures above are content.
+
+**The max of 183 is the rule working, not failing.** It is a single paragraph
+longer than the budget, and a paragraph is never cut open — see below.
 
 So: **headings give the structure; a size budget is a separate policy on top.**
 Split at headings first, then subdivide any section over budget at paragraph
 boundaries — never mid-paragraph, because a paragraph is the unit the reader
-already wraps. At a ~200-character budget the document yields roughly 40 leaves,
+already wraps. At a ~70-character budget the document yields roughly 40 leaves,
 each the size of a real article. The budget wants to be a named constant with
 its reason written down, the way `MAX_PER_COLLECTION = 30` already is.
 
@@ -184,11 +215,40 @@ files per article and authors editing the wrong one. This is separate from the
 
 ## Order of work
 
-1. **Segmentation** — the ADT case plus the generator. It is what makes the
-   format usable at all, and it is what makes the review burden survivable.
-2. **The Latin rule**, with a test.
-3. **The markdown subset**, headings through the existing title renderer.
-4. **A reviewed-readings ledger** — independent of all of this. Once 的 has been
+1. ~~**The markdown subset**~~ — done. `MdSubsetParser`, and the specification
+   is *The Markdown Kranji Reads*.
+2. ~~**The Latin rule**~~ — done, and it went further than "with a test": text
+   that is not Chinese and not a mark is an **error** unless it is wrapped, and
+   `Mark` is both the whitelist and the typed model the rules live in.
+3. ~~**Segmentation**~~ — `Segments` builds the tree and the figures above are
+   measured rather than estimated.
+4. ~~**The generator**~~ — `ArticleGenerator` and `ArticleGeneratorMain`. A
+   folder of `.md` becomes one JSON resource per section beside a catalogue in
+   Java, so listing never parses and nothing parses markdown at request time —
+   by the time a reader asks, there is no markdown left. It writes nothing while
+   anything is wrong, because a half-generated library is worse than none.
+5. ~~**Ids that survive**~~ — settled without a write-back. A section with no
+   pinned `{#slug}` is a **build error naming the heading**, and the generator
+   invents nothing. The write-back this note proposed would have been a build
+   step editing sources; requiring the author to write the id once, and checking
+   it for ever after, gets the same guarantee and leaves the file alone. The
+   workbench shows which headings still need one.
+
+### What the generator did not do
+
+- **The reader cannot read the output yet.** `ArticleRef.resource` now names a
+  `.json` for generated sections, and the reading path still expects `.txt`
+  source lines it scans in the browser. Serving structure instead of text is the
+  next piece, and it is where the format machinery has to leave
+  `kranji-studio` — `MdSubsetParser` and friends live there because that is
+  where they were needed first, not because that is where they belong.
+- **The tree is flattened.** A `###` under a `##` becomes another article in the
+  same ordered collection. `ArticleSeries` is what restores the nesting, and it
+  is still the third case the sealed `ArticleEntry` wants.
+- **It is a CLI, not a build binding.** Nothing runs it automatically. The
+  digest precedent — *generated output must match its source or the build
+  fails* — applies here and is not yet applied.
+5. **A reviewed-readings ledger** — independent of all of this. Once 的 has been
    confirmed as `de` somewhere it is settled vocabulary, not a judgement; a
    checked-in ledger of confirmed `character:reading` pairs would collapse 553
    to the few dozen genuinely new pairs, and improves with every article.

@@ -10,6 +10,8 @@ import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpecRegistry;
 import hue.captains.singapura.tao.http.action.GetAction;
 import hue.captains.singapura.tao.ontology.ValueObject;
 import io.vertx.ext.web.RoutingContext;
+import kranji.studio.articles.ArticleDraftGetAction;
+import kranji.studio.articles.MvpSectionGetAction;
 import kranji.studio.gloss.GlossRelationGetAction;
 
 import java.util.ArrayList;
@@ -42,6 +44,9 @@ public record KranjiStudioFixtures<S extends Studio<?>>(Umbrella<S> umbrella)
         if (WorkspaceSpecRegistry.INSTANCE.get(CuratedWorkspaceSpec.INSTANCE.kind()).isEmpty()) {
             WorkspaceSpecRegistry.INSTANCE.register(CuratedWorkspaceSpec.INSTANCE);
         }
+        if (WorkspaceSpecRegistry.INSTANCE.get(ArticlesWorkspaceSpec.INSTANCE.kind()).isEmpty()) {
+            WorkspaceSpecRegistry.INSTANCE.register(ArticlesWorkspaceSpec.INSTANCE);
+        }
     }
 
     private DefaultFixtures<S> defaults() {
@@ -58,6 +63,8 @@ public record KranjiStudioFixtures<S extends Studio<?>>(Umbrella<S> umbrella)
     public Map<String, GetAction<RoutingContext, ?, ?, ?>> harnessGetActions() {
         var actions = new LinkedHashMap<>(defaults().harnessGetActions());
         actions.put(GlossRelationGetAction.PATH, new GlossRelationGetAction());
+        actions.put(ArticleDraftGetAction.PATH, new ArticleDraftGetAction());
+        actions.put(MvpSectionGetAction.PATH, new MvpSectionGetAction());
         return Map.copyOf(actions);
     }
 
