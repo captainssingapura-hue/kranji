@@ -184,20 +184,30 @@ public final class GridPlanner {
          * A mark. It never begins a row.
          *
          * <p>With no room left it hangs off the end of this one instead of
-         * starting the next, which is the whole of 禁则's first half. An
-         * opening mark is the exception in the other direction: it belongs to
-         * what follows, so one that would sit in the last box moves down to
-         * meet it.</p>
+         * starting the next, which is the whole of 禁则's first half.</p>
+         *
+         * <p>An opening mark needs nothing here. Whether it ends a row is not
+         * known when it is placed — that depends on whether what it opens still
+         * fits, and a run three squares wide may not — so the check belongs
+         * where the row actually ends. See {@link #newRow()}.</p>
          */
         private void punct(Square.Punct p) {
-            if (opening(p) && used() > 0 && left() == 1) newRow();
-            cur.add(left() < 1 ? new Square.Punct(p.marks(), true) : p);
+            if (left() >= 1) { cur.add(p); return; }
+            // Hanging is for a mark that must not BEGIN a line. An opening
+            // mark's trouble is the opposite one, and hanging it would strand
+            // it at the end of a row whose next row holds the thing it opens.
+            if (opening(p)) { newRow(); cur.add(p); return; }
+            cur.add(new Square.Punct(p.marks(), true));
         }
 
         /** A run, moved rather than split — unless it can never fit a row. */
         private void run(Square.Run run) {
             if (run.width() > columns) { cut(run); return; }
             if (run.width() > left()) newRow();
+            // The new row may have opened with a mark carried down from the
+            // last one, and on a narrow page that can be the square the run
+            // needed. Cutting is what is left; it places whatever fits.
+            if (run.width() > left()) { cut(run); return; }
             place(run);
         }
 
@@ -256,10 +266,30 @@ public final class GridPlanner {
             return take;
         }
 
-        /** A wrap: the row so far is full and there is more to place. */
+        /**
+         * A wrap: the row so far is full and there is more to place.
+         *
+         * <p>An opening mark must not end a row, and this is the only place
+         * that can know whether one has. When {@code （} is placed there may be
+         * room for it and no way to tell yet whether what it opens will fit —
+         * {@code （Tunnel）} needs four squares and a run does not shrink. So
+         * the mark goes down where it was, and any opening marks left at the
+         * end of the row are carried onto the next one, where the thing they
+         * open is about to be written.</p>
+         *
+         * <p>A row of nothing but opening marks has nowhere to carry them to,
+         * and carrying them for ever would not terminate. It keeps them.</p>
+         */
         private void newRow() {
-            if (!cur.isEmpty()) rows.add(new Row(kind, block, line++, cur));
-            cur = new ArrayList<>();
+            if (cur.isEmpty()) return;
+
+            int keep = cur.size();
+            while (keep > 0 && cur.get(keep - 1) instanceof Square.Punct p && opening(p)) keep--;
+            if (keep == 0) keep = cur.size();
+
+            var carry = new ArrayList<>(cur.subList(keep, cur.size()));
+            rows.add(new Row(kind, block, line++, new ArrayList<>(cur.subList(0, keep))));
+            cur = carry;
         }
 
         /**
