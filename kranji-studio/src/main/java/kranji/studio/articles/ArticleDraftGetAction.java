@@ -135,7 +135,7 @@ public final class ArticleDraftGetAction
                 .append(",\"ok\":").append(parsed.ok())
                 .append(",\"blocks\":");
         List<Block> blocks = parsed.blocks().orElse(List.of());
-        blocks(js, blocks);
+        MdJson.blocks(js, blocks);
         // The same document, arranged. Both views travel together because a
         // workbench exists to compare them: the question a squares view answers
         // is what the reader will do with what the document says.
@@ -238,7 +238,7 @@ public final class ArticleDraftGetAction
                   .append(",\"id\":").append(run.id());
                 if (run.broken()) js.append(",\"cut\":true");
                 js.append(",\"parts\":");
-                spans(js, run.parts());
+                MdJson.spans(js, run.parts());
                 js.append('}');
             }
             case Square.Cont cont ->
@@ -247,64 +247,6 @@ public final class ArticleDraftGetAction
         }
     }
 
-    // ── The document, as JSON ──────────────────────────────────────────
-
-    private static void blocks(StringBuilder js, List<Block> blocks) {
-        js.append('[');
-        for (int i = 0; i < blocks.size(); i++) {
-            Block b = blocks.get(i);
-            if (i > 0) js.append(',');
-            js.append("{\"kind\":").append(quote(b.kind()))
-              .append(",\"level\":").append(b.level())
-              .append(",\"id\":").append(quote(b.id()))
-              .append(",\"lines\":[");
-            for (int l = 0; l < b.lines().size(); l++) {
-                if (l > 0) js.append(',');
-                spans(js, b.lines().get(l));
-            }
-            js.append("]}");
-        }
-        js.append(']');
-    }
-
-    /**
-     * A line's spans, under short names.
-     *
-     * <p>Short because these are the numerous thing: an article is a few dozen
-     * blocks and several thousand spans, and {@code "kind"} spelled out on
-     * every one of them is a good part of the response.</p>
-     */
-    private static void spans(StringBuilder js, List<Span> line) {
-        js.append('[');
-        for (int i = 0; i < line.size(); i++) {
-            Span s = line.get(i);
-            if (i > 0) js.append(',');
-            js.append("{\"k\":").append(quote(s.kind()))
-              .append(",\"t\":").append(quote(s.text()));
-            if (!s.reading().isEmpty())  js.append(",\"r\":").append(quote(s.reading()));
-            if (!s.emphasis().isEmpty()) js.append(",\"e\":").append(quote(s.emphasis()));
-            if (s.inRun()) js.append(",\"run\":true");
-            js.append('}');
-        }
-        js.append(']');
-    }
-
-    private static String quote(String raw) {
-        var sb = new StringBuilder("\"");
-        for (int i = 0; i < raw.length(); i++) {
-            char c = raw.charAt(i);
-            switch (c) {
-                case '"'  -> sb.append("\\\"");
-                case '\\' -> sb.append("\\\\");
-                case '\n' -> sb.append("\\n");
-                case '\r' -> sb.append("\\r");
-                case '\t' -> sb.append("\\t");
-                default   -> {
-                    if (c < 0x20) sb.append(String.format("\\u%04x", (int) c));
-                    else sb.append(c);
-                }
-            }
-        }
-        return sb.append('"').toString();
-    }
+    /** Everything a draft can contain, safely inside a JSON string. */
+    private static String quote(String raw) { return MdJson.quote(raw); }
 }

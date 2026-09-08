@@ -127,6 +127,22 @@ class SamplesTest {
     }
 
     @Test
+    void theGeneratorRefusesASampleWhoseHeadingsHaveNoIds() throws IOException {
+        // blocks.md is written with unpinned headings, because the workbench
+        // shows them as such. The generator is the other end of that: an
+        // address it cannot find is one it will not invent.
+        var draft = new ArticleGenerator.Draft("blocks.md",
+                Files.readString(SAMPLES.resolve("blocks.md"), StandardCharsets.UTF_8));
+        var result = ArticleGenerator.generate(List.of(draft),
+                ArticleGenerator.Options.of("x", "X", "x"));
+
+        assertFalse(result.ok(), "it has headings with no {#slug}");
+        assertTrue(result.files().isEmpty(), "and nothing is written while that stands");
+        assertTrue(result.problems().stream().anyMatch(p -> p.message().contains("no id")),
+                result.problems().toString());
+    }
+
+    @Test
     void noRowIsWiderThanThePage() throws IOException {
         for (Path file : samples()) {
             var blocks = parse(file).blocks().orElseThrow();

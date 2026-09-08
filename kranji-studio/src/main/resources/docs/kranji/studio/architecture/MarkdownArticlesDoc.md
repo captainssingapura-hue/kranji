@@ -220,18 +220,34 @@ files per article and authors editing the wrong one. This is separate from the
 2. ~~**The Latin rule**~~ — done, and it went further than "with a test": text
    that is not Chinese and not a mark is an **error** unless it is wrapped, and
    `Mark` is both the whitelist and the typed model the rules live in.
-3. ~~**Segmentation**~~ — the cut is done: `Segments` builds the tree and the
-   figures above are measured rather than estimated.
-   **The generator is not.** Segments still come from parsing at request time,
-   which the workbench may do and the library may not — see *The rule this
-   collides with*. Two pieces remain: the `ArticleSeries` case in the product's
-   sealed `ArticleEntry`, and a build step that emits the catalogue as Java so
-   listing stays parse-free.
-4. **Ids that survive.** A segment with no pinned `{#slug}` has no address, and
-   `Segments` invents none — deliberately, because an invented one moves. The
-   write-back step that generates one from the heading and then *checks* it
-   rather than recomputing it is what closes this, and it is the same build step
-   as (3).
+3. ~~**Segmentation**~~ — `Segments` builds the tree and the figures above are
+   measured rather than estimated.
+4. ~~**The generator**~~ — `ArticleGenerator` and `ArticleGeneratorMain`. A
+   folder of `.md` becomes one JSON resource per section beside a catalogue in
+   Java, so listing never parses and nothing parses markdown at request time —
+   by the time a reader asks, there is no markdown left. It writes nothing while
+   anything is wrong, because a half-generated library is worse than none.
+5. ~~**Ids that survive**~~ — settled without a write-back. A section with no
+   pinned `{#slug}` is a **build error naming the heading**, and the generator
+   invents nothing. The write-back this note proposed would have been a build
+   step editing sources; requiring the author to write the id once, and checking
+   it for ever after, gets the same guarantee and leaves the file alone. The
+   workbench shows which headings still need one.
+
+### What the generator did not do
+
+- **The reader cannot read the output yet.** `ArticleRef.resource` now names a
+  `.json` for generated sections, and the reading path still expects `.txt`
+  source lines it scans in the browser. Serving structure instead of text is the
+  next piece, and it is where the format machinery has to leave
+  `kranji-studio` — `MdSubsetParser` and friends live there because that is
+  where they were needed first, not because that is where they belong.
+- **The tree is flattened.** A `###` under a `##` becomes another article in the
+  same ordered collection. `ArticleSeries` is what restores the nesting, and it
+  is still the third case the sealed `ArticleEntry` wants.
+- **It is a CLI, not a build binding.** Nothing runs it automatically. The
+  digest precedent — *generated output must match its source or the build
+  fails* — applies here and is not yet applied.
 5. **A reviewed-readings ledger** — independent of all of this. Once 的 has been
    confirmed as `de` somewhere it is settled vocabulary, not a judgement; a
    checked-in ledger of confirmed `character:reading` pairs would collapse 553
