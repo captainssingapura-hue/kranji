@@ -3,7 +3,7 @@
 *A design, not an implementation. The constructs an article may use are specified
 separately, in **The Markdown Kranji Reads**; this is the shape of the thing that
 reads them. Written against one real document —
-`CS2地图简介-Italy详细版.md`, 8,470 characters — and every number below is
+`CS2地图简介-Italy详细版.md`, 3,232 characters — and every number below is
 measured from it rather than estimated.*
 
 ## Why the current format has a ceiling
@@ -48,31 +48,39 @@ becomes decoration and the guarantee behind it quietly stops being true.
 A long document should not be one article. It should be a **tree of segments**,
 each the size of a thing somebody sits down to read.
 
-Where to cut, measured three ways against the library's own distribution:
+Where to cut, measured three ways against the library's own distribution.
+
+> **These figures were wrong once and are worth not getting wrong again.** An
+> earlier revision quoted them 2.6× too large, because `wc -m` counts *bytes*
+> unless the locale says otherwise and a Han character is three of them. Every
+> number here is now characters, cross-checked against the parser's own count.
+> The conclusions did not change — the ratio between a segment and an article
+> is what the argument rests on, and that survived — but "8,470 characters" was
+> a byte count wearing a character's name.
 
 | | segments | median | p90 | max |
 |---|---|---|---|---|
-| Whole document | 1 | — | — | **8,470** |
-| Split at headings (`##`/`###`) | 14 | 471 | 795 | 1,257 |
-| Split at paragraph blocks | 30 | 219 | 447 | 541 |
-| **The published library** | 608 | **143** | **200** | 1,387 |
+| Whole document | 1 | — | — | **3,232** |
+| Split at headings (`##`/`###`) | 14 | 185 | 299 | 461 |
+| Split at paragraph blocks | 30 | 80 | 168 | 216 |
+| **The published library** | 608 | **51** | **71** | 489 |
 
 This separates two problems that look like one.
 
 **Display.** The board builds roughly one cell widget per character — 462
 measured for a 392-character article. The whole document is ~2,300 cells.
-Splitting at headings fixes this outright: the largest segment is 1,257,
-already under the 1,387 that renders today. **For display, headings alone are
+Splitting at headings fixes this outright: the largest segment is 461,
+already under the 489 that renders today. **For display, headings alone are
 sufficient and no size policy is needed.**
 
-**Reading session.** Here they are not. A median segment of 471 is 3.3× the
-library's median of 143. That is not a broken page, it is a different kind of
+**Reading session.** Here they are not. A median segment of 185 is 3.6× the
+library's median of 51. That is not a broken page, it is a different kind of
 sitting.
 
 So: **headings give the structure; a size budget is a separate policy on top.**
 Split at headings first, then subdivide any section over budget at paragraph
 boundaries — never mid-paragraph, because a paragraph is the unit the reader
-already wraps. At a ~200-character budget the document yields roughly 40 leaves,
+already wraps. At a ~70-character budget the document yields roughly 40 leaves,
 each the size of a real article. The budget wants to be a named constant with
 its reason written down, the way `MAX_PER_COLLECTION = 30` already is.
 

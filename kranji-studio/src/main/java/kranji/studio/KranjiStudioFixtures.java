@@ -10,6 +10,7 @@ import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpecRegistry;
 import hue.captains.singapura.tao.http.action.GetAction;
 import hue.captains.singapura.tao.ontology.ValueObject;
 import io.vertx.ext.web.RoutingContext;
+import kranji.studio.articles.ArticleDraftGetAction;
 import kranji.studio.gloss.GlossRelationGetAction;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public record KranjiStudioFixtures<S extends Studio<?>>(Umbrella<S> umbrella)
     public Map<String, GetAction<RoutingContext, ?, ?, ?>> harnessGetActions() {
         var actions = new LinkedHashMap<>(defaults().harnessGetActions());
         actions.put(GlossRelationGetAction.PATH, new GlossRelationGetAction());
+        actions.put(ArticleDraftGetAction.PATH, new ArticleDraftGetAction());
         return Map.copyOf(actions);
     }
 
