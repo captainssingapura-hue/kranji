@@ -56,19 +56,20 @@ changes it silently unless you know.
 | Syntax | Verdict | Becomes |
 |---|---|---|
 | `字{dì}` | keep — **E1** | the reading of that character |
-| `**bold**` **over Chinese** | **drop, warn** | the text, unemphasised |
-| `**bold**` **inside a plain run** | keep — **E3** | emphasised text |
+| `‹text›` | keep — **E3** | a non-Chinese run, *n* squares wide |
+| `**bold**` **inside `‹…›`** | keep | emphasised text |
+| `**bold**` **anywhere else** | **drop, warn** | the text, unemphasised |
 | `*italic*` | as bold, by the same rule | |
-| `` `text` `` | **reserved** | see E3 — not the plain-run marker |
+| `` `text` `` | **error** | not a construct here; see E3 |
 | `[text](url)` | **error** | a link the reader cannot follow is a lie |
 | `![alt](file)` | **error, reserved** | see below |
 | `~~strike~~`, `==mark==` | **error** | — |
 
-**Emphasis depends on what it is over, and that is the whole point of E3.**
-Over Chinese it is dropped: a bold run in a square practice grid is one heavier
+**Emphasis depends on where it is, and that is the whole point of E3.** Over
+Chinese it is dropped: a bold run in a square practice grid is one heavier
 square, competing with the pinyin directly above it, and it says nothing. Inside
-a plain run there is no grid and no pinyin — it is ordinary typography, where
-bold over `Premier` means exactly what it means anywhere else. So it is kept.
+a `‹…›` run there is no grid and no pinyin — it is ordinary typography, where
+bold over Premier means exactly what it means anywhere else. So it is kept.
 
 Dropping silently is what we refuse, so the dropped case warns and names the
 line. The sample document has 24 bold runs and this rule keeps the ones that
@@ -123,57 +124,89 @@ end of a heading line, not after a character. Optional on first write —
 generated once from the heading, then written back into the file and thereafter
 checked rather than recomputed.
 
-### E3 — Plain runs
+### E3 — Non-Chinese run: `‹…›`
 
-**A maximal run of non-Han characters is a plain run. There is no syntax for
-it.**
+**`‹` U+2039 and `›` U+203A** bracket a run that is not Chinese to be practised.
+Everything between them is ordinary typography.
 
 ```
-警察出生点在 Tunnel 附近，属于 **Premier** 之外的图。
+警察出生点在‹Tunnel›附近，属于‹**Premier**›之外的图。
 ```
 
-`Tunnel` is a plain run; so is `Premier`, and its bold survives. The scanner
-already groups exactly this way — `ArticleScannerModule.flushPlain` emits one
-unit per maximal non-Han run — so the concept exists, it simply had no name and
-no width.
+The delimiters are markup: they do not appear in the reading. Inside, `**bold**`
+and `*italic*` are parsed and kept.
 
-#### Why there is no marker
+#### Why it is delimited, and not detected
 
-An earlier draft made this `` `Apartments` `` — backticks, borrowing markdown's
-code span. **That was wrong, and the reason is worth recording.** A code span's
-contents are *literal* by definition: CommonMark does no emphasis parsing inside
-one. So `` `**Premier**` `` means the asterisks, and the very thing E3 is for —
-keeping emphasis where emphasis still means something — is the one thing that
-delimiter forbids.
+The obvious alternative is to take any maximal run of non-Han as a run
+automatically — the scanner already groups that way. **It cannot work, and the
+reason is emphasis.**
 
-Backticks stay **reserved**. They may later mean *treat this as plain even
-though it is Han* — "do not practise this" — which is a real and different need.
-Nothing is invented for it yet.
+`**` is itself non-Han. In `属于 **Premier** 之外`, the maximal non-Han run is
+` **Premier** ` *including the asterisks*, so the marker and its content land in
+the same undifferentiated blob. Automatic detection cannot tell the emphasis
+from the text it emphasises, which is exactly the distinction E3 exists to make.
+A delimiter that is not markdown syntax settles it: what is inside is parsed,
+what is outside is not.
+
+#### It is not for every non-Han character
+
+**You do not wrap a comma.** Punctuation, spaces and digits are carried as
+`Token.Plain` exactly as they are today, with no width claim and no delimiters
+— the 禁则 rules that tuck 。 into the preceding cell are untouched.
+
+`‹…›` is for a run you want treated as *one typographic unit*: a name, a term,
+an English phrase. It is a positive statement about a span of text, not a
+requirement on every character that is not Han.
+
+#### Why these two characters
+
+They are not markdown syntax, so nothing competes for them. They are paired,
+which backticks are not. And they clash with nothing here: `‹` and `›` appear in
+neither `ARTICLE_CLOSING` (`。，、！？：；）】》」』’”…`) nor `ARTICLE_OPENING`,
+and occur in none of the 608 published articles.
+
+`〈…〉` (U+3008/U+3009) would have been the wrong choice for the opposite reason:
+`《` and `》` are already in those punctuation tables and get 禁则 handling, and
+the two pairs are easy to confuse at reading size.
+
+An earlier draft used backticks, borrowing markdown's code span. That was wrong
+and the reason is worth keeping: a code span's contents are *literal* by
+definition — CommonMark does no emphasis parsing inside one — so
+`` `**Premier**` `` means the asterisks. The delimiter forbade the one thing the
+extension is for. **Backticks are now simply an error**, like any other
+construct not listed above.
 
 #### Width: a run is *n* squares
 
-A plain run occupies `ceil(runWidth / cellWidth)` squares, measured from the
+A `‹…›` run occupies `ceil(runWidth / cellWidth)` squares, measured from the
 text rather than from its character count — `Apartments` is not ten squares, it
 is however many its rendered width needs, which at a 62px cell is about four.
 
 **Everything up to the final render works on this today.** Parsing, the token
-model, segmentation, the census and the length count all treat a plain run as
+model, segmentation, the census and the length count all treat the run as
 one unit with a width; nothing about them waits on the grid.
 
 The render does wait. `RelGridCellsModule` builds one `div` per column and
 `RelGridLayoutModule` sizes them through `<col>` elements — there is no span or
 merge anywhere in the grid, so a run cannot yet occupy the *n* squares it has
 asked for. **That is a RelationGrid enhancement — merged cells — and it belongs
-to the framework, not here.** Until it lands, a plain run draws in one cell; the
+to the framework, not here.** Until it lands, the run draws in one cell; the
 number it carries is correct in the model whether or not the renderer can honour
 it yet.
 
 #### What the model needs
 
-`Token.Plain(String text)` carries no styling and no width. Both are needed:
-emphasis inside the run, and the square count. That is the concrete model change
-E3 asks for, and it is small — a `Plain` that carries marks and a width, or a
-third token case beside `Zi` and `Plain`.
+`Token` is sealed over `Zi` and `Plain`, and `Plain(String text)` carries
+neither styling nor width. A `‹…›` run needs both, and it is a genuinely
+different thing from the punctuation `Plain` exists for — one is a span the
+author marked, the other is a comma.
+
+So the likely shape is **a third case**, `Token.Run`, beside them: its own text,
+its emphasis, and its square count. That keeps `Plain` exactly as it is — every
+existing article and the 禁则 rules go on meaning what they meant — and it makes
+the sealed switch tell a renderer that it has three things to draw rather than
+two, which is the point of sealing it.
 
 ### E4 — Verse fence
 
@@ -217,7 +250,9 @@ the author wrote?* A dropped bold run does not. A dropped table does.
 
 ## 三、整体结构 {#zheng-ti-jie-gou}
 
-警察出生点在地{dì}图较低的一侧，靠近 **Tunnel** 入口。
+警察出生点在地{dì}图较低的一侧，靠近‹Tunnel›入口。
+
+它不在‹**Premier**›的现役地图池里。
 
 - 市场
 - 中路大街
@@ -229,6 +264,9 @@ the author wrote?* A dropped bold run does not. A dropped table does.
 ```
 
 One title checked against the catalogue, two pinned ids, one reading override,
-a plain run carrying bold that survives because it is not over Chinese, a list,
-and two lines whose breaks survive. Everything else in the file would be an
-error or a warning, and the author is told which.
+two `‹…›` runs — the second carrying bold that survives because it is inside a
+run rather than over Chinese — a list, and two lines whose breaks survive. The
+commas and 。 need no delimiters and get none.
+
+Everything else in the file would be an error or a warning, and the author is
+told which line.
