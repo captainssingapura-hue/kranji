@@ -1,7 +1,7 @@
 # The Markdown Kranji Reads
 
 *The contract between an author and the reader. Not "markdown support" — a
-named subset, plus four extensions that exist because the reader needs
+named subset, plus five extensions that exist because the reader needs
 something markdown has no way to say.*
 
 The rule that makes it a contract: **anything not listed here is an error.** An
@@ -57,23 +57,16 @@ changes it silently unless you know.
 |---|---|---|
 | `字{dì}` | keep — **E1** | the reading of that character |
 | `‹text›` | keep — **E3** | a non-Chinese run, *n* squares wide |
-| `**bold**` **inside `‹…›`** | keep | emphasised text |
-| `**bold**` **anywhere else** | **drop, warn** | the text, unemphasised |
-| `*italic*` | as bold, by the same rule | |
+| `**bold**` | keep — **E5** | emphasis, `strong` |
+| `*italic*` | keep — **E5** | emphasis, `em` |
+| an unpaired `*` | **warn** | the star, as written |
 | `` `text` `` | **error** | not a construct here; see E3 |
 | `[text](url)` | **error** | a link the reader cannot follow is a lie |
 | `![alt](file)` | **error, reserved** | see below |
 | `~~strike~~`, `==mark==` | **error** | — |
 
-**Emphasis depends on where it is, and that is the whole point of E3.** Over
-Chinese it is dropped: a bold run in a square practice grid is one heavier
-square, competing with the pinyin directly above it, and it says nothing. Inside
-a `‹…›` run there is no grid and no pinyin — it is ordinary typography, where
-bold over Premier means exactly what it means anywhere else. So it is kept.
-
-Dropping silently is what we refuse, so the dropped case warns and names the
-line. The sample document has 24 bold runs and this rule keeps the ones that
-mean something.
+**Emphasis is kept wherever it is written — see E5.** It used to be dropped
+outside a `‹…›` run, and that is the one rule here that has been reversed.
 
 **Images are reserved, not forgotten.** `Block.Illustration(file, alt, caption)`
 and `ImageRef` already exist in the model and are unused. When images are
@@ -83,7 +76,7 @@ error, so that nobody writes one and wonders where it went.
 
 ---
 
-## The four extensions
+## The five extensions
 
 Each exists because the reader needs something markdown cannot say. None is
 decoration.
@@ -223,6 +216,52 @@ poems, 儿歌, 绕口令 — because markdown proper would join them into a para
 `verse` is the only info string accepted. Any other fence is an error, which is
 what keeps this from being a hole through which arbitrary code blocks arrive.
 
+### E5 — Emphasis, set the way the writing system sets it
+
+Emphasis is kept everywhere. **How it is *drawn* depends on which side of a run
+it is on**, and that is the extension: markdown has one italic, and Chinese and
+Latin do not emphasise the same way.
+
+| | inside `‹…›` | outside |
+|---|---|---|
+| `**bold**` | `<strong>` | `<strong>` |
+| `*italic*` | `<em>` — slanted | `<em>` — set as 着重号 |
+
+#### Why this reversed
+
+Emphasis over Chinese used to be dropped with a warning, on the grounds that a
+slanted character cannot be drawn in a practice square. That was right about the
+slant, and for a precise reason: **no CJK face has an italic**, so a browser
+fakes one by shearing the glyph — which pushes it out of the square it is
+supposed to sit in, and looks wrong besides.
+
+But it is an objection to the slant, not to the emphasis. Chinese has had its
+own mark for this for a century: the **着重号**, a dot under each emphasised
+character. It takes no width, so the grid is untouched. It sits underneath, so
+it never argues with the pinyin above. And bold needs no such help at all — a
+heavier character is the same character in the same square.
+
+Dropping it was therefore solving the wrong problem. The author's intention is
+representable; it just is not representable *as a slant*.
+
+#### Where the decision lives
+
+The parser records `emphasis` on every span and decides nothing about how it
+looks. The renderer knows whether a span is inside a run and picks the mark.
+Keeping the split there is what lets stage two draw the same document as a grid
+of squares — where a 着重号 works and a slant never could — without the parser
+changing.
+
+It is also why `Span` carries an `emphasis` *field* rather than an emphasis
+*kind*. A weight and a pinned reading are two questions about one character, not
+two things it could be: 这个**字{zì}**需要两个答案.
+
+#### An unpaired star
+
+`**很重要` closes nothing. It is left exactly as written and warned about — a
+typo rather than a construct, and not the sort of thing an author should first
+notice as a stray asterisk in the middle of a sentence.
+
 ---
 
 ## Errors and warnings
@@ -233,13 +272,18 @@ structure we cannot represent — a table, a link, a fourth heading level — an
 for anything factually wrong, like a reading the character does not have or a
 `#` title disagreeing with the catalogue.
 
-**A warning means it served, with something dropped.** Warnings are for
-decoration with no meaning in a practice grid: emphasis, and `---`. They land in
-`target/article-warnings.txt` beside the guessed readings, which is the file an
-author already has to read.
+**A warning means it served, and that something in it is probably not what the
+author meant.** There are two: a `---` that had nothing to separate, and a `*`
+that closes nothing. They land in `target/article-warnings.txt` beside the
+guessed readings, which is the file an author already has to read.
 
 The two categories divide on one question: *would serving this misrepresent what
-the author wrote?* A dropped bold run does not. A dropped table does.
+the author wrote?* A rule between two headings does not — they were already
+separated. A missing table does.
+
+The warning list used to be longer. Dropped emphasis was on it, and E5 explains
+why it should not have been: the fix for something we could not draw was to
+learn how Chinese draws it, not to warn about discarding it.
 
 ---
 
@@ -252,7 +296,7 @@ the author wrote?* A dropped bold run does not. A dropped table does.
 
 警察出生点在地{dì}图较低的一侧，靠近‹Tunnel›入口。
 
-它不在‹**Premier**›的现役地图池里。
+它不在‹**Premier**›的现役地图池里，这一点*很重要*。
 
 - 市场
 - 中路大街
@@ -264,9 +308,12 @@ the author wrote?* A dropped bold run does not. A dropped table does.
 ```
 
 One title checked against the catalogue, two pinned ids, one reading override,
-two `‹…›` runs — the second carrying bold that survives because it is inside a
-run rather than over Chinese — a list, and two lines whose breaks survive. The
-commas and 。 need no delimiters and get none.
+two `‹…›` runs, a list, and two lines whose breaks survive. The commas and 。
+need no delimiters and get none.
+
+Two emphases, drawn two ways: **Premier** is bold Latin inside a run, and
+*很重要* is Chinese outside one, so it is set with a 着重号 rather than sheared
+into a fake italic.
 
 Everything else in the file would be an error or a warning, and the author is
 told which line.

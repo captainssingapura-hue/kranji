@@ -107,37 +107,63 @@ class MdSubsetParserTest {
         assertTrue(messages(p).contains("never closed"), messages(p));
     }
 
-    // ── Emphasis depends on where it is ────────────────────────────────
+    // ── Emphasis ───────────────────────────────────────────────────────
 
     @Test
     void emphasisInsideARunIsKept() {
         var p = parse("它不在‹**Premier**›的池里。");
 
         List<Span> line = of(p, "p").get(0).lines().get(0);
-        Span bold = line.stream().filter(s -> s.kind().equals("strong")).findFirst().orElseThrow();
+        Span bold = line.stream().filter(s -> s.emphasis().equals("strong")).findFirst().orElseThrow();
         assertEquals("Premier", bold.text());
-        assertTrue(bold.inRun(), "emphasis is only kept because it is inside a run");
+        assertTrue(bold.inRun());
         assertEquals(List.of(), p.warnings(), "nothing was dropped");
     }
 
     @Test
-    void emphasisOverChineseIsDroppedWithAWarning() {
+    void emphasisOverChineseIsKeptToo() {
+        // It used to be dropped, on the grounds that a slanted character cannot
+        // be drawn in a practice square. True about the slant; wrong about the
+        // emphasis, which Chinese marks with a 着重号 instead. Which mark to
+        // use is the renderer's decision - what the author wrote reaches it.
         var p = parse("这是**很重要**的。");
 
         List<Span> line = of(p, "p").get(0).lines().get(0);
-        assertEquals("这是很重要的。", said(line), "the words survive");
-        assertTrue(line.stream().noneMatch(s -> s.kind().equals("strong")),
-                "emphasis over Chinese means nothing in a square");
-        assertEquals(1, p.warnings().size());
-        assertTrue(messages(p).contains("cannot be drawn in a practice square"), messages(p));
+        assertEquals("这是很重要的。", said(line), "the words are unchanged");
+        Span bold = line.stream().filter(s -> s.emphasis().equals("strong")).findFirst().orElseThrow();
+        assertEquals("很重要", bold.text());
+        assertFalse(bold.inRun(), "outside a run - which is how the renderer knows to use a 着重号");
+        assertEquals(List.of(), p.warnings(), "nothing is dropped any more");
     }
 
     @Test
     void italicFollowsTheSameRule() {
-        assertEquals(1, parse("这是*重要*的。").warnings().size());
+        List<Span> chinese = of(parse("这是*重要*的。"), "p").get(0).lines().get(0);
+        assertTrue(chinese.stream().anyMatch(s -> s.emphasis().equals("em") && s.text().equals("重要")));
 
-        List<Span> line = of(parse("‹*Mid*›"), "p").get(0).lines().get(0);
-        assertTrue(line.stream().anyMatch(s -> s.kind().equals("em") && s.text().equals("Mid")));
+        List<Span> latin = of(parse("‹*Mid*›"), "p").get(0).lines().get(0);
+        assertTrue(latin.stream().anyMatch(s -> s.emphasis().equals("em") && s.inRun()));
+    }
+
+    @Test
+    void aCharacterCanCarryBothAReadingAndAWeight() {
+        // The reason emphasis stopped being a kind of span. These are two
+        // questions about one character, not two things it could be.
+        List<Span> line = of(parse("这个**字{zì}**很重要。"), "p").get(0).lines().get(0);
+
+        Span both = line.stream().filter(s -> s.kind().equals("ruby")).findFirst().orElseThrow();
+        assertEquals("字", both.text());
+        assertEquals("zì", both.reading());
+        assertEquals("strong", both.emphasis());
+    }
+
+    @Test
+    void aStarNothingClosedIsWarnedAboutRatherThanRefused() {
+        var p = parse("这是**很重要的。");
+
+        assertTrue(p.ok(), "a typo does not stop the document");
+        assertEquals("这是**很重要的。", said(of(p, "p").get(0).lines().get(0)), "left as written");
+        assertTrue(messages(p).contains("unpaired *"), messages(p));
     }
 
     // ── Runs ───────────────────────────────────────────────────────────

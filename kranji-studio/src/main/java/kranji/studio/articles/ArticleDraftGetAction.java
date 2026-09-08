@@ -155,7 +155,8 @@ public final class ArticleDraftGetAction
             if (i > 0) js.append(',');
             js.append("{\"k\":").append(quote(s.kind()))
               .append(",\"t\":").append(quote(s.text()));
-            if (!s.reading().isEmpty()) js.append(",\"r\":").append(quote(s.reading()));
+            if (!s.reading().isEmpty())  js.append(",\"r\":").append(quote(s.reading()));
+            if (!s.emphasis().isEmpty()) js.append(",\"e\":").append(quote(s.emphasis()));
             if (s.inRun()) js.append(",\"run\":true");
             js.append('}');
         }

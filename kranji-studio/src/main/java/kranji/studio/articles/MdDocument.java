@@ -31,21 +31,26 @@ public final class MdDocument {
     /**
      * One piece of a line.
      *
-     * @param kind    {@code text}, or {@code ruby} for a character carrying a
-     *                reading, or {@code strong} / {@code em} for emphasis —
-     *                which only ever occurs inside a run
-     * @param text    what it says
-     * @param reading the reading, on a {@code ruby} span and empty otherwise
-     * @param inRun   inside {@code ‹…›}. Consecutive spans sharing this make one
-     *                run: flat here, grouped by whatever draws it, so that
-     *                nesting never has to travel over the wire
+     * <h2>Emphasis is not a kind</h2>
+     *
+     * <p>It was, briefly, and that was wrong: it made emphasis and a pinned
+     * reading alternatives, so a character could be one or the other. They are
+     * two different questions about the same character — what it says, and how
+     * heavily it is said — and an emphasised 字{zì} needs both answered.</p>
+     *
+     * @param kind     {@code text}, or {@code ruby} for a character carrying a
+     *                 reading
+     * @param text     what it says
+     * @param reading  the reading, on a {@code ruby} span and empty otherwise
+     * @param emphasis {@code strong}, {@code em}, or empty. How it is <i>set</i>
+     *                 depends on whether it is inside a run, and that is the
+     *                 renderer's business rather than this record's
+     * @param inRun    inside {@code ‹…›}. Consecutive spans sharing this make one
+     *                 run: flat here, grouped by whatever draws it, so that
+     *                 nesting never has to travel over the wire
      */
-    public record Span(String kind, String text, String reading, boolean inRun) {
-
-        public static Span text(String t)            { return new Span("text", t, "", false); }
-        public static Span ruby(String t, String r)  { return new Span("ruby", t, r, false); }
-        public static Span inRun(String kind, String t) { return new Span(kind, t, "", true); }
-    }
+    public record Span(String kind, String text, String reading,
+                       String emphasis, boolean inRun) {}
 
     /**
      * One block.

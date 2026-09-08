@@ -321,6 +321,30 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         }
     }
 
+    /**
+     * 着重号 — emphasis, set the way Chinese sets it.
+     *
+     * <p>{@code *…*} over Chinese used to be dropped, on the grounds that a
+     * slanted character cannot be drawn in a practice square. That was right
+     * about the slant and wrong about the emphasis. No CJK face has an italic,
+     * so a browser fakes one by shearing the glyph — which is both ugly and
+     * exactly the objection: a sheared character no longer fits its square.</p>
+     *
+     * <p>Chinese has had its own mark for this all along: a dot under each
+     * emphasised character. It takes no width, so the grid is untouched, and it
+     * goes underneath, so it never argues with the reading above. Bold needs no
+     * such help — a heavier character is the same character in the same
+     * square — so only italic is redirected here.</p>
+     */
+    public record aw_zi_em() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                font-style: normal;
+                text-emphasis: filled dot;
+                text-emphasis-position: under right;
+                """;
+        }
+    }
+
     /** Not the document: what the pane has to say instead of one. */
     public record aw_msg() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
@@ -392,7 +416,7 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
                 new aw_title(), new aw_h2(), new aw_h3(), new aw_pin(),
                 new aw_unpinned(), new aw_p(), new aw_li(), new aw_marker(),
                 new aw_quote(), new aw_verse(), new aw_vline(), new aw_run(),
-                new aw_ruby(), new aw_rt(), new aw_msg(),
+                new aw_ruby(), new aw_rt(), new aw_zi_em(), new aw_msg(),
                 new aw_findings(), new aw_finding(),
                 new aw_error(), new aw_warn(), new aw_status());
     }

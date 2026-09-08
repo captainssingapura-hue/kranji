@@ -15,6 +15,10 @@
 // an author has come here to check: a ‹…› run is tinted, an override wears its
 // pinned reading, and a heading with no id says so.
 //
+// Emphasis is set the way the writing system sets it. Inside a run it is bold
+// and italic, which is what Latin does; outside one, italic becomes the 着重号,
+// which is what Chinese does.
+//
 // No CJK literal appears in this file. Every character it draws came from a
 // draft on disk.
 // =============================================================================
@@ -24,7 +28,7 @@
  *   css,        // the class setter
  *   classes: {  // every class this sets, by name
  *     title, h2, h3, pin, unpinned, p, li, marker,
- *     quote, verse, vline, run, ruby, rt, msg
+ *     quote, verse, vline, run, ruby, rt, ziEm, msg
  *   }
  * }
  * Returns { draw(branch, host, blocks), say(branch, host, text) }.
@@ -36,30 +40,47 @@ function createMdPreview(opts) {
     var minted = 0;
 
     // Every element the preview owns comes from here, so there is exactly one
-    // place that could ever fail to go through the branch.
+    // place that could ever fail to go through the branch. `cls` may be one
+    // class or several.
     function el(branch, tag, cls, text) {
         var e = branch.createElement('m' + (++minted), tag);
-        if (cls) opts.css.setClass(e, cls);
+        if (cls) opts.css.setClass.apply(opts.css, [e].concat(cls));
         if (text) e.textContent = text;
         return e;
     }
 
     // ── A line ─────────────────────────────────────────────────────────
 
-    function ruby(branch, host, span) {
-        var r = el(branch, 'ruby', C.ruby, span.t);
-        r.appendChild(el(branch, 'rt', C.rt, span.r));
-        host.appendChild(r);
+    // Emphasis is the element - strong and em mean what the tags mean, and
+    // inventing names for them would say less.
+    function weightOf(span) {
+        return span.e === 'strong' ? 'strong' : span.e === 'em' ? 'em' : null;
+    }
+
+    // Outside a run it is also a class, because a slant is not how Chinese is
+    // emphasised: no CJK face has an italic, so a browser fakes one by shearing
+    // the glyph, which pushes it out of the square it is supposed to sit in.
+    // The Chinese mark for exactly this is the 着重号 - a dot under each
+    // character - which is what em becomes there. Bold needs no such help: a
+    // heavier character is still the same character in the same square.
+    function markOf(span) {
+        return (span.e === 'em' && !span.run) ? C.ziEm : null;
     }
 
     function piece(branch, host, span) {
-        if (span.k === 'ruby') { ruby(branch, host, span); return; }
-        // strong and em are the elements themselves - they mean the same thing
-        // the tags mean, and inventing classes for them would say less.
-        var tag = span.k === 'strong' ? 'strong'
-                : span.k === 'em'     ? 'em'
-                : 'span';
-        host.appendChild(el(branch, tag, null, span.t));
+        var tag = weightOf(span);
+        var mark = markOf(span);
+        if (span.k !== 'ruby') {
+            host.appendChild(el(branch, tag || 'span', mark, span.t));
+            return;
+        }
+        // A reading and a weight are two questions about one character, so the
+        // ruby goes inside the emphasis rather than instead of it.
+        var into = host;
+        if (tag) { into = el(branch, tag, mark, null); host.appendChild(into); }
+        var r = el(branch, 'ruby', C.ruby, span.t);
+        r.appendChild(el(branch, 'rt', C.rt, span.r));
+        into.appendChild(r);
     }
 
     /**

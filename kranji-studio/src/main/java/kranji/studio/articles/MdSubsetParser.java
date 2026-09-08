@@ -23,8 +23,8 @@ import java.util.regex.Pattern;
  * comes back empty. That is deliberate and it is the whole point of a subset:
  * a file accepted with its tables quietly missing is a page that is not what
  * was written, and the author has no way to find out. A warning means it
- * rendered with something dropped, which is reserved for decoration that has no
- * meaning in a practice grid.</p>
+ * rendered, and that something in it is not what the author probably meant —
+ * a horizontal rule that had nothing to separate, a star nothing closed.</p>
  *
  * <h2>What this stage does not do</h2>
  *
@@ -70,7 +70,6 @@ public final class MdSubsetParser {
     private static final Pattern RUN       = Pattern.compile("‹([^‹›]*)›");
     private static final Pattern OVERRIDE  = Pattern.compile("(\\p{IsHan})\\{([^}]*)}");
     private static final Pattern EMPHASIS  = Pattern.compile("(\\*{1,2})([^*]+)\\1");
-    private static final Pattern ANY_EMPH  = Pattern.compile("\\*{1,2}[^*]+\\*{1,2}");
     private static final Pattern LINK      = Pattern.compile("!?\\[[^]]*]\\([^)]*\\)");
     private static final Pattern STRIKE    = Pattern.compile("~~|==");
 
@@ -257,7 +256,7 @@ public final class MdSubsetParser {
         return List.copyOf(spans);
     }
 
-    /** Chinese, punctuation, and the readings on it. Emphasis here means nothing. */
+    /** Chinese, punctuation, and the readings on it. */
     private static void outsideRun(String text, int no, List<ParseFinding> findings,
                                    List<Span> into) {
         if (text.isEmpty()) return;
@@ -274,41 +273,64 @@ public final class MdSubsetParser {
         if (STRIKE.matcher(text).find()) {
             findings.add(ParseFinding.error(no, "strikethrough and highlight are not read"));
         }
-        String stripped = text;
-        if (ANY_EMPH.matcher(stripped).find()) {
-            findings.add(ParseFinding.warning(no,
-                    "emphasis over Chinese was dropped; it cannot be drawn in a practice square"));
-            stripped = EMPHASIS.matcher(stripped).replaceAll("$2");
-        }
-        ruby(stripped, into);
+        emphasised(text, no, findings, into, false);
     }
 
-    /** Ordinary typography. Emphasis here is kept, because there is no grid. */
+    /** Ordinary typography. */
     private static void insideRun(String text, int no, List<ParseFinding> findings,
                                   List<Span> into) {
         if (text.indexOf('`') >= 0) {
             findings.add(ParseFinding.error(no, "a backtick is not a construct here"));
         }
+        // An empty run still happened, and a renderer that saw nothing could
+        // not tell it from no run at all.
+        if (text.isEmpty()) { into.add(new Span("text", "", "", "", true)); return; }
+        emphasised(text, no, findings, into, true);
+    }
+
+    /**
+     * One stretch, split on emphasis.
+     *
+     * <p>Emphasis is kept wherever it is written, Chinese included. It used to
+     * be dropped outside a run on the grounds that a slanted character cannot
+     * be drawn in a practice square — which was true about the slant and wrong
+     * about the emphasis. Chinese has its own mark for this, the 着重号, and
+     * choosing it is the renderer's job; refusing to carry the author's
+     * intention this far up was never the way to get there.</p>
+     */
+    private static void emphasised(String text, int no, List<ParseFinding> findings,
+                                   List<Span> into, boolean inRun) {
         Matcher em = EMPHASIS.matcher(text);
         int at = 0;
         while (em.find()) {
-            if (em.start() > at) into.add(Span.inRun("text", text.substring(at, em.start())));
-            into.add(Span.inRun(em.group(1).length() == 2 ? "strong" : "em", em.group(2)));
+            if (em.start() > at) readings(text.substring(at, em.start()), "", inRun, into);
+            readings(em.group(2), em.group(1).length() == 2 ? "strong" : "em", inRun, into);
             at = em.end();
         }
-        if (at < text.length()) into.add(Span.inRun("text", text.substring(at)));
-        if (text.isEmpty()) into.add(Span.inRun("text", ""));
+        if (at < text.length()) readings(text.substring(at), "", inRun, into);
+
+        // A star nothing closed. It is left as written rather than refused -
+        // it is a typo, not a construct - but silently drawing an asterisk in
+        // the middle of a sentence is how an author fails to notice one.
+        if (EMPHASIS.matcher(text).replaceAll("$2").indexOf('*') >= 0) {
+            findings.add(ParseFinding.warning(no,
+                    "an unpaired * was left as written; emphasis needs both ends"));
+        }
     }
 
-    /** An override becomes a ruby span, so a person can see what was pinned. */
-    private static void ruby(String text, List<Span> into) {
+    /** One stretch of one weight: its overrides become ruby, the rest is text. */
+    private static void readings(String text, String emphasis, boolean inRun, List<Span> into) {
         Matcher m = OVERRIDE.matcher(text);
         int at = 0;
         while (m.find()) {
-            if (m.start() > at) into.add(Span.text(text.substring(at, m.start())));
-            into.add(Span.ruby(m.group(1), m.group(2)));
+            if (m.start() > at) {
+                into.add(new Span("text", text.substring(at, m.start()), "", emphasis, inRun));
+            }
+            into.add(new Span("ruby", m.group(1), m.group(2), emphasis, inRun));
             at = m.end();
         }
-        if (at < text.length()) into.add(Span.text(text.substring(at)));
+        if (at < text.length()) {
+            into.add(new Span("text", text.substring(at), "", emphasis, inRun));
+        }
     }
 }

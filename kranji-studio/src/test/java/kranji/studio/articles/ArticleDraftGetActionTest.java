@@ -55,8 +55,18 @@ class ArticleDraftGetActionTest {
 
         assertTrue(json.contains("\"k\":\"ruby\""), json);
         assertTrue(json.contains("\"r\":\"dì\""), json);
-        assertTrue(json.contains("\"k\":\"strong\""), json);
+        assertTrue(json.contains("\"e\":\"strong\""), json);
         assertTrue(json.contains("\"run\":true"), json);
+    }
+
+    @Test
+    void whereTheEmphasisIsTravelsWithIt(@TempDir Path dir) throws IOException {
+        // Not decoration on the wire: it is what tells the renderer to reach
+        // for a 着重号 rather than a slant. Emphasis with no `run` beside it is
+        // emphasis over Chinese.
+        String json = previewOf(dir, "# 标题\n\n这是*重要*的。\n");
+
+        assertTrue(json.contains("{\"k\":\"text\",\"t\":\"重要\",\"e\":\"em\"}"), json);
     }
 
     @Test
