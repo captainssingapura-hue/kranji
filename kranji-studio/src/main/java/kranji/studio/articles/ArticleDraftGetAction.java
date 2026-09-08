@@ -183,24 +183,22 @@ public final class ArticleDraftGetAction
 
     private static void square(StringBuilder js, Square square) {
         switch (square) {
-            // z: a character. Its reading, and the punctuation riding in its
-            // corners, are omitted when it has none.
+            // z: a character. Nothing rides on it; marks have squares.
             case Square.Zi zi -> {
                 js.append("{\"k\":\"z\",\"t\":").append(quote(zi.zi()));
                 if (!zi.reading().isEmpty()) js.append(",\"r\":").append(quote(zi.reading()));
-                if (!zi.lead().isEmpty())    js.append(",\"lp\":").append(quote(zi.lead()));
-                if (!zi.tail().isEmpty())    js.append(",\"p\":").append(quote(zi.tail()));
                 if (zi.bold())               js.append(",\"b\":true");
                 js.append('}');
             }
             case Square.Marker marker ->
                 js.append("{\"k\":\"t\",\"t\":").append(quote(marker.text())).append('}');
-            // s: Chinese punctuation standing in a square of its own, with the
-            // same corners a character has.
-            case Square.Sign sign -> {
-                js.append("{\"k\":\"s\",\"t\":").append(quote(sign.text()));
-                if (!sign.lead().isEmpty()) js.append(",\"lp\":").append(quote(sign.lead()));
-                if (!sign.tail().isEmpty()) js.append(",\"p\":").append(quote(sign.tail()));
+            // s: one square of punctuation - one mark, or several packed.
+            // `hang` is placement, not content: it hangs past the right edge
+            // so that a mark never begins a row.
+            case Square.Punct punct -> {
+                js.append("{\"k\":\"s\",\"t\":").append(quote(punct.marks()));
+                if (punct.packed())  js.append(",\"n\":").append(punct.marks().length());
+                if (punct.hanging()) js.append(",\"hang\":true");
                 js.append('}');
             }
             // A run head carries its own spans, so a renderer can put the

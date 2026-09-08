@@ -11,6 +11,10 @@
 // questions apart: whether the SIZES are right, and whether the grid substrate
 // can draw them. Stage three swaps the substrate and the plan does not move.
 //
+// Every mark has a square, the way it does on 稿纸 - and where two would leave
+// a hole in the line they share one. A mark that finds no room hangs past the
+// right edge rather than opening the next row.
+//
 // The thing worth looking at here is a run - any non-Chinese sequence, whether
 // or not its author wrapped it. It claims several squares and gets
 // them as one head plus placeholders, because RelationGrid cannot merge cells
@@ -24,8 +28,9 @@
 /**
  * opts = {
  *   css,
- *   classes: {  // sheet, row, sq, zi, ann, punct, lead, bold,
- *               // marker, run, loose, runText, cont, indent, pad, tag
+ *   classes: {  // sheet, row, sq, zi, ann, bold,
+ *               // punct, pack, half, hang, marker, run, loose,
+ *               // runText, cont, indent, pad, tag
  *   }
  * }
  * Returns { draw(branch, host, plan) }.
@@ -59,10 +64,30 @@ function createMdSquares(opts) {
         // would stop being square.
         b.appendChild(el(branch, 'div', C.ann, s.r || ''));
         b.appendChild(el(branch, 'div', C.zi, s.t));
-        // Punctuation rides in a corner and claims no width, which is 禁则
-        // handled by the cell rather than by a line-breaking rule.
-        if (s.lp) b.appendChild(el(branch, 'div', C.lead, s.lp));
-        if (s.p) b.appendChild(el(branch, 'div', C.punct, s.p));
+    }
+
+    /**
+     * A square of punctuation.
+     *
+     * <p>One mark fills it. Two or three share it, each squeezed to its share
+     * of the width - which is what a person does on paper, and why the packing
+     * happened at all.</p>
+     *
+     * <p>A hanging square sits past the right edge: narrower, no ruling of its
+     * own, so the row's last cell simply reads as a little wider.</p>
+     */
+    function punct(branch, row, s) {
+        var classes = [C.punct];
+        if (s.hang) classes.push(C.hang);
+        var b = box(branch, row, classes);
+        if (!s.n) { b.appendChild(el(branch, 'div', C.zi, s.t)); return; }
+
+        var pack = el(branch, 'div', C.pack, null);
+        var marks = Array.from(s.t);
+        for (var i = 0; i < marks.length; i++) {
+            pack.appendChild(el(branch, 'span', C.half, marks[i]));
+        }
+        b.appendChild(pack);
     }
 
     function marker(branch, row, s) {
@@ -95,10 +120,8 @@ function createMdSquares(opts) {
 
     function square(branch, row, s) {
         switch (s.k) {
-            // A character and a sign are the same box with the same corners.
-            // The only difference is that one has a reading and one never will.
             case 'z': zi(branch, row, s); return;
-            case 's': zi(branch, row, s); return;
+            case 's': punct(branch, row, s); return;
             case 't': marker(branch, row, s); return;
             case 'r': run(branch, row, s); return;
             // Claimed by the run before it. Marked, never blank: an empty box
@@ -122,13 +145,16 @@ function createMdSquares(opts) {
             for (var r = 0; r < rows.length; r++) {
                 var line = el(branch, 'div', C.row, null);
                 var squares = rows[r].squares || [];
-                for (var i = 0; i < squares.length; i++) square(branch, line, squares[i]);
+                var filled = 0;
+                for (var i = 0; i < squares.length; i++) {
+                    square(branch, line, squares[i]);
+                    if (!squares[i].hang) filled++;
+                }
                 // Squares past the end of a short line are padding rather than
                 // cells - a poem's shape is the absence of content, and the
-                // model says so by leaving the row short.
-                for (var pad = squares.length; pad < columns; pad++) {
-                    box(branch, line, [C.pad]);
-                }
+                // model says so by leaving the row short. What hangs past the
+                // right edge was never a position, so it is not counted here.
+                for (var pad = filled; pad < columns; pad++) box(branch, line, [C.pad]);
                 sheet.appendChild(line);
             }
             host.appendChild(sheet);

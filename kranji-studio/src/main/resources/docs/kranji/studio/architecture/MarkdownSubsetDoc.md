@@ -150,44 +150,66 @@ what is outside is not.
 an English phrase. It is a positive statement about a span of text, not a
 requirement on every character that is not Han.
 
-**You do not wrap a comma.** Three groups need no delimiters, and between them
+**You do not wrap a comma.** Two groups need no delimiters, and between them
 they cover every non-Han character a Chinese sentence normally contains:
 
 | | | |
 |---|---|---|
-| **Riding marks** | `。，、！？：；…` `）】》」』’”` `（【《「『‘“` | 禁则 — they sit in the corner of the character beside them and claim no square |
-| **Standing marks** | `—` `―` `～` `·` `／` | Chinese punctuation with nowhere to ride. Full-width, one square each |
+| **Marks** | `。，、！？：；…` `）】》」』’”` `（【《「『‘“` `—` `―` `～` `·` `／` | 每个标点占一格 — each takes a square, like every other mark on 稿纸 |
 | **The delimiters** | `‹` `›` | markup; they never reach the page |
 
-The standing marks are `GridPlanner.SIGNS`, and the list is short on purpose: a
-character earns a place by being Chinese punctuation that occupies exactly one
-square, not by being common. **Digits are the case that tests the rule and are
-deliberately absent** — `1999` is four characters and one word, and on 稿纸
-numerals are written two to a square, a convention not implemented yet. Until it
-is, they are a run.
+**Digits are the case that tests the rule and are deliberately absent** —
+`1999` is four characters and one word, and on 稿纸 numerals are written two to
+a square, a convention not implemented yet. Until it is, they are a run.
 
-`——` needs no special handling at all once `—` is on the list: it is two
-full-width characters and therefore two squares.
+Latin punctuation stays inside its run: the full stop in `Dust II.` belongs to
+the Latin, not to the page.
 
-#### Riding, closing, separating
+#### 每个标点占一格
 
-Everything in the riding table must not begin a line, which is why 禁则 groups
-them. What they belong to differs, and the arrangement has to know:
+Every mark has a square. That was not always so — a closing mark used to ride
+in the corner of the character before it and an opening mark in the corner of
+the one after, which made 禁则 free, because a row cannot break inside a square.
 
-- 「）」**closes** the thing before it and is part of it. `（Premier）` is **one
-  run with both brackets inside it** — including the opening one, which would
-  otherwise wait for a character to ride on and find the one *after* the run.
-- 「、」**separates** two things and is part of neither, so it **ends** a run
-  rather than joining it.
+It was clever and it was inconsistent. A mark's square depended on what happened
+to be beside it: 。 after a character was invisible in the model, 。 after a
+Latin run was a square, and 。 opening a line was a third thing. Two rules
+existed only to paper over it — one making a bracket join its run, one making
+`、` end a run so `Ancient、Anubis、Cache、…` did not become a single run fifty
+characters wide. **Both are gone.** No full-width mark is inside a run at all
+any more.
 
-That second rule is not decoration. Without it
-`Ancient、Anubis、Cache、Dust II、…` was a single run **fifty characters wide** —
-nineteen of the twenty squares on a row, and hyphenated through the middle of
-map names at any narrower width. With it, the longest unwrapped run in the
-sample document is twelve characters.
+#### Two marks in a square
 
-A separator with nothing to ride on — a line opening with 。, or a mark after a
-run — takes a square of its own rather than being dropped.
+`”。` goes in one box, because two boxes there leaves a hole in the line — which
+is what a hand does. Adjacent marks **of the same class** share a square, up to
+`GridPlanner.MAX_MARKS`: two is the ordinary case and three is the squeeze.
+
+Same class only. `’”` close together and `“‘` open together, but a `“` starting
+the next quotation gets its own square, because it belongs to what follows
+rather than to what came before.
+
+`—` `―` `…` `～` `·` `／` never share. 破折号 and 省略号 are written double,
+`——` and `……`, and each half fills a square; packing them would turn a dash
+into a hyphen.
+
+#### 禁则, and the paper trick
+
+A mark must not begin a line. Rather than push the character before it down, or
+squeeze the mark into that character's box, **a mark that finds no room hangs
+past the right edge** and the row's last cell runs a little wider to take it.
+
+That is not an invention. It is what you do writing a composition when a full
+stop arrives at the margin: carry on past the ruling rather than start the next
+line with it. And it is why the rule needs almost no code — nothing moves, so a
+row's contents never depend on what comes after them.
+
+One rule comes free with it: `——` cannot be split across rows, because the
+second dash hangs beside the first instead of opening the next row.
+
+The other half of 禁则 needs one line. An opening mark must not *end* a row, and
+hanging cannot help — the mark belongs to what follows it, and what follows is
+on the next row — so one that would land last moves down instead.
 
 #### Why these two characters
 
@@ -241,10 +263,11 @@ neither styling nor width. A run needs both. This note used to propose a third
 reader has, on behalf of a format the reader does not yet serve.
 
 **The workbench took the other road**, and it is worth writing down which.
-`kranji.studio.articles.Square` is a second, studio-local model: `Zi`, `Run`,
-`Cont`, `Marker`, `Indent`. `GridPlanner` builds it from the parsed blocks, and
-it reuses the reading model's `Cells.CLOSING` and `Cells.OPENING` rather than
-copying them, because two 禁则 tables that must agree should be one table.
+`kranji.studio.articles.Square` is a second, studio-local model: `Zi`, `Punct`,
+`Run`, `Cont`, `Marker`, `Indent`. `GridPlanner` builds it from the parsed
+blocks, and it reuses the reading model's `Cells.CLOSING` and `Cells.OPENING`
+rather than copying them, because two 禁则 tables that must agree should be one
+table.
 
 The duplication is real and deliberate: the reader's model describes squares
 that are all one wide, and widening it is a change to the product that ought to
@@ -258,7 +281,8 @@ there is no span or merge. So a run four squares wide is drawn as **one head
 plus three placeholders** — `Square.Cont`, hatched, carrying the head's id.
 
 They are in the model, not just in the rendering, which is what keeps a row's
-arithmetic honest: a row occupies exactly as many positions as it has squares.
+arithmetic honest: every square is a position, except one hanging past the
+right edge, which by definition is not.
 When merged cells arrive the placeholders collapse into the head and nothing
 else moves — which is why the width lives on the head rather than being implied
 by counting them.

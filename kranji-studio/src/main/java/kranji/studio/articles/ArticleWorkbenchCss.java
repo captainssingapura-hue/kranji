@@ -402,28 +402,65 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         }
     }
 
-    /** A closing mark, in the corner. It claims no width — that is 禁则. */
+    /**
+     * A square of punctuation.
+     *
+     * <p>A square like any other, which is the point: on 稿纸 每个标点占一格,
+     * and a mark that used to ride invisibly in a character's corner now has a
+     * box you can count.</p>
+     */
     public record aw_sq_punct() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
-                position: absolute;
-                right: 1px;
-                bottom: 0;
-                font-size: 13px;
-                line-height: 1;
-                color: var(--color-text-muted);
+                color: var(--color-text-secondary, var(--color-text-primary));
                 """;
         }
     }
 
-    /** An opening mark, in the other corner. */
-    public record aw_sq_lead() implements CssClass<ArticleWorkbenchCss> {
+    /** Two or three marks sharing one square, side by side. */
+    public record aw_sq_pack() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
                 position: absolute;
-                left: 1px;
-                top: 1px;
-                font-size: 13px;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                padding-top: 7px;
+                """;
+        }
+    }
+
+    /**
+     * One mark of a packed square.
+     *
+     * <p>Squeezed rather than shrunk. A smaller 。 is a different mark; a
+     * narrower one is the same mark written tight, which is what a hand does
+     * when it fits {@code ”，} into one box.</p>
+     */
+    public record aw_sq_half() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                flex: 1 1 0;
+                min-width: 0;
+                text-align: center;
+                font-size: 23px;
                 line-height: 1;
-                color: var(--color-text-muted);
+                transform: scaleX(0.55);
+                """;
+        }
+    }
+
+    /**
+     * A square hanging past the right edge of its row.
+     *
+     * <p>Narrower, and with no ruling between it and the square before it — so
+     * the row's last cell simply reads as a little fatter. That is what a
+     * person does when a full stop lands at the margin of a composition: carry
+     * on past the ruling rather than begin the next line with it.</p>
+     */
+    public record aw_sq_hang() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                width: 22px;
+                border-left: 0;
+                margin-left: 0;
+                background: var(--color-surface-raised, var(--color-surface));
                 """;
         }
     }
@@ -623,7 +660,8 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
                 new aw_quote(), new aw_verse(), new aw_vline(), new aw_run(),
                 new aw_ruby(), new aw_rt(), new aw_msg(),
                 new aw_sheet(), new aw_row(), new aw_sq(), new aw_sq_zi(),
-                new aw_sq_ann(), new aw_sq_punct(), new aw_sq_lead(), new aw_sq_bold(),
+                new aw_sq_ann(), new aw_sq_punct(), new aw_sq_pack(), new aw_sq_half(),
+                new aw_sq_hang(), new aw_sq_bold(),
                 new aw_sq_marker(), new aw_sq_run(), new aw_sq_loose(),
                 new aw_sq_run_text(), new aw_sq_tag(),
                 new aw_sq_cont(), new aw_sq_indent(), new aw_sq_pad(),

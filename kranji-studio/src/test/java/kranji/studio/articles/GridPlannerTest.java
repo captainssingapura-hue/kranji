@@ -35,9 +35,9 @@ class GridPlannerTest {
     private static String said(Row r) {
         var sb = new StringBuilder();
         for (Square s : r.squares()) {
-            if (s instanceof Square.Zi z)          sb.append(z.lead()).append(z.zi()).append(z.tail());
+            if (s instanceof Square.Zi z)           sb.append(z.zi());
             else if (s instanceof Square.Marker m)  sb.append(m.text());
-            else if (s instanceof Square.Sign sg) sb.append(sg.lead()).append(sg.text()).append(sg.tail());
+            else if (s instanceof Square.Punct p)   sb.append(p.hanging() ? "|" : "").append(p.marks());
             else if (s instanceof Square.Run run)  sb.append('[').append(run.text()).append(']');
             else if (s instanceof Square.Cont)     sb.append('_');
             else                                   sb.append('.');
@@ -45,10 +45,15 @@ class GridPlannerTest {
         return sb.toString();
     }
 
+    /** Verse, to get a line with no 首行缩进 in the way. */
+    private static GridPlan verse(String line, int columns) {
+        return plan("```verse\n" + line + "\n```", columns);
+    }
+
     // ── Squares ────────────────────────────────────────────────────────
 
     @Test
-    void aCharacterIsASquareAndAParagraphOpensWithTwoBlanks() {
+    void aCharacterIsASquareAndSoIsAMark() {
         GridPlan p = plan("一二三。", 20);
 
         Row r = row(p, 0);
@@ -58,31 +63,32 @@ class GridPlannerTest {
         assertInstanceOf(Square.Indent.class, r.squares().get(0));
         assertInstanceOf(Square.Indent.class, r.squares().get(1));
         assertEquals("..一二三。", said(r));
-        assertEquals(5, r.used(), "three characters, two blanks - the 。 rides in 三's square");
+        assertEquals(6, r.used(), "两个空格，三个字，一个标点 - 每个标点占一格");
     }
 
     @Test
-    void closingPunctuationRidesInTheSquareBeforeIt() {
-        // 禁则, and it falls out of the cell rule rather than out of a
-        // line-breaking rule: a row cannot break inside a square.
+    void nothingRidesInACharactersCornerAnyMore() {
+        // It used to. A mark's square depended on what happened to be beside
+        // it, which made 。 after a character invisible in the model and 。
+        // after a run a square. Every mark has a box now.
         Row r = row(plan("一，二。", 20), 0);
 
-        var zi = (Square.Zi) r.squares().get(2);
-        assertEquals("一", zi.zi());
-        assertEquals("，", zi.tail());
-        assertEquals(4, r.used());
+        assertEquals("..一，二。", said(r));
+        assertEquals(6, r.used());
+        assertInstanceOf(Square.Punct.class, r.squares().get(3));
+        assertEquals("，", ((Square.Punct) r.squares().get(3)).marks());
     }
 
     @Test
-    void punctuationReachesBackAcrossASpanBoundary() {
-        // The comma is in a different span from the character it belongs to,
-        // because the bold ended first.
+    void aMarkAfterBoldIsNotItselfBold() {
+        // The bold ends with the characters it was written around. The comma
+        // is a square of its own and belongs to neither side.
         Row r = row(plan("这是**很重要**，对吗。", 20), 0);
 
         var zi = (Square.Zi) r.squares().stream()
                 .filter(s -> s instanceof Square.Zi z && z.zi().equals("要")).findFirst().orElseThrow();
-        assertEquals("，", zi.tail());
-        assertTrue(zi.bold(), "and it is still the bold 要");
+        assertTrue(zi.bold());
+        assertEquals("..这是很重要，对吗。", said(r));
     }
 
     @Test
@@ -94,79 +100,44 @@ class GridPlannerTest {
         assertEquals("dì", zi.reading());
     }
 
-    // ── What needs no ‹…› ──────────────────────────────────────────────
+    // ── Marks sharing a square ─────────────────────────────────────────
 
     @Test
-    void bothBracketsBelongToTheRunTheyEnclose() {
-        // The bug: the （ had nothing to ride on yet, so it waited for a
-        // character and found the one AFTER the run - drawing 「（的」and
-        // putting the bracket on the wrong side of what it opened.
-        Row r = row(plan("它不在（Premier）的池里。", 20), 0);
+    void twoClosingMarksShareASquare() {
+        // ”。 in one box, which is what a hand does: two boxes there leaves a
+        // hole in the line.
+        Row r = row(plan("他说：“好。”", 20), 0);
 
-        var run = (Square.Run) r.squares().stream()
-                .filter(s -> s instanceof Square.Run).findFirst().orElseThrow();
-        assertEquals("（Premier）", run.text());
-        assertEquals("..它不在[（Premier）]___的池里。", said(r));
+        var last = (Square.Punct) r.squares().get(r.squares().size() - 1);
+        assertEquals("。”", last.marks());
+        assertTrue(last.packed());
     }
 
     @Test
-    void anOpeningMarkStillWaitsWhenThereIsNothingToJoin() {
-        // The other half of the same rule: 「（你好）」 must keep the bracket in
-        // 你's corner, where 禁则 wants it.
-        Row r = row(plan("（你好）", 20), 0);
+    void openingMarksShareToo_butNotWithClosingOnes() {
+        // Same class only. 「“‘」 open together and 「’”」 close together, but a
+        // 「“」 starting the next quotation gets its own square, because it
+        // belongs to what follows rather than to what came before.
+        Row r = row(plan("“‘甲’”，“乙”", 20), 0);
 
-        var zi = (Square.Zi) r.squares().get(2);
-        assertEquals("你", zi.zi());
-        assertEquals("（", zi.lead());
-        assertEquals(4, r.used(), "two blanks and two characters - both brackets ride");
+        List<String> marks = r.squares().stream()
+                .filter(s -> s instanceof Square.Punct)
+                .map(s -> ((Square.Punct) s).marks()).toList();
+        assertEquals(List.of("“‘", "’”，", "“", "”"), marks);
     }
 
     @Test
-    void aSeparatorEndsARunRatherThanJoiningIt() {
-        // The other half of the bracket rule, and the reason it is a rule
-        // rather than a special case. In the real draft this kept
-        // Ancient、Anubis、Cache、… as one run of fifty characters - nineteen
-        // of twenty squares, hyphenated through map names on a narrow page.
-        Row r = row(plan("Ancient、Anubis、Cache", 20), 0);
-
-        assertEquals("..[Ancient]__、[Anubis]__、[Cache]_", said(r));
-        assertEquals(3, r.squares().stream().filter(s -> s instanceof Square.Run).count());
-        assertEquals(2, r.squares().stream().filter(s -> s instanceof Square.Sign).count());
-    }
-
-    @Test
-    void aSeparatorStillRidesWhenThereIsACharacterToRideOn() {
-        // Splitting runs must not have cost 禁则 anything.
-        Row r = row(plan("一、二、三", 20), 0);
-
-        assertEquals("..一、二、三", said(r));
-        assertEquals(5, r.used(), "the 、 take no squares of their own");
-    }
-
-    @Test
-    void aDashIsTwoSquaresAndAsksForNoDelimiters() {
-        // 破折号 is Chinese punctuation. Requiring ‹——› would be asking an
-        // author to mark Chinese as foreign, and it is full-width, so it needs
-        // no width machinery either - one square each, and that is all.
+    void aDashNeverSharesASquare() {
+        // 破折号 is written double and each half fills a square. Packing them
+        // would turn a dash into a hyphen.
         Row r = row(plan("一——二。", 20), 0);
 
         assertEquals("..一——二。", said(r));
-        assertEquals(6, r.used(), "two blanks, 一, two dashes, 二。");
-        assertTrue(r.squares().get(3) instanceof Square.Sign,
-                () -> "a dash is a sign, not a run: " + said(r));
-        assertTrue(r.squares().stream().noneMatch(s -> s instanceof Square.Run));
-    }
-
-    @Test
-    void aClosingMarkRidesInASignsCornerToo() {
-        // 。 must not begin a line whatever precedes it, and a dash has the
-        // same two free corners a character has.
-        Row r = row(plan("一——。", 20), 0);
-
-        var sign = (Square.Sign) r.squares().get(4);
-        assertEquals("—", sign.text());
-        assertEquals("。", sign.tail());
-        assertEquals(5, r.used());
+        assertEquals(7, r.used(), "two blanks, 一, two dashes, 二, and 。 in a box of its own");
+        assertInstanceOf(Square.Punct.class, r.squares().get(3));
+        assertFalse(((Square.Punct) r.squares().get(3)).packed());
+        assertTrue(r.squares().stream().noneMatch(s -> s instanceof Square.Run),
+                () -> "a dash is a mark, not a run: " + said(r));
     }
 
     @Test
@@ -176,6 +147,91 @@ class GridPlannerTest {
         // getting it wrong made 破折号 claim one square for two.
         assertEquals(1.0, SquareWidth.ems("—"), 0.001);
         assertEquals(2, SquareWidth.squares("——"));
+    }
+
+    // ── 禁则 ───────────────────────────────────────────────────────────
+
+    @Test
+    void aMarkWithNoRoomHangsPastTheEdgeRatherThanBeginningARow() {
+        // The paper trick: when a full stop lands at the margin you carry on
+        // past the ruling. Nothing is pushed down and nothing is squeezed into
+        // the character's box.
+        GridPlan p = verse("一二三四。", 4);
+
+        Row r = row(p, 0);
+        assertEquals("一二三四|。", said(r));
+        assertEquals(4, r.used(), "what hangs past the edge is not a position");
+        assertEquals(1, r.hanging().size());
+        assertEquals(1, p.height(), "and nothing was pushed onto a second row");
+    }
+
+    @Test
+    void aDashPairCannotBeSplitAcrossRows() {
+        // Free, and worth an assertion because it is the reason hanging beats
+        // pushing: the second dash hangs beside the first instead of opening
+        // the next row.
+        GridPlan p = verse("一二三——四", 4);
+
+        assertEquals("一二三—|—", said(row(p, 0)));
+        assertEquals("四", said(row(p, 1)));
+    }
+
+    @Test
+    void anOpeningMarkMovesDownRatherThanEndingARow() {
+        // Hanging cannot help here: the mark belongs to what follows it, and
+        // what follows is on the next row.
+        GridPlan p = verse("一二三（四）", 4);
+
+        assertEquals("一二三", said(row(p, 0)));
+        assertEquals("（四）", said(row(p, 1)));
+    }
+
+    @Test
+    void noRowBeginsWithAClosingMarkOrEndsWithAnOpeningOne() {
+        // The rule check, over something long enough to hit every width.
+        String text = "他说：“一二三四五六七八九十。”（甲）乙、丙——丁，戊己庚辛。";
+        for (int columns = 4; columns <= 20; columns++) {
+            GridPlan p = plan(text, columns);
+            for (Row r : p.rows()) {
+                List<Square> in = r.squares().stream().filter(s -> !s.hanging()).toList();
+                if (in.isEmpty()) continue;
+                if (in.get(0) instanceof Square.Punct first) {
+                    assertFalse(kranji.reading.model.Cells.CLOSING.contains(first.first()),
+                            () -> "a closing mark began a row at " + said(r));
+                }
+                if (in.get(in.size() - 1) instanceof Square.Punct last) {
+                    assertFalse(kranji.reading.model.Cells.OPENING.contains(last.first()),
+                            () -> "an opening mark ended a row at " + said(r));
+                }
+            }
+        }
+    }
+
+    // ── What needs no ‹…› ──────────────────────────────────────────────
+
+    @Test
+    void fullWidthMarksNeverEndUpInsideARun() {
+        // The whole reason this is simpler than it was. Brackets used to have
+        // to join their run and separators used to have to end one, because
+        // marks had no squares of their own. Now none of them are in a run at
+        // all, and the two rules that arranged that are gone.
+        Row r = row(plan("它不在（Premier）的池里。", 20), 0);
+
+        var run = (Square.Run) r.squares().stream()
+                .filter(s -> s instanceof Square.Run).findFirst().orElseThrow();
+        assertEquals("Premier", run.text());
+        assertEquals("..它不在（[Premier]__）的池里。", said(r));
+    }
+
+    @Test
+    void aListOfLatinNamesIsNotOneEnormousRun() {
+        // Ancient、Anubis、… was one run of fifty characters when the 、 had
+        // nowhere else to go: nineteen of twenty squares, hyphenated through
+        // map names on any narrower page.
+        Row r = row(plan("Ancient、Anubis、Cache", 20), 0);
+
+        assertEquals("..[Ancient]__、[Anubis]__、[Cache]_", said(r));
+        assertEquals(3, r.squares().stream().filter(s -> s instanceof Square.Run).count());
     }
 
     // ── Runs ───────────────────────────────────────────────────────────
@@ -192,7 +248,7 @@ class GridPlannerTest {
         long conts = r.squares().stream()
                 .filter(s -> s instanceof Square.Cont c && c.id() == run.id()).count();
         assertEquals(run.width() - 1, conts, "the head takes one square, placeholders the rest");
-        assertEquals(2 + 1 + run.width() + 1, r.used(), "indent, 在, the run, 口。");
+        assertEquals(2 + 1 + run.width() + 1 + 1, r.used(), "indent, 在, the run, 口, 。");
     }
 
     @Test
@@ -255,6 +311,8 @@ class GridPlannerTest {
         for (Row r : p.rows()) {
             assertTrue(r.used() <= p.columns(),
                     () -> "row over the page: " + said(r) + " (" + r.used() + ")");
+            assertTrue(r.hanging().size() <= 2,
+                    () -> "too much hanging past the edge: " + said(r));
         }
     }
 

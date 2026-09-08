@@ -7,17 +7,30 @@ import java.util.List;
 /**
  * One square of the page.
  *
+ * <h2>Punctuation has squares of its own</h2>
+ *
+ * <p>It did not always. A closing mark used to ride in the corner of the
+ * character before it and an opening mark in the corner of the one after, which
+ * made 禁则 free: a row cannot break inside a square, so 。 could not begin a
+ * line without anybody writing a line-breaking rule.</p>
+ *
+ * <p>That was clever and it was inconsistent. It made a mark's square depend on
+ * what happened to be beside it — 。 after a character was invisible in the
+ * model, 。 after a Latin run was a square, and 。 opening a line was a third
+ * thing. On 稿纸 every mark occupies a square, and now so does every mark
+ * here.</p>
+ *
+ * <p>禁则 is a real rule again as a result. {@code GridPlanner} binds a closing
+ * mark to what precedes it and an opening mark to what follows, and places the
+ * binding whole — so a mark still cannot begin or end a row, but because
+ * something says so rather than because the model could not express it.</p>
+ *
  * <h2>Why this is not {@code kranji.reading.model.Cell}</h2>
  *
  * <p>That one is sealed over a character and a plain stretch, and neither
  * carries a width — every cell it can describe is exactly one square wide. A
  * {@code ‹…›} run is not: {@code Apartments} is one typographic unit that needs
  * several squares, and saying so is the whole point of the extension.</p>
- *
- * <p>Widening the reading model would mean a third {@code Token} case and a new
- * arm in every switch the reader has, on behalf of a format the reader does not
- * yet serve. The design note argues for that eventually. It is not this
- * change.</p>
  *
  * <h2>The two blanks are different blanks</h2>
  *
@@ -37,55 +50,85 @@ public sealed interface Square {
     default int width() { return 1; }
 
     /**
-     * A character, and everything glued to it.
+     * Whether this is hanging past the right edge of its row.
      *
-     * @param zi      the character
-     * @param reading the reading its author pinned, or empty
-     * @param lead    an opening mark that must not end a line — 「（《
-     * @param tail    a closing mark that must not begin one — 。，、！？
-     * @param bold    inside {@code **…**}. There is no italic here: the parser
-     *                drops it over Chinese, for the reason E5 gives
+     * <p>Only punctuation ever does. It is how a mark that would otherwise
+     * begin a line stays on the one before it — see {@link Punct}.</p>
      */
-    record Zi(String zi, String reading, String lead, String tail, boolean bold)
-            implements Square {}
+    default boolean hanging() { return false; }
+
+    /**
+     * A character.
+     *
+     * <p>Nothing rides on it any more. It used to carry the punctuation glued
+     * to either corner; punctuation has its own squares now, so a character is
+     * a character and its reading.</p>
+     *
+     * @param bold inside {@code **…**}. There is no italic: the parser drops it
+     *             over Chinese, for the reason E5 gives
+     */
+    record Zi(String zi, String reading, boolean bold) implements Square {}
+
+    /**
+     * One square of punctuation.
+     *
+     * <h2>More than one mark in a square</h2>
+     *
+     * <p>Which is what a person does on 稿纸: {@code ”，} and {@code ”。} go in
+     * one box, because two boxes there leaves a hole in the line. Adjacent
+     * marks of the same class share a square, up to
+     * {@code GridPlanner.MAX_MARKS} — two is the ordinary case and three is the
+     * squeeze.</p>
+     *
+     * <p>A standing mark never shares. 破折号 and 省略号 are written double,
+     * {@code ——} and {@code ……}, and each half is a full square; packing them
+     * would turn a dash into a hyphen.</p>
+     *
+     * <h2>Hanging</h2>
+     *
+     * <p>A mark must not begin a line. When one lands where a row has no room
+     * left, it does not push a character down and it does not squeeze into the
+     * character's box — it <b>hangs past the right edge</b>, and the row's last
+     * cell simply runs a little wider to take it.</p>
+     *
+     * <p>That is not a trick invented here. It is what you do writing a
+     * composition when a full stop arrives at the margin: you carry on past the
+     * ruling rather than starting the next line with it. It also happens to
+     * make 禁则 free again without any of the machinery pushing would need —
+     * and it keeps {@code ——} together, since the second dash hangs beside the
+     * first rather than opening the next row.</p>
+     *
+     * @param marks   one to three characters, in the order they were written
+     * @param hanging placed past the right edge of its row
+     */
+    record Punct(String marks, boolean hanging) implements Square {
+
+        /** The mark that decides which class this square belongs to. */
+        public String first() {
+            return marks.isEmpty() ? "" : marks.substring(0, 1);
+        }
+
+        /** Whether more than one mark is sharing this square. */
+        public boolean packed() { return marks.length() > 1; }
+    }
 
     /**
      * The planner's own mark: a bullet, a list number.
      *
-     * <p>The only square that holds text and is not from the document. Always
-     * one square — a marker that needed two would be a marker nobody would
-     * write.</p>
+     * <p>The only square that holds text and is not from the document.</p>
      */
     record Marker(String text) implements Square {}
-
-    /**
-     * A character that stands in a square of its own.
-     *
-     * <p>Chinese punctuation that is not in the 禁则 tables and so has nowhere
-     * to ride: 破折号 —, 波浪号 ～, 间隔号 ·. Each is full-width and each takes
-     * one square, which means 破折号 written properly as {@code ——} is two
-     * squares and needs no special handling at all.</p>
-     *
-     * <p>They are the exception to <i>everything non-Chinese belongs inside
-     * {@code ‹…›}</i>. Requiring an author to write {@code ‹——›} would be
-     * asking them to mark Chinese punctuation as foreign. The list is
-     * {@link GridPlanner#SIGNS} and it is short on purpose: a character earns
-     * a place on it by being Chinese punctuation that occupies exactly one
-     * square, not by being convenient.</p>
-     *
-     * @param lead an opening mark riding in its corner, as on a {@link Zi}
-     * @param tail a closing mark riding in the other one
-     */
-    record Sign(String text, String lead, String tail) implements Square {}
 
     /**
      * The head of a non-Chinese sequence.
      *
      * <p>Both kinds. {@code ‹Tunnel›} is one, and so is a bare {@code markdown}
      * an author did not wrap — because the square it would otherwise get is one
-     * square, and eight letters do not fit in one square. That was the bug this
-     * case was widened to fix: only marked runs claimed width, so unmarked
-     * Latin overflowed silently into the characters beside it.</p>
+     * square, and eight letters do not fit in one square.</p>
+     *
+     * <p>Its own punctuation stays inside it. A full stop in {@code Dust II.}
+     * is Latin punctuation belonging to Latin text; the marks that get squares
+     * of their own are the full-width ones.</p>
      *
      * @param parts  the sequence's own spans, so the emphasis inside it
      *               survives — {@code ‹Tunnel bla *bla*›} is three pieces
