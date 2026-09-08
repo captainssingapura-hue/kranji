@@ -56,18 +56,23 @@ changes it silently unless you know.
 | Syntax | Verdict | Becomes |
 |---|---|---|
 | `字{dì}` | keep — **E1** | the reading of that character |
-| `` `text` `` | keep — **E3** | a run marked *not Chinese to be practised* |
-| `**bold**` | **drop, warn** | the text, unemphasised |
-| `*italic*` | **drop, warn** | the text, unemphasised |
+| `**bold**` **over Chinese** | **drop, warn** | the text, unemphasised |
+| `**bold**` **inside a plain run** | keep — **E3** | emphasised text |
+| `*italic*` | as bold, by the same rule | |
+| `` `text` `` | **reserved** | see E3 — not the plain-run marker |
 | `[text](url)` | **error** | a link the reader cannot follow is a lie |
 | `![alt](file)` | **error, reserved** | see below |
 | `~~strike~~`, `==mark==` | **error** | — |
 
-**Why emphasis is dropped rather than rejected.** It is too common to reject —
-the sample document has 24 bold runs — and meaningless to render: a bold run
-inside a square practice grid is one heavier square, competing with the pinyin
-directly above it. Dropping it silently is what we refuse, so it drops with a
-warning naming the line.
+**Emphasis depends on what it is over, and that is the whole point of E3.**
+Over Chinese it is dropped: a bold run in a square practice grid is one heavier
+square, competing with the pinyin directly above it, and it says nothing. Inside
+a plain run there is no grid and no pinyin — it is ordinary typography, where
+bold over `Premier` means exactly what it means anywhere else. So it is kept.
+
+Dropping silently is what we refuse, so the dropped case warns and names the
+line. The sample document has 24 bold runs and this rule keeps the ones that
+mean something.
 
 **Images are reserved, not forgotten.** `Block.Illustration(file, alt, caption)`
 and `ImageRef` already exist in the model and are unused. When images are
@@ -118,54 +123,57 @@ end of a heading line, not after a character. Optional on first write —
 generated once from the heading, then written back into the file and thereafter
 checked rather than recomputed.
 
-### E3 — Plain run: `` `Apartments` ``
+### E3 — Plain runs
 
-Backticks mean exactly one thing: **this run is not Chinese to be practised.**
+**A maximal run of non-Han characters is a plain run. There is no syntax for
+it.**
 
 ```
-警察出生点在`Tunnel`附近。
+警察出生点在 Tunnel 附近，属于 **Premier** 之外的图。
 ```
 
-It settles *intent* first — it separates Latin the author wants inline
-from Latin that arrived by accident, and gives the renderer something to switch
-on. How such a run is then drawn is a separate question, settled below.
+`Tunnel` is a plain run; so is `Premier`, and its bold survives. The scanner
+already groups exactly this way — `ArticleScannerModule.flushPlain` emits one
+unit per maximal non-Han run — so the concept exists, it simply had no name and
+no width.
 
-The problem it exists for is measured. `ArticleScannerModule.flushPlain` pushes
-an entire non-Han run into a **single cell**, and a cell's character box is
-fixed — `width: 62px; font-size: 42px` at medium, centred, with no `overflow`
-rule. Ten letters at 42px is roughly 230px of text in a 62px box: about 3.7×
-over, spilling across both neighbours. The published library has exactly one
-Latin run and it is one character long (`U字形`), so nothing has ever exercised
-this; the sample document has 37 runs.
+#### Why there is no marker
 
-#### How it renders
+An earlier draft made this `` `Apartments` `` — backticks, borrowing markdown's
+code span. **That was wrong, and the reason is worth recording.** A code span's
+contents are *literal* by definition: CommonMark does no emphasis parsing inside
+one. So `` `**Premier**` `` means the asterisks, and the very thing E3 is for —
+keeping emphasis where emphasis still means something — is the one thing that
+delimiter forbids.
 
-| | `Apartments` becomes | keeps the grid | verdict |
-|---|---|---|---|
-| **A** one cell per letter | 10 squares | yes | **wrong** |
-| **B** one cell, scaled to fit | 1 square, small text | yes | **take this** |
-| **C** spans *k* cells | ~4 columns, normal size | — | **not available** |
-| **D** leaves the grid | inline text between two boards | no | later, if B proves not enough |
+Backticks stay **reserved**. They may later mean *treat this as plain even
+though it is Han* — "do not practise this" — which is a real and different need.
+Nothing is invented for it yet.
 
-**A is wrong** despite being cheapest: ten Latin letters each in a practice
-square says *learn these*, which is the opposite of what the mark means.
+#### Width: a run is *n* squares
 
-**C would have been the one to want** — the Chinese keeps its rhythm and the
-Latin reads at a normal size — and it is not available. `RelGridCellsModule`
-builds one `div` per column and `RelGridLayoutModule` sizes columns through
-`<col>` elements; there is no span or merge concept anywhere in the grid. Having
-it would mean changing the framework, which is a different repository and a much
-larger ask than this feature earns.
+A plain run occupies `ceil(runWidth / cellWidth)` squares, measured from the
+text rather than from its character count — `Apartments` is not ten squares, it
+is however many its rendered width needs, which at a 62px cell is about four.
 
-**So B.** One cell, its content scaled to fit, with `overflow: hidden` so a run
-can never spill across its neighbours the way it silently would today. It is
-adequate for the common case — the sample's runs are mostly `T`, `CT`, `Mid`,
-`CS2` — and only a run as long as `Apartments` becomes uncomfortably small.
+**Everything up to the final render works on this today.** Parsing, the token
+model, segmentation, the census and the length count all treat a plain run as
+one unit with a width; nothing about them waits on the grid.
 
-**D stays on the table** for the day a document is mostly Latin. It is the
-semantically right answer and the structurally expensive one: a block is
-currently one board, and this makes it board / text / board. Not worth it for 37
-runs in one article.
+The render does wait. `RelGridCellsModule` builds one `div` per column and
+`RelGridLayoutModule` sizes them through `<col>` elements — there is no span or
+merge anywhere in the grid, so a run cannot yet occupy the *n* squares it has
+asked for. **That is a RelationGrid enhancement — merged cells — and it belongs
+to the framework, not here.** Until it lands, a plain run draws in one cell; the
+number it carries is correct in the model whether or not the renderer can honour
+it yet.
+
+#### What the model needs
+
+`Token.Plain(String text)` carries no styling and no width. Both are needed:
+emphasis inside the run, and the square count. That is the concrete model change
+E3 asks for, and it is small — a `Plain` that carries marks and a width, or a
+third token case beside `Zi` and `Plain`.
 
 ### E4 — Verse fence
 
@@ -209,7 +217,7 @@ the author wrote?* A dropped bold run does not. A dropped table does.
 
 ## 三、整体结构 {#zheng-ti-jie-gou}
 
-警察出生点在地{dì}图较低的一侧，靠近`Tunnel`入口。
+警察出生点在地{dì}图较低的一侧，靠近 **Tunnel** 入口。
 
 - 市场
 - 中路大街
@@ -221,6 +229,6 @@ the author wrote?* A dropped bold run does not. A dropped table does.
 ```
 
 One title checked against the catalogue, two pinned ids, one reading override,
-one run marked as not-Chinese, a list, and two lines whose breaks survive.
-Everything else in the file would be an error or a warning, and the author is
-told which.
+a plain run carrying bold that survives because it is not over Chinese, a list,
+and two lines whose breaks survive. Everything else in the file would be an
+error or a warning, and the author is told which.
