@@ -291,12 +291,20 @@ public final class MdSubsetParser {
     /**
      * One stretch, split on emphasis.
      *
-     * <p>Emphasis is kept wherever it is written, Chinese included. It used to
-     * be dropped outside a run on the grounds that a slanted character cannot
-     * be drawn in a practice square — which was true about the slant and wrong
-     * about the emphasis. Chinese has its own mark for this, the 着重号, and
-     * choosing it is the renderer's job; refusing to carry the author's
-     * intention this far up was never the way to get there.</p>
+     * <h2>Bold survives over Chinese; italic does not</h2>
+     *
+     * <p>Bold is a weight, and a heavier character is the same character in the
+     * same square — nothing about the grid objects to it.</p>
+     *
+     * <p>Italic has no such reading. No CJK face has one, so a browser fakes it
+     * by shearing the glyph out of its square. Chinese does have a mark for
+     * this — the 着重号, a dot under each character — and it was tried here: it
+     * fits the grid perfectly and is too faint to notice at reading size, which
+     * is a worse outcome than not offering it. So {@code *…*} over Chinese is
+     * dropped, and said so.</p>
+     *
+     * <p>Inside a run neither question arises. That is Latin, where italic is
+     * an italic.</p>
      */
     private static void emphasised(String text, int no, List<ParseFinding> findings,
                                    List<Span> into, boolean inRun) {
@@ -304,7 +312,14 @@ public final class MdSubsetParser {
         int at = 0;
         while (em.find()) {
             if (em.start() > at) readings(text.substring(at, em.start()), "", inRun, into);
-            readings(em.group(2), em.group(1).length() == 2 ? "strong" : "em", inRun, into);
+            boolean bold = em.group(1).length() == 2;
+            String weight = bold ? "strong" : "em";
+            if (!bold && !inRun) {
+                weight = "";
+                findings.add(ParseFinding.warning(no,
+                        "italic over Chinese was dropped; use ** for emphasis a reader will see"));
+            }
+            readings(em.group(2), weight, inRun, into);
             at = em.end();
         }
         if (at < text.length()) readings(text.substring(at), "", inRun, into);

@@ -121,28 +121,40 @@ class MdSubsetParserTest {
     }
 
     @Test
-    void emphasisOverChineseIsKeptToo() {
-        // It used to be dropped, on the grounds that a slanted character cannot
-        // be drawn in a practice square. True about the slant; wrong about the
-        // emphasis, which Chinese marks with a 着重号 instead. Which mark to
-        // use is the renderer's decision - what the author wrote reaches it.
+    void boldOverChineseIsKept() {
+        // A heavier character is the same character in the same square, so
+        // nothing about the practice grid objects to it.
         var p = parse("这是**很重要**的。");
 
         List<Span> line = of(p, "p").get(0).lines().get(0);
         assertEquals("这是很重要的。", said(line), "the words are unchanged");
         Span bold = line.stream().filter(s -> s.emphasis().equals("strong")).findFirst().orElseThrow();
         assertEquals("很重要", bold.text());
-        assertFalse(bold.inRun(), "outside a run - which is how the renderer knows to use a 着重号");
-        assertEquals(List.of(), p.warnings(), "nothing is dropped any more");
+        assertEquals(List.of(), p.warnings());
     }
 
     @Test
-    void italicFollowsTheSameRule() {
-        List<Span> chinese = of(parse("这是*重要*的。"), "p").get(0).lines().get(0);
-        assertTrue(chinese.stream().anyMatch(s -> s.emphasis().equals("em") && s.text().equals("重要")));
+    void italicOverChineseIsDroppedWithAWarning() {
+        // No CJK face has an italic; a browser fakes one by shearing the glyph
+        // out of its square. The 着重号 fits the grid and is too faint to see
+        // at reading size, which is worse than not offering it at all.
+        var p = parse("这是*重要*的。");
 
-        List<Span> latin = of(parse("‹*Mid*›"), "p").get(0).lines().get(0);
-        assertTrue(latin.stream().anyMatch(s -> s.emphasis().equals("em") && s.inRun()));
+        List<Span> line = of(p, "p").get(0).lines().get(0);
+        assertEquals("这是重要的。", said(line), "the words survive");
+        assertTrue(line.stream().allMatch(s -> s.emphasis().isEmpty()));
+        assertEquals(1, p.warnings().size());
+        assertTrue(messages(p).contains("italic over Chinese was dropped"), messages(p));
+    }
+
+    @Test
+    void insideARunItalicIsAnItalic() {
+        // That is Latin, and Latin italicises.
+        var p = parse("‹*Mid*›");
+
+        List<Span> line = of(p, "p").get(0).lines().get(0);
+        assertTrue(line.stream().anyMatch(s -> s.emphasis().equals("em") && s.inRun()));
+        assertEquals(List.of(), p.warnings());
     }
 
     @Test

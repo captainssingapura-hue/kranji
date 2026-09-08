@@ -15,9 +15,9 @@
 // an author has come here to check: a ‹…› run is tinted, an override wears its
 // pinned reading, and a heading with no id says so.
 //
-// Emphasis is set the way the writing system sets it. Inside a run it is bold
-// and italic, which is what Latin does; outside one, italic becomes the 着重号,
-// which is what Chinese does.
+// Emphasis: bold everywhere, italic only inside a run. Over Chinese an italic
+// is a sheared glyph rather than a typeface, so the parser drops it before it
+// gets here - which is why nothing below has a case for it.
 //
 // No CJK literal appears in this file. Every character it draws came from a
 // draft on disk.
@@ -28,7 +28,7 @@
  *   css,        // the class setter
  *   classes: {  // every class this sets, by name
  *     title, h2, h3, pin, unpinned, p, li, marker,
- *     quote, verse, vline, run, ruby, rt, ziEm, msg
+ *     quote, verse, vline, run, ruby, rt, msg
  *   }
  * }
  * Returns { draw(branch, host, blocks), say(branch, host, text) }.
@@ -52,32 +52,22 @@ function createMdPreview(opts) {
     // ── A line ─────────────────────────────────────────────────────────
 
     // Emphasis is the element - strong and em mean what the tags mean, and
-    // inventing names for them would say less.
+    // inventing names for them would say less. Only ever em inside a run: the
+    // parser drops italic over Chinese, so nothing here has to know why.
     function weightOf(span) {
         return span.e === 'strong' ? 'strong' : span.e === 'em' ? 'em' : null;
     }
 
-    // Outside a run it is also a class, because a slant is not how Chinese is
-    // emphasised: no CJK face has an italic, so a browser fakes one by shearing
-    // the glyph, which pushes it out of the square it is supposed to sit in.
-    // The Chinese mark for exactly this is the 着重号 - a dot under each
-    // character - which is what em becomes there. Bold needs no such help: a
-    // heavier character is still the same character in the same square.
-    function markOf(span) {
-        return (span.e === 'em' && !span.run) ? C.ziEm : null;
-    }
-
     function piece(branch, host, span) {
         var tag = weightOf(span);
-        var mark = markOf(span);
         if (span.k !== 'ruby') {
-            host.appendChild(el(branch, tag || 'span', mark, span.t));
+            host.appendChild(el(branch, tag || 'span', null, span.t));
             return;
         }
         // A reading and a weight are two questions about one character, so the
         // ruby goes inside the emphasis rather than instead of it.
         var into = host;
-        if (tag) { into = el(branch, tag, mark, null); host.appendChild(into); }
+        if (tag) { into = el(branch, tag, null, null); host.appendChild(into); }
         var r = el(branch, 'ruby', C.ruby, span.t);
         r.appendChild(el(branch, 'rt', C.rt, span.r));
         into.appendChild(r);

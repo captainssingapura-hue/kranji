@@ -321,26 +321,231 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         }
     }
 
+    // ── The squares ────────────────────────────────────────────────────
+
     /**
-     * 着重号 — emphasis, set the way Chinese sets it.
+     * The page of squares.
      *
-     * <p>{@code *…*} over Chinese used to be dropped, on the grounds that a
-     * slanted character cannot be drawn in a practice square. That was right
-     * about the slant and wrong about the emphasis. No CJK face has an italic,
-     * so a browser fakes one by shearing the glyph — which is both ugly and
-     * exactly the objection: a sheared character no longer fits its square.</p>
-     *
-     * <p>Chinese has had its own mark for this all along: a dot under each
-     * emphasised character. It takes no width, so the grid is untouched, and it
-     * goes underneath, so it never argues with the reading above. Bold needs no
-     * such help — a heavier character is the same character in the same
-     * square — so only italic is redirected here.</p>
+     * <p>{@code fit-content}, because a sheet of squared paper is a fixed shape
+     * rather than a layout that adapts. Stretching it to the pane would make
+     * the squares stop being square, which is the one property the whole model
+     * rests on.</p>
      */
-    public record aw_zi_em() implements CssClass<ArticleWorkbenchCss> {
+    public record aw_sheet() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
-                font-style: normal;
-                text-emphasis: filled dot;
-                text-emphasis-position: under right;
+                width: fit-content;
+                padding: var(--space-4, 16px);
+                """;
+        }
+    }
+
+    public record aw_row() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                display: flex;
+                """;
+        }
+    }
+
+    /**
+     * One square: 34px, holding a 23px glyph.
+     *
+     * <p>The reader's medium is 62/42. This is the same 1.48 ratio at bench
+     * scale — {@link SquareWidth} computes against that ratio, so a run drawn
+     * here claims the squares it will claim in the reader.</p>
+     */
+    public record aw_sq() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                position: relative;
+                box-sizing: border-box;
+                flex: 0 0 auto;
+                width: 34px;
+                height: 34px;
+                border: 1px solid var(--color-border);
+                margin: -1px 0 0 -1px;
+                """;
+        }
+    }
+
+    /** The character itself, filling its box and centred in it. */
+    public record aw_sq_zi() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 23px;
+                line-height: 1;
+                padding-top: 7px;
+                """;
+        }
+    }
+
+    /**
+     * The reading, inside the box rather than above it.
+     *
+     * <p>Ruby widens what it sits on. A square that grew to fit its pinyin
+     * would stop being square, so the reading is laid over the top of the box
+     * and the character is pushed down to make room.</p>
+     */
+    public record aw_sq_ann() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                position: absolute;
+                top: 1px;
+                left: 0;
+                right: 0;
+                text-align: center;
+                font-size: 8px;
+                line-height: 1;
+                color: var(--color-accent, var(--color-text-muted));
+                """;
+        }
+    }
+
+    /** A closing mark, in the corner. It claims no width — that is 禁则. */
+    public record aw_sq_punct() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                position: absolute;
+                right: 1px;
+                bottom: 0;
+                font-size: 13px;
+                line-height: 1;
+                color: var(--color-text-muted);
+                """;
+        }
+    }
+
+    /** An opening mark, in the other corner. */
+    public record aw_sq_lead() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                position: absolute;
+                left: 1px;
+                top: 1px;
+                font-size: 13px;
+                line-height: 1;
+                color: var(--color-text-muted);
+                """;
+        }
+    }
+
+    public record aw_sq_bold() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                font-weight: 700;
+                """;
+        }
+    }
+
+    /** A bullet or a list number: the planner's own mark, not the document's. */
+    public record aw_sq_marker() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                color: var(--color-text-muted);
+                font-size: 13px;
+                """;
+        }
+    }
+
+    /**
+     * A run's head.
+     *
+     * <p>Its text overflows the box on purpose: the run owns the placeholders
+     * beside it, and spilling across them is the closest a grid with no merged
+     * cells can come to showing that it is one thing.</p>
+     */
+    public record aw_sq_run() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                background: var(--color-surface-raised, var(--color-surface));
+                overflow: visible;
+                z-index: 1;
+                """;
+        }
+    }
+
+    /**
+     * A run the author did not wrap.
+     *
+     * <p>It spans its squares exactly as a marked one does — the width is not a
+     * matter of opinion. What it does not get is the tint, and what it does get
+     * is a dotted rule underneath: this is a place where nobody has yet said
+     * whether these letters are one typographic unit or several.</p>
+     */
+    public record aw_sq_loose() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                overflow: visible;
+                z-index: 1;
+                border-bottom: 2px dotted var(--color-accent, var(--color-text-muted));
+                """;
+        }
+    }
+
+    /**
+     * A run's text, at the size the width was computed against.
+     *
+     * <p>23px, the same as {@link aw_sq_zi} — and that is not a coincidence to
+     * be tidied away later. {@link SquareWidth} measures a run in ems of the
+     * text drawn <em>inside</em> a square and divides by 62/42; drawing it at
+     * any other size makes the squares view lie about the fit. It was 15px
+     * once, which left every run looking half the width it had claimed.</p>
+     */
+    public record aw_sq_run_text() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                padding-top: 7px;
+                padding-left: 1px;
+                white-space: nowrap;
+                font-size: 23px;
+                line-height: 1;
+                font-family: system-ui, sans-serif;
+                """;
+        }
+    }
+
+    /** How many squares it asked for, and whether the page was too narrow. */
+    public record aw_sq_tag() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                position: absolute;
+                left: 1px;
+                top: 0;
+                font-size: 8px;
+                line-height: 1;
+                color: var(--color-accent, var(--color-text-muted));
+                font-variant-numeric: tabular-nums;
+                """;
+        }
+    }
+
+    /**
+     * A square a run claimed and cannot fill.
+     *
+     * <p>Hatched, so it reads as spoken for rather than as empty page. This is
+     * the placeholder that disappears when RelationGrid gains merged cells; it
+     * is drawn to be conspicuous because it is temporary.</p>
+     */
+    public record aw_sq_cont() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                background: repeating-linear-gradient(
+                        135deg,
+                        transparent 0 4px,
+                        var(--color-border) 4px 5px);
+                """;
+        }
+    }
+
+    /** 首行缩进两格. Empty, and empty is what it means. */
+    public record aw_sq_indent() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                background: transparent;
+                """;
+        }
+    }
+
+    /** Past the end of a short line. Ruled, but not part of the row. */
+    public record aw_sq_pad() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                border-color: var(--color-border);
+                opacity: 0.35;
                 """;
         }
     }
@@ -416,7 +621,12 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
                 new aw_title(), new aw_h2(), new aw_h3(), new aw_pin(),
                 new aw_unpinned(), new aw_p(), new aw_li(), new aw_marker(),
                 new aw_quote(), new aw_verse(), new aw_vline(), new aw_run(),
-                new aw_ruby(), new aw_rt(), new aw_zi_em(), new aw_msg(),
+                new aw_ruby(), new aw_rt(), new aw_msg(),
+                new aw_sheet(), new aw_row(), new aw_sq(), new aw_sq_zi(),
+                new aw_sq_ann(), new aw_sq_punct(), new aw_sq_lead(), new aw_sq_bold(),
+                new aw_sq_marker(), new aw_sq_run(), new aw_sq_loose(),
+                new aw_sq_run_text(), new aw_sq_tag(),
+                new aw_sq_cont(), new aw_sq_indent(), new aw_sq_pad(),
                 new aw_findings(), new aw_finding(),
                 new aw_error(), new aw_warn(), new aw_status());
     }

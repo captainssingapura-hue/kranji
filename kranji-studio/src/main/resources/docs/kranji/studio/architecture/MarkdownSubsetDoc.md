@@ -58,15 +58,17 @@ changes it silently unless you know.
 | `字{dì}` | keep — **E1** | the reading of that character |
 | `‹text›` | keep — **E3** | a non-Chinese run, *n* squares wide |
 | `**bold**` | keep — **E5** | emphasis, `strong` |
-| `*italic*` | keep — **E5** | emphasis, `em` |
+| `*italic*` **inside `‹…›`** | keep — **E5** | emphasis, `em` |
+| `*italic*` **anywhere else** | **drop, warn** | the text, unemphasised |
 | an unpaired `*` | **warn** | the star, as written |
 | `` `text` `` | **error** | not a construct here; see E3 |
 | `[text](url)` | **error** | a link the reader cannot follow is a lie |
 | `![alt](file)` | **error, reserved** | see below |
 | `~~strike~~`, `==mark==` | **error** | — |
 
-**Emphasis is kept wherever it is written — see E5.** It used to be dropped
-outside a `‹…›` run, and that is the one rule here that has been reversed.
+**Emphasis depends on which mark, not on where — see E5.** Bold works over
+Chinese and italic cannot, for a reason about typefaces rather than about
+permission.
 
 **Images are reserved, not forgotten.** `Block.Illustration(file, alt, caption)`
 and `ImageRef` already exist in the model and are unused. When images are
@@ -144,9 +146,9 @@ what is outside is not.
 
 #### It is not for every non-Han character
 
-**You do not wrap a comma.** Punctuation, spaces and digits are carried as
-`Token.Plain` exactly as they are today, with no width claim and no delimiters
-— the 禁则 rules that tuck 。 into the preceding cell are untouched.
+**You do not wrap a comma.** Punctuation and spaces need no delimiters — the
+禁则 rules that tuck 。 into the preceding cell are untouched, and a mark that
+rides in a character's corner claims no square at all.
 
 `‹…›` is for a run you want treated as *one typographic unit*: a name, a term,
 an English phrase. It is a positive statement about a span of text, not a
@@ -172,9 +174,17 @@ construct not listed above.
 
 #### Width: a run is *n* squares
 
-A `‹…›` run occupies `ceil(runWidth / cellWidth)` squares, measured from the
-text rather than from its character count — `Apartments` is not ten squares, it
-is however many its rendered width needs, which at a 62px cell is about four.
+A run occupies `ceil(runWidth / cellWidth)` squares, measured from the text
+rather than from its character count — `Apartments` is not ten squares, it is
+however many its rendered width needs, which at a 62px cell holding a 42px
+glyph is 3.46, so four. `SquareWidth` computes this from Helvetica advances and
+the workbench confirms it against a real browser font: 3.51 drawn.
+
+**Any non-Chinese sequence, not only a marked one.** `‹…›` says the author
+meant these letters as one unit; it does not say how wide they are. A bare
+`markdown` needs the same four squares whether or not anybody wrapped it, and
+giving it one was a bug that overflowed into the characters beside it. What the
+marking changes is what a workbench can point at.
 
 **Everything up to the final render works on this today.** Parsing, the token
 model, segmentation, the census and the length count all treat the run as
@@ -188,18 +198,48 @@ to the framework, not here.** Until it lands, the run draws in one cell; the
 number it carries is correct in the model whether or not the renderer can honour
 it yet.
 
-#### What the model needs
+#### What the model needs, and what it got
 
 `Token` is sealed over `Zi` and `Plain`, and `Plain(String text)` carries
-neither styling nor width. A `‹…›` run needs both, and it is a genuinely
-different thing from the punctuation `Plain` exists for — one is a span the
-author marked, the other is a comma.
+neither styling nor width. A run needs both. This note used to propose a third
+`Token.Run` case beside them, which would mean a new arm in every switch the
+reader has, on behalf of a format the reader does not yet serve.
 
-So the likely shape is **a third case**, `Token.Run`, beside them: its own text,
-its emphasis, and its square count. That keeps `Plain` exactly as it is — every
-existing article and the 禁则 rules go on meaning what they meant — and it makes
-the sealed switch tell a renderer that it has three things to draw rather than
-two, which is the point of sealing it.
+**The workbench took the other road**, and it is worth writing down which.
+`kranji.studio.articles.Square` is a second, studio-local model: `Zi`, `Run`,
+`Cont`, `Marker`, `Indent`. `GridPlanner` builds it from the parsed blocks, and
+it reuses the reading model's `Cells.CLOSING` and `Cells.OPENING` rather than
+copying them, because two 禁则 tables that must agree should be one table.
+
+The duplication is real and deliberate: the reader's model describes squares
+that are all one wide, and widening it is a change to the product that ought to
+wait until the product serves `.md`. When it does, `Token.Run` is still the
+right shape and `Square.Run` is what it will be built from.
+
+#### Placeholders, until the grid can merge
+
+`RelationGrid` builds one element per column and sizes them through `<col>`;
+there is no span or merge. So a run four squares wide is drawn as **one head
+plus three placeholders** — `Square.Cont`, hatched, carrying the head's id.
+
+They are in the model, not just in the rendering, which is what keeps a row's
+arithmetic honest: a row occupies exactly as many positions as it has squares.
+When merged cells arrive the placeholders collapse into the head and nothing
+else moves — which is why the width lives on the head rather than being implied
+by counting them.
+
+#### When a run cannot fit at all
+
+A run that does not fit in what is left of a row moves to the next row whole.
+That is what Chinese typesetting does with a Latin word, and it needs no hyphen.
+
+A run wider than the *entire* row has nowhere to move to. Only then is it cut,
+and the pieces carry a hyphen the author did not write — marked as `broken`, and
+keeping the run's id so the pieces are still recognisably one run. The cut is at
+whatever character fits, which is not where a dictionary would hyphenate: real
+hyphenation needs a language and a pattern table, and guessing badly at one is
+worse for a child than an obviously mechanical break in a word that was never
+going to fit.
 
 ### E4 — Verse fence
 
@@ -216,33 +256,32 @@ poems, 儿歌, 绕口令 — because markdown proper would join them into a para
 `verse` is the only info string accepted. Any other fence is an error, which is
 what keeps this from being a hole through which arbitrary code blocks arrive.
 
-### E5 — Emphasis, set the way the writing system sets it
-
-Emphasis is kept everywhere. **How it is *drawn* depends on which side of a run
-it is on**, and that is the extension: markdown has one italic, and Chinese and
-Latin do not emphasise the same way.
+### E5 — Bold everywhere; italic only inside a run
 
 | | inside `‹…›` | outside |
 |---|---|---|
 | `**bold**` | `<strong>` | `<strong>` |
-| `*italic*` | `<em>` — slanted | `<em>` — set as 着重号 |
+| `*italic*` | `<em>` | **dropped, warned** |
 
-#### Why this reversed
+**Bold survives over Chinese** because nothing about the grid objects to it: a
+heavier character is the same character in the same square. This is the half
+that changed — emphasis over Chinese used to be dropped wholesale.
 
-Emphasis over Chinese used to be dropped with a warning, on the grounds that a
-slanted character cannot be drawn in a practice square. That was right about the
-slant, and for a precise reason: **no CJK face has an italic**, so a browser
-fakes one by shearing the glyph — which pushes it out of the square it is
-supposed to sit in, and looks wrong besides.
+#### Why italic still does not
 
-But it is an objection to the slant, not to the emphasis. Chinese has had its
-own mark for this for a century: the **着重号**, a dot under each emphasised
-character. It takes no width, so the grid is untouched. It sits underneath, so
-it never argues with the pinyin above. And bold needs no such help at all — a
-heavier character is the same character in the same square.
+**No CJK face has an italic.** A browser fakes one by shearing the glyph, which
+both looks wrong and pushes the character out of the square it is supposed to
+sit in. So the obvious rendering is unavailable, not merely ugly.
 
-Dropping it was therefore solving the wrong problem. The author's intention is
-representable; it just is not representable *as a slant*.
+Chinese does have a mark for this: the **着重号**, a dot under each emphasised
+character. It solves the mechanical problem exactly — no width, so the grid is
+untouched; underneath, so it never argues with the pinyin above. It was
+implemented, and then removed, for a reason no amount of correctness fixes: **at
+reading size it is too faint to notice.** An emphasis nobody sees is worse than
+an emphasis that was declined, because the author believes it landed.
+
+One way to say something is better than two, and `**` is the one that works. An
+author who wants emphasis in a practice grid writes bold.
 
 #### Where the decision lives
 
