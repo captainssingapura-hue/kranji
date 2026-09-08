@@ -156,11 +156,11 @@ class GridPlannerTest {
         // The paper trick: when a full stop lands at the margin you carry on
         // past the ruling. Nothing is pushed down and nothing is squeezed into
         // the character's box.
-        GridPlan p = verse("一二三四。", 4);
+        GridPlan p = verse("一二三四。", 6);
 
         Row r = row(p, 0);
-        assertEquals("一二三四|。", said(r));
-        assertEquals(4, r.used(), "what hangs past the edge is not a position");
+        assertEquals("..一二三四|。", said(r));
+        assertEquals(6, r.used(), "what hangs past the edge is not a position");
         assertEquals(1, r.hanging().size());
         assertEquals(1, p.height(), "and nothing was pushed onto a second row");
     }
@@ -170,9 +170,9 @@ class GridPlannerTest {
         // Free, and worth an assertion because it is the reason hanging beats
         // pushing: the second dash hangs beside the first instead of opening
         // the next row.
-        GridPlan p = verse("一二三——四", 4);
+        GridPlan p = verse("一二三——四", 6);
 
-        assertEquals("一二三—|—", said(row(p, 0)));
+        assertEquals("..一二三—|—", said(row(p, 0)));
         assertEquals("四", said(row(p, 1)));
     }
 
@@ -180,9 +180,9 @@ class GridPlannerTest {
     void anOpeningMarkMovesDownRatherThanEndingARow() {
         // Hanging cannot help here: the mark belongs to what follows it, and
         // what follows is on the next row.
-        GridPlan p = verse("一二三（四）", 4);
+        GridPlan p = verse("一二三（四）", 6);
 
-        assertEquals("一二三", said(row(p, 0)));
+        assertEquals("..一二三", said(row(p, 0)));
         assertEquals("（四）", said(row(p, 1)));
     }
 
@@ -374,9 +374,33 @@ class GridPlannerTest {
         GridPlan p = plan("```verse\n床前明月光，\n疑是地上霜。\n```", 20);
 
         assertEquals(2, p.height(), "a poem's rows are the lines its author wrote");
-        assertEquals("床前明月光，", said(row(p, 0)));
+        assertEquals("..床前明月光，", said(row(p, 0)));
+        assertEquals("..疑是地上霜。", said(row(p, 1)),
+                "every line of a poem is indented, not only its first");
         assertEquals(0, row(p, 0).line());
         assertEquals(1, row(p, 1).line());
+    }
+
+    @Test
+    void aStanzaBreakIsNotIndented() {
+        // A poem is set in from the margin, but an empty line's whole meaning
+        // is that it has nothing in it — and two blanks are something.
+        GridPlan p = plan("```verse\n甲。\n\n乙。\n```", 20);
+
+        assertEquals("..甲。", said(row(p, 0)));
+        assertEquals("", said(row(p, 1)));
+        assertEquals(0, row(p, 1).used());
+        assertEquals("..乙。", said(row(p, 2)));
+    }
+
+    @Test
+    void aWrappedVerseLineIsIndentedOnceLikeAnyOtherWrap() {
+        // The indent belongs to the line the author wrote. What the page did
+        // to it afterwards is the page's.
+        GridPlan p = verse("一二三四五六。", 6);
+
+        assertEquals("..一二三四", said(row(p, 0)));
+        assertEquals("五六。", said(row(p, 1)), "a wrap is not a new line of the poem");
     }
 
     @Test

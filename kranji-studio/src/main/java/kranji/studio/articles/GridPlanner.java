@@ -80,6 +80,10 @@ public final class GridPlanner {
     /** A fragment shorter than this is not worth leaving at the end of a row. */
     private static final int MIN_FRAGMENT = 2;
 
+    /** 首行缩进两格 — and the whole of a poem. */
+    private static final List<Square> INDENT =
+            List.of(new Square.Indent(), new Square.Indent());
+
     private static final String BULLET = "•";
     private static final String HYPHEN = "-";
 
@@ -91,17 +95,21 @@ public final class GridPlanner {
         for (int b = 0; b < blocks.size(); b++) {
             Block block = blocks.get(b);
             switch (block.kind()) {
-                // A poem's rows are the lines its author wrote. Only a line
-                // too long for the page is wrapped, and then only because the
+                // A poem's rows are the lines its author wrote; only a line too
+                // long for the page is wrapped, and then only because the
                 // alternative is losing the end of it.
-                case "verse" -> lay(rows, "verse", b, width, List.of(), lines(block, ids));
-                case "p" -> lay(rows, "p", b, width,
-                        List.of(new Square.Indent(), new Square.Indent()), lines(block, ids));
+                //
+                // Indented on every line, not just the first. A paragraph is
+                // indented to show where it starts; a poem is set in from the
+                // margin as a whole, and a second line back at the edge would
+                // read as prose that had wrapped.
+                case "verse" -> lay(rows, "verse", b, width, INDENT, lines(block, ids), true);
+                case "p" -> lay(rows, "p", b, width, INDENT, lines(block, ids), false);
                 case "li" -> lay(rows, "li", b, width,
-                        List.of(new Square.Marker(BULLET)), lines(block, ids));
+                        List.of(new Square.Marker(BULLET)), lines(block, ids), false);
                 case "oli" -> lay(rows, "oli", b, width,
-                        List.of(new Square.Marker(block.level() + ".")), lines(block, ids));
-                default -> lay(rows, block.kind(), b, width, List.of(), lines(block, ids));
+                        List.of(new Square.Marker(block.level() + ".")), lines(block, ids), false);
+                default -> lay(rows, block.kind(), b, width, List.of(), lines(block, ids), false);
             }
         }
         return new GridPlan(width, rows);
@@ -118,17 +126,24 @@ public final class GridPlanner {
     // ── Wrapping ───────────────────────────────────────────────────────
 
     /**
-     * Lays one block into rows, opening the first with {@code opener}.
+     * Lays one block into rows.
      *
      * <p>Every authored line becomes at least one row, which is what keeps a
      * blank line inside a {@code ```verse} fence as the stanza break its author
      * wrote rather than as nothing.</p>
+     *
+     * @param everyLine whether each authored line opens with {@code opener} or
+     *                  only the first. 首行缩进两格 is the first; a poem is the
+     *                  whole block
      */
     private static void lay(List<Row> rows, String kind, int block, int columns,
-                            List<Square> opener, List<List<Square>> lines) {
+                            List<Square> opener, List<List<Square>> lines, boolean everyLine) {
         var wrap = new Wrap(rows, kind, block, columns);
         for (int i = 0; i < lines.size(); i++) {
-            wrap.open(i == 0 ? opener : List.of());
+            // A stanza break opens with nothing. Indenting an empty line would
+            // put squares in a row whose whole meaning is that it has none.
+            boolean opens = (everyLine || i == 0) && !lines.get(i).isEmpty();
+            wrap.open(opens ? opener : List.of());
             for (Square sq : lines.get(i)) wrap.add(sq);
             wrap.endLine();
         }
