@@ -59,6 +59,26 @@ public sealed interface Square {
     record Marker(String text) implements Square {}
 
     /**
+     * A character that stands in a square of its own.
+     *
+     * <p>Chinese punctuation that is not in the 禁则 tables and so has nowhere
+     * to ride: 破折号 —, 波浪号 ～, 间隔号 ·. Each is full-width and each takes
+     * one square, which means 破折号 written properly as {@code ——} is two
+     * squares and needs no special handling at all.</p>
+     *
+     * <p>They are the exception to <i>everything non-Chinese belongs inside
+     * {@code ‹…›}</i>. Requiring an author to write {@code ‹——›} would be
+     * asking them to mark Chinese punctuation as foreign. The list is
+     * {@link GridPlanner#SIGNS} and it is short on purpose: a character earns
+     * a place on it by being Chinese punctuation that occupies exactly one
+     * square, not by being convenient.</p>
+     *
+     * @param lead an opening mark riding in its corner, as on a {@link Zi}
+     * @param tail a closing mark riding in the other one
+     */
+    record Sign(String text, String lead, String tail) implements Square {}
+
+    /**
      * The head of a non-Chinese sequence.
      *
      * <p>Both kinds. {@code ‹Tunnel›} is one, and so is a bare {@code markdown}

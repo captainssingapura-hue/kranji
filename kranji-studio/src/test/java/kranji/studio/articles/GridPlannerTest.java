@@ -37,6 +37,7 @@ class GridPlannerTest {
         for (Square s : r.squares()) {
             if (s instanceof Square.Zi z)          sb.append(z.lead()).append(z.zi()).append(z.tail());
             else if (s instanceof Square.Marker m)  sb.append(m.text());
+            else if (s instanceof Square.Sign sg) sb.append(sg.lead()).append(sg.text()).append(sg.tail());
             else if (s instanceof Square.Run run)  sb.append('[').append(run.text()).append(']');
             else if (s instanceof Square.Cont)     sb.append('_');
             else                                   sb.append('.');
@@ -91,6 +92,90 @@ class GridPlannerTest {
         var zi = (Square.Zi) r.squares().stream()
                 .filter(s -> s instanceof Square.Zi z && z.zi().equals("地")).findFirst().orElseThrow();
         assertEquals("dì", zi.reading());
+    }
+
+    // ── What needs no ‹…› ──────────────────────────────────────────────
+
+    @Test
+    void bothBracketsBelongToTheRunTheyEnclose() {
+        // The bug: the （ had nothing to ride on yet, so it waited for a
+        // character and found the one AFTER the run - drawing 「（的」and
+        // putting the bracket on the wrong side of what it opened.
+        Row r = row(plan("它不在（Premier）的池里。", 20), 0);
+
+        var run = (Square.Run) r.squares().stream()
+                .filter(s -> s instanceof Square.Run).findFirst().orElseThrow();
+        assertEquals("（Premier）", run.text());
+        assertEquals("..它不在[（Premier）]___的池里。", said(r));
+    }
+
+    @Test
+    void anOpeningMarkStillWaitsWhenThereIsNothingToJoin() {
+        // The other half of the same rule: 「（你好）」 must keep the bracket in
+        // 你's corner, where 禁则 wants it.
+        Row r = row(plan("（你好）", 20), 0);
+
+        var zi = (Square.Zi) r.squares().get(2);
+        assertEquals("你", zi.zi());
+        assertEquals("（", zi.lead());
+        assertEquals(4, r.used(), "two blanks and two characters - both brackets ride");
+    }
+
+    @Test
+    void aSeparatorEndsARunRatherThanJoiningIt() {
+        // The other half of the bracket rule, and the reason it is a rule
+        // rather than a special case. In the real draft this kept
+        // Ancient、Anubis、Cache、… as one run of fifty characters - nineteen
+        // of twenty squares, hyphenated through map names on a narrow page.
+        Row r = row(plan("Ancient、Anubis、Cache", 20), 0);
+
+        assertEquals("..[Ancient]__、[Anubis]__、[Cache]_", said(r));
+        assertEquals(3, r.squares().stream().filter(s -> s instanceof Square.Run).count());
+        assertEquals(2, r.squares().stream().filter(s -> s instanceof Square.Sign).count());
+    }
+
+    @Test
+    void aSeparatorStillRidesWhenThereIsACharacterToRideOn() {
+        // Splitting runs must not have cost 禁则 anything.
+        Row r = row(plan("一、二、三", 20), 0);
+
+        assertEquals("..一、二、三", said(r));
+        assertEquals(5, r.used(), "the 、 take no squares of their own");
+    }
+
+    @Test
+    void aDashIsTwoSquaresAndAsksForNoDelimiters() {
+        // 破折号 is Chinese punctuation. Requiring ‹——› would be asking an
+        // author to mark Chinese as foreign, and it is full-width, so it needs
+        // no width machinery either - one square each, and that is all.
+        Row r = row(plan("一——二。", 20), 0);
+
+        assertEquals("..一——二。", said(r));
+        assertEquals(6, r.used(), "two blanks, 一, two dashes, 二。");
+        assertTrue(r.squares().get(3) instanceof Square.Sign,
+                () -> "a dash is a sign, not a run: " + said(r));
+        assertTrue(r.squares().stream().noneMatch(s -> s instanceof Square.Run));
+    }
+
+    @Test
+    void aClosingMarkRidesInASignsCornerToo() {
+        // 。 must not begin a line whatever precedes it, and a dash has the
+        // same two free corners a character has.
+        Row r = row(plan("一——。", 20), 0);
+
+        var sign = (Square.Sign) r.squares().get(4);
+        assertEquals("—", sign.text());
+        assertEquals("。", sign.tail());
+        assertEquals(5, r.used());
+    }
+
+    @Test
+    void aDashMeasuresAFullSquare() {
+        // U+2014 sits in General Punctuation, which is mostly not full-width -
+        // ‹ and › are in the same block. It is named rather than ranged, and
+        // getting it wrong made 破折号 claim one square for two.
+        assertEquals(1.0, SquareWidth.ems("—"), 0.001);
+        assertEquals(2, SquareWidth.squares("——"));
     }
 
     // ── Runs ───────────────────────────────────────────────────────────

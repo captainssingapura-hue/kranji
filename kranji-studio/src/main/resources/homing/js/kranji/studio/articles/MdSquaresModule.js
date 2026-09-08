@@ -95,7 +95,10 @@ function createMdSquares(opts) {
 
     function square(branch, row, s) {
         switch (s.k) {
+            // A character and a sign are the same box with the same corners.
+            // The only difference is that one has a reading and one never will.
             case 'z': zi(branch, row, s); return;
+            case 's': zi(branch, row, s); return;
             case 't': marker(branch, row, s); return;
             case 'r': run(branch, row, s); return;
             // Claimed by the run before it. Marked, never blank: an empty box

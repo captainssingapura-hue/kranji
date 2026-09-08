@@ -146,13 +146,48 @@ what is outside is not.
 
 #### It is not for every non-Han character
 
-**You do not wrap a comma.** Punctuation and spaces need no delimiters — the
-禁则 rules that tuck 。 into the preceding cell are untouched, and a mark that
-rides in a character's corner claims no square at all.
-
 `‹…›` is for a run you want treated as *one typographic unit*: a name, a term,
 an English phrase. It is a positive statement about a span of text, not a
 requirement on every character that is not Han.
+
+**You do not wrap a comma.** Three groups need no delimiters, and between them
+they cover every non-Han character a Chinese sentence normally contains:
+
+| | | |
+|---|---|---|
+| **Riding marks** | `。，、！？：；…` `）】》」』’”` `（【《「『‘“` | 禁则 — they sit in the corner of the character beside them and claim no square |
+| **Standing marks** | `—` `―` `～` `·` `／` | Chinese punctuation with nowhere to ride. Full-width, one square each |
+| **The delimiters** | `‹` `›` | markup; they never reach the page |
+
+The standing marks are `GridPlanner.SIGNS`, and the list is short on purpose: a
+character earns a place by being Chinese punctuation that occupies exactly one
+square, not by being common. **Digits are the case that tests the rule and are
+deliberately absent** — `1999` is four characters and one word, and on 稿纸
+numerals are written two to a square, a convention not implemented yet. Until it
+is, they are a run.
+
+`——` needs no special handling at all once `—` is on the list: it is two
+full-width characters and therefore two squares.
+
+#### Riding, closing, separating
+
+Everything in the riding table must not begin a line, which is why 禁则 groups
+them. What they belong to differs, and the arrangement has to know:
+
+- 「）」**closes** the thing before it and is part of it. `（Premier）` is **one
+  run with both brackets inside it** — including the opening one, which would
+  otherwise wait for a character to ride on and find the one *after* the run.
+- 「、」**separates** two things and is part of neither, so it **ends** a run
+  rather than joining it.
+
+That second rule is not decoration. Without it
+`Ancient、Anubis、Cache、Dust II、…` was a single run **fifty characters wide** —
+nineteen of the twenty squares on a row, and hyphenated through the middle of
+map names at any narrower width. With it, the longest unwrapped run in the
+sample document is twelve characters.
+
+A separator with nothing to ride on — a line opening with 。, or a mark after a
+run — takes a square of its own rather than being dropped.
 
 #### Why these two characters
 

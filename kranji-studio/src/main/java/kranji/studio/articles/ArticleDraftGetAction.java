@@ -195,6 +195,14 @@ public final class ArticleDraftGetAction
             }
             case Square.Marker marker ->
                 js.append("{\"k\":\"t\",\"t\":").append(quote(marker.text())).append('}');
+            // s: Chinese punctuation standing in a square of its own, with the
+            // same corners a character has.
+            case Square.Sign sign -> {
+                js.append("{\"k\":\"s\",\"t\":").append(quote(sign.text()));
+                if (!sign.lead().isEmpty()) js.append(",\"lp\":").append(quote(sign.lead()));
+                if (!sign.tail().isEmpty()) js.append(",\"p\":").append(quote(sign.tail()));
+                js.append('}');
+            }
             // A run head carries its own spans, so a renderer can put the
             // emphasis back where the author wrote it.
             case Square.Run run -> {

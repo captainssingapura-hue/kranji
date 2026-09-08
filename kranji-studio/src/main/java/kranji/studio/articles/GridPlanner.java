@@ -61,6 +61,47 @@ public final class GridPlanner {
 
     private static final String BULLET = "•";
 
+    /**
+     * Characters that need no {@code ‹…›} and take one square each.
+     *
+     * <p>The exception to <i>everything non-Chinese belongs inside a run</i>,
+     * and the reason there has to be one: these are Chinese punctuation. The
+     * 禁则 tables cover the marks that ride in a character's corner; these have
+     * nowhere to ride and are full-width, so they stand in a square.</p>
+     *
+     * <pre>
+     *   —  U+2014  破折号 — written ——, and therefore two squares
+     *   ―  U+2015  the same mark, the other codepoint
+     *   ～  U+FF5E  波浪号 — 三～五
+     *   ·  U+00B7  间隔号 — 麦克·乔丹
+     *   ／  U+FF0F  full-width solidus
+     * </pre>
+     *
+     * <p>Short on purpose. A character earns a place by being Chinese
+     * punctuation that occupies exactly one square — not by being common.
+     * Digits are the case that tests the rule and are deliberately absent:
+     * {@code 1999} is four characters and one word, and on 稿纸 numerals are
+     * written two to a square, which is a convention this does not yet
+     * implement. They stay runs until it does.</p>
+     */
+    public static final String SIGNS = "—―～·／";
+
+    /**
+     * The half of {@link Cells#CLOSING} that separates rather than closes.
+     *
+     * <p>Both halves must not begin a line, which is why they share a table.
+     * They differ in what they belong to: 「）」closes the thing before it and
+     * is part of it, so {@code （Premier）} is one run with both brackets in it.
+     * 「、」 separates two things and is part of neither, so it ends a run
+     * instead of joining it.</p>
+     *
+     * <p>Without the split, {@code Ancient、Anubis、Cache、Dust II、…} was a
+     * single run fifty characters wide — nineteen of the twenty squares on a
+     * row, and hyphenated through the middle of map names at any narrower
+     * width.</p>
+     */
+    private static final String SEPARATORS = "。，、！？：；…";
+
     public static GridPlan plan(List<Block> blocks, int columns) {
         int width = Math.max(1, columns);
         var rows = new ArrayList<Row>();
@@ -242,7 +283,7 @@ public final class GridPlanner {
                 int j = i;
                 var parts = new ArrayList<Span>();
                 while (j < line.size() && line.get(j).inRun()) parts.add(line.get(j++));
-                flush(out, plain, ids);
+                flush(out, plain, lead, ids);
                 out.add(run(parts, true, ids));
                 i = j;
                 continue;
@@ -250,7 +291,7 @@ public final class GridPlanner {
 
             boolean bold = s.emphasis().equals("strong");
             if (s.kind().equals("ruby")) {
-                flush(out, plain, ids);
+                flush(out, plain, lead, ids);
                 out.add(new Square.Zi(s.text(), s.reading(), take(lead), "", bold));
                 i++;
                 continue;
@@ -260,10 +301,10 @@ public final class GridPlanner {
             i++;
         }
 
-        flush(out, plain, ids);
-        // An opening mark with no character after it. Rare, and its own square
-        // rather than dropped - the author wrote it.
-        if (lead.length() > 0) out.add(new Square.Marker(take(lead)));
+        flush(out, plain, lead, ids);
+        // An opening mark with nothing after it at all. Rare, and its own
+        // square rather than dropped - the author wrote it.
+        if (lead.length() > 0) out.add(new Square.Sign(take(lead), "", ""));
         return out;
     }
 
@@ -281,33 +322,64 @@ public final class GridPlanner {
             String ch = new String(Character.toChars(cp));
 
             if (Character.UnicodeScript.of(cp) == Character.UnicodeScript.HAN) {
-                flush(out, plain, ids);
+                flush(out, plain, lead, ids);
                 out.add(new Square.Zi(ch, "", take(lead), "", bold));
                 continue;
             }
             if (Cells.CLOSING.contains(ch)) {
-                // Only reaches back past nothing. With plain text already
-                // accumulating, the mark belongs to that run instead.
-                if (plain.isEmpty() && attach(out, ch)) continue;
+                // A bracket closes the run it opened and belongs inside it.
+                // A separator separates two things and belongs to neither, so
+                // it ends the run rather than being swallowed by it - which is
+                // what kept Ancient、Anubis、Cache、… as one run fifty
+                // characters long.
+                if (SEPARATORS.contains(ch)) flush(out, plain, lead, ids);
+                if (plain.isEmpty()) {
+                    if (attach(out, ch)) continue;
+                    // Nothing to ride on: a line opening with 。, or a mark
+                    // after a run. Its own square rather than dropped.
+                    out.add(new Square.Sign(ch, take(lead), ""));
+                    continue;
+                }
                 plain.append(ch);
                 continue;
             }
             if (Cells.OPENING.contains(ch)) {
-                flush(out, plain, ids);
+                flush(out, plain, lead, ids);
                 lead.append(ch);
+                continue;
+            }
+            // Chinese punctuation with nowhere to ride. Its own square, and
+            // no ‹…› asked of the author - see SIGNS.
+            if (SIGNS.contains(ch)) {
+                flush(out, plain, lead, ids);
+                out.add(new Square.Sign(ch, take(lead), ""));
                 continue;
             }
             plain.append(ch);
         }
     }
 
-    /** Adds a closing mark to the last square, when that square can carry one. */
+    /**
+     * Adds a closing mark to the last square, when that square can carry one.
+     *
+     * <p>A {@link Square.Sign} can, as well as a {@link Square.Zi}: 破折号 is a
+     * full square with two free corners like any other, and 。 after {@code ——}
+     * has the same reason to ride there as 。 after a character — it must not
+     * be what begins the next line.</p>
+     */
     private static boolean attach(List<Square> out, String mark) {
         if (out.isEmpty()) return false;
-        if (!(out.get(out.size() - 1) instanceof Square.Zi zi)) return false;
-        out.set(out.size() - 1,
-                new Square.Zi(zi.zi(), zi.reading(), zi.lead(), zi.tail() + mark, zi.bold()));
-        return true;
+        int last = out.size() - 1;
+        if (out.get(last) instanceof Square.Zi zi) {
+            out.set(last, new Square.Zi(zi.zi(), zi.reading(), zi.lead(),
+                                        zi.tail() + mark, zi.bold()));
+            return true;
+        }
+        if (out.get(last) instanceof Square.Sign sign) {
+            out.set(last, new Square.Sign(sign.text(), sign.lead(), sign.tail() + mark));
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -321,11 +393,24 @@ public final class GridPlanner {
      * <p>Stripped at the ends. The space between a character and a Latin word
      * is not a square — it is the gap that already exists between two squares.
      * Spaces inside the run are its own and stay.</p>
+     *
+     * <h2>A pending opening mark joins the run it opened</h2>
+     *
+     * <p>{@code （Premier）} is one bracketed thing, and both brackets belong to
+     * it. Without this, the {@code （} waited for a character to ride on and
+     * found the one <em>after</em> the run — so 的现役地图池 in
+     * {@code （Premier）的现役地图池} was drawn as 「（的」and the bracket ended up
+     * on the wrong side of the run it opened.</p>
+     *
+     * <p>It waits only when there is nothing to join. A blank {@code plain}
+     * leaves the mark pending, so {@code （你好）} still puts the bracket in
+     * 你's corner where it belongs.</p>
      */
-    private static void flush(List<Square> out, StringBuilder plain, int[] ids) {
+    private static void flush(List<Square> out, StringBuilder plain,
+                              StringBuilder lead, int[] ids) {
         String text = take(plain).strip();
         if (text.isEmpty()) return;
-        out.add(run(List.of(new Span("text", text, "", "", false)), false, ids));
+        out.add(run(List.of(new Span("text", take(lead) + text, "", "", false)), false, ids));
     }
 
     private static String take(StringBuilder sb) {

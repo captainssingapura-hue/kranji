@@ -87,6 +87,10 @@ public final class SquareWidth {
      * square each by construction rather than by measurement.</p>
      */
     private static boolean isFullWidth(int cp) {
+        // Named one by one rather than by block: General Punctuation holds
+        // these three at full width and ‹ › at half, and this file supplies
+        // the delimiters. A range would have made the run marks a square each.
+        if (cp == 0x2014 || cp == 0x2015 || cp == 0x2026) return true;  // — ― …
         return (cp >= 0x1100 && cp <= 0x115F)     // Hangul jamo
             || (cp >= 0x2E80 && cp <= 0x303E)     // CJK radicals, kangxi, punctuation
             || (cp >= 0x3041 && cp <= 0x33FF)     // kana, compatibility
