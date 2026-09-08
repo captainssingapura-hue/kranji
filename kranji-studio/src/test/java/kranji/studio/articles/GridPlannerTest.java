@@ -215,7 +215,7 @@ class GridPlannerTest {
         // to join their run and separators used to have to end one, because
         // marks had no squares of their own. Now none of them are in a run at
         // all, and the two rules that arranged that are gone.
-        Row r = row(plan("它不在（Premier）的池里。", 20), 0);
+        Row r = row(plan("它不在（‹Premier›）的池里。", 20), 0);
 
         var run = (Square.Run) r.squares().stream()
                 .filter(s -> s instanceof Square.Run).findFirst().orElseThrow();
@@ -228,7 +228,7 @@ class GridPlannerTest {
         // Ancient、Anubis、… was one run of fifty characters when the 、 had
         // nowhere else to go: nineteen of twenty squares, hyphenated through
         // map names on any narrower page.
-        Row r = row(plan("Ancient、Anubis、Cache", 20), 0);
+        Row r = row(plan("‹Ancient›、‹Anubis›、‹Cache›", 20), 0);
 
         assertEquals("..[Ancient]__、[Anubis]__、[Cache]_", said(r));
         assertEquals(3, r.squares().stream().filter(s -> s instanceof Square.Run).count());
@@ -267,28 +267,25 @@ class GridPlannerTest {
         // The bug this case exists for. Only marked runs used to claim width,
         // so a word nobody wrapped got one square and overflowed into the
         // characters beside it. How wide it is was never a matter of opinion.
-        Row r = row(plan("会像 markdown 那样。", 20), 0);
+        Row r = row(plan("会像‹markdown›那样。", 20), 0);
 
         var run = (Square.Run) r.squares().stream()
                 .filter(s -> s instanceof Square.Run).findFirst().orElseThrow();
-        assertEquals("markdown", run.text(), "and the spaces around it are not squares");
-        assertTrue(run.width() > 1);
-        assertFalse(run.marked(), "nobody wrapped it, and the workbench should say so");
+        assertEquals("markdown", run.text());
+        assertTrue(run.width() > 1, "eight letters do not fit in one square");
     }
 
     @Test
-    void aMarkedRunIsTheSameShapeAndSaysWhoAskedForIt() {
-        Row bare = row(plan("在 Tunnel 口。", 20), 0);
-        Row wrapped = row(plan("在‹Tunnel›口。", 20), 0);
+    void unwrappedTextNeverReachesThePlanner() {
+        // It used to, as a run the planner inferred. Inferring it was the
+        // problem: a square holds one character, and nobody but the author can
+        // say that eight letters are one word rather than eight things.
+        var parsed = MdSubsetParser.parse("# 标题\n\n会像 markdown 那样。\n");
 
-        var a = (Square.Run) bare.squares().stream()
-                .filter(s -> s instanceof Square.Run).findFirst().orElseThrow();
-        var b = (Square.Run) wrapped.squares().stream()
-                .filter(s -> s instanceof Square.Run).findFirst().orElseThrow();
-
-        assertEquals(a.width(), b.width(), "the arrangement does not depend on the marking");
-        assertFalse(a.marked());
-        assertTrue(b.marked());
+        assertFalse(parsed.ok());
+        assertTrue(parsed.blocks().isEmpty(), "nothing to arrange");
+        assertTrue(parsed.errors().get(0).message().contains("‹markdown›"),
+                parsed.errors().get(0).message());
     }
 
     @Test

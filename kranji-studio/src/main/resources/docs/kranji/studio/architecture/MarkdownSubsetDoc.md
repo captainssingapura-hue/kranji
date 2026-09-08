@@ -57,6 +57,7 @@ changes it silently unless you know.
 |---|---|---|
 | `字{dì}` | keep — **E1** | the reading of that character |
 | `‹text›` | keep — **E3** | a non-Chinese run, *n* squares wide |
+| non-Chinese, **unwrapped** | **error** — E3 | — the author is told to write `‹…›` |
 | `**bold**` | keep — **E5** | emphasis, `strong` |
 | `*italic*` **inside `‹…›`** | keep — **E5** | emphasis, `em` |
 | `*italic*` **anywhere else** | **drop, warn** | the text, unemphasised |
@@ -144,26 +145,74 @@ from the text it emphasises, which is exactly the distinction E3 exists to make.
 A delimiter that is not markdown syntax settles it: what is inside is parsed,
 what is outside is not.
 
-#### It is not for every non-Han character
+#### It is required, and the whitelist is short
 
-`‹…›` is for a run you want treated as *one typographic unit*: a name, a term,
-an English phrase. It is a positive statement about a span of text, not a
-requirement on every character that is not Han.
+**Anything not Chinese and not a mark is an error unless it is wrapped.** Not a
+warning: a square holds one character, so something has to decide that
+`markdown` is one word rather than eight things, and the only party who can say
+so is the author. Inferring it worked and was still a guess.
 
-**You do not wrap a comma.** Two groups need no delimiters, and between them
-they cover every non-Han character a Chinese sentence normally contains:
+```
+会像 markdown 那样接在一起。      ← error: write ‹markdown›
+Valve 在 1999 年做了 Beta 版。     ← three errors, one per stretch
+```
+
+The error names the fix rather than the offence — *"'markdown' is not Chinese
+and is not wrapped; write ‹markdown›"* — and comes once per contiguous stretch,
+so eight letters are one error.
+
+Two groups need no delimiters, and between them they cover every non-Han
+character a Chinese sentence normally contains:
 
 | | | |
 |---|---|---|
 | **Marks** | `。，、！？：；…` `）】》」』’”` `（【《「『‘“` `—` `―` `～` `·` `／` | 每个标点占一格 — each takes a square, like every other mark on 稿纸 |
 | **The delimiters** | `‹` `›` | markup; they never reach the page |
 
-**Digits are the case that tests the rule and are deliberately absent** —
-`1999` is four characters and one word, and on 稿纸 numerals are written two to
-a square, a convention not implemented yet. Until it is, they are a run.
+**That table is `Mark`, and `Mark` is what the parser asks.** The list of marks
+and the list of things needing no delimiters are the same list by construction
+rather than by two people agreeing — see *A typed model for the marks* below.
 
-Latin punctuation stays inside its run: the full stop in `Dust II.` belongs to
+**Digits are on neither side, deliberately.** `1999` is four characters and one
+word, so it wants wrapping like any other; on 稿纸 numerals are written two to
+a square, and until that is implemented `‹1999›` is a run two squares wide.
+
+Latin punctuation stays inside its run: the full stop in `‹Dust II.›` belongs to
 the Latin, not to the page.
+
+#### A typed model for the marks
+
+The rules used to be three strings — `Cells.CLOSING`, `Cells.OPENING`, a
+`STANDING` constant — read with `contains()` wherever a decision was needed.
+That holds until the questions multiply, and they did: *may this begin a line,
+may it end one, may it share a square, and with what.* Four questions asked of
+three overlapping strings in five places is how `……` nearly ended up packed into
+one square and how `（` ended up stranded at a margin.
+
+`Mark` is an enum; each mark names its `Role`, and the role carries the rules:
+
+| Role | Side | May begin a line | May end a line |
+|---|---|---|---|
+| `STOP` — 。，、；：？！ | trailing | no | yes |
+| `CLOSE` — ）】》」』’” | trailing | no | yes |
+| `OPEN` — （【《「『‘“ | leading | yes | no |
+| `DOUBLED` — `—` `―` `…` | alone | no | yes |
+| `JOINER` — `～` `·` `／` | alone | no | yes |
+
+Marks share a square only with their own **side**, which is why `”。` packs and
+`”“` does not. `ALONE` shares with nothing.
+
+`DOUBLED.mayBeginLine = false` is the field to look at if it ever seems wrong.
+The strict rule in GB/T 15834 is only that `——` must not be *split* across two
+rows, and many houses do let 破折号 open a line. Barring it delivers the strict
+rule for nothing: the second half hangs beside the first, so the pair cannot come
+apart. Allowing it would mean moving both halves down together, which is a rule
+nothing else here needs.
+
+The reader's tables are still the reader's; `MarkTest` asserts the two agree
+about the *rule* rather than about the membership — every character in
+`Cells.CLOSING` is a `Mark` that may not begin a line, and every one in
+`Cells.OPENING` is a `Mark` that may not end one.
 
 #### 每个标点占一格
 

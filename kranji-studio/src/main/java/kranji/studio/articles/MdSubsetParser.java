@@ -267,13 +267,70 @@ public final class MdSubsetParser {
             findings.add(ParseFinding.error(no,
                     "a backtick is not a construct here; a non-Chinese run is ‹like this›"));
         }
+        boolean refused = false;
         if (LINK.matcher(text).find()) {
             findings.add(ParseFinding.error(no, "a link or image is not a construct this reads"));
+            refused = true;
         }
         if (STRIKE.matcher(text).find()) {
             findings.add(ParseFinding.error(no, "strikethrough and highlight are not read"));
+            refused = true;
         }
+        // Skipped when something above already refused this stretch: a URL is
+        // full of characters that are not Chinese, and reporting each of them
+        // as unwrapped would bury the reason the line was refused.
+        if (!refused) unwrapped(text, no, findings);
         emphasised(text, no, findings, into, false);
+    }
+
+    /**
+     * Everything outside a run that is neither Chinese nor a mark.
+     *
+     * <h2>Why this is an error and not a warning</h2>
+     *
+     * <p>A square holds one character. {@code markdown} is eight letters and
+     * cannot be one square, so something has to decide how many squares it is —
+     * and the only honest answer is the one the author gives by writing
+     * {@code ‹markdown›}. Left unwrapped it was being guessed at, which worked
+     * and was still wrong: nobody had said those eight letters were one word
+     * rather than eight things.</p>
+     *
+     * <p>{@link Mark} is the whitelist, so it and the marks that need no
+     * delimiters are the same list by construction. Digits are not on it —
+     * {@code ‹1999›} — because a year is one word and a square is not a
+     * digit.</p>
+     *
+     * <p>Reported per contiguous stretch rather than per character, so
+     * {@code markdown} is one error naming what to write instead of eight.</p>
+     */
+    private static void unwrapped(String text, int no, List<ParseFinding> findings) {
+        // The constructs that are still in the text at this point and are not
+        // content: an override's reading, and the emphasis markers. A stray *
+        // has its own warning already.
+        String bare = OVERRIDE.matcher(text).replaceAll("$1");
+        bare = EMPHASIS.matcher(bare).replaceAll("$2").replace("*", "");
+
+        var loose = new StringBuilder();
+        for (int i = 0; i < bare.length(); ) {
+            int cp = bare.codePointAt(i);
+            i += Character.charCount(cp);
+            String ch = new String(Character.toChars(cp));
+
+            boolean allowed = Character.UnicodeScript.of(cp) == Character.UnicodeScript.HAN
+                    || Character.isWhitespace(cp)
+                    || Mark.is(ch);
+            if (allowed) { report(loose, no, findings); continue; }
+            loose.append(ch);
+        }
+        report(loose, no, findings);
+    }
+
+    private static void report(StringBuilder loose, int no, List<ParseFinding> findings) {
+        if (loose.isEmpty()) return;
+        String text = loose.toString();
+        loose.setLength(0);
+        findings.add(ParseFinding.error(no,
+                "'" + text + "' is not Chinese and is not wrapped; write ‹" + text + "›"));
     }
 
     /** Ordinary typography. */

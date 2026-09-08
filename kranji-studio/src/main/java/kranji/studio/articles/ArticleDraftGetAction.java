@@ -206,9 +206,6 @@ public final class ArticleDraftGetAction
             case Square.Run run -> {
                 js.append("{\"k\":\"r\",\"w\":").append(run.width())
                   .append(",\"id\":").append(run.id());
-                // Marked means the author wrote the delimiters. It changes no
-                // arrangement and is the thing a workbench should point at.
-                if (run.marked()) js.append(",\"m\":true");
                 if (run.broken()) js.append(",\"cut\":true");
                 js.append(",\"parts\":");
                 spans(js, run.parts());

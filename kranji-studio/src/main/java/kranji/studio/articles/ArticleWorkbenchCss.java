@@ -498,23 +498,6 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
     }
 
     /**
-     * A run the author did not wrap.
-     *
-     * <p>It spans its squares exactly as a marked one does — the width is not a
-     * matter of opinion. What it does not get is the tint, and what it does get
-     * is a dotted rule underneath: this is a place where nobody has yet said
-     * whether these letters are one typographic unit or several.</p>
-     */
-    public record aw_sq_loose() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                overflow: visible;
-                z-index: 1;
-                border-bottom: 2px dotted var(--color-accent, var(--color-text-muted));
-                """;
-        }
-    }
-
-    /**
      * A run's text, at the size the width was computed against.
      *
      * <p>23px, the same as {@link aw_sq_zi} — and that is not a coincidence to
@@ -662,7 +645,7 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
                 new aw_sheet(), new aw_row(), new aw_sq(), new aw_sq_zi(),
                 new aw_sq_ann(), new aw_sq_punct(), new aw_sq_pack(), new aw_sq_half(),
                 new aw_sq_hang(), new aw_sq_bold(),
-                new aw_sq_marker(), new aw_sq_run(), new aw_sq_loose(),
+                new aw_sq_marker(), new aw_sq_run(),
                 new aw_sq_run_text(), new aw_sq_tag(),
                 new aw_sq_cont(), new aw_sq_indent(), new aw_sq_pad(),
                 new aw_findings(), new aw_finding(),

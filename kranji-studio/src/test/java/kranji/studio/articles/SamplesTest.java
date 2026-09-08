@@ -1,5 +1,6 @@
 package kranji.studio.articles;
 
+import kranji.reading.content.ParseFinding;
 import kranji.reading.model.Cells;
 import kranji.studio.articles.GridPlan.Row;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -43,13 +45,29 @@ class SamplesTest {
     private static final int NARROWEST = 4;
     private static final int WIDEST = 24;
 
-    private static List<Path> samples() throws IOException {
+    /**
+     * The drafts written to be refused.
+     *
+     * <p>Named here rather than kept in another folder, because the point of
+     * one is to be opened in the workbench and read alongside the error it
+     * produces.</p>
+     */
+    private static final Set<String> REJECTED = Set.of("unwrapped.md");
+
+    private static List<Path> all() throws IOException {
         assertTrue(Files.isDirectory(SAMPLES), () -> "no samples at " + SAMPLES.toAbsolutePath());
         try (Stream<Path> files = Files.list(SAMPLES)) {
             List<Path> md = files.filter(p -> p.toString().endsWith(".md")).sorted().toList();
             assertFalse(md.isEmpty(), "the samples folder is empty");
             return md;
         }
+    }
+
+    /** The drafts that must render. Everything below arranges these. */
+    private static List<Path> samples() throws IOException {
+        return all().stream()
+                .filter(p -> !REJECTED.contains(p.getFileName().toString()))
+                .toList();
     }
 
     private static MdSubsetParser.Parsed parse(Path file) throws IOException {
@@ -75,6 +93,36 @@ class SamplesTest {
         for (Path file : samples()) {
             var parsed = parse(file);
             assertTrue(parsed.ok(), () -> file.getFileName() + " did not render: " + parsed.errors());
+        }
+    }
+
+    @Test
+    void unwrappedTextIsRefusedAndTheErrorSaysWhatToWrite() throws IOException {
+        // Not a warning. A square holds one character, so nobody but the author
+        // can say that eight letters are one word - and a document that renders
+        // on a guess is a document nobody was asked about.
+        var parsed = parse(SAMPLES.resolve("unwrapped.md"));
+
+        assertFalse(parsed.ok(), "it is written to be refused");
+        String said = String.join(" | ",
+                parsed.errors().stream().map(ParseFinding::message).toList());
+
+        // One error per stretch, naming the fix rather than the offence.
+        assertTrue(said.contains("‹markdown›"), said);
+        assertTrue(said.contains("‹Valve›"), said);
+        assertTrue(said.contains("‹1999›"), said);
+        assertTrue(said.contains("‹3/5›"), said);
+    }
+
+    @Test
+    void aMarkNeedsNoDelimitersAndAnOverrideSurvivesTheCheck() throws IOException {
+        // The whitelist is Mark, so what needs wrapping and what does not are
+        // the same list. An override's reading is markup rather than content
+        // and must not be reported as loose Latin.
+        for (Path file : samples()) {
+            var parsed = parse(file);
+            assertTrue(parsed.errors().isEmpty(),
+                    () -> file.getFileName() + ": " + parsed.errors());
         }
     }
 

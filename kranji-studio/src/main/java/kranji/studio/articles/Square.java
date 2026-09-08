@@ -108,6 +108,11 @@ public sealed interface Square {
             return marks.isEmpty() ? "" : marks.substring(0, 1);
         }
 
+        /** The mark a following one would have to pack with. */
+        public String last() {
+            return marks.isEmpty() ? "" : marks.substring(marks.length() - 1);
+        }
+
         /** Whether more than one mark is sharing this square. */
         public boolean packed() { return marks.length() > 1; }
     }
@@ -122,9 +127,9 @@ public sealed interface Square {
     /**
      * The head of a non-Chinese sequence.
      *
-     * <p>Both kinds. {@code ‹Tunnel›} is one, and so is a bare {@code markdown}
-     * an author did not wrap — because the square it would otherwise get is one
-     * square, and eight letters do not fit in one square.</p>
+     * <p>Always one the author wrote. {@code ‹Tunnel›} is a run; a bare
+     * {@code markdown} is an error, because a square holds one character and
+     * nobody but the author can say that eight letters are one word.</p>
      *
      * <p>Its own punctuation stays inside it. A full stop in {@code Dust II.}
      * is Latin punctuation belonging to Latin text; the marks that get squares
@@ -132,16 +137,12 @@ public sealed interface Square {
      *
      * @param parts  the sequence's own spans, so the emphasis inside it
      *               survives — {@code ‹Tunnel bla *bla*›} is three pieces
-     * @param marked whether the author wrote {@code ‹…›} around it. It changes
-     *               nothing about the arrangement and everything about what a
-     *               workbench should point at: an unmarked run is a place the
-     *               author has not yet said what they meant
      * @param width  squares claimed, from {@link SquareWidth}
      * @param id     ties this head to its {@link Cont} squares. Unique in a plan
      * @param broken cut from a longer run that could not fit a line at all, and
      *               therefore carrying a hyphen the author did not write
      */
-    record Run(List<Span> parts, boolean marked, int width, int id, boolean broken)
+    record Run(List<Span> parts, int width, int id, boolean broken)
             implements Square {
 
         public Run {

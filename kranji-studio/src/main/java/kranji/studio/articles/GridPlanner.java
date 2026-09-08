@@ -1,12 +1,12 @@
 package kranji.studio.articles;
 
-import kranji.reading.model.Cells;
 import kranji.studio.articles.GridPlan.Row;
 import kranji.studio.articles.MdDocument.Block;
 import kranji.studio.articles.MdDocument.Span;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A parsed document, arranged into squares.
@@ -76,19 +76,6 @@ public final class GridPlanner {
      * this.</p>
      */
     public static final int MAX_MARKS = 3;
-
-    /**
-     * Marks that always have a square to themselves.
-     *
-     * <p>破折号 and 省略号 are written double, {@code ——} and {@code ……}, and
-     * each half fills a square: packing them would turn a dash into a hyphen.
-     * 波浪号, 间隔号 and the full-width solidus are single full-width marks with
-     * nothing to pack against.</p>
-     */
-    public static final String STANDING = "—―…～·／";
-
-    /** Every full-width mark that gets a square. */
-    private static final String MARKS = Cells.CLOSING + Cells.OPENING + STANDING;
 
     /** A fragment shorter than this is not worth leaving at the end of a row. */
     private static final int MIN_FRAGMENT = 2;
@@ -237,7 +224,7 @@ public final class GridPlanner {
                 int restWidth = SquareWidth.squares(rest);
                 if (restWidth <= left()) {
                     place(new Square.Run(spansOf(chars, at, chars.size(), ""),
-                                         run.marked(), restWidth, run.id(), broken));
+                                         restWidth, run.id(), broken));
                     return;
                 }
 
@@ -248,7 +235,7 @@ public final class GridPlanner {
 
                 String piece = textOf(chars, at, at + take) + HYPHEN;
                 place(new Square.Run(spansOf(chars, at, at + take, HYPHEN),
-                                     run.marked(), SquareWidth.squares(piece), run.id(), true));
+                                     SquareWidth.squares(piece), run.id(), true));
                 at += take;
                 broken = true;
                 newRow();
@@ -305,8 +292,9 @@ public final class GridPlanner {
         }
     }
 
+    /** A mark that must not end a row - it belongs to what follows it. */
     private static boolean opening(Square.Punct p) {
-        return Cells.OPENING.contains(p.first());
+        return Mark.of(p.first()).map(m -> !m.mayEndLine()).orElse(false);
     }
 
     // ── Squares from spans ─────────────────────────────────────────────
@@ -324,7 +312,7 @@ public final class GridPlanner {
                 var parts = new ArrayList<Span>();
                 while (j < line.size() && line.get(j).inRun()) parts.add(line.get(j++));
                 flush(out, plain, ids);
-                out.add(run(parts, true, ids));
+                out.add(run(parts, ids));
                 i = j;
                 continue;
             }
@@ -345,9 +333,9 @@ public final class GridPlanner {
         return out;
     }
 
-    private static Square.Run run(List<Span> parts, boolean marked, int[] ids) {
+    private static Square.Run run(List<Span> parts, int[] ids) {
         String text = parts.stream().map(Span::text).reduce("", String::concat);
-        return new Square.Run(parts, marked, SquareWidth.squares(text), ids[0]++, false);
+        return new Square.Run(parts, SquareWidth.squares(text), ids[0]++, false);
     }
 
     /** Character by character: a 字, a mark, or something to collect. */
@@ -363,49 +351,39 @@ public final class GridPlanner {
                 out.add(new Square.Zi(ch, "", bold));
                 continue;
             }
-            if (MARKS.contains(ch)) {
+            Optional<Mark> mark = Mark.of(ch);
+            if (mark.isPresent()) {
                 flush(out, plain, ids);
-                mark(out, ch);
+                mark(out, mark.get());
                 continue;
             }
-            // Latin, digits, and the punctuation that belongs to them: a full
-            // stop in "Dust II." is part of the Latin, not a Chinese mark.
+            // Whatever is left is inside a ‹…› run or the parser refused the
+            // document: a full stop in "Dust II." is Latin punctuation and
+            // travels with its Latin. Kept as a fallback so a plan can still be
+            // asked for over blocks that never came from the parser.
             plain.append(ch);
         }
     }
 
-    /**
-     * A mark, sharing the previous square when the two belong in one.
-     *
-     * <p>Same class only. {@code ”，} is two closing marks and shares; a
-     * {@code “} opening the next quotation starts its own square, because it
-     * belongs to what comes after it rather than to what came before.</p>
-     */
-    private static void mark(List<Square> out, String ch) {
+    /** A mark, sharing the previous square when the two belong in one. */
+    private static void mark(List<Square> out, Mark mark) {
         if (!out.isEmpty()
-                && !STANDING.contains(ch)
                 && out.get(out.size() - 1) instanceof Square.Punct prev
-                && !STANDING.contains(prev.first())
                 && prev.marks().length() < MAX_MARKS
-                && sameClass(prev.first(), ch)) {
-            out.set(out.size() - 1, new Square.Punct(prev.marks() + ch, false));
+                && Mark.of(prev.last()).map(m -> m.packsWith(mark)).orElse(false)) {
+            out.set(out.size() - 1, new Square.Punct(prev.marks() + mark.text(), false));
             return;
         }
-        out.add(new Square.Punct(ch, false));
-    }
-
-    private static boolean sameClass(String a, String b) {
-        return (Cells.CLOSING.contains(a) && Cells.CLOSING.contains(b))
-            || (Cells.OPENING.contains(a) && Cells.OPENING.contains(b));
+        out.add(new Square.Punct(mark.text(), false));
     }
 
     /**
      * The non-Chinese text collected so far, as a run.
      *
-     * <p>A run whether or not the author marked one, because the width is not
-     * a matter of opinion: {@code markdown} is eight letters and needs the
-     * squares eight letters need. What the marking changes is what a workbench
-     * can say about it.</p>
+     * <p>A fallback. The parser refuses anything non-Chinese that was not
+     * wrapped, so in a document that rendered there is nothing here to collect —
+     * but a plan can be asked for over blocks that never came from the parser,
+     * and it should not lose them.</p>
      *
      * <p>Stripped at the ends. The space between a character and a Latin word
      * is not a square — it is the gap that already exists between two
@@ -414,7 +392,7 @@ public final class GridPlanner {
     private static void flush(List<Square> out, StringBuilder plain, int[] ids) {
         String text = take(plain).strip();
         if (text.isEmpty()) return;
-        out.add(run(List.of(new Span("text", text, "", "", false)), false, ids));
+        out.add(run(List.of(new Span("text", text, "", "", false)), ids));
     }
 
     private static String take(StringBuilder sb) {

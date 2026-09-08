@@ -15,11 +15,11 @@
 // a hole in the line they share one. A mark that finds no room hangs past the
 // right edge rather than opening the next row.
 //
-// The thing worth looking at here is a run - any non-Chinese sequence, whether
-// or not its author wrapped it. It claims several squares and gets
-// them as one head plus placeholders, because RelationGrid cannot merge cells
-// yet - so the placeholders are drawn as marked blanks. What they will become
-// is one wide cell; what they must never look like is empty page.
+// The thing worth looking at here is a run - a ‹…› sequence the author wrapped.
+// It claims several squares and gets them as one head plus placeholders,
+// because RelationGrid cannot merge cells yet - so the placeholders are drawn
+// as marked blanks. What they will become is one wide cell; what they must
+// never look like is empty page.
 //
 // No CJK literal appears in this file. Every character it draws came from a
 // draft on disk.
@@ -29,7 +29,7 @@
  * opts = {
  *   css,
  *   classes: {  // sheet, row, sq, zi, ann, bold,
- *               // punct, pack, half, hang, marker, run, loose,
+ *               // punct, pack, half, hang, marker, run,
  *               // runText, cont, indent, pad, tag
  *   }
  * }
@@ -55,7 +55,7 @@ function createMdSquares(opts) {
         return b;
     }
 
-    // ── The four things a square can be ─────────────────────────────────
+    // ── What a square can hold ──────────────────────────────────────────
 
     function zi(branch, row, s) {
         var b = box(branch, row, s.b ? [C.bold] : []);
@@ -100,13 +100,9 @@ function createMdSquares(opts) {
      * <p>The text overflows its own box on purpose. It is supposed to occupy
      * the placeholders beside it, and letting it spill across them is the
      * closest a grid without merged cells can get to showing that.</p>
-     *
-     * <p>Tinted only when the author marked it. A run this had to infer is left
-     * plain and wears a dotted underline, because that is a place the author has
-     * not yet said whether these letters are one thing.</p>
      */
     function run(branch, row, s) {
-        var b = box(branch, row, [s.m ? C.run : C.loose]);
+        var b = box(branch, row, [C.run]);
         var text = el(branch, 'div', C.runText, null);
         for (var i = 0; i < (s.parts || []).length; i++) {
             var p = s.parts[i];
