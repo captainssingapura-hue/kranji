@@ -52,14 +52,14 @@ class SamplesTest {
      * one is to be opened in the workbench and read alongside the error it
      * produces.</p>
      */
-    private static final Set<String> REJECTED = Set.of("unwrapped.md");
+    private static final Set<String> REJECTED = Set.of("unwrapped.kmd");
 
     private static List<Path> all() throws IOException {
         assertTrue(Files.isDirectory(SAMPLES), () -> "no samples at " + SAMPLES.toAbsolutePath());
         try (Stream<Path> files = Files.list(SAMPLES)) {
-            List<Path> md = files.filter(p -> p.toString().endsWith(".md")).sorted().toList();
-            assertFalse(md.isEmpty(), "the samples folder is empty");
-            return md;
+            List<Path> kmd = files.filter(p -> p.toString().endsWith(".kmd")).sorted().toList();
+            assertFalse(kmd.isEmpty(), "the samples folder is empty");
+            return kmd;
         }
     }
 
@@ -101,7 +101,7 @@ class SamplesTest {
         // Not a warning. A square holds one character, so nobody but the author
         // can say that eight letters are one word - and a document that renders
         // on a guess is a document nobody was asked about.
-        var parsed = parse(SAMPLES.resolve("unwrapped.md"));
+        var parsed = parse(SAMPLES.resolve("unwrapped.kmd"));
 
         assertFalse(parsed.ok(), "it is written to be refused");
         String said = String.join(" | ",
@@ -128,11 +128,11 @@ class SamplesTest {
 
     @Test
     void theGeneratorRefusesASampleWhoseHeadingsHaveNoIds() throws IOException {
-        // blocks.md is written with unpinned headings, because the workbench
+        // blocks.kmd is written with unpinned headings, because the workbench
         // shows them as such. The generator is the other end of that: an
         // address it cannot find is one it will not invent.
-        var draft = new ArticleGenerator.Draft("blocks.md",
-                Files.readString(SAMPLES.resolve("blocks.md"), StandardCharsets.UTF_8));
+        var draft = new ArticleGenerator.Draft("blocks.kmd",
+                Files.readString(SAMPLES.resolve("blocks.kmd"), StandardCharsets.UTF_8));
         var result = ArticleGenerator.generate(List.of(draft),
                 ArticleGenerator.Options.of("x", "X", "x"));
 

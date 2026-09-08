@@ -143,7 +143,7 @@ That property is load-bearing at 608 articles — it is why the whole library ca
 be listed without opening a file. Segments come *from* the file, so something
 has to give.
 
-**Resolve it with codegen, not runtime parsing.** A build step reads the `.md`
+**Resolve it with codegen, not runtime parsing.** A build step reads the `.kmd`
 and emits the section catalogue as Java. Listing stays parse-free, authors keep
 one file, and the repository already has `kranji-codegen` plus the seed-digest
 precedent for *generated output must match its source or the build fails*.
@@ -209,7 +209,7 @@ truth and **require the `#` line to match it**, checked at build — readable
 file, one identity, no drift.
 
 **Parse at serve time, not as a build step.** Chosen by file extension, in the
-same `ArticleParser` family. A build-time `.md → .txt` conversion means two
+same `ArticleParser` family. A build-time `.kmd → .txt` conversion means two
 files per article and authors editing the wrong one. This is separate from the
 *catalogue* codegen above: the section index is generated, the body is not.
 
@@ -223,7 +223,7 @@ files per article and authors editing the wrong one. This is separate from the
 3. ~~**Segmentation**~~ — `Segments` builds the tree and the figures above are
    measured rather than estimated.
 4. ~~**The generator**~~ — `ArticleGenerator` and `ArticleGeneratorMain`. A
-   folder of `.md` becomes one JSON resource per section beside a catalogue in
+   folder of `.kmd` becomes one JSON resource per section beside a catalogue in
    Java, so listing never parses and nothing parses markdown at request time —
    by the time a reader asks, there is no markdown left. It writes nothing while
    anything is wrong, because a half-generated library is worse than none.

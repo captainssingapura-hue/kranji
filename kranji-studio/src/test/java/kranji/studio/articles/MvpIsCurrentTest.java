@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * <p>{@code SeedIsImmutableTest} hashes what is committed rather than
  * regenerating it, because its generator needs an 8MB Unihan drop that is not
  * tracked — a regenerate-and-diff there would pass by being skipped on every
- * clean checkout. Here the input <i>is</i> tracked: {@code mvp-source.md} sits
+ * clean checkout. Here the input <i>is</i> tracked: {@code mvp-source.kmd} sits
  * beside the output it produced, so this can ask the stronger question.</p>
  *
  * <p>What it protects against is the ordinary thing: somebody improves the
@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class MvpIsCurrentTest {
 
-    private static final Path SOURCE = Path.of("src/test/resources/samples/mvp-source.md");
+    private static final Path SOURCE = Path.of("src/test/resources/samples/mvp-source.kmd");
     private static final Path COMMITTED = Path.of("src/main/resources");
 
     /** Exactly the arguments {@code ArticleGeneratorMain} was given. */

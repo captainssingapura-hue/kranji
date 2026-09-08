@@ -36,7 +36,7 @@ class ArticleGeneratorTest {
     private static Result generate(String... sources) {
         var drafts = new java.util.ArrayList<Draft>();
         for (int i = 0; i < sources.length; i++) {
-            drafts.add(new Draft("draft" + (i + 1) + ".md", sources[i]));
+            drafts.add(new Draft("draft" + (i + 1) + ".kmd", sources[i]));
         }
         return ArticleGenerator.generate(drafts, OPTIONS);
     }

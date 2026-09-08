@@ -12,11 +12,19 @@ codebase refuses everywhere else.
 
 `.txt` articles are unaffected, for ever. The file extension chooses the parser.
 
+**And the extension is `.kmd`, not `.md`.** What this document specifies is not
+CommonMark: it adds five things markdown has no way to say, and it *refuses*
+tables, links, images and raw HTML rather than passing them through. A file
+named `.md` tells everything downstream — an editor, a viewer, a linter, the
+next person's script — that it is markdown, and each of them is then quietly
+wrong about all of it. The cost is one line of editor configuration to get
+highlighting back; what it buys is a name that is true.
+
 ---
 
 ## The conflict you must know about first
 
-> **In `.md`, a line break inside a paragraph means nothing.**
+> **In markdown, a line break inside a paragraph means nothing.**
 
 The `.txt` format says *one line is a paragraph and several lines are a verse*,
 so a poem needs no markup at all. Markdown says the opposite: consecutive lines
@@ -24,7 +32,7 @@ are one paragraph, and every renderer in the world joins them.
 
 We follow markdown, because a file that previews wrongly in every other tool is
 not markdown. **A poem therefore needs a fence** — extension E4 below. This is
-the one place where moving a `.txt` article to `.md` changes its meaning, and it
+the one place where moving a `.txt` article to `.kmd` changes its meaning, and it
 changes it silently unless you know.
 
 ---
@@ -320,7 +328,7 @@ table.
 
 The duplication is real and deliberate: the reader's model describes squares
 that are all one wide, and widening it is a change to the product that ought to
-wait until the product serves `.md`. When it does, `Token.Run` is still the
+wait until the product serves `.kmd`. When it does, `Token.Run` is still the
 right shape and `Square.Run` is what it will be built from.
 
 #### Placeholders, until the grid can merge

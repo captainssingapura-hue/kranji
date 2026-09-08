@@ -10,7 +10,11 @@ import kranji.reading.content.ParseFinding;
 import kranji.studio.articles.MdDocument.Block;
 import kranji.studio.articles.MdDocument.Span;
 
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -98,7 +102,13 @@ public final class ArticleDraftGetAction
         }
     }
 
-    /** Visible for testing — the folder, as the workbench sees it. */
+    /**
+     * Visible for testing — the folder, as the workbench sees it.
+     *
+     * <p>Flat and nested both, because the pane needs both and they are one
+     * walk of the disk. The tree is what is drawn; the list is what answers
+     * <i>is the draft I had open still here</i> after a refresh.</p>
+     */
     static String listing() {
         var js = new StringBuilder("{\"dir\":").append(quote(MdSourceFolder.dir().toString()))
                 .append(",\"drafts\":[");
@@ -108,10 +118,84 @@ public final class ArticleDraftGetAction
             if (i > 0) js.append(',');
             js.append("{\"id\":").append(quote(d.id()))
               .append(",\"name\":").append(quote(d.name()))
+              .append(",\"path\":").append(quote(d.path()))
               .append(",\"chars\":").append(d.chars())
               .append(",\"modified\":").append(d.modifiedEpochMs()).append('}');
         }
-        return js.append("]}").toString();
+        js.append("],\"tree\":");
+        tree(js, drafts);
+        return js.append('}').toString();
+    }
+
+    // ── The folder, as the canonical tree ──────────────────────────────
+
+    /**
+     * The directory structure, in the shape {@code TreeRenderer} draws.
+     *
+     * <p>Which is what buys the bench arrow keys: the renderer owns the key
+     * semantics for any conforming tree, so a second tree with a second idea of
+     * what ArrowDown means never gets written. It is the same trade the MVP
+     * reader made next door.</p>
+     *
+     * <p>There is no manifest and no ordering file. The folder <i>is</i> the
+     * shape, so nothing can fall out of step with it — and a draft's
+     * {@code segment} is its id, so choosing a node needs no second lookup. A
+     * folder's segment is empty, which is also how the pane knows a folder is
+     * not something to open.</p>
+     */
+    private static void tree(StringBuilder js, List<MdSourceFolder.Draft> drafts) {
+        var root = new Folder();
+        for (MdSourceFolder.Draft d : drafts) root.add(d);
+
+        Path dir = MdSourceFolder.dir();
+        Path name = dir.getFileName();
+        root.write(js, name == null ? dir.toString() : name.toString(), 0);
+    }
+
+    /** A folder on the way to being drawn. Insertion order is path order. */
+    private static final class Folder {
+
+        private final Map<String, Folder> folders = new LinkedHashMap<>();
+        private final List<MdSourceFolder.Draft> drafts = new ArrayList<>();
+
+        void add(MdSourceFolder.Draft draft) {
+            String[] parts = draft.path().split("/");
+            Folder here = this;
+            for (int i = 0; i < parts.length - 1; i++) {
+                here = here.folders.computeIfAbsent(parts[i], unused -> new Folder());
+            }
+            here.drafts.add(draft);
+        }
+
+        void write(StringBuilder js, String label, int depth) {
+            node(js, depth, "", label, "", "folder");
+            boolean first = true;
+            for (var entry : folders.entrySet()) {
+                if (!first) js.append(',');
+                first = false;
+                entry.getValue().write(js, entry.getKey(), depth + 1);
+            }
+            for (MdSourceFolder.Draft d : drafts) {
+                if (!first) js.append(',');
+                first = false;
+                // Characters, not bytes. A count belongs in a workbench, where
+                // it says how much there is to check.
+                node(js, depth + 1, d.id(), d.name(), d.chars() + " characters", "draft");
+                js.append("]}");
+            }
+            js.append("]}");
+        }
+    }
+
+    /** Everything but the children, which the caller closes. */
+    private static void node(StringBuilder js, int depth, String segment,
+                             String label, String badge, String kind) {
+        js.append("{\"level\":\"L").append(depth).append('"')
+          .append(",\"segment\":").append(quote(segment))
+          .append(",\"display\":{\"label\":").append(quote(label))
+          .append(",\"badge\":").append(quote(badge))
+          .append(",\"note\":\"\",\"kind\":\"").append(kind).append("\"}")
+          .append(",\"dimensions\":[],\"children\":[");
     }
 
     /** Visible for testing — one draft, parsed and arranged. */

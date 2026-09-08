@@ -15,7 +15,7 @@ import java.util.List;
  * parses.</blockquote>
  *
  * <p>That property is what makes 608 articles listable without opening a file,
- * and a {@code .md} document breaks it: its sections come <i>from</i> the file.
+ * and a {@code .kmd} document breaks it: its sections come <i>from</i> the file.
  * So the file is read once, at build time, and what ships is a catalogue in
  * Java beside one resource per section. Nothing parses markdown at request
  * time, and nothing can: by the time a reader asks, there is no markdown

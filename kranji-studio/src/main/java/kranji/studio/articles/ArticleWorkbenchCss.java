@@ -93,41 +93,6 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         }
     }
 
-    public record aw_item() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                padding: 6px 8px;
-                border-radius: 6px;
-                cursor: pointer;
-                font-size: 13px;
-                line-height: 1.35;
-                """;
-        }
-    }
-
-    public record aw_item_on() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                padding: 6px 8px;
-                border-radius: 6px;
-                cursor: pointer;
-                font-size: 13px;
-                line-height: 1.35;
-                background: var(--color-surface-raised, var(--color-surface));
-                border-left: 3px solid var(--color-accent, var(--color-text-secondary));
-                """;
-        }
-    }
-
-    /** How big a draft is, in characters. Bytes would be 2.6x on Chinese. */
-    public record aw_size() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                display: block;
-                font-size: 11px;
-                color: var(--color-text-muted);
-                font-variant-numeric: tabular-nums;
-                """;
-        }
-    }
-
     /**
      * The document above, the findings below.
      *
@@ -790,7 +755,7 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
     public List<CssClass<ArticleWorkbenchCss>> cssClasses() {
         return List.of(
                 new aw_root(), new aw_head(), new aw_btn(), new aw_split(),
-                new aw_list(), new aw_item(), new aw_item_on(), new aw_size(),
+                new aw_list(),
                 new aw_main(), new aw_preview(), new aw_page(),
                 new aw_title(), new aw_h2(), new aw_h3(), new aw_pin(),
                 new aw_unpinned(), new aw_p(), new aw_li(), new aw_marker(),
