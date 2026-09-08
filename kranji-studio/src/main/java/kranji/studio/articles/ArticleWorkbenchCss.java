@@ -570,6 +570,160 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         }
     }
 
+    // ── The tree ───────────────────────────────────────────────────────
+
+    public record aw_tree() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                padding: var(--space-4, 16px);
+                font-size: 13px;
+                """;
+        }
+    }
+
+    /** One segment: where it sits, what it is called, and how big it is. */
+    public record aw_node() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                display: flex;
+                align-items: center;
+                gap: var(--space-2, 8px);
+                padding: 3px 0;
+                border-bottom: 1px solid var(--color-border);
+                line-height: 1.4;
+                """;
+        }
+    }
+
+    /**
+     * Depth, as an indent.
+     *
+     * <p>Four classes rather than a computed margin: a tree three levels deep
+     * plus the parts inside it is all this format allows, and an inline style
+     * is what the alternative would cost.</p>
+     */
+    public record aw_d0() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return "padding-left: 0;\n"; }
+    }
+
+    public record aw_d1() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return "padding-left: var(--space-4, 16px);\n"; }
+    }
+
+    public record aw_d2() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return "padding-left: var(--space-6, 32px);\n"; }
+    }
+
+    public record aw_d3() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return "padding-left: var(--space-8, 48px);\n"; }
+    }
+
+    /** The position: 2.1 is the first subsection of the second section. */
+    public record aw_path() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                flex: 0 0 3.5em;
+                font-family: ui-monospace, monospace;
+                font-size: 11px;
+                color: var(--color-text-muted);
+                font-variant-numeric: tabular-nums;
+                """;
+        }
+    }
+
+    public record aw_name() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                flex: 1 1 auto;
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                """;
+        }
+    }
+
+    /** A piece the budget cut out of a longer section. It has no heading. */
+    public record aw_part() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                flex: 1 1 auto;
+                font-style: italic;
+                color: var(--color-text-muted);
+                """;
+        }
+    }
+
+    /** The address, when the author pinned one. */
+    public record aw_id() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                flex: 0 0 auto;
+                font-family: ui-monospace, monospace;
+                font-size: 11px;
+                color: var(--color-text-muted);
+                """;
+        }
+    }
+
+    /** How much prose the segment holds, against the largest in the tree. */
+    public record aw_bar() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                flex: 0 0 90px;
+                height: 6px;
+                border-radius: 3px;
+                background: var(--color-surface-raised, var(--color-surface));
+                overflow: hidden;
+                """;
+        }
+    }
+
+    public record aw_fill() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                height: 100%;
+                background: var(--color-accent, var(--color-text-muted));
+                """;
+        }
+    }
+
+    public record aw_w0() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return "width: 4%;\n"; }
+    }
+
+    public record aw_w1() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return "width: 25%;\n"; }
+    }
+
+    public record aw_w2() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return "width: 50%;\n"; }
+    }
+
+    public record aw_w3() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return "width: 75%;\n"; }
+    }
+
+    public record aw_w4() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return "width: 100%;\n"; }
+    }
+
+    public record aw_chars() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                flex: 0 0 3.5em;
+                text-align: right;
+                font-size: 11px;
+                color: var(--color-text-muted);
+                font-variant-numeric: tabular-nums;
+                """;
+        }
+    }
+
+    /** Over the budget: a section somebody would not sit down and read. */
+    public record aw_over() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                flex: 0 0 3.5em;
+                text-align: right;
+                font-size: 11px;
+                font-weight: 600;
+                color: var(--color-danger, var(--color-text-primary));
+                font-variant-numeric: tabular-nums;
+                """;
+        }
+    }
+
     /** Not the document: what the pane has to say instead of one. */
     public record aw_msg() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
@@ -648,6 +802,12 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
                 new aw_sq_marker(), new aw_sq_run(),
                 new aw_sq_run_text(), new aw_sq_tag(),
                 new aw_sq_cont(), new aw_sq_indent(), new aw_sq_pad(),
+                new aw_tree(), new aw_node(),
+                new aw_d0(), new aw_d1(), new aw_d2(), new aw_d3(),
+                new aw_path(), new aw_name(), new aw_part(), new aw_id(),
+                new aw_bar(), new aw_fill(),
+                new aw_w0(), new aw_w1(), new aw_w2(), new aw_w3(), new aw_w4(),
+                new aw_chars(), new aw_over(),
                 new aw_findings(), new aw_finding(),
                 new aw_error(), new aw_warn(), new aw_status());
     }

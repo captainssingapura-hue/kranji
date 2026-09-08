@@ -19,6 +19,7 @@ import kranji.studio.gloss.SoundEntityWidget;
 import kranji.studio.articles.ArticleDraftWidget;
 import kranji.studio.articles.ArticleWorkbenchCss;
 import kranji.studio.articles.MdPreviewModule;
+import kranji.studio.articles.MdSegmentsModule;
 import kranji.studio.articles.MdSquaresModule;
 
 import java.util.List;
@@ -60,6 +61,7 @@ public final class KranjiStudioCrate implements Crate {
                 CrateEntry.of(ArticleWorkbenchCss.INSTANCE),
                 CrateEntry.of(MdPreviewModule.INSTANCE),
                 CrateEntry.of(MdSquaresModule.INSTANCE),
+                CrateEntry.of(MdSegmentsModule.INSTANCE),
                 CrateEntry.of(ArticleDraftWidget.INSTANCE));
     }
 

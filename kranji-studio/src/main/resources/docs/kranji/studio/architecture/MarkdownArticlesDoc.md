@@ -77,6 +77,29 @@ sufficient and no size policy is needed.**
 library's median of 51. That is not a broken page, it is a different kind of
 sitting.
 
+### What it actually did
+
+`Segments` is built and the figures above were estimates worth checking. Run
+over the same document, now that the subset requires its Latin to be wrapped:
+
+| | leaves | median | p90 | max |
+|---|---|---|---|---|
+| Split at headings | **14** | 172 | 349 | 443 |
+| Budget 70, at paragraph boundaries | **41** | **64** | 111 | 183 |
+
+Fourteen sections against fourteen predicted, and forty-one leaves against
+"roughly forty". The median lands at 64 against the library's 51 — a segment is
+now the size of an article, which was the whole claim.
+
+**One number moved and it is worth saying why.** The document measures 2,740
+characters here, not 3,232. Both are right: 3,232 is the *file*, and 2,740 is
+what the parser hands over — the difference is the markdown itself, the `##` and
+the `**` and the readings inside `{…}`, none of which a reader ever sees. The
+figures above are content.
+
+**The max of 183 is the rule working, not failing.** It is a single paragraph
+longer than the budget, and a paragraph is never cut open — see below.
+
 So: **headings give the structure; a size budget is a separate policy on top.**
 Split at headings first, then subdivide any section over budget at paragraph
 boundaries — never mid-paragraph, because a paragraph is the unit the reader
@@ -192,11 +215,24 @@ files per article and authors editing the wrong one. This is separate from the
 
 ## Order of work
 
-1. **Segmentation** — the ADT case plus the generator. It is what makes the
-   format usable at all, and it is what makes the review burden survivable.
-2. **The Latin rule**, with a test.
-3. **The markdown subset**, headings through the existing title renderer.
-4. **A reviewed-readings ledger** — independent of all of this. Once 的 has been
+1. ~~**The markdown subset**~~ — done. `MdSubsetParser`, and the specification
+   is *The Markdown Kranji Reads*.
+2. ~~**The Latin rule**~~ — done, and it went further than "with a test": text
+   that is not Chinese and not a mark is an **error** unless it is wrapped, and
+   `Mark` is both the whitelist and the typed model the rules live in.
+3. ~~**Segmentation**~~ — the cut is done: `Segments` builds the tree and the
+   figures above are measured rather than estimated.
+   **The generator is not.** Segments still come from parsing at request time,
+   which the workbench may do and the library may not — see *The rule this
+   collides with*. Two pieces remain: the `ArticleSeries` case in the product's
+   sealed `ArticleEntry`, and a build step that emits the catalogue as Java so
+   listing stays parse-free.
+4. **Ids that survive.** A segment with no pinned `{#slug}` has no address, and
+   `Segments` invents none — deliberately, because an invented one moves. The
+   write-back step that generates one from the heading and then *checks* it
+   rather than recomputing it is what closes this, and it is the same build step
+   as (3).
+5. **A reviewed-readings ledger** — independent of all of this. Once 的 has been
    confirmed as `de` somewhere it is settled vocabulary, not a judgement; a
    checked-in ledger of confirmed `character:reading` pairs would collapse 553
    to the few dozen genuinely new pairs, and improves with every article.

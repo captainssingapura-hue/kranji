@@ -141,6 +141,10 @@ public final class ArticleDraftGetAction
         // is what the reader will do with what the document says.
         js.append(",\"plan\":");
         plan(js, GridPlanner.plan(blocks, columns));
+        // And the same document as a tree. Three views, one fetch: a workbench
+        // exists to hold them against each other.
+        js.append(",\"tree\":");
+        segment(js, Segments.of(blocks));
         js.append(",\"findings\":[");
         List<ParseFinding> findings = parsed.findings();
         for (int i = 0; i < findings.size(); i++) {
@@ -151,6 +155,32 @@ public final class ArticleDraftGetAction
               .append(",\"message\":").append(quote(f.message())).append('}');
         }
         return js.append("]}").toString();
+    }
+
+    // ── The tree, as JSON ──────────────────────────────────────────────
+
+    /**
+     * One segment and everything under it.
+     *
+     * <p>{@code path} is a position and {@code id} is an address; a segment
+     * with no {@code id} has no address yet, which is what a workbench should
+     * be able to point at.</p>
+     */
+    private static void segment(StringBuilder js, Segment segment) {
+        js.append("{\"path\":").append(quote(segment.path()))
+          .append(",\"id\":").append(quote(segment.id()))
+          .append(",\"level\":").append(segment.level())
+          .append(",\"title\":").append(quote(segment.title()))
+          .append(",\"chars\":").append(segment.chars())
+          .append(",\"total\":").append(segment.total())
+          .append(",\"blocks\":").append(segment.blocks().size())
+          .append(",\"children\":[");
+        List<Segment> children = segment.children();
+        for (int i = 0; i < children.size(); i++) {
+            if (i > 0) js.append(',');
+            segment(js, children.get(i));
+        }
+        js.append("]}");
     }
 
     // ── The arrangement, as JSON ───────────────────────────────────────
