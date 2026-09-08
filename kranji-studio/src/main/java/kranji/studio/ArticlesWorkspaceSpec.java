@@ -6,6 +6,7 @@ import hue.captains.singapura.js.homing.workspace.WidgetLabel;
 import hue.captains.singapura.js.homing.workspace.shell.PartyDecl;
 import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpec;
 import kranji.studio.articles.ArticleDraftWidget;
+import kranji.studio.articles.SectionReaderWidget;
 
 import java.util.List;
 
@@ -37,7 +38,9 @@ public final class ArticlesWorkspaceSpec implements WorkspaceSpec {
     public List<WidgetEntry> widgetEntries() {
         return List.of(
                 WidgetEntry.of(ArticleDraftWidget.class, WidgetLabel.of("Drafts"))
-                        .withIcon(new WidgetIcon.Emoji("📝")));
+                        .withIcon(new WidgetIcon.Emoji("📝")),
+                WidgetEntry.of(SectionReaderWidget.class, WidgetLabel.of("Reading"))
+                        .withIcon(new WidgetIcon.Emoji("📖")));
     }
 
     @Override

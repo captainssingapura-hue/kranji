@@ -1,8 +1,11 @@
 package kranji.studio.articles;
 
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 import kranji.studio.articles.MdDocument.Block;
 import kranji.studio.articles.MdDocument.Span;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,8 +26,10 @@ import java.util.List;
  * {@code k}/{@code t} and its optional parts are omitted rather than sent
  * empty.</p>
  *
- * <p>Written by hand into a {@code StringBuilder}. The shape is four fields
- * wide and a mapping library would be a dependency to describe it.</p>
+ * <p>Written by hand into a {@code StringBuilder} and read back through
+ * Vert.x's {@code JsonArray}, which the server already brings. The shape is
+ * four fields wide and a mapping library would be a dependency to describe
+ * it.</p>
  */
 public final class MdJson {
 
@@ -73,6 +78,45 @@ public final class MdJson {
             js.append('}');
         }
         js.append(']');
+    }
+
+    // ── Back again ─────────────────────────────────────────────────────
+
+    /**
+     * The blocks a generated resource holds.
+     *
+     * <p>The other half of the codec, and the reason this class is a codec
+     * rather than a writer. A generated document is structure on disk; whatever
+     * arranges it has to get the structure back, and it must be <b>the same
+     * structure</b> — a reader that re-derived it from markdown would be the
+     * second answer this whole arrangement exists to avoid.</p>
+     *
+     * <p>{@code JsonArray} is Vert.x's, already on the classpath because the
+     * server is. A hand-rolled reader for a shape this small would still be a
+     * hand-rolled reader.</p>
+     */
+    public static List<Block> blocksFrom(JsonArray json) {
+        var blocks = new ArrayList<Block>();
+        for (int i = 0; i < json.size(); i++) {
+            JsonObject b = json.getJsonObject(i);
+            var lines = new ArrayList<List<Span>>();
+            JsonArray raw = b.getJsonArray("lines", new JsonArray());
+            for (int l = 0; l < raw.size(); l++) lines.add(spansFrom(raw.getJsonArray(l)));
+            blocks.add(new Block(b.getString("kind", "p"), b.getInteger("level", 0),
+                                 b.getString("id", ""), lines));
+        }
+        return List.copyOf(blocks);
+    }
+
+    private static List<Span> spansFrom(JsonArray json) {
+        var spans = new ArrayList<Span>();
+        for (int i = 0; i < json.size(); i++) {
+            JsonObject s = json.getJsonObject(i);
+            spans.add(new Span(s.getString("k", "text"), s.getString("t", ""),
+                               s.getString("r", ""), s.getString("e", ""),
+                               s.getBoolean("run", false)));
+        }
+        return List.copyOf(spans);
     }
 
     /** A JSON string. Nothing a draft can contain escapes it. */

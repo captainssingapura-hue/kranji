@@ -132,6 +132,7 @@ public final class ArticleGenerator {
                                       body(section)));
             }
         }
+        files.add(new Emitted(options.resources() + "/index.json", index(documents)));
         files.add(new Emitted(javaPath(options), catalogue(documents, options)));
         return new Result(files, problems);
     }
@@ -178,6 +179,42 @@ public final class ArticleGenerator {
              + ",\"chars\":" + section.segment().chars()
              + ",\"blocks\":" + MdJson.blocks(section.segment().blocks())
              + "}";
+    }
+
+    /**
+     * The shape of what was generated, in one resource.
+     *
+     * <p>The Java catalogue is what a library lists from, and it is flat — an
+     * {@code ArticleRef} has an id and a title and no notion of being under
+     * anything. The nesting is real and a reader needs it to draw a tree, so
+     * the level travels here until {@code ArticleSeries} exists to carry it in
+     * the catalogue itself.</p>
+     *
+     * <p>Generated, so reading it is not parsing a document: it is one small
+     * file listing what the documents are, read once.</p>
+     */
+    private static String index(Map<String, List<Section>> documents) {
+        var js = new StringBuilder("{\"documents\":[");
+        boolean firstDoc = true;
+        for (var entry : documents.entrySet()) {
+            if (!firstDoc) js.append(',');
+            firstDoc = false;
+            List<Section> sections = entry.getValue();
+            js.append("{\"title\":").append(MdJson.quote(entry.getKey()))
+              .append(",\"id\":").append(MdJson.quote(sections.get(0).id()))
+              .append(",\"sections\":[");
+            for (int i = 0; i < sections.size(); i++) {
+                Section s = sections.get(i);
+                if (i > 0) js.append(',');
+                js.append("{\"id\":").append(MdJson.quote(s.id()))
+                  .append(",\"title\":").append(MdJson.quote(s.title()))
+                  .append(",\"level\":").append(s.level())
+                  .append(",\"chars\":").append(s.segment().chars())
+                  .append('}');
+            }
+            js.append("]}");
+        }
+        return js.append("]}").toString();
     }
 
     private static String javaPath(Options options) {

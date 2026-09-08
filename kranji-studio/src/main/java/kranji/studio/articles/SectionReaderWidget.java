@@ -1,0 +1,232 @@
+package kranji.studio.articles;
+
+import hue.captains.singapura.js.homing.core.Importable;
+import hue.captains.singapura.js.homing.core.ModuleImports;
+import hue.captains.singapura.js.homing.workspace.LifecycleHint;
+import hue.captains.singapura.js.homing.workspace.WorkspaceWidget;
+
+import java.util.List;
+
+/**
+ * A generated document, read: its sections on the left, one of them as squares.
+ *
+ * <h2>What this is for</h2>
+ *
+ * <p>The workbench answers an author's questions — did the subset accept this,
+ * what did the cut produce, where are the ids missing. This answers the only
+ * question that matters afterwards: <b>does it read.</b></p>
+ *
+ * <p>So there is one thing on the right and it is the grid. No document view,
+ * no findings, no plan sizes: those are the bench's, and a page a child is
+ * looking at should have nothing on it but the page.</p>
+ *
+ * <h2>Nothing here has seen markdown</h2>
+ *
+ * <p>The sections come from resources {@link ArticleGenerator} wrote. The route
+ * reads structure and arranges it; the pane draws the arrangement. That is the
+ * whole path, and the absence of a parser anywhere along it is the point of the
+ * generator existing.</p>
+ *
+ * <p>The document is fixed for now. Choosing between documents is the library's
+ * job and the library does not carry a generated one yet.</p>
+ *
+ * <p>No CJK literal appears in this file. Every character on screen came from a
+ * generated resource.</p>
+ */
+public final class SectionReaderWidget
+        extends WorkspaceWidget<WorkspaceWidget._None, SectionReaderWidget> {
+
+    public static final SectionReaderWidget INSTANCE = new SectionReaderWidget();
+
+    private SectionReaderWidget() {}
+
+    private record construct() implements WorkspaceWidget._Construct<_None, SectionReaderWidget> {}
+
+    @Override protected _Construct<_None, SectionReaderWidget> construct() { return new construct(); }
+    @Override public Class<_None> paramsType() { return _None.class; }
+    @Override public String title() { return "Reading"; }
+    @Override public LifecycleHint lifecycleHint() { return LifecycleHint.MULTI; }
+
+    @Override
+    protected List<ModuleImports<? extends Importable>> bodyImports() {
+        return List.of(
+                new ModuleImports<>(List.of(
+                        new ArticleWorkbenchCss.aw_root(),
+                        new ArticleWorkbenchCss.aw_head(),
+                        new ArticleWorkbenchCss.aw_btn(),
+                        new ArticleWorkbenchCss.aw_split(),
+                        new ArticleWorkbenchCss.aw_list(),
+                        new ArticleWorkbenchCss.aw_item(),
+                        new ArticleWorkbenchCss.aw_item_on(),
+                        new ArticleWorkbenchCss.aw_size(),
+                        new ArticleWorkbenchCss.aw_main(),
+                        new ArticleWorkbenchCss.aw_preview(),
+                        new ArticleWorkbenchCss.aw_msg(),
+                        new ArticleWorkbenchCss.aw_status(),
+                        new ArticleWorkbenchCss.aw_d0(),
+                        new ArticleWorkbenchCss.aw_d1(),
+                        new ArticleWorkbenchCss.aw_d2(),
+                        new ArticleWorkbenchCss.aw_sheet(),
+                        new ArticleWorkbenchCss.aw_row(),
+                        new ArticleWorkbenchCss.aw_sq(),
+                        new ArticleWorkbenchCss.aw_sq_zi(),
+                        new ArticleWorkbenchCss.aw_sq_ann(),
+                        new ArticleWorkbenchCss.aw_sq_punct(),
+                        new ArticleWorkbenchCss.aw_sq_pack(),
+                        new ArticleWorkbenchCss.aw_sq_half(),
+                        new ArticleWorkbenchCss.aw_sq_hang(),
+                        new ArticleWorkbenchCss.aw_sq_bold(),
+                        new ArticleWorkbenchCss.aw_sq_marker(),
+                        new ArticleWorkbenchCss.aw_sq_run(),
+                        new ArticleWorkbenchCss.aw_sq_run_text(),
+                        new ArticleWorkbenchCss.aw_sq_tag(),
+                        new ArticleWorkbenchCss.aw_sq_cont(),
+                        new ArticleWorkbenchCss.aw_sq_indent(),
+                        new ArticleWorkbenchCss.aw_sq_pad()),
+                        ArticleWorkbenchCss.INSTANCE),
+                new ModuleImports<>(
+                        List.of(new MdSquaresModule.createMdSquares()),
+                        MdSquaresModule.INSTANCE));
+    }
+
+    @Override
+    protected List<String> constructBodyJs() {
+        return List.of(
+                "    var root = branch.createElement('root', 'div');",
+                "    css.setClass(root, aw_root);",
+                "",
+                "    var head = branch.createElement('head', 'div');",
+                "    css.setClass(head, aw_head);",
+                "    root.appendChild(head);",
+                "",
+                "    // Twenty per row is the ruled paper a child writes on. The",
+                "    // others are here because a smaller page is a different reading.",
+                "    var WIDTHS = [20, 16, 12, 10];",
+                "    var width = 0;",
+                "    var widthBtn = branch.createElement('width', 'button');",
+                "    widthBtn.type = 'button';",
+                "    css.setClass(widthBtn, aw_btn);",
+                "    head.appendChild(widthBtn);",
+                "",
+                "    var where = branch.createElement('where', 'span');",
+                "    head.appendChild(where);",
+                "",
+                "    var split = branch.createElement('split', 'div');",
+                "    css.setClass(split, aw_split);",
+                "    root.appendChild(split);",
+                "",
+                "    var list = branch.createElement('list', 'div');",
+                "    css.setClass(list, aw_list);",
+                "    split.appendChild(list);",
+                "",
+                "    var main = branch.createElement('main', 'div');",
+                "    css.setClass(main, aw_main);",
+                "    split.appendChild(main);",
+                "",
+                "    // One thing on the right, and it is the page.",
+                "    var page = branch.createElement('page', 'div');",
+                "    css.setClass(page, aw_preview);",
+                "    main.appendChild(page);",
+                "",
+                "    var owner = Object.freeze({ toString: function () { return 'reading'; } });",
+                "",
+                "    var sheet = createMdSquares({",
+                "        css: css,",
+                "        classes: {",
+                "            sheet: aw_sheet, row: aw_row, sq: aw_sq, zi: aw_sq_zi,",
+                "            ann: aw_sq_ann, punct: aw_sq_punct,",
+                "            pack: aw_sq_pack, half: aw_sq_half, hang: aw_sq_hang,",
+                "            bold: aw_sq_bold, marker: aw_sq_marker,",
+                "            run: aw_sq_run, runText: aw_sq_run_text, tag: aw_sq_tag,",
+                "            cont: aw_sq_cont, indent: aw_sq_indent, pad: aw_sq_pad",
+                "        }",
+                "    });",
+                "",
+                "    function fresh(name) {",
+                "        if (branch.getBranch(name)) branch.dissolveBranch(name);",
+                "        var b = branch.createBranch(name);",
+                "        b.activate(owner);",
+                "        return b;",
+                "    }",
+                "",
+                "    var FRESH = { cache: 'no-store' };",
+                "    var sections = [];",
+                "    var chosen = null;",
+                "",
+                "    function say(text) {",
+                "        var b = fresh('page');",
+                "        var line = b.createElement('msg', 'div');",
+                "        css.setClass(line, aw_msg);",
+                "        line.textContent = text;",
+                "        page.appendChild(line);",
+                "    }",
+                "",
+                "    var DEPTH = [aw_d0, aw_d0, aw_d1, aw_d2];",
+                "",
+                "    function paintList() {",
+                "        var b = fresh('sections');",
+                "        for (var i = 0; i < sections.length; i++) {",
+                "            (function (s, n) {",
+                "                var item = b.createElement('s' + n, 'div');",
+                "                // Depth by heading level, so the shelf reads as the",
+                "                // document's own shape rather than a flat list.",
+                "                css.setClass(item, s.id === chosen ? aw_item_on : aw_item,",
+                "                             DEPTH[Math.min(DEPTH.length - 1, s.level)]);",
+                "                item.textContent = s.title;",
+                "                var size = b.createElement('z' + n, 'span');",
+                "                css.setClass(size, aw_size);",
+                "                size.textContent = s.chars + ' characters';",
+                "                item.appendChild(size);",
+                "                item.addEventListener('click', function () { open(s.id); });",
+                "                list.appendChild(item);",
+                "            })(sections[i], i);",
+                "        }",
+                "    }",
+                "",
+                "    function open(id) {",
+                "        chosen = id;",
+                "        paintList();",
+                "        say('\\u2026');",
+                "        fetch('/mvp-section?id=' + encodeURIComponent(id)",
+                "            + '&columns=' + WIDTHS[width], FRESH)",
+                "            .then(function (r) { return r.json(); })",
+                "            .then(function (d) {",
+                "                if (d.error) { say(d.error); return; }",
+                "                var b = fresh('page');",
+                "                sheet.draw(b, page, d.plan);",
+                "            })",
+                "            .catch(function (e) { say('Could not read it: ' + e); });",
+                "    }",
+                "",
+                "    function load() {",
+                "        fetch('/mvp-section', FRESH)",
+                "            .then(function (r) { return r.json(); })",
+                "            .then(function (d) {",
+                "                var docs = d.documents || [];",
+                "                if (!docs.length) { say('Nothing generated.'); return; }",
+                "                where.textContent = docs[0].title;",
+                "                sections = docs[0].sections || [];",
+                "                paintList();",
+                "                if (sections.length) open(chosen || sections[0].id);",
+                "            })",
+                "            .catch(function (e) { where.textContent = 'Could not list: ' + e; });",
+                "    }",
+                "",
+                "    function labels() { widthBtn.textContent = WIDTHS[width] + '/row'; }",
+                "    labels();",
+                "",
+                "    widthBtn.addEventListener('click', function () {",
+                "        width = (width + 1) % WIDTHS.length;",
+                "        labels();",
+                "        if (chosen) open(chosen);",
+                "    });",
+                "",
+                "    load();",
+                "",
+                "    return {",
+                "        root: root,",
+                "        setActive: function (active) { if (active && !sections.length) load(); }",
+                "    };"
+        );
+    }
+}

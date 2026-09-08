@@ -114,7 +114,7 @@ class ArticleGeneratorTest {
     // ── What it emits ──────────────────────────────────────────────────
 
     @Test
-    void oneResourcePerSectionAndOneCatalogue() {
+    void oneResourcePerSectionAnIndexAndOneCatalogue() {
         Result result = generate(GOOD);
         assertTrue(result.ok(), result.problems().toString());
 
@@ -124,7 +124,18 @@ class ArticleGeneratorTest {
                 "kranji/articles/generated/bei-jing.json",
                 "kranji/articles/generated/jie-gou.json",
                 "kranji/articles/generated/xi-jie.json",
+                "kranji/articles/generated/index.json",
                 "kranji/library/generated/GeneratedCollections.java"), paths);
+    }
+
+    @Test
+    void theIndexCarriesTheNestingTheCatalogueCannot() {
+        // An ArticleRef has an id and a title and no notion of being under
+        // anything, so the level travels here until ArticleSeries exists.
+        String index = file(generate(GOOD), "index.json");
+
+        assertTrue(index.contains("\"id\":\"xi-jie\",\"title\":\"二之一\",\"level\":3"), index);
+        assertTrue(index.contains("\"level\":1"), "the document's own prose");
     }
 
     @Test

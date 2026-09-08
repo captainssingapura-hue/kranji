@@ -140,7 +140,7 @@ public final class ArticleDraftGetAction
         // workbench exists to compare them: the question a squares view answers
         // is what the reader will do with what the document says.
         js.append(",\"plan\":");
-        plan(js, GridPlanner.plan(blocks, columns));
+        GridJson.plan(js, GridPlanner.plan(blocks, columns));
         // And the same document as a tree. Three views, one fetch: a workbench
         // exists to hold them against each other.
         js.append(",\"tree\":");
@@ -184,68 +184,6 @@ public final class ArticleDraftGetAction
     }
 
     // ── The arrangement, as JSON ───────────────────────────────────────
-
-    /**
-     * The plan: rows of squares, each square a one-letter kind and its content.
-     *
-     * <p>Short names throughout. A page of Chinese is a few thousand squares
-     * and the difference between {@code "kind"} and {@code "k"} on every one of
-     * them is most of the response.</p>
-     */
-    private static void plan(StringBuilder js, GridPlan plan) {
-        js.append("{\"columns\":").append(plan.columns()).append(",\"rows\":[");
-        List<GridPlan.Row> rows = plan.rows();
-        for (int i = 0; i < rows.size(); i++) {
-            GridPlan.Row row = rows.get(i);
-            if (i > 0) js.append(',');
-            js.append("{\"kind\":").append(quote(row.kind()))
-              .append(",\"block\":").append(row.block())
-              .append(",\"line\":").append(row.line())
-              .append(",\"squares\":[");
-            for (int s = 0; s < row.squares().size(); s++) {
-                if (s > 0) js.append(',');
-                square(js, row.squares().get(s));
-            }
-            js.append("]}");
-        }
-        js.append("]}");
-    }
-
-    private static void square(StringBuilder js, Square square) {
-        switch (square) {
-            // z: a character. Nothing rides on it; marks have squares.
-            case Square.Zi zi -> {
-                js.append("{\"k\":\"z\",\"t\":").append(quote(zi.zi()));
-                if (!zi.reading().isEmpty()) js.append(",\"r\":").append(quote(zi.reading()));
-                if (zi.bold())               js.append(",\"b\":true");
-                js.append('}');
-            }
-            case Square.Marker marker ->
-                js.append("{\"k\":\"t\",\"t\":").append(quote(marker.text())).append('}');
-            // s: one square of punctuation - one mark, or several packed.
-            // `hang` is placement, not content: it hangs past the right edge
-            // so that a mark never begins a row.
-            case Square.Punct punct -> {
-                js.append("{\"k\":\"s\",\"t\":").append(quote(punct.marks()));
-                if (punct.packed())  js.append(",\"n\":").append(punct.marks().length());
-                if (punct.hanging()) js.append(",\"hang\":true");
-                js.append('}');
-            }
-            // A run head carries its own spans, so a renderer can put the
-            // emphasis back where the author wrote it.
-            case Square.Run run -> {
-                js.append("{\"k\":\"r\",\"w\":").append(run.width())
-                  .append(",\"id\":").append(run.id());
-                if (run.broken()) js.append(",\"cut\":true");
-                js.append(",\"parts\":");
-                MdJson.spans(js, run.parts());
-                js.append('}');
-            }
-            case Square.Cont cont ->
-                js.append("{\"k\":\"c\",\"id\":").append(cont.id()).append('}');
-            case Square.Indent ignored -> js.append("{\"k\":\"i\"}");
-        }
-    }
 
     /** Everything a draft can contain, safely inside a JSON string. */
     private static String quote(String raw) { return MdJson.quote(raw); }
