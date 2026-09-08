@@ -6,6 +6,9 @@ import hue.captains.singapura.js.homing.workspace.WidgetLabel;
 import hue.captains.singapura.js.homing.workspace.shell.PartyDecl;
 import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpec;
 import kranji.studio.articles.ArticleDraftWidget;
+import kranji.studio.articles.ArticleNavigatorWidget;
+import kranji.studio.articles.ArticleRootsWidget;
+import kranji.studio.articles.ArticleShelfSecretaryModule;
 import kranji.studio.articles.SectionReaderWidget;
 
 import java.util.List;
@@ -13,15 +16,22 @@ import java.util.List;
 /**
  * The article workbench: drafts on disk, read through the subset.
  *
- * <p>One widget so far, and it is {@code MULTI} — which is the arrangement this
- * exists for. An author comparing two drafts, or one draft against the guide
- * they are following, opens the pane twice; the useful workspace is the second
- * copy, not the first.</p>
+ * <h2>Three panes and one chain</h2>
  *
- * <p>No parties. Nothing here has a second widget to tell anything to yet, and
- * a selection bus with one participant is a bus with nobody on it. The library
- * view arrives from the reader in stage two and brings the first real
- * conversation with it.</p>
+ * <p><b>Roots</b> is which folders may be read; <b>Navigator</b> is one of
+ * those folders as the tree it already is; <b>Drafts</b> is one file in it,
+ * through the subset. Each pane answers one question and passes the answer
+ * along, which is why none of them has to know what the others are showing.</p>
+ *
+ * <p>Roots is {@code SINGLETON} — a shelf is a fact about the studio and two
+ * copies of it would be two lists of the same thing. The other two are
+ * {@code MULTI}, which is the arrangement they exist for: two navigators on two
+ * roots, or one draft beside the guide it is being written against.</p>
+ *
+ * <h2>The party this note said was coming</h2>
+ *
+ * <p>It used to say there were no parties, because a bus with one participant
+ * is a bus with nobody on it. There are three now, so there is one.</p>
  */
 public final class ArticlesWorkspaceSpec implements WorkspaceSpec {
 
@@ -36,15 +46,33 @@ public final class ArticlesWorkspaceSpec implements WorkspaceSpec {
 
     @Override
     public List<WidgetEntry> widgetEntries() {
+        // Listed in the order the chain runs, because that is the order
+        // somebody opens them in the first time.
         return List.of(
+                WidgetEntry.of(ArticleRootsWidget.class, WidgetLabel.of("Roots"))
+                        .withIcon(new WidgetIcon.Emoji("🗂")),
+                WidgetEntry.of(ArticleNavigatorWidget.class, WidgetLabel.of("Navigator"))
+                        .withIcon(new WidgetIcon.Emoji("🌲")),
                 WidgetEntry.of(ArticleDraftWidget.class, WidgetLabel.of("Drafts"))
                         .withIcon(new WidgetIcon.Emoji("📝")),
                 WidgetEntry.of(SectionReaderWidget.class, WidgetLabel.of("Reading"))
                         .withIcon(new WidgetIcon.Emoji("📖")));
     }
 
+    /**
+     * The shelf bus.
+     *
+     * <p>One party for the whole chain rather than one per hop. Two would mean
+     * two declarations and two joins per widget, and a widget that forgot one
+     * would go quiet with nothing to show for it — the same argument the gloss
+     * workbench makes next door.</p>
+     */
     @Override
     public List<PartyDecl> parties() {
-        return List.of();
+        return List.of(
+                PartyDecl.of("articleShelf", ArticleShelfSecretaryModule.INSTANCE,
+                             "ArticleShelfSecretary")
+                         .exposedAs("articleShelf")
+                         .build());
     }
 }

@@ -93,6 +93,110 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         }
     }
 
+    // ── The shelf of roots ─────────────────────────────────────────────
+
+    /** Where a root is typed in, above the list it joins. */
+    public record aw_shelf_bar() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                display: flex;
+                gap: var(--space-2, 8px);
+                padding: var(--space-2, 8px);
+                border-bottom: 1px solid var(--color-border);
+                """;
+        }
+    }
+
+    public record aw_shelf_input() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                flex: 1 1 auto;
+                min-width: 0;
+                border: 1px solid var(--color-border);
+                border-radius: 6px;
+                background: var(--color-surface);
+                color: var(--color-text-primary);
+                padding: 3px 8px;
+                font: inherit;
+                font-family: ui-monospace, monospace;
+                font-size: 12px;
+                """;
+        }
+    }
+
+    /** One folder on the shelf. */
+    public record aw_shelf_row() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                display: flex;
+                align-items: baseline;
+                gap: var(--space-2, 8px);
+                padding: 6px 8px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 13px;
+                line-height: 1.35;
+                """;
+        }
+    }
+
+    /** The one the navigator is showing. */
+    public record aw_shelf_on() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                display: flex;
+                align-items: baseline;
+                gap: var(--space-2, 8px);
+                padding: 6px 8px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 13px;
+                line-height: 1.35;
+                background: var(--color-surface-raised, var(--color-surface));
+                border-left: 3px solid var(--color-accent, var(--color-text-secondary));
+                """;
+        }
+    }
+
+    /** The whole path, under the folder's name. */
+    public record aw_shelf_path() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                display: block;
+                font-size: 11px;
+                font-family: ui-monospace, monospace;
+                color: var(--color-text-muted);
+                word-break: break-all;
+                """;
+        }
+    }
+
+    /**
+     * A root whose folder is not there.
+     *
+     * <p>Shown rather than dropped: a folder on a drive that is not mounted is
+     * still a root somebody chose, and quietly removing it would be the tool
+     * losing their work for them.</p>
+     */
+    public record aw_shelf_gone() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                font-size: 11px;
+                color: var(--color-status-warning, var(--color-text-muted));
+                """;
+        }
+    }
+
+    /** Take a folder off the shelf. The folder itself is untouched. */
+    public record aw_shelf_x() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                margin-left: auto;
+                appearance: none;
+                border: none;
+                background: none;
+                color: var(--color-text-muted);
+                cursor: pointer;
+                font: inherit;
+                line-height: 1;
+                padding: 0 4px;
+                """;
+        }
+    }
+
     /**
      * The document above, the findings below.
      *
@@ -756,6 +860,9 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         return List.of(
                 new aw_root(), new aw_head(), new aw_btn(), new aw_split(),
                 new aw_list(),
+                new aw_shelf_bar(), new aw_shelf_input(), new aw_shelf_row(),
+                new aw_shelf_on(), new aw_shelf_path(), new aw_shelf_gone(),
+                new aw_shelf_x(),
                 new aw_main(), new aw_preview(), new aw_page(),
                 new aw_title(), new aw_h2(), new aw_h3(), new aw_pin(),
                 new aw_unpinned(), new aw_p(), new aw_li(), new aw_marker(),

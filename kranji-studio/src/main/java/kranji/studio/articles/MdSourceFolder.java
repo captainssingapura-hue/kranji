@@ -109,7 +109,18 @@ public final class MdSourceFolder {
      * fail to load.</p>
      */
     public static List<Draft> drafts() {
-        Path dir = dir();
+        return drafts(dir());
+    }
+
+    /**
+     * The same, under a root the caller chose.
+     *
+     * <p>Ids are relative to their root, so two roots may each hold a
+     * {@code yu.kmd} and the two are different drafts. Which means an id is
+     * only an answer alongside the root it came from — every caller of
+     * {@link #read(Path, String)} passes both.</p>
+     */
+    public static List<Draft> drafts(Path dir) {
         if (!Files.isDirectory(dir)) return List.of();
 
         var found = new ArrayList<Draft>();
@@ -171,8 +182,13 @@ public final class MdSourceFolder {
 
     /** The draft with this id, if the folder still holds it. */
     public static Optional<Draft> draft(String id) {
+        return draft(dir(), id);
+    }
+
+    /** The draft with this id under this root, if it still holds it. */
+    public static Optional<Draft> draft(Path dir, String id) {
         if (id == null || id.isBlank()) return Optional.empty();
-        return drafts().stream().filter(d -> d.id().equals(id)).findFirst();
+        return drafts(dir).stream().filter(d -> d.id().equals(id)).findFirst();
     }
 
     /**
@@ -185,10 +201,17 @@ public final class MdSourceFolder {
      * folder before anything is opened.</p>
      */
     public static Optional<String> read(String id) {
-        Optional<Draft> found = draft(id);
+        return read(dir(), id);
+    }
+
+    /** The same, under a root the caller chose. */
+    public static Optional<String> read(Path root, String id) {
+        Optional<Draft> found = draft(root, id);
         if (found.isEmpty()) return Optional.empty();
 
-        Path dir = dir();
+        // Absolute before the comparison, or startsWith is answering a
+        // question about two relative paths and not about containment.
+        Path dir = root.toAbsolutePath().normalize();
         Path file = dir.resolve(found.get().path()).normalize();
         if (!file.startsWith(dir) || !Files.isRegularFile(file)) return Optional.empty();
         try {

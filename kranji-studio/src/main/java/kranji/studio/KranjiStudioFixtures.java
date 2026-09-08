@@ -8,9 +8,12 @@ import hue.captains.singapura.js.homing.studio.base.Umbrella;
 import hue.captains.singapura.js.homing.workspace.shell.GenericWorkspace;
 import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpecRegistry;
 import hue.captains.singapura.tao.http.action.GetAction;
+import hue.captains.singapura.tao.http.action.PostAction;
 import hue.captains.singapura.tao.ontology.ValueObject;
 import io.vertx.ext.web.RoutingContext;
 import kranji.studio.articles.ArticleDraftGetAction;
+import kranji.studio.articles.ArticleRootsGetAction;
+import kranji.studio.articles.ArticleRootsPostAction;
 import kranji.studio.articles.MvpSectionGetAction;
 import kranji.studio.gloss.GlossRelationGetAction;
 
@@ -64,7 +67,22 @@ public record KranjiStudioFixtures<S extends Studio<?>>(Umbrella<S> umbrella)
         var actions = new LinkedHashMap<>(defaults().harnessGetActions());
         actions.put(GlossRelationGetAction.PATH, new GlossRelationGetAction());
         actions.put(ArticleDraftGetAction.PATH, new ArticleDraftGetAction());
+        actions.put(ArticleRootsGetAction.PATH, new ArticleRootsGetAction());
         actions.put(MvpSectionGetAction.PATH, new MvpSectionGetAction());
+        return Map.copyOf(actions);
+    }
+
+    /**
+     * The one thing the studio writes.
+     *
+     * <p>Adding a folder to the article shelf changes a file, and a GET that
+     * writes is one a prefetch or a back button can fire. It sits on the same
+     * path as the listing; the verb is what tells them apart.</p>
+     */
+    @Override
+    public Map<String, PostAction<RoutingContext, ?, ?, ?>> harnessPostActions() {
+        var actions = new LinkedHashMap<>(defaults().harnessPostActions());
+        actions.put(ArticleRootsPostAction.PATH, new ArticleRootsPostAction());
         return Map.copyOf(actions);
     }
 

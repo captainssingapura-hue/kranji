@@ -32,10 +32,24 @@ class ArticleDraftGetActionTest {
     @AfterEach
     void clearProperty() {
         System.clearProperty(MdSourceFolder.DIR_PROPERTY);
+        System.clearProperty(ArticleRoots.STORE_PROPERTY);
+    }
+
+    /**
+     * Points the studio at one folder and nothing else.
+     *
+     * <p>The store is named at a path that does not exist, so the shelf falls
+     * back to {@code kranji.articles.dir}. Without this a test would read
+     * whatever roots the person running it happens to have added, and pass or
+     * fail on their machine rather than on the code.</p>
+     */
+    private static void reading(Path dir) {
+        System.setProperty(MdSourceFolder.DIR_PROPERTY, dir.toString());
+        System.setProperty(ArticleRoots.STORE_PROPERTY, dir.resolve("no-shelf.json").toString());
     }
 
     private static String previewOf(Path dir, String body) throws IOException {
-        System.setProperty(MdSourceFolder.DIR_PROPERTY, dir.toString());
+        reading(dir);
         Files.writeString(dir.resolve("draft.kmd"), body, StandardCharsets.UTF_8);
         return ArticleDraftGetAction.preview(MdSourceFolder.drafts().get(0).id());
     }
@@ -92,7 +106,7 @@ class ArticleDraftGetActionTest {
 
     @Test
     void anIdForNothingIsAnErrorRatherThanAnEmptyDocument(@TempDir Path dir) {
-        System.setProperty(MdSourceFolder.DIR_PROPERTY, dir.toString());
+        reading(dir);
 
         String json = ArticleDraftGetAction.preview("0123456789abcdef");
 
@@ -104,10 +118,10 @@ class ArticleDraftGetActionTest {
     void theListingNamesTheFolderItRead(@TempDir Path dir) throws IOException {
         // The pane shows this. A workbench reading the wrong folder is the
         // easiest mistake to make and the hardest to notice.
-        System.setProperty(MdSourceFolder.DIR_PROPERTY, dir.toString());
+        reading(dir);
         Files.writeString(dir.resolve("one.kmd"), "# 一\n", StandardCharsets.UTF_8);
 
-        String json = ArticleDraftGetAction.listing();
+        String json = ArticleDraftGetAction.listing(null);
 
         assertTrue(json.contains("\"dir\":"), json);
         assertTrue(json.contains("\"name\":\"one.kmd\""), json);
@@ -120,13 +134,13 @@ class ArticleDraftGetActionTest {
         // The folder IS the shape - no manifest, nothing to fall out of step -
         // and it arrives in the canonical TreeNode form, which is what buys the
         // bench arrow keys without anybody writing an arrow key.
-        System.setProperty(MdSourceFolder.DIR_PROPERTY, dir.toString());
+        reading(dir);
         Files.createDirectories(dir.resolve("gushi/tang"));
         Files.writeString(dir.resolve("top.kmd"), "# 上\n", StandardCharsets.UTF_8);
         Files.writeString(dir.resolve("gushi/tang/deng-guan.kmd"), "# 登鹳\n",
                 StandardCharsets.UTF_8);
 
-        var tree = new JsonObject(ArticleDraftGetAction.listing()).getJsonObject("tree");
+        var tree = new JsonObject(ArticleDraftGetAction.listing(null)).getJsonObject("tree");
 
         // gushi/ nests, and the folders come before the loose files.
         var top = tree.getJsonArray("children");
@@ -147,13 +161,13 @@ class ArticleDraftGetActionTest {
     void twoDraftsOfTheSameNameInDifferentFoldersStayTwo(@TempDir Path dir) throws IOException {
         // The tree is built from paths, so this is the case that would collapse
         // if anything along the way keyed on a file name.
-        System.setProperty(MdSourceFolder.DIR_PROPERTY, dir.toString());
+        reading(dir);
         Files.createDirectories(dir.resolve("one"));
         Files.createDirectories(dir.resolve("two"));
         Files.writeString(dir.resolve("one/yu.kmd"), "# 甲\n", StandardCharsets.UTF_8);
         Files.writeString(dir.resolve("two/yu.kmd"), "# 乙\n", StandardCharsets.UTF_8);
 
-        var listing = new JsonObject(ArticleDraftGetAction.listing());
+        var listing = new JsonObject(ArticleDraftGetAction.listing(null));
         var folders = listing.getJsonObject("tree").getJsonArray("children");
 
         assertEquals(2, folders.size());

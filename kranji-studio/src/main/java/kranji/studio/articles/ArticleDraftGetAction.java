@@ -62,14 +62,17 @@ public final class ArticleDraftGetAction
     private static final String JSON = "application/json; charset=utf-8";
 
     /**
+     * @param root    the root to read under, or absent for the first on the shelf
      * @param id      the id the listing gave a draft, or absent to list the folder
      * @param columns squares per row, or absent for 每行二十格
      */
-    public record Query(String id, String columns) implements Param._QueryString {}
+    public record Query(String root, String id, String columns) implements Param._QueryString {}
 
     @Override
     public ParamMarshaller._QueryString<RoutingContext, Query> queryStrMarshaller() {
-        return ctx -> new Query(ctx.request().getParam("id"), ctx.request().getParam("columns"));
+        return ctx -> new Query(ctx.request().getParam("root"),
+                                ctx.request().getParam("id"),
+                                ctx.request().getParam("columns"));
     }
 
     @Override
@@ -81,9 +84,23 @@ public final class ArticleDraftGetAction
     public CompletableFuture<DocContent> execute(Query query, EmptyParam.NoHeaders headers) {
         String id = query.id();
         String body = (id == null || id.isBlank())
-                ? listing()
-                : preview(id, columnsOf(query.columns()));
+                ? listing(query.root())
+                : preview(query.root(), id, columnsOf(query.columns()));
         return CompletableFuture.completedFuture(new DocContent(body, JSON));
+    }
+
+    /**
+     * The root a request means.
+     *
+     * <p>An unnamed root is the first on the shelf rather than an error, so a
+     * pane that has just mounted shows something before anybody has chosen. An
+     * id that is <i>not</i> on the shelf resolves to nothing at all: a root is
+     * addressed by an id the server issued, which is the same rule a draft
+     * follows, and it is what keeps a path in a query string from being a way
+     * to read the machine.</p>
+     */
+    private static Optional<ArticleRoots.Root> rootOf(String id) {
+        return (id == null || id.isBlank()) ? ArticleRoots.first() : ArticleRoots.root(id);
     }
 
     /**
@@ -109,10 +126,18 @@ public final class ArticleDraftGetAction
      * walk of the disk. The tree is what is drawn; the list is what answers
      * <i>is the draft I had open still here</i> after a refresh.</p>
      */
-    static String listing() {
-        var js = new StringBuilder("{\"dir\":").append(quote(MdSourceFolder.dir().toString()))
+    static String listing(String rootId) {
+        Optional<ArticleRoots.Root> root = rootOf(rootId);
+        if (root.isEmpty()) {
+            return "{\"root\":\"\",\"dir\":\"\",\"drafts\":[],\"tree\":null,\"message\":"
+                 + quote("no folder on the shelf yet") + "}";
+        }
+        Path dir = Path.of(root.get().path());
+
+        var js = new StringBuilder("{\"root\":").append(quote(root.get().id()))
+                .append(",\"dir\":").append(quote(root.get().path()))
                 .append(",\"drafts\":[");
-        List<MdSourceFolder.Draft> drafts = MdSourceFolder.drafts();
+        List<MdSourceFolder.Draft> drafts = MdSourceFolder.drafts(dir);
         for (int i = 0; i < drafts.size(); i++) {
             MdSourceFolder.Draft d = drafts.get(i);
             if (i > 0) js.append(',');
@@ -123,7 +148,7 @@ public final class ArticleDraftGetAction
               .append(",\"modified\":").append(d.modifiedEpochMs()).append('}');
         }
         js.append("],\"tree\":");
-        tree(js, drafts);
+        tree(js, root.get().name(), drafts);
         return js.append('}').toString();
     }
 
@@ -143,13 +168,10 @@ public final class ArticleDraftGetAction
      * folder's segment is empty, which is also how the pane knows a folder is
      * not something to open.</p>
      */
-    private static void tree(StringBuilder js, List<MdSourceFolder.Draft> drafts) {
+    private static void tree(StringBuilder js, String label, List<MdSourceFolder.Draft> drafts) {
         var root = new Folder();
         for (MdSourceFolder.Draft d : drafts) root.add(d);
-
-        Path dir = MdSourceFolder.dir();
-        Path name = dir.getFileName();
-        root.write(js, name == null ? dir.toString() : name.toString(), 0);
+        root.write(js, label, 0);
     }
 
     /** A folder on the way to being drawn. Insertion order is path order. */
@@ -200,17 +222,23 @@ public final class ArticleDraftGetAction
 
     /** Visible for testing — one draft, parsed and arranged. */
     static String preview(String id) {
-        return preview(id, GridPlanner.DEFAULT_COLUMNS);
+        return preview(null, id, GridPlanner.DEFAULT_COLUMNS);
     }
 
-    static String preview(String id, int columns) {
-        Optional<String> source = MdSourceFolder.read(id);
-        String name = MdSourceFolder.draft(id).map(MdSourceFolder.Draft::name).orElse(id);
+    static String preview(String rootId, String id, int columns) {
+        Optional<ArticleRoots.Root> root = rootOf(rootId);
+        Path dir = root.map(r -> Path.of(r.path())).orElse(null);
+
+        Optional<String> source = dir == null
+                ? Optional.empty() : MdSourceFolder.read(dir, id);
+        String name = dir == null ? id
+                : MdSourceFolder.draft(dir, id).map(MdSourceFolder.Draft::name).orElse(id);
         if (source.isEmpty()) {
+            String where = dir == null ? "no folder on the shelf" : dir.toString();
             return "{\"name\":" + quote(name) + ",\"ok\":false,\"blocks\":[],\"title\":\"\","
                  + "\"plan\":{\"columns\":" + columns + ",\"rows\":[]},"
                  + "\"findings\":[{\"severity\":\"ERROR\",\"line\":0,\"message\":"
-                 + quote("no draft with id '" + id + "' in " + MdSourceFolder.dir()) + "}]}";
+                 + quote("no draft with id '" + id + "' in " + where) + "}]}";
         }
         MdSubsetParser.Parsed parsed = MdSubsetParser.parse(source.get());
 
