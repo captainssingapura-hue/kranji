@@ -16,6 +16,9 @@ import kranji.studio.gloss.ProblemEntityWidget;
 import kranji.studio.gloss.PhraseSenseEntityWidget;
 import kranji.studio.gloss.SenseEntityWidget;
 import kranji.studio.gloss.SoundEntityWidget;
+import kranji.studio.articles.ArticleDraftWidget;
+import kranji.studio.articles.ArticleWorkbenchCss;
+import kranji.studio.articles.MdPreviewModule;
 
 import java.util.List;
 
@@ -51,7 +54,11 @@ public final class KranjiStudioCrate implements Crate {
                 CrateEntry.of(IssueEntityWidget.INSTANCE),
                 CrateEntry.of(CuratedEntityWidget.INSTANCE),
                 CrateEntry.of(ImpactEntityWidget.INSTANCE),
-                CrateEntry.of(ImpactArticleEntityWidget.INSTANCE));
+                CrateEntry.of(ImpactArticleEntityWidget.INSTANCE),
+
+                CrateEntry.of(ArticleWorkbenchCss.INSTANCE),
+                CrateEntry.of(MdPreviewModule.INSTANCE),
+                CrateEntry.of(ArticleDraftWidget.INSTANCE));
     }
 
     @Override

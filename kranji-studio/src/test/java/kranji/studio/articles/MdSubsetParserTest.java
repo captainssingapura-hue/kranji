@@ -1,6 +1,8 @@
 package kranji.studio.articles;
 
 import kranji.reading.content.ParseFinding;
+import kranji.studio.articles.MdDocument.Block;
+import kranji.studio.articles.MdDocument.Span;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -17,11 +19,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * obvious from the syntax: emphasis means something inside a run and nothing
  * outside one, and a paragraph's line breaks are markdown's rather than the
  * {@code .txt} format's.</p>
+ *
+ * <p>Asserted against structure, not markup. A test matching a substring of
+ * HTML passes for the wrong reasons and fails whenever the markup is
+ * restyled.</p>
  */
 class MdSubsetParserTest {
 
     private static MdSubsetParser.Parsed parse(String body) {
         return MdSubsetParser.parse("# 标题\n\n" + body + "\n");
+    }
+
+    private static List<Block> blocks(MdSubsetParser.Parsed p) {
+        return p.blocks().orElseThrow(() -> new AssertionError("did not render: " + messages(p)));
+    }
+
+    /** Blocks of one kind, the title excluded — every fixture has one. */
+    private static List<Block> of(MdSubsetParser.Parsed p, String kind) {
+        return blocks(p).stream().filter(b -> b.kind().equals(kind)).toList();
+    }
+
+    /** What a line says, ignoring how it is divided into spans. */
+    private static String said(List<Span> line) {
+        return line.stream().map(Span::text).reduce("", String::concat);
     }
 
     private static String messages(MdSubsetParser.Parsed p) {
@@ -42,8 +62,10 @@ class MdSubsetParserTest {
     }
 
     @Test
-    void theTitleIsReportedSeparately() {
-        assertEquals("标题", parse("正文。").title());
+    void theTitleIsReportedSeparatelyAndIsAlsoABlock() {
+        var p = parse("正文。");
+        assertEquals("标题", p.title());
+        assertEquals(1, of(p, "title").size());
     }
 
     // ── The conflict the spec leads with ───────────────────────────────
@@ -53,18 +75,19 @@ class MdSubsetParserTest {
         // The one place a .txt article changes meaning when it becomes .md.
         var p = parse("第一行，\n第二行。");
 
-        assertTrue(p.ok(), messages(p));
-        assertTrue(p.html().orElseThrow().contains("<p>第一行，第二行。</p>"), p.html().orElseThrow());
+        List<Block> paras = of(p, "p");
+        assertEquals(1, paras.size(), "two source lines, one paragraph");
+        assertEquals("第一行，第二行。", said(paras.get(0).lines().get(0)));
     }
 
     @Test
     void aVerseFenceKeepsItsLines() {
         var p = parse("```verse\n床前明月光，\n疑是地上霜。\n```");
 
-        String html = p.html().orElseThrow();
-        assertTrue(html.contains("<div class=\"kw-verse\">"), html);
-        assertTrue(html.contains("<div>床前明月光，</div>"), html);
-        assertTrue(html.contains("<div>疑是地上霜。</div>"), html);
+        Block verse = of(p, "verse").get(0);
+        assertEquals(2, verse.lines().size(), "a poem's lines are its own");
+        assertEquals("床前明月光，", said(verse.lines().get(0)));
+        assertEquals("疑是地上霜。", said(verse.lines().get(1)));
     }
 
     @Test
@@ -90,8 +113,10 @@ class MdSubsetParserTest {
     void emphasisInsideARunIsKept() {
         var p = parse("它不在‹**Premier**›的池里。");
 
-        String html = p.html().orElseThrow();
-        assertTrue(html.contains("<span class=\"kw-run\"><strong>Premier</strong></span>"), html);
+        List<Span> line = of(p, "p").get(0).lines().get(0);
+        Span bold = line.stream().filter(s -> s.kind().equals("strong")).findFirst().orElseThrow();
+        assertEquals("Premier", bold.text());
+        assertTrue(bold.inRun(), "emphasis is only kept because it is inside a run");
         assertEquals(List.of(), p.warnings(), "nothing was dropped");
     }
 
@@ -99,28 +124,31 @@ class MdSubsetParserTest {
     void emphasisOverChineseIsDroppedWithAWarning() {
         var p = parse("这是**很重要**的。");
 
-        String html = p.html().orElseThrow();
-        assertTrue(p.ok(), "it still renders");
-        assertTrue(html.contains("这是很重要的。"), html);
-        assertFalse(html.contains("<strong>"), "emphasis over Chinese means nothing in a square");
+        List<Span> line = of(p, "p").get(0).lines().get(0);
+        assertEquals("这是很重要的。", said(line), "the words survive");
+        assertTrue(line.stream().noneMatch(s -> s.kind().equals("strong")),
+                "emphasis over Chinese means nothing in a square");
         assertEquals(1, p.warnings().size());
         assertTrue(messages(p).contains("cannot be drawn in a practice square"), messages(p));
     }
 
     @Test
     void italicFollowsTheSameRule() {
-        assertTrue(parse("这是*重要*的。").warnings().size() == 1);
-        assertTrue(parse("‹*Mid*›").html().orElseThrow().contains("<em>Mid</em>"));
+        assertEquals(1, parse("这是*重要*的。").warnings().size());
+
+        List<Span> line = of(parse("‹*Mid*›"), "p").get(0).lines().get(0);
+        assertTrue(line.stream().anyMatch(s -> s.kind().equals("em") && s.text().equals("Mid")));
     }
 
     // ── Runs ───────────────────────────────────────────────────────────
 
     @Test
-    void aRunIsMarkedAndItsDelimitersDoNotSurvive() {
-        String html = parse("靠近‹Tunnel›入口。").html().orElseThrow();
+    void aRunIsMarkedAndItsDelimitersAreNotContent() {
+        List<Span> line = of(parse("靠近‹Tunnel›入口。"), "p").get(0).lines().get(0);
 
-        assertTrue(html.contains("<span class=\"kw-run\">Tunnel</span>"), html);
-        assertFalse(html.contains("‹"), "the delimiters are markup, not content");
+        assertTrue(line.stream().anyMatch(s -> s.inRun() && s.text().equals("Tunnel")));
+        assertFalse(said(line).contains("‹"), "the delimiters are markup, not content");
+        assertEquals("靠近Tunnel入口。", said(line));
     }
 
     @Test
@@ -133,34 +161,40 @@ class MdSubsetParserTest {
     @Test
     void punctuationNeedsNoRunAndGetsNone() {
         // You do not wrap a comma. The commas and 。 pass through untouched.
-        var p = parse("一，二。");
-        assertTrue(p.ok(), messages(p));
-        assertFalse(p.html().orElseThrow().contains("kw-run"), p.html().orElseThrow());
+        List<Span> line = of(parse("一，二。"), "p").get(0).lines().get(0);
+
+        assertTrue(line.stream().noneMatch(Span::inRun));
+        assertEquals("一，二。", said(line));
     }
 
     // ── Overrides ──────────────────────────────────────────────────────
 
     @Test
-    void anOverrideIsShownAsRuby() {
-        String html = parse("读中文的地{dì}方。").html().orElseThrow();
-        assertTrue(html.contains("<ruby>地<rt>dì</rt></ruby>"), html);
+    void anOverrideBecomesARubySpanCarryingItsReading() {
+        List<Span> line = of(parse("读中文的地{dì}方。"), "p").get(0).lines().get(0);
+
+        Span ruby = line.stream().filter(s -> s.kind().equals("ruby")).findFirst().orElseThrow();
+        assertEquals("地", ruby.text());
+        assertEquals("dì", ruby.reading());
+        assertEquals("读中文的地方。", said(line), "the sentence still reads whole");
     }
 
     // ── Pinned ids ─────────────────────────────────────────────────────
 
     @Test
-    void aPinnedIdBecomesTheHeadingsId() {
-        String html = parse("## 整体结构 {#zheng-ti}").html().orElseThrow();
+    void aPinnedIdIsCarriedOnTheHeading() {
+        Block h = of(parse("## 整体结构 {#zheng-ti}"), "heading").get(0);
 
-        assertTrue(html.contains("<h2 id=\"zheng-ti\">整体结构</h2>"), html);
+        assertEquals(2, h.level());
+        assertEquals("zheng-ti", h.id());
+        assertEquals("整体结构", said(h.lines().get(0)), "the pin is not part of the text");
     }
 
     @Test
-    void anUnpinnedHeadingIsMarkedAsSuch() {
+    void anUnpinnedHeadingHasNoId() {
         // Not an error - the id is generated on first write - but visible, so
-        // the workbench can show which headings have no address yet.
-        String html = parse("## 整体结构").html().orElseThrow();
-        assertTrue(html.contains("kw-unpinned"), html);
+        // a workbench can show which headings have no address yet.
+        assertEquals("", of(parse("## 整体结构"), "heading").get(0).id());
     }
 
     // ── What is refused ────────────────────────────────────────────────
@@ -188,31 +222,43 @@ class MdSubsetParserTest {
     }
 
     @Test
-    void anErrorMeansNoHtmlAtAll() {
-        // The whole point of the subset: a document is not served with its
+    void anErrorMeansNoBlocksAtAll() {
+        // The whole point of the subset: a document is not shown with its
         // table quietly missing.
         var p = parse("正文。\n\n| a |\n\n更多正文。");
 
         assertFalse(p.ok());
-        assertTrue(p.html().isEmpty(), "nothing renders when something was refused");
+        assertTrue(p.blocks().isEmpty(), "nothing renders when something was refused");
         assertFalse(p.errors().isEmpty());
     }
 
     // ── The shapes that should just work ───────────────────────────────
 
     @Test
-    void listsAndQuotesRender() {
-        String html = parse("- 市场\n- 中路大街\n\n1. 第一\n2. 第二\n\n> 说明").html().orElseThrow();
+    void listsAndQuotesBecomeTheirOwnBlocks() {
+        var p = parse("- 市场\n- 中路大街\n\n1. 第一\n2. 第二\n\n> 说明");
 
-        assertTrue(html.contains("<ul>\n<li>市场</li>\n<li>中路大街</li>\n</ul>"), html);
-        assertTrue(html.contains("<ol>\n<li>第一</li>"), html);
-        assertTrue(html.contains("<blockquote>说明</blockquote>"), html);
+        assertEquals(List.of("市场", "中路大街"),
+                of(p, "li").stream().map(b -> said(b.lines().get(0))).toList());
+        assertEquals(List.of("第一", "第二"),
+                of(p, "oli").stream().map(b -> said(b.lines().get(0))).toList());
+        assertEquals("说明", said(of(p, "quote").get(0).lines().get(0)));
     }
 
     @Test
-    void htmlIsEscaped() {
-        // The source is a file from disk; it does not get to write markup.
+    void anOrderedItemKeepsTheNumberItsAuthorWrote() {
+        // A renderer that counted for itself would silently renumber this to
+        // 1, 2, 3 - and a workbench exists to show what the file says.
+        var p = parse("3. 第三\n4. 第四");
+
+        assertEquals(List.of(3, 4), of(p, "oli").stream().map(Block::level).toList());
+    }
+
+    @Test
+    void nothingIsEscapedHereBecauseNothingIsMarkupHere() {
+        // The parser hands over text. Whatever draws it decides how to put a
+        // '<' on screen safely, which is the point of not returning markup.
         var p = MdSubsetParser.parse("# 标题 & <x>\n");
-        assertTrue(p.html().orElseThrow().contains("&amp;"), p.html().orElseThrow());
+        assertEquals("标题 & <x>", p.title());
     }
 }

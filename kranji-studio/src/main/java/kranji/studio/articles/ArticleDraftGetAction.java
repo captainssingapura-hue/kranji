@@ -7,18 +7,31 @@ import hue.captains.singapura.tao.http.action.Param;
 import hue.captains.singapura.tao.http.action.ParamMarshaller;
 import io.vertx.ext.web.RoutingContext;
 import kranji.reading.content.ParseFinding;
+import kranji.studio.articles.MdDocument.Block;
+import kranji.studio.articles.MdDocument.Span;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * The drafts on disk, and one of them rendered.
+ * The drafts on disk, and one of them parsed.
  *
  * <p>One route, two questions, told apart by whether a draft is named. Without
- * {@code ?id=} it lists the folder; with one it parses that draft through
- * {@link MdSubsetParser} and returns the HTML and everything the subset had to
- * say about it.</p>
+ * {@code ?id=} it lists the folder; with one it puts that draft through
+ * {@link MdSubsetParser} and returns its blocks and everything the subset had
+ * to say about it.</p>
+ *
+ * <h2>Blocks, not markup</h2>
+ *
+ * <p>What travels is structure — see {@link MdDocument}. Markup would decide,
+ * from here, that the pane must inject it, and a widget that injects markup has
+ * given up the branch that owns its DOM. Structure leaves the pane free to
+ * build, and leaves stage two free to build something else entirely from the
+ * same response.</p>
+ *
+ * <p>Serialised by hand, into one {@code StringBuilder}. A workbench route is
+ * not worth a mapping library, and the shape is four fields wide.</p>
  *
  * <p>JSON rather than an ES module, for the reason the gloss browser next door
  * gives: {@code import(url)} memoises on the URL and never re-evaluates, so a
@@ -85,7 +98,7 @@ public final class ArticleDraftGetAction
         Optional<String> source = MdSourceFolder.read(id);
         String name = MdSourceFolder.draft(id).map(MdSourceFolder.Draft::name).orElse(id);
         if (source.isEmpty()) {
-            return "{\"name\":" + quote(name) + ",\"ok\":false,\"html\":\"\",\"title\":\"\","
+            return "{\"name\":" + quote(name) + ",\"ok\":false,\"blocks\":[],\"title\":\"\","
                  + "\"findings\":[{\"severity\":\"ERROR\",\"line\":0,\"message\":"
                  + quote("no draft with id '" + id + "' in " + MdSourceFolder.dir()) + "}]}";
         }
@@ -94,8 +107,9 @@ public final class ArticleDraftGetAction
         var js = new StringBuilder("{\"name\":").append(quote(name))
                 .append(",\"title\":").append(quote(parsed.title()))
                 .append(",\"ok\":").append(parsed.ok())
-                .append(",\"html\":").append(quote(parsed.html().orElse("")))
-                .append(",\"findings\":[");
+                .append(",\"blocks\":");
+        blocks(js, parsed.blocks().orElse(List.of()));
+        js.append(",\"findings\":[");
         List<ParseFinding> findings = parsed.findings();
         for (int i = 0; i < findings.size(); i++) {
             ParseFinding f = findings.get(i);
@@ -105,6 +119,47 @@ public final class ArticleDraftGetAction
               .append(",\"message\":").append(quote(f.message())).append('}');
         }
         return js.append("]}").toString();
+    }
+
+    // ── The document, as JSON ──────────────────────────────────────────
+
+    private static void blocks(StringBuilder js, List<Block> blocks) {
+        js.append('[');
+        for (int i = 0; i < blocks.size(); i++) {
+            Block b = blocks.get(i);
+            if (i > 0) js.append(',');
+            js.append("{\"kind\":").append(quote(b.kind()))
+              .append(",\"level\":").append(b.level())
+              .append(",\"id\":").append(quote(b.id()))
+              .append(",\"lines\":[");
+            for (int l = 0; l < b.lines().size(); l++) {
+                if (l > 0) js.append(',');
+                spans(js, b.lines().get(l));
+            }
+            js.append("]}");
+        }
+        js.append(']');
+    }
+
+    /**
+     * A line's spans, under short names.
+     *
+     * <p>Short because these are the numerous thing: an article is a few dozen
+     * blocks and several thousand spans, and {@code "kind"} spelled out on
+     * every one of them is a good part of the response.</p>
+     */
+    private static void spans(StringBuilder js, List<Span> line) {
+        js.append('[');
+        for (int i = 0; i < line.size(); i++) {
+            Span s = line.get(i);
+            if (i > 0) js.append(',');
+            js.append("{\"k\":").append(quote(s.kind()))
+              .append(",\"t\":").append(quote(s.text()));
+            if (!s.reading().isEmpty()) js.append(",\"r\":").append(quote(s.reading()));
+            if (s.inRun()) js.append(",\"run\":true");
+            js.append('}');
+        }
+        js.append(']');
     }
 
     private static String quote(String raw) {

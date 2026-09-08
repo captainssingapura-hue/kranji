@@ -62,12 +62,19 @@ public record KranjiCatalogue()
                         new GenericWorkspace.Params(CuratedWorkspaceSpec.KIND),
                         "Curated Workbench",
                         "One partition at a time - the issues beside what has been written.");
+        Navigable<GenericWorkspace.Params, GenericWorkspace> articles =
+                new Navigable<>(GenericWorkspace.INSTANCE,
+                        new GenericWorkspace.Params(ArticlesWorkspaceSpec.KIND),
+                        "Article Workbench",
+                        "Drafts on disk, read through the subset - what it accepted, and "
+                      + "what it had to say about the rest.");
         return List.of(
                 Entry.of(this, DocReader.INSTANCE,
                         new DocReader.Params(KranjiIntroDoc.INSTANCE.uuid().toString()),
                         KranjiIntroDoc.INSTANCE),
                 Entry.of(this, workbench),
-                Entry.of(this, curated)
+                Entry.of(this, curated),
+                Entry.of(this, articles)
         );
     }
 

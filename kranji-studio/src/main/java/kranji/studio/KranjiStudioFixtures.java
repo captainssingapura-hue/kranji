@@ -43,6 +43,9 @@ public record KranjiStudioFixtures<S extends Studio<?>>(Umbrella<S> umbrella)
         if (WorkspaceSpecRegistry.INSTANCE.get(CuratedWorkspaceSpec.INSTANCE.kind()).isEmpty()) {
             WorkspaceSpecRegistry.INSTANCE.register(CuratedWorkspaceSpec.INSTANCE);
         }
+        if (WorkspaceSpecRegistry.INSTANCE.get(ArticlesWorkspaceSpec.INSTANCE.kind()).isEmpty()) {
+            WorkspaceSpecRegistry.INSTANCE.register(ArticlesWorkspaceSpec.INSTANCE);
+        }
     }
 
     private DefaultFixtures<S> defaults() {
