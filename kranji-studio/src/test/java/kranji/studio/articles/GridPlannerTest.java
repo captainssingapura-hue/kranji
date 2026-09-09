@@ -13,8 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * The arrangement.
  *
- * <p>One character, one square. Most of what used to be worth asserting here
- * was about the machinery that made that untrue — a run's claim, the
+ * <p>A 字 is a square, a mark is a square, and everything else is a run in one
+ * square. Most of what used to be worth asserting here
+ * was about the machinery that made that untrue — a run’s measured claim, the
  * placeholders behind it, marks sharing a box, marks hanging past the margin —
  * and those tests went with the machinery.</p>
  *
@@ -40,7 +41,7 @@ class GridPlannerTest {
         var sb = new StringBuilder();
         for (Square s : r.squares()) {
             if (s instanceof Square.Zi z)           sb.append(z.zi());
-            else if (s instanceof Square.Letter l)  sb.append(l.text());
+            else if (s instanceof Square.Run run)   sb.append(run.text());
             else if (s instanceof Square.Marker m)  sb.append(m.text());
             else if (s instanceof Square.Punct p)   sb.append(p.mark());
             else                                    sb.append('.');
@@ -53,30 +54,41 @@ class GridPlannerTest {
         return plan("```verse\n" + line + "\n```", columns);
     }
 
-    // ── One character, one square ──────────────────────────────────────
+    // ── 字, mark, run ──────────────────────────────────────────────────
 
     @Test
-    void everyCharacterIsOneSquareWhateverItIs() {
+    void a字AndAMarkAreSquaresAndEverythingElseCollects() {
         GridPlan p = verse("甲a1。", 20);
 
         List<Square> sq = row(p, 0).squares();
         assertInstanceOf(Square.Zi.class, sq.get(2), "a 字");
-        assertInstanceOf(Square.Letter.class, sq.get(3), "a letter");
-        assertInstanceOf(Square.Letter.class, sq.get(4), "a digit");
-        assertInstanceOf(Square.Punct.class, sq.get(5), "a mark");
-        assertEquals(6, row(p, 0).used(), "four characters behind 首行缩进两格");
+        assertInstanceOf(Square.Run.class, sq.get(3), "a1 is one run, not two characters");
+        assertEquals("a1", ((Square.Run) sq.get(3)).text());
+        assertInstanceOf(Square.Punct.class, sq.get(4), "a mark");
+        assertEquals(5, row(p, 0).used(), "三 things behind 首行缩进两格");
     }
 
     @Test
-    void aLatinWordIsAsManySquaresAsItHasLetters() {
-        // It used to be one unit claiming four squares from a width table, and
-        // the author had to write ‹markdown› to say it was one word at all.
+    void aLatinWordIsOneSquareHoweverLongItIs() {
+        // A foreign word is one thing to read rather than eight characters to
+        // practise. The square shows a placeholder; the whole word travels on
+        // it, which is what a hover or a selection reads out.
         GridPlan p = verse("markdown", 20);
 
         assertEquals("..markdown", said(row(p, 0)));
-        assertEquals(10, row(p, 0).used());
-        assertTrue(row(p, 0).squares().subList(2, 10).stream()
-                .allMatch(s -> s instanceof Square.Letter));
+        assertEquals(3, row(p, 0).used(), "two indents and one square");
+        assertEquals("markdown", ((Square.Run) row(p, 0).squares().get(2)).text());
+    }
+
+    @Test
+    void aRunEndsAtTheNextCharacterOrMark() {
+        GridPlan p = verse("靠近Tunnel入口，住在Apartments那边。", 40);
+
+        List<String> runs = row(p, 0).squares().stream()
+                .filter(s -> s instanceof Square.Run)
+                .map(s -> ((Square.Run) s).text())
+                .toList();
+        assertEquals(List.of("Tunnel", "Apartments"), runs);
     }
 
     @Test
@@ -96,16 +108,21 @@ class GridPlannerTest {
         GridPlan p = verse("靠近‹Tunnel›。", 20);
 
         assertEquals("..靠近Tunnel。", said(row(p, 0)));
+        assertEquals(6, row(p, 0).used(), "two indents, 靠, 近, one run, one mark");
     }
 
     @Test
-    void aSpaceIsNotASquare() {
-        // The gap between two words is the gap that already exists between two
-        // squares. A box for it would be a hole the author did not write.
-        GridPlan p = verse("Dust II", 20);
+    void aRunKeepsItsOwnSpacingAndNotTheSpaceAroundIt() {
+        // The space inside `Dust II` is part of the word's typography and has
+        // to survive, or the tooltip would read DustII. The space between a run
+        // and the character beside it is not — that is the gap two squares
+        // already have.
+        GridPlan p = verse("看Dust II 的图", 20);
 
-        assertEquals("..DustII", said(row(p, 0)));
-        assertEquals(8, row(p, 0).used());
+        List<Square> sq = row(p, 0).squares();
+        assertEquals("Dust II", ((Square.Run) sq.get(3)).text());
+        assertEquals("..看Dust II的图", said(row(p, 0)));
+        assertEquals(6, row(p, 0).used(), "two indents, 看, one run, 的, 图");
     }
 
     @Test

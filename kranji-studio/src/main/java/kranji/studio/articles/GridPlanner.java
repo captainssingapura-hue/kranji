@@ -13,8 +13,9 @@ import java.util.Optional;
  *
  * <h2>Two jobs</h2>
  *
- * <p><b>Squares.</b> One character, one square. A 字, a letter, a digit and a
- * mark are all one square wide, and nothing shares, spans or hangs.</p>
+ * <p><b>Squares.</b> A 字 is a square and so is a mark. Everything else —
+ * a word, a number, a symbol — collects into a {@link Square.Run}, and a run is
+ * <b>one square whatever its length</b>. Nothing shares, spans or hangs.</p>
  *
  * <p><b>Wrapping.</b> Prose wraps at the column count; verse does not, because
  * a poem's lines are the author's.</p>
@@ -261,30 +262,46 @@ public final class GridPlanner {
     }
 
     /**
-     * Character by character: a 字, a mark, or anything else.
+     * Character by character: a 字, a mark, or something collecting into a run.
      *
-     * <p>Whitespace is not a square. The gap between a character and the word
-     * beside it is the gap that already exists between two squares, and a space
-     * given a box of its own would open a hole in the line that the author did
-     * not write.</p>
+     * <p>A 字 and a mark are each a square as they arrive. Everything else
+     * accumulates, and what ends it is the next Han character, the next mark,
+     * or the end of the span — so a run cannot cross an emphasis boundary,
+     * which makes {@code **Pre**mier} two runs. That is rare and the
+     * alternative is a square holding two weights.</p>
+     *
+     * <p>Whitespace collects rather than being skipped, so {@code Dust II}
+     * keeps its own space, and then the ends are stripped so the space between
+     * a run and the character beside it does not. That gap is one two squares
+     * already have.</p>
      */
     private static void scan(String text, boolean bold, List<Square> out) {
+        var run = new StringBuilder();
         for (int i = 0; i < text.length(); ) {
             int cp = text.codePointAt(i);
             i += Character.charCount(cp);
-            if (Character.isWhitespace(cp)) continue;
-
             String ch = new String(Character.toChars(cp));
+
             if (Character.UnicodeScript.of(cp) == Character.UnicodeScript.HAN) {
+                flush(out, run, bold);
                 out.add(new Square.Zi(ch, "", bold));
                 continue;
             }
             Optional<Mark> mark = Mark.of(ch);
             if (mark.isPresent()) {
+                flush(out, run, bold);
                 out.add(new Square.Punct(mark.get().text()));
                 continue;
             }
-            out.add(new Square.Letter(ch, bold));
+            run.append(ch);
         }
+        flush(out, run, bold);
+    }
+
+    /** What has collected, as one square. Nothing, when it is only spacing. */
+    private static void flush(List<Square> out, StringBuilder run, boolean bold) {
+        String text = run.toString().strip();
+        run.setLength(0);
+        if (!text.isEmpty()) out.add(new Square.Run(text, bold));
     }
 }

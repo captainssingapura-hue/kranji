@@ -11,12 +11,13 @@
 // questions apart: whether the SIZES are right, and whether the grid substrate
 // can draw them. Stage three swaps the substrate and the plan does not move.
 //
-// ONE CHARACTER, ONE SQUARE - a 字, a letter, a digit, a mark, all of them.
-// There is nothing else to know, and there used to be a great deal: marks
-// shared a box the way ”。 do on 稿纸, a mark with no room hung past the right
-// margin, and a ‹…› run was one unit claiming several squares with placeholders
-// behind it because RelationGrid cannot merge cells. All of that is gone, and
-// with it the reason an author had to wrap anything.
+// A 字 is a square and so is a mark. Everything else - a word, a number, a
+// symbol - is a RUN, and a run is one square whatever its length.
+//
+// There used to be a great deal more: marks shared a box the way ”。 do on
+// 稿纸, a mark with no room hung past the right margin, and a run claimed
+// several squares from a width table with placeholders behind it. All gone,
+// and with it the reason an author had to wrap anything in ‹…›.
 //
 // No CJK literal appears in this file. Every character it draws came from a
 // draft on disk.
@@ -25,7 +26,7 @@
 /**
  * opts = {
  *   css,
- *   classes: { sheet, row, sq, zi, ann, bold, punct, letter, marker,
+ *   classes: { sheet, row, sq, zi, ann, bold, punct, run, marker,
  *              indent, pad }
  * }
  * Returns { draw(branch, host, plan) }.
@@ -61,11 +62,25 @@ function createMdSquares(opts) {
         b.appendChild(el(branch, 'div', C.zi, s.t));
     }
 
-    // A letter, a digit, a symbol: one character that is not Chinese, drawn in
-    // its own box like everything else but not as though it were a 字.
-    function letter(branch, row, s) {
-        var b = box(branch, row, s.b ? [C.letter, C.bold] : [C.letter]);
-        b.appendChild(el(branch, 'div', C.zi, s.t));
+    // A run of anything that is not Chinese, in ONE square whatever its length.
+    // A foreign word is one thing to read rather than ten characters to
+    // practise, and a box each would say it was a 字.
+    //
+    // So the square is a placeholder: the first character and an ellipsis, with
+    // the whole word on the cell's title so a hover says what it is. Three
+    // blank boxes in a sentence would be unreadable - which is the whole reason
+    // the first character is shown rather than nothing.
+    //
+    // Temporary, and known to be. The arrangement this is standing in for is a
+    // run spanning as many merged cells as it has characters; RelationGrid
+    // cannot merge yet, and when it can this is where that choice is made.
+    function run(branch, row, s) {
+        var b = box(branch, row, s.b ? [C.run, C.bold] : [C.run]);
+        var text = String(s.t || '');
+        b.title = text;
+        var chars = Array.from(text);
+        b.appendChild(el(branch, 'div', C.zi,
+                chars.length > 1 ? chars[0] + '…' : text));
     }
 
     function punct(branch, row, s) {
@@ -79,7 +94,7 @@ function createMdSquares(opts) {
     function square(branch, row, s) {
         switch (s.k) {
             case 'z': zi(branch, row, s); return;
-            case 'l': letter(branch, row, s); return;
+            case 'r': run(branch, row, s); return;
             case 's': punct(branch, row, s); return;
             case 't': marker(branch, row, s); return;
             // 首行缩进两格 - empty, and empty is what it means.

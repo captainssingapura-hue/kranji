@@ -80,7 +80,7 @@ class SamplesTest {
         var sb = new StringBuilder();
         for (Square s : r.squares()) {
             if (s instanceof Square.Zi z)           sb.append(z.zi());
-            else if (s instanceof Square.Letter l)  sb.append(l.text());
+            else if (s instanceof Square.Run run)   sb.append(run.text());
             else if (s instanceof Square.Marker m)  sb.append(m.text());
             else if (s instanceof Square.Punct p)   sb.append(p.mark());
             else                                    sb.append('.');
@@ -236,7 +236,7 @@ class SamplesTest {
             for (Square s : r.squares()) {
                 if (s instanceof Square.Zi z)          sb.append(z.zi());
                 else if (s instanceof Square.Punct p)  sb.append(p.mark());
-                else if (s instanceof Square.Letter l) sb.append(l.text());
+                else if (s instanceof Square.Run run) sb.append(run.text());
             }
         }
         return sb.toString();

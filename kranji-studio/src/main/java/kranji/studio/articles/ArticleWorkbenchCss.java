@@ -485,20 +485,22 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
     }
 
     /**
-     * One character that is not Chinese, in a square of its own.
+     * A run that is not Chinese: one square standing in for a whole word.
      *
      * <p>Set in the body face rather than the reading face, and a shade lighter
-     * than a 字. The distinction is the point: this is not a character to
-     * practise, and drawing an {@code m} exactly as though it were 马 would say
-     * it was.</p>
+     * than a 字 — this is not a character to practise, and drawing it exactly
+     * as though it were 马 would say it was.</p>
      *
-     * <p>It is the same size, though. A letter shrunk to look subordinate
-     * reads as a mistake in a grid where everything else fills its box.</p>
+     * <p>{@code cursor: help} is the only affordance a placeholder has. What it
+     * stands for is on the cell's title, and nothing else on the page says
+     * there is anything to hover.</p>
      */
-    public record aw_sq_letter() implements CssClass<ArticleWorkbenchCss> {
+    public record aw_sq_run() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
                 font-family: system-ui, sans-serif;
                 color: var(--color-text-secondary, var(--color-text-primary));
+                background: var(--color-surface-raised, var(--color-surface));
+                cursor: help;
                 """;
         }
     }
@@ -766,7 +768,7 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
                 new aw_quote(), new aw_verse(), new aw_vline(), new aw_run(),
                 new aw_ruby(), new aw_rt(), new aw_msg(),
                 new aw_sheet(), new aw_row(), new aw_sq(), new aw_sq_zi(),
-                new aw_sq_ann(), new aw_sq_punct(), new aw_sq_letter(),
+                new aw_sq_ann(), new aw_sq_punct(), new aw_sq_run(),
                 new aw_sq_bold(), new aw_sq_marker(),
                 new aw_sq_indent(), new aw_sq_pad(),
                 new aw_tree(), new aw_node(),

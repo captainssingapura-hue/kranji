@@ -65,7 +65,7 @@ changes it silently unless you know.
 |---|---|---|
 | `字{dì}` | keep — **E1** | the reading of that character |
 | `‹text›` | keep — **E3** | optional; marks where `*italic*` applies |
-| non-Chinese, **unwrapped** | keep | one square per character, like everything else |
+| non-Chinese, **unwrapped** | keep | a run — one square, whatever its length |
 | `**bold**` | keep — **E5** | emphasis, `strong` |
 | `*italic*` **inside `‹…›`** | keep — **E5** | emphasis, `em` |
 | `*italic*` **anywhere else** | **drop, warn** | the text, unemphasised |
@@ -140,18 +140,24 @@ Everything between them is ordinary typography.
 The delimiters are markup: they do not appear in the reading. Inside, `**bold**`
 and `*italic*` are parsed and kept.
 
-#### Why it is delimited, and not detected
+#### Why it is detected, and what the delimiters are still for
 
-The obvious alternative is to take any maximal run of non-Han as a run
-automatically — the scanner already groups that way. **It cannot work, and the
-reason is emphasis.**
+This section used to argue the opposite — that runs *could not* be detected and
+had to be marked — and the argument was right about the wrong stage. It went:
+`**` is itself non-Han, so in `属于 **Premier** 之外` the maximal non-Han stretch
+is ` **Premier** ` *including the asterisks*, and detection cannot tell a marker
+from the text it marks.
 
-`**` is itself non-Han. In `属于 **Premier** 之外`, the maximal non-Han run is
-` **Premier** ` *including the asterisks*, so the marker and its content land in
-the same undifferentiated blob. Automatic detection cannot tell the emphasis
-from the text it emphasises, which is exactly the distinction E3 exists to make.
-A delimiter that is not markdown syntax settles it: what is inside is parsed,
-what is outside is not.
+True of the **raw line**. Detection does not happen there. By the time squares
+are built, emphasis has already been parsed into spans, and a run is a maximal
+stretch of one span that is neither Han nor a mark — so the asterisks are long
+gone and `Premier` is a run with `strong` on it. The objection was about
+scanning text; the scanner works on structure.
+
+So `‹…›` is not needed to *find* a run, and is not needed to size one either.
+What it is still for is E5: inside it, `*italic*` means italic, because the
+words in it are the kind that italicise. That is the whole of its remaining
+job — and it is enough to keep it.
 
 #### It used to be required. It is not any more
 
@@ -166,11 +172,9 @@ eight things, and the only party who can say so is the author.
 Valve 在 1999 年做了 Beta 版。     ← was three errors, one per stretch
 ```
 
-The argument was sound and its premise stopped being true. **The arrangement is
-one character to a square — every character, including the marks** — so
-`markdown` is eight squares because it is eight characters, and nothing has to
-decide anything. `1999` is four. `‹Dust II›` is seven, the space being the gap
-that already exists between two squares.
+The argument was sound and its premise stopped being true. **A 字 is a square, a
+mark is a square, and everything else is a *run* in one square** — so nobody has
+to decide how wide `markdown` is, because it is one, the same as `T`.
 
 So all of this now renders exactly as written, and `‹…›` is **optional
 markup**. What it still does is E5: it is the only place `*italic*` means
@@ -178,9 +182,36 @@ anything, because Latin italicises and Chinese does not.
 
 | | | |
 |---|---|---|
-| **Every character** | 一 `a` `1` `。` `—` | one square each, 每个标点占一格 |
-| **Whitespace** | | not a square — it is the gap between two |
+| **A 字** | 一 | one square |
+| **A mark** | `。` `—` `（` | one square each, 每个标点占一格 |
+| **A run** | `markdown` `1999` `Dust II` | **one square, whatever its length** |
 | **The delimiters** | `‹` `›` | markup; they never reach the page |
+
+A run is a maximal stretch that is neither Han nor a mark, and it ends at the
+next one of those or at an emphasis boundary — so `**Pre**mier` is two runs,
+which is rare and better than a square holding two weights. Its own spacing is
+kept and the ends are stripped: `Dust II` is one run holding its space, because
+that space is inside the word; the space between the run and 的 is not, because
+that is the gap two squares already have.
+
+#### The single cell is temporary, and known to be
+
+One square cannot show `Apartments`. What it shows is a **placeholder** — the
+first character and an ellipsis — with the whole word on the cell, so a hover or
+a selection says what it is. A blank box would be worse than useless: three of
+them in a sentence and nothing tells them apart.
+
+The arrangement this stands in for is a run spanning as many **merged cells** as
+it has characters. RelationGrid cannot merge yet. When it can, the width becomes
+a rendering choice — 1 or *n* — and neither the detection nor anything else in
+the model has to move, which is the whole reason detection is defined here as a
+fact about the document rather than about pixels.
+
+**The reason is not density.** Measured on the Italy article, the most
+Latin-heavy document there is: 178 of 2,857 squares are foreign, so collapsing
+every run saves 137 squares — about 4%, some seven rows in 172. The reason is
+that a foreign word is one thing to *read* and not ten characters to *practise*,
+and giving each letter a box says it is a 字.
 
 What went with the rule is a good deal of machinery: a run was one unit several
 squares wide, measured against a Helvetica advance table, placed whole, moved
@@ -299,7 +330,7 @@ but 3.46 of them at a 62px cell holding a 42px glyph, so four. `SquareWidth`
 computed that from a Helvetica advance table, and the workbench confirmed it
 against a real browser: 3.51 drawn, every ceiling agreeing.
 
-**That is all gone.** `Apartments` is ten squares because it is ten characters.
+**That is all gone.** `Apartments` is ONE square, and so is `T`.
 The measurement was accurate, validated, and answering a question nobody needs
 asked once a square holds one character — so `SquareWidth` is deleted rather
 than left sitting there looking like wiring.

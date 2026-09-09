@@ -52,12 +52,14 @@ public final class GridJson {
                 if (zi.bold())               js.append(",\"b\":true");
                 js.append('}');
             }
-            // l: one character that is not Chinese. Its own kind rather than a
-            // flag on z, because it is not a character to practise and a
-            // renderer has to be able to draw it differently.
-            case Square.Letter letter -> {
-                js.append("{\"k\":\"l\",\"t\":").append(MdJson.quote(letter.text()));
-                if (letter.bold()) js.append(",\"b\":true");
+            // r: a run of anything that is not Chinese, whole. It travels
+            // whole even though one square is drawn for it, because the cell
+            // shows a placeholder and has to be able to say what it stands
+            // for — and because the day merged cells arrive, the width becomes
+            // a rendering choice and this needs no new field.
+            case Square.Run run -> {
+                js.append("{\"k\":\"r\",\"t\":").append(MdJson.quote(run.text()));
+                if (run.bold()) js.append(",\"b\":true");
                 js.append('}');
             }
             case Square.Marker marker ->

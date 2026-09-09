@@ -50,14 +50,32 @@ public sealed interface Square {
     record Zi(String zi, String reading, boolean bold) implements Square {}
 
     /**
-     * One character that is not Chinese — a letter, a digit, a symbol.
+     * A stretch that is not Chinese — a word, a number, a symbol.
      *
-     * <p>Its own square, like everything else, which is how a child writes a
-     * foreign word on squared paper. Kept apart from {@link Zi} because it is
-     * not a character to practise and should not be drawn as though it were:
-     * the distinction is the renderer's whole reason for wanting one.</p>
+     * <p><b>One square, however long it is.</b> {@code Apartments} is one
+     * square and so is {@code T}. A foreign word is one thing to read rather
+     * than ten characters to practise, and the grid exists for the practising:
+     * giving each letter a box says it is a 字, which it is not.</p>
+     *
+     * <p>What the square shows is therefore a placeholder — the first character
+     * and an ellipsis — with the whole of {@link #text} on the cell, so a hover
+     * or a selection can say what the word is. That is a <b>temporary</b>
+     * answer and known to be one. The eventual arrangement is a run spanning as
+     * many merged cells as it has characters, which RelationGrid cannot do
+     * yet; when it can, the width becomes a rendering choice and nothing about
+     * this record has to move.</p>
+     *
+     * <p>Detecting the run is deliberately independent of either. It is a fact
+     * about the document — a maximal stretch that is neither Han nor a mark —
+     * and the last model got into trouble by making it a fact about pixels
+     * instead.</p>
+     *
+     * <p>Internal spacing is kept and the ends are stripped: {@code Dust II} is
+     * one run holding its own space, because that space is inside the word's
+     * own typography. The space between a run and the character beside it is
+     * not — it is the gap two squares already have.</p>
      */
-    record Letter(String text, boolean bold) implements Square {}
+    record Run(String text, boolean bold) implements Square {}
 
     /**
      * One punctuation mark.
