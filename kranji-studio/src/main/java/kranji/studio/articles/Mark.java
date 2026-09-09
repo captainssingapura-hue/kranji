@@ -20,12 +20,16 @@ import java.util.Optional;
  * <p>Each mark now names its {@link Role}, and the role carries the rules. A
  * new mark is one line; a changed rule is one field.</p>
  *
- * <h2>This is also the whitelist</h2>
+ * <h2>Two of those four questions are gone</h2>
  *
- * <p>Everything not Chinese and not a mark must be wrapped in {@code ‹…›} —
- * see the subset specification. {@link #of} is what the parser asks, so the
- * list of marks and the list of things needing no delimiters are the same list
- * by construction rather than by agreement.</p>
+ * <p>Marks do not share squares any more — one character, one square, marks
+ * included — so <i>may it share</i> and <i>with what</i> have no answers to
+ * give. What is left is 禁则, which is the pair this was really for.</p>
+ *
+ * <p>This also used to be the <b>whitelist</b>: everything not Chinese and not
+ * a mark had to be wrapped in {@code ‹…›}, and {@link #of} was what the parser
+ * asked so that the two lists were the same list by construction. Nothing needs
+ * wrapping now, and this is a punctuation table and nothing more.</p>
  */
 public enum Mark {
 
@@ -71,23 +75,17 @@ public enum Mark {
     TILDE        ("～", Role.JOINER),
     SOLIDUS      ("／", Role.JOINER);
 
-    /** Which end of the thing beside it a mark belongs to. */
-    public enum Side {
-        /** Belongs to what follows: an opening bracket or quote. */
-        LEADING,
-        /** Belongs to what precedes: 句读 and the closing brackets. */
-        TRAILING,
-        /** Belongs to neither, and therefore shares a square with neither. */
-        ALONE
-    }
-
     /**
-     * What a mark does, and the rules that follow from it.
+     * What a mark does, and the two rules that follow from it.
      *
-     * @param side         which neighbour it belongs to, and so what it packs
-     *                     with — marks pack only with their own side
+     * <p>There used to be a third thing here — a {@code Side}, saying which
+     * neighbour a mark belonged to and therefore which marks shared a square.
+     * Nothing shares a square any more, so what is left is 禁则 and only
+     * 禁则.</p>
+     *
      * @param mayBeginLine 禁则's first half. A mark that may not begin a line
-     *                     hangs past the right edge instead of wrapping
+     *                     brings the character before it down onto the next row
+     *                     rather than opening one
      * @param mayEndLine   禁则's second half. A mark that may not end a line is
      *                     carried down onto the next row, where the thing it
      *                     opens is about to be written
@@ -95,30 +93,30 @@ public enum Mark {
     public enum Role {
 
         /** 。，、；：？！ — never begin a line. */
-        STOP(Side.TRAILING, false, true),
+        STOP(false, true),
 
         /** ）】》」』’” — never begin a line. */
-        CLOSE(Side.TRAILING, false, true),
+        CLOSE(false, true),
 
         /** （【《「『‘“ — never end a line. */
-        OPEN(Side.LEADING, true, false),
+        OPEN(true, false),
 
         /**
          * 破折号 and 省略号, written {@code ——} and {@code ……}.
          *
-         * <p>{@code ALONE} because packing them would turn a dash into a
-         * hyphen, and each half is a full square.</p>
-         *
          * <p>{@code mayBeginLine = false} is the field to look at if this ever
          * seems wrong. The strict rule in GB/T 15834 is only that the pair must
          * not be <i>split</i> across two rows, and many houses do let 破折号
-         * open a line. Barring it delivers the strict rule for nothing: the
-         * second half hangs beside the first rather than opening the next row,
-         * so the pair cannot come apart. Allowing it would mean moving both
-         * halves down together, which is a rule this does not otherwise
-         * need.</p>
+         * open a line.</p>
+         *
+         * <p>Barring it used to deliver the strict rule for nothing, back when
+         * the second half would hang beside the first. It no longer does: two
+         * squares can now be separated by a row boundary like any other two, and
+         * what keeps the pair together is that the second half drags the first
+         * down with it under the closing rule. Same outcome, stated rather than
+         * fallen out.</p>
          */
-        DOUBLED(Side.ALONE, false, true),
+        DOUBLED(false, true),
 
         /**
          * 间隔号, 波浪号, the full-width solidus.
@@ -127,19 +125,16 @@ public enum Mark {
          * a line. They may close one: the alternative is carrying them down,
          * and a joiner at the head of a row is the thing being avoided.</p>
          */
-        JOINER(Side.ALONE, false, true);
+        JOINER(false, true);
 
-        private final Side side;
         private final boolean mayBeginLine;
         private final boolean mayEndLine;
 
-        Role(Side side, boolean mayBeginLine, boolean mayEndLine) {
-            this.side = side;
+        Role(boolean mayBeginLine, boolean mayEndLine) {
             this.mayBeginLine = mayBeginLine;
             this.mayEndLine = mayEndLine;
         }
 
-        public Side side()            { return side; }
         public boolean mayBeginLine() { return mayBeginLine; }
         public boolean mayEndLine()   { return mayEndLine; }
     }
@@ -165,25 +160,13 @@ public enum Mark {
     public boolean mayEndLine()   { return role.mayEndLine(); }
 
     /**
-     * Whether this mark will share a square with {@code other} written after
-     * it.
+     * The mark this character is, if it is one.
      *
-     * <p>Only with its own side. {@code ”。} is a closing quote and a full stop,
-     * both belonging to what came before, and they share a box the way a hand
-     * writes them. A {@code “} opening the next quotation does not, however
-     * adjacent it is, because it belongs to what comes after.</p>
+     * <p>What the arrangement asks. A character that is not a mark and not
+     * Chinese is simply a character, and gets a square like everything
+     * else — there is nothing left for this to gate.</p>
      */
-    public boolean packsWith(Mark other) {
-        return role.side() != Side.ALONE && role.side() == other.role.side();
-    }
-
-    /** The mark this character is, if it is one. This is the whitelist. */
     public static Optional<Mark> of(String ch) {
         return Optional.ofNullable(BY_TEXT.get(ch));
-    }
-
-    /** Whether this character is a mark, and so needs no {@code ‹…›}. */
-    public static boolean is(String ch) {
-        return BY_TEXT.containsKey(ch);
     }
 }

@@ -40,33 +40,11 @@ class MarkTest {
         });
     }
 
-    @Test
-    void marksPackOnlyWithTheirOwnSide() {
-        // ”。 shares a box; “ starting the next quotation does not, however
-        // adjacent it is, because it belongs to what comes after.
-        assertTrue(Mark.CLOSE_DOUBLE.packsWith(Mark.FULL_STOP));
-        assertTrue(Mark.FULL_STOP.packsWith(Mark.CLOSE_DOUBLE));
-        assertTrue(Mark.OPEN_DOUBLE.packsWith(Mark.OPEN_SINGLE));
-
-        assertFalse(Mark.FULL_STOP.packsWith(Mark.OPEN_DOUBLE));
-        assertFalse(Mark.OPEN_DOUBLE.packsWith(Mark.FULL_STOP));
-    }
-
-    @Test
-    void aMarkWrittenDoubleSharesWithNothing() {
-        // Packing 破折号 or 省略号 would turn a dash into a hyphen.
-        assertFalse(Mark.DASH.packsWith(Mark.DASH));
-        assertFalse(Mark.ELLIPSIS.packsWith(Mark.ELLIPSIS));
-        assertFalse(Mark.DASH.packsWith(Mark.FULL_STOP));
-        assertFalse(Mark.FULL_STOP.packsWith(Mark.DASH));
-        assertFalse(Mark.MIDDLE_DOT.packsWith(Mark.MIDDLE_DOT));
-    }
 
     @Test
     void onlyAnOpeningMarkIsBarredFromEndingALine() {
         // Everything else may. A mark that could neither begin nor end a line
-        // would have nowhere to go at a boundary, and hanging already keeps
-        // the trailing ones off the head of the next row.
+        // would have nowhere to go at a row boundary at all.
         for (Mark mark : Mark.values()) {
             if (mark.role() == Mark.Role.OPEN) assertFalse(mark.mayEndLine(), mark.text());
             else assertTrue(mark.mayEndLine(), mark.text() + " should be able to end a line");
@@ -81,16 +59,18 @@ class MarkTest {
     }
 
     @Test
-    void theWhitelistIsTheMarkTable() {
-        // What needs no ‹…› and what is a Mark are the same question, which is
-        // the point of Mark being the lookup the parser uses.
-        assertTrue(Mark.is("。"));
-        assertTrue(Mark.is("—"));
-        assertTrue(Mark.is("·"));
+    void whatIsAMarkAndWhatIsJustACharacter() {
+        // This used to be the whitelist: what needed no ‹…› and what was a Mark
+        // were the same question. Nothing needs wrapping now, so all it decides
+        // is which square a character lands in - a mark's or a letter's.
+        assertTrue(Mark.of("。").isPresent());
+        assertTrue(Mark.of("—").isPresent());
+        assertTrue(Mark.of("·").isPresent());
 
-        assertFalse(Mark.is("a"), "Latin belongs in a run");
-        assertFalse(Mark.is("1"), "so does a digit");
-        assertFalse(Mark.is("/"), "the half-width solidus is not the full-width one");
-        assertFalse(Mark.is("中"), "a character is not a mark");
+        assertTrue(Mark.of("a").isEmpty(), "a letter is a letter");
+        assertTrue(Mark.of("1").isEmpty(), "so is a digit");
+        assertTrue(Mark.of("/").isEmpty(),
+                "the half-width solidus is not the full-width one");
+        assertTrue(Mark.of("中").isEmpty(), "a character is not a mark");
     }
 }

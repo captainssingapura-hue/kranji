@@ -74,11 +74,14 @@ class ArticleGeneratorTest {
     void aDraftTheSubsetRefusesStopsTheWholeRun() {
         // Nothing is written while a problem stands. A half-generated library
         // is worse than none, because the half that generated looks finished.
-        Result result = generate(GOOD, "# 标题 {#t}\n\n会像 markdown 那样。\n");
+        // A table. This used to be a bare `markdown`, back when anything not
+        // Chinese had to be bracketed — and that is no longer refused, so the
+        // fixture had to become something the subset still genuinely rejects.
+        Result result = generate(GOOD, "# 标题 {#t}\n\n正文。\n\n| a | b |\n");
 
         assertFalse(result.ok());
         assertTrue(result.files().isEmpty(), "not even the draft that was fine");
-        assertTrue(result.problems().stream().anyMatch(p -> p.message().contains("‹markdown›")),
+        assertTrue(result.problems().stream().anyMatch(p -> p.message().contains("table")),
                 result.problems().toString());
     }
 

@@ -52,29 +52,21 @@ public final class GridJson {
                 if (zi.bold())               js.append(",\"b\":true");
                 js.append('}');
             }
+            // l: one character that is not Chinese. Its own kind rather than a
+            // flag on z, because it is not a character to practise and a
+            // renderer has to be able to draw it differently.
+            case Square.Letter letter -> {
+                js.append("{\"k\":\"l\",\"t\":").append(MdJson.quote(letter.text()));
+                if (letter.bold()) js.append(",\"b\":true");
+                js.append('}');
+            }
             case Square.Marker marker ->
                 js.append("{\"k\":\"t\",\"t\":").append(MdJson.quote(marker.text())).append('}');
-            // s: one square of punctuation - one mark, or several packed.
-            // `hang` is placement, not content: it hangs past the right edge so
-            // that a mark never begins a row.
-            case Square.Punct punct -> {
-                js.append("{\"k\":\"s\",\"t\":").append(MdJson.quote(punct.marks()));
-                if (punct.packed())  js.append(",\"n\":").append(punct.marks().length());
-                if (punct.hanging()) js.append(",\"hang\":true");
-                js.append('}');
-            }
-            // A run head carries its own spans, so a renderer can put the
-            // emphasis back where the author wrote it.
-            case Square.Run run -> {
-                js.append("{\"k\":\"r\",\"w\":").append(run.width())
-                  .append(",\"id\":").append(run.id());
-                if (run.broken()) js.append(",\"cut\":true");
-                js.append(",\"parts\":");
-                MdJson.spans(js, run.parts());
-                js.append('}');
-            }
-            case Square.Cont cont ->
-                js.append("{\"k\":\"c\",\"id\":").append(cont.id()).append('}');
+            // s: one punctuation mark, in a square of its own like everything
+            // else. Marks used to share a box and to hang past the margin, and
+            // both are gone.
+            case Square.Punct punct ->
+                js.append("{\"k\":\"s\",\"t\":").append(MdJson.quote(punct.mark())).append('}');
             case Square.Indent ignored -> js.append("{\"k\":\"i\"}");
         }
     }

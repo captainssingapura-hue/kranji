@@ -419,8 +419,7 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
      * One square: 34px, holding a 23px glyph.
      *
      * <p>The reader's medium is 62/42. This is the same 1.48 ratio at bench
-     * scale — {@link SquareWidth} computes against that ratio, so a run drawn
-     * here claims the squares it will claim in the reader.</p>
+     * scale, so what an author checks here is the shape a child will read.</p>
      */
     public record aw_sq() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
@@ -485,51 +484,21 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         }
     }
 
-    /** Two or three marks sharing one square, side by side. */
-    public record aw_sq_pack() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                position: absolute;
-                inset: 0;
-                display: flex;
-                align-items: center;
-                padding-top: 7px;
-                """;
-        }
-    }
-
     /**
-     * One mark of a packed square.
+     * One character that is not Chinese, in a square of its own.
      *
-     * <p>Squeezed rather than shrunk. A smaller 。 is a different mark; a
-     * narrower one is the same mark written tight, which is what a hand does
-     * when it fits {@code ”，} into one box.</p>
-     */
-    public record aw_sq_half() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                flex: 1 1 0;
-                min-width: 0;
-                text-align: center;
-                font-size: 23px;
-                line-height: 1;
-                transform: scaleX(0.55);
-                """;
-        }
-    }
-
-    /**
-     * A square hanging past the right edge of its row.
+     * <p>Set in the body face rather than the reading face, and a shade lighter
+     * than a 字. The distinction is the point: this is not a character to
+     * practise, and drawing an {@code m} exactly as though it were 马 would say
+     * it was.</p>
      *
-     * <p>Narrower, and with no ruling between it and the square before it — so
-     * the row's last cell simply reads as a little fatter. That is what a
-     * person does when a full stop lands at the margin of a composition: carry
-     * on past the ruling rather than begin the next line with it.</p>
+     * <p>It is the same size, though. A letter shrunk to look subordinate
+     * reads as a mistake in a grid where everything else fills its box.</p>
      */
-    public record aw_sq_hang() implements CssClass<ArticleWorkbenchCss> {
+    public record aw_sq_letter() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
-                width: 22px;
-                border-left: 0;
-                margin-left: 0;
-                background: var(--color-surface-raised, var(--color-surface));
+                font-family: system-ui, sans-serif;
+                color: var(--color-text-secondary, var(--color-text-primary));
                 """;
         }
     }
@@ -546,78 +515,6 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         @Override public String body() { return """
                 color: var(--color-text-muted);
                 font-size: 13px;
-                """;
-        }
-    }
-
-    /**
-     * A run's head.
-     *
-     * <p>Its text overflows the box on purpose: the run owns the placeholders
-     * beside it, and spilling across them is the closest a grid with no merged
-     * cells can come to showing that it is one thing.</p>
-     */
-    public record aw_sq_run() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                background: var(--color-surface-raised, var(--color-surface));
-                overflow: visible;
-                z-index: 1;
-                """;
-        }
-    }
-
-    /**
-     * A run's text, at the size the width was computed against.
-     *
-     * <p>23px, the same as {@link aw_sq_zi} — and that is not a coincidence to
-     * be tidied away later. {@link SquareWidth} measures a run in ems of the
-     * text drawn <em>inside</em> a square and divides by 62/42; drawing it at
-     * any other size makes the squares view lie about the fit. It was 15px
-     * once, which left every run looking half the width it had claimed.</p>
-     */
-    public record aw_sq_run_text() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                position: absolute;
-                inset: 0;
-                display: flex;
-                align-items: center;
-                padding-top: 7px;
-                padding-left: 1px;
-                white-space: nowrap;
-                font-size: 23px;
-                line-height: 1;
-                font-family: system-ui, sans-serif;
-                """;
-        }
-    }
-
-    /** How many squares it asked for, and whether the page was too narrow. */
-    public record aw_sq_tag() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                position: absolute;
-                left: 1px;
-                top: 0;
-                font-size: 8px;
-                line-height: 1;
-                color: var(--color-accent, var(--color-text-muted));
-                font-variant-numeric: tabular-nums;
-                """;
-        }
-    }
-
-    /**
-     * A square a run claimed and cannot fill.
-     *
-     * <p>Hatched, so it reads as spoken for rather than as empty page. This is
-     * the placeholder that disappears when RelationGrid gains merged cells; it
-     * is drawn to be conspicuous because it is temporary.</p>
-     */
-    public record aw_sq_cont() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                background: repeating-linear-gradient(
-                        135deg,
-                        transparent 0 4px,
-                        var(--color-border) 4px 5px);
                 """;
         }
     }
@@ -869,11 +766,9 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
                 new aw_quote(), new aw_verse(), new aw_vline(), new aw_run(),
                 new aw_ruby(), new aw_rt(), new aw_msg(),
                 new aw_sheet(), new aw_row(), new aw_sq(), new aw_sq_zi(),
-                new aw_sq_ann(), new aw_sq_punct(), new aw_sq_pack(), new aw_sq_half(),
-                new aw_sq_hang(), new aw_sq_bold(),
-                new aw_sq_marker(), new aw_sq_run(),
-                new aw_sq_run_text(), new aw_sq_tag(),
-                new aw_sq_cont(), new aw_sq_indent(), new aw_sq_pad(),
+                new aw_sq_ann(), new aw_sq_punct(), new aw_sq_letter(),
+                new aw_sq_bold(), new aw_sq_marker(),
+                new aw_sq_indent(), new aw_sq_pad(),
                 new aw_tree(), new aw_node(),
                 new aw_d0(), new aw_d1(), new aw_d2(), new aw_d3(),
                 new aw_path(), new aw_name(), new aw_part(), new aw_id(),
