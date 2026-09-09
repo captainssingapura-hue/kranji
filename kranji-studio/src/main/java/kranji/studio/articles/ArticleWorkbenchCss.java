@@ -521,6 +521,40 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         }
     }
 
+    /**
+     * The strip above the page: what the square under the cursor is not showing.
+     *
+     * <p>A run is one square holding a placeholder, because a word does not fit
+     * in a box. This is where the word goes, and it is above the page rather
+     * than beside the square because the grid is walked with arrow keys — a
+     * tooltip needs a pointer and a reader may not have one.</p>
+     *
+     * <p>It keeps its height when it is empty. A strip that collapsed would
+     * shift the whole page up every time the cursor left a run, which is a
+     * worse distraction than a blank line.</p>
+     */
+    public record aw_strip() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                flex: 0 0 auto;
+                display: flex;
+                align-items: center;
+                min-height: 28px;
+                padding: 0 var(--space-3, 12px);
+                border-bottom: 1px solid var(--color-border);
+                """;
+        }
+    }
+
+    /** The word itself. Marked as standing in for something, not as a label. */
+    public record aw_strip_text() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                font-family: system-ui, sans-serif;
+                font-size: 15px;
+                color: var(--color-accent, var(--color-text-primary));
+                """;
+        }
+    }
+
     /** 首行缩进两格. Empty, and empty is what it means. */
     public record aw_sq_indent() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
@@ -771,6 +805,7 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
                 new aw_sq_ann(), new aw_sq_punct(), new aw_sq_run(),
                 new aw_sq_bold(), new aw_sq_marker(),
                 new aw_sq_indent(), new aw_sq_pad(),
+                new aw_strip(), new aw_strip_text(),
                 new aw_tree(), new aw_node(),
                 new aw_d0(), new aw_d1(), new aw_d2(), new aw_d3(),
                 new aw_path(), new aw_name(), new aw_part(), new aw_id(),

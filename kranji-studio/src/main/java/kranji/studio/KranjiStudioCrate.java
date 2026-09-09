@@ -24,6 +24,7 @@ import kranji.studio.articles.ArticleWorkbenchCss;
 import kranji.studio.articles.MdPreviewModule;
 import kranji.studio.articles.MdSegmentsModule;
 import kranji.studio.articles.SectionReaderWidget;
+import kranji.studio.articles.KmdBoardModule;
 import kranji.studio.articles.MdSquaresModule;
 
 import java.util.List;
@@ -65,6 +66,7 @@ public final class KranjiStudioCrate implements Crate {
                 CrateEntry.of(ArticleWorkbenchCss.INSTANCE),
                 CrateEntry.of(MdPreviewModule.INSTANCE),
                 CrateEntry.of(MdSquaresModule.INSTANCE),
+                CrateEntry.of(KmdBoardModule.INSTANCE),
                 CrateEntry.of(MdSegmentsModule.INSTANCE),
                 CrateEntry.of(ArticleShelfSecretaryModule.INSTANCE),
                 CrateEntry.of(ArticleRootsWidget.INSTANCE),
