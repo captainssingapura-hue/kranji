@@ -36,10 +36,22 @@ var ARTICLE_HAN = /\p{Script=Han}/u;
  *   { z, p }                   trailing punctuation, drawn inside the square
  *   { z, lp }                  leading punctuation
  *   { t }                      anything that is not a character
+ *
+ * An authored reading is CANONICALISED here - dì becomes di4 - because this is
+ * where a file crosses into the system. Below the display layer everything
+ * carries spelling plus a tone digit, so that a reading is ASCII apart from ü
+ * and can be a key in IndexedDB, a JS module and a Java registry at once; see
+ * PinyinSwfModule, which owns that rule and the only conversion out of it.
+ *
+ * The server used to do this on the way out: it parsed the file, rebuilt the
+ * line from tokens, and the rebuild wrote the canonical form. Now the file is
+ * sent as it was written, so the boundary is here instead - which is what
+ * PinyinSwf.canonical calls itself the entry point for.
  */
 function createArticleScanner(opts) {
     var closing = (opts && opts.closing) || ARTICLE_CLOSING;
     var opening = (opts && opts.opening) || ARTICLE_OPENING;
+    var swf = createPinyinSwf();
 
     /** Adds a closing run to the last cell, when that cell can carry one. */
     function attachTrailing(cells, mark) {
@@ -83,7 +95,12 @@ function createArticleScanner(opts) {
                             j++;
                         }
                         if (j < chars.length) {
-                            cell.r = reading;
+                            // Canonical if it is a syllable at all. When it is
+                            // not, the author's text is kept rather than
+                            // dropped: a typo that shows on the page is one
+                            // somebody can find, and an empty annotation is
+                            // not.
+                            cell.r = swf.canonical(reading) || reading;
                             cell.o = true;
                             i = j;
                         }

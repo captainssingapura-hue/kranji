@@ -35,10 +35,23 @@ class ArticleScannerTest extends JsModuleTestBase {
     private static final String MODULE =
             "/homing/js/kranji/reading/app/read/ArticleScannerModule.js";
 
+    /**
+     * The scanner's one import: it canonicalises an authored reading, because
+     * the wire carries the file as written and {@code dì} has to become
+     * {@code di4} before anything below the display layer sees it.
+     *
+     * <p>Loaded by hand here because this harness resolves nothing — in the
+     * browser the module manifest does it. Mirroring that is the price of
+     * testing the module rather than a copy of it.</p>
+     */
+    private static final String SWF =
+            "/homing/js/kranji/reading/app/ui/PinyinSwfModule.js";
+
     private Value scanner;
 
     @BeforeEach
     void load() {
+        loadModule(SWF);
         loadModule(MODULE);
         scanner = global("createArticleScanner").execute();
     }
@@ -114,7 +127,8 @@ class ArticleScannerTest extends JsModuleTestBase {
         List<Value> cells = scan("地{dì}上");
         assertEquals(2, cells.size(), "the braces are syntax, not a cell");
         assertEquals("地", member(cells.get(0), "z"));
-        assertEquals("dì", member(cells.get(0), "r"));
+        assertEquals("di4", member(cells.get(0), "r"),
+                "canonicalised on the way in: the file says dì, the system says di4");
         assertTrue(cells.get(0).getMember("o").asBoolean());
         assertEquals("上", member(cells.get(1), "z"));
         assertFalse(cells.get(1).hasMember("r"),
@@ -125,7 +139,8 @@ class ArticleScannerTest extends JsModuleTestBase {
     void anAuthoredReadingSurvivesTrailingPunctuation() {
         List<Value> cells = scan("地{dì}。");
         assertEquals(1, cells.size());
-        assertEquals("dì", member(cells.get(0), "r"));
+        assertEquals("di4", member(cells.get(0), "r"),
+                "canonicalised on the way in: the file says dì, the system says di4");
         assertEquals("。", member(cells.get(0), "p"));
     }
 
@@ -166,6 +181,44 @@ class ArticleScannerTest extends JsModuleTestBase {
         }
         assertTrue(linesChecked >= 40,
                 "expected the bundled articles to contribute lines, got " + linesChecked);
+    }
+
+    @Test
+    void everyReadingIsCanonicalWhenTheFileIsScannedAsWritten() {
+        // The check that lets the wire carry the file unchanged.
+        //
+        // It used to be the server's: /article parsed the source and rebuilt
+        // each line from tokens, and the rebuild wrote the canonical form. On
+        // the bundled articles that rewrote 26 lines in 88 - every one an
+        // authored reading, dì becoming di4. Send the file instead and the
+        // diacritic arrives at a cell, which is exactly where PinyinSwfModule
+        // says it must never be: below the display layer a reading is a key,
+        // in IndexedDB and in a Java registry, and two spellings are two keys.
+        //
+        // So the scanner canonicalises, and this is what says it did. Scanned
+        // from the SOURCE rather than from a reconstruction of it, because a
+        // reconstruction is the thing being removed.
+        Value swf = global("createPinyinSwf").execute();
+        int authored = 0;
+
+        for (ArticleCollection collection : DemoLibrary.INSTANCE.tree().collections()) {
+            for (ArticleRef ref : collection.articles()) {
+                String source = Articles.sourceOf(ref).orElseThrow();
+                for (String line : source.split("\\R")) {
+                    if (line.isBlank()) continue;
+                    for (Value cell : scan(line.strip())) {
+                        String reading = member(cell, "r");
+                        if (reading == null) continue;
+                        authored++;
+                        assertTrue(swf.getMember("isCanonical").execute(reading).asBoolean(),
+                                () -> "'" + reading + "' reached a cell uncanonicalised, "
+                                    + "from: " + line.strip());
+                    }
+                }
+            }
+        }
+        assertTrue(authored >= 20, "the bundled articles should carry authored readings, "
+                + "or this passes by finding none: " + authored);
     }
 
     private static List<List<Token>> linesOf(Block block) {
@@ -234,7 +287,7 @@ class ArticleScannerTest extends JsModuleTestBase {
         // the scanner is not expected to know them.
         return "lp=" + leading
              + " z=" + zi.zi().value()
-             + " r=" + (zi.authored() ? zi.reading().toDiacritic() : "")
+             + " r=" + (zi.authored() ? zi.reading().numbered() : "")
              + " p=" + trailing;
     }
 }

@@ -4,6 +4,7 @@ import hue.captains.singapura.js.homing.core.DomModule;
 import hue.captains.singapura.js.homing.core.Exportable;
 import hue.captains.singapura.js.homing.core.ExportsOf;
 import hue.captains.singapura.js.homing.core.ImportsFor;
+import hue.captains.singapura.js.homing.core.ModuleImports;
 
 import java.util.List;
 
@@ -33,7 +34,14 @@ public record ArticleScannerModule() implements DomModule<ArticleScannerModule> 
 
     @Override
     public ImportsFor<ArticleScannerModule> imports() {
-        return ImportsFor.<ArticleScannerModule>builder().build();
+        // The canonical form of a reading. A file is written by hand and may
+        // say dì; everything below the display layer carries di4, and this is
+        // where the file crosses in — see PinyinSwfModule, which owns the rule.
+        return ImportsFor.<ArticleScannerModule>builder()
+                .add(new ModuleImports<>(
+                        List.of(new kranji.reading.app.ui.PinyinSwfModule.createPinyinSwf()),
+                        kranji.reading.app.ui.PinyinSwfModule.INSTANCE))
+                .build();
     }
 
     @Override
