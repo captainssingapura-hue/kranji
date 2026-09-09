@@ -7,48 +7,48 @@ import hue.captains.singapura.tao.http.action.Param;
 import hue.captains.singapura.tao.http.action.ParamMarshaller;
 import io.vertx.ext.web.RoutingContext;
 import kranji.reading.content.Articles;
-import kranji.reading.content.ParsedArticle;
-import kranji.reading.model.Article;
 import kranji.reading.library.ArticleAddress;
+import kranji.reading.library.ArticleRef;
 import kranji.reading.library.CollectionId;
 import kranji.reading.library.Libraries;
 import kranji.reading.library.LocalId;
-import kranji.reading.model.Block;
-import kranji.reading.model.Lines;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Serves one article as an ES module, in the form it was authored.
+ * Serves one article as an ES module: the file, as it was written.
  *
  * <pre>{@code
- * { kind: "verse", lines: ["床前明月光，", "疑是地{dì}上霜。"] }
- * { kind: "p",     text:  "春天来了。小草绿了，花儿开了。" }
+ * export const id     = "chengyu:hua-she-tian-zu";
+ * export const title  = "画蛇添足";
+ * export const source = "楚国有一个人…\n\n有人说…";
  * }</pre>
  *
- * <h2>The wire is the source</h2>
+ * <h2>The wire is the file</h2>
  *
- * <p>This used to send cells with every character's codepoint and reading
- * resolved. Both were restatements: the codepoint of what the glyph already
- * says, and the reading of what the corpus already knows. Measured on the
- * bundled articles, dropping them made a module three to six times smaller —
- * but size was the lesser reason.</p>
+ * <p>This once sent cells with every character's codepoint and reading
+ * resolved, then source lines rebuilt from a parse. Both were restatements of
+ * something the other end already had — the codepoint of what the glyph says,
+ * the reading the corpus knows, and finally the file the resource holds.</p>
  *
- * <p>The real cost was that a principal reading became <em>frozen into every
- * article that used the character</em>. Correcting 地 in the corpus would leave
- * every article containing 地 quietly serving the old reading. Now an article
- * carries only what nothing else can supply: its text, and the readings its
- * author chose against the principal, written {@code 地{dì}}.</p>
+ * <p>So it sends the file. Resolve the address, read the resource, quote it:
+ * no parse, no token walk, no line rebuilt. What a browser needs to know about
+ * the format it knows — {@code ArticleScannerModule} splits blocks and squares
+ * with the block rule of {@link kranji.reading.content.ArticleParser} and the
+ * cell rule of {@link kranji.reading.model.Cells}, both ported and both held to
+ * the Java by a parity test that runs over the real corpus at build time.</p>
  *
- * <p>{@link Lines} writes that form and the parser reads it, so authoring,
- * storage, and wire are one format. A browser turns it into squares with
- * {@code ArticleScannerModule}, which is {@link kranji.reading.model.Cells}
- * ported to JavaScript and held to it by a parity test.</p>
+ * <p>That is where the checking moved to, and it is the better place for it.
+ * A serve-time parse could only reject a bad article once a child had asked
+ * for it; a build-time one cannot ship it. Serving stays a resource read.</p>
  *
- * <p>Data literals only, like the other data actions, asserted by
- * {@code ArticleGetActionTest}.</p>
+ * <p>The one thing the article still carries that nothing else can supply is
+ * the reading its author chose against the principal, written {@code 地{dì}}.
+ * The scanner canonicalises it on arrival, because below the display layer a
+ * reading is a key — see {@code PinyinSwfModule}.</p>
+ *
+ * <p>Data literals only, like the other data actions.</p>
  */
 public final class ArticleGetAction
         implements GetAction<RoutingContext, ArticleGetAction.Query,
@@ -78,6 +78,7 @@ public final class ArticleGetAction
         return CompletableFuture.completedFuture(
                 new DocContent(moduleFor(query.id()), JS));
     }
+
     public static String moduleFor(String rawAddress) {
         ArticleAddress address;
         try {
@@ -90,67 +91,35 @@ public final class ArticleGetAction
         } catch (RuntimeException e) {
             return errorModule("not an article address: '" + rawAddress + "'");
         }
-        Optional<ParsedArticle> found = Articles.read(Libraries.mounted(), address);
+        Optional<ArticleRef> found = Libraries.mounted().tree().find(address);
         if (found.isEmpty()) return errorModule("no article '" + address + "'");
-        ParsedArticle parsed = found.get();
-        if (parsed.article().isEmpty()) {
-            return errorModule("article '" + address + "' did not parse");
+        ArticleRef ref = found.get();
+
+        Optional<String> source = Articles.sourceOf(ref);
+        if (source.isEmpty()) {
+            return errorModule("article '" + address + "' has no text at " + ref.resource());
         }
-        Article article = parsed.article().get();
+        // The one thing worth refusing to serve without reading the format: an
+        // entry that resolves to nothing at all. A blank scan is a blank page,
+        // and "no article" is a truer thing to say than an empty sheet. Whether
+        // what IS there parses is the build's question, not this request's.
+        if (source.get().isBlank()) {
+            return errorModule("article '" + address + "' is empty");
+        }
 
         var js = new StringBuilder();
         js.append("// Generated from the Kranji corpus. Data only - no behaviour.\n");
-        js.append("export const id = ").append(quote(article.address().toString())).append(";\n");
-        js.append("export const title = ").append(quote(article.title())).append(";\n");
-        js.append("export const length = ").append(article.length()).append(";\n");
-
-        // No catalogue here. Every article used to carry the whole list so the
-        // reader's own dropdown could offer the others - one list repeated into
-        // every article, to be read by nothing once /article-tree existed.
-        // Choosing what to read is the Library's job now.
-
-        js.append("export const blocks = [\n");
-        List<Block> blocks = article.blocks();
-        for (int b = 0; b < blocks.size(); b++) {
-            appendBlock(js, blocks.get(b));
-            js.append(b + 1 < blocks.size() ? "," : "").append("\n");
-        }
-        js.append("];\n");
+        js.append("export const id = ").append(quote(address.toString())).append(";\n");
+        js.append("export const title = ").append(quote(ref.title())).append(";\n");
+        js.append("export const source = ").append(quote(source.get())).append(";\n");
         return js.toString();
-    }
-
-    private static void appendBlock(StringBuilder js, Block block) {
-        switch (block) {
-            case Block.Paragraph p ->
-                // A paragraph is one flow that wraps, so it is one string. Verse
-                // has authored breaks, so it is many. The wire mirrors the ADT
-                // rather than flattening both into a single shape.
-                js.append("  { kind: \"p\", text: ").append(quote(Lines.of(p.tokens())))
-                  .append(" }");
-            case Block.Verse v -> {
-                js.append("  { kind: \"verse\", lines: [\n");
-                List<String> lines = Lines.of(v);
-                for (int i = 0; i < lines.size(); i++) {
-                    js.append("    ").append(quote(lines.get(i)))
-                      .append(i + 1 < lines.size() ? "," : "").append("\n");
-                }
-                js.append("  ] }");
-            }
-            case Block.Illustration i ->
-                js.append("  { kind: \"img\", src: ")
-                  .append(quote("/article-asset?file=" + i.file()))
-                  .append(", alt: ").append(quote(i.alt()))
-                  .append(", caption: ").append(quote(Lines.of(i.caption())))
-                  .append(" }");
-        }
     }
 
     private static String errorModule(String problem) {
         return "// No article could be served.\n"
              + "export const id = \"\";\n"
              + "export const title = \"\";\n"
-             + "export const length = 0;\n"
-             + "export const blocks = [];\n"
+             + "export const source = \"\";\n"
              + "export const problem = " + quote(problem) + ";\n";
     }
 

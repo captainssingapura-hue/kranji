@@ -8,10 +8,15 @@
 // cell is atomic and a row cannot break inside one.
 //
 // This is the same rule as kranji.reading.model.Cells, moved to where the text
-// arrives. The wire now carries the article as its source lines, so a reading
-// the corpus already knows is not restated once per character per article, and
-// correcting the corpus does not leave every article that used the character
-// carrying the old reading.
+// arrives - and beside it the block rule of ArticleParser, because the wire now
+// carries the FILE. The server resolves an address, reads the resource and
+// sends it; splitting it into blocks and squares is all here.
+//
+// What that buys is not bytes. A reading the corpus already knows is not
+// restated once per character per article, correcting the corpus does not leave
+// every article that used the character carrying the old reading, and there is
+// no serve-time parse to keep in step with this one - there is one parser for
+// the format, and a build-time check that it agrees with the Java.
 //
 // Pure - no DOM, no fetch. It is read by GraalVM under ordinary JUnit,
 // including a parity test against the Java it was ported from.
@@ -28,7 +33,10 @@ var ARTICLE_HAN = /\p{Script=Han}/u;
 /**
  * opts = { closing, opening }  - both optional, defaulted to the tables above.
  *
- * Returns { closing, opening, scan(line) }.
+ * Returns { closing, opening, blocks(source), scan(line) }.
+ *
+ * blocks splits the file: a blank line ends a block, one line is a paragraph
+ * and several are a verse.
  *
  * scan yields cells, in the shape the reader renders:
  *   { z }                      a character, reading resolved from the map
@@ -65,6 +73,45 @@ function createArticleScanner(opts) {
     return {
         closing: closing,
         opening: opening,
+
+        /**
+         * The whole file -> the blocks it is written in.
+         *
+         * A blank line ends a block; one line is a paragraph and several are a
+         * verse. That is the entire structure of the format - a poem needs no
+         * markup and prose is one long line per paragraph - which is why it
+         * can be read here rather than on the server.
+         *
+         *   { kind: 'p',     text:  '...' }
+         *   { kind: 'verse', lines: ['...', '...'] }
+         *
+         * The same shape /article used to send, so nothing downstream changed.
+         * What changed is that the server no longer parses an article to build
+         * it: it sends the file. This is the block rule of
+         * kranji.reading.content.ArticleParser, held to it by the same parity
+         * test that holds scan to Cells.
+         */
+        blocks: function (source) {
+            var out = [];
+            var pending = [];
+
+            function flush() {
+                if (pending.length === 0) return;
+                out.push(pending.length === 1
+                        ? { kind: 'p', text: pending[0] }
+                        : { kind: 'verse', lines: pending });
+                pending = [];
+            }
+
+            var lines = String(source || '').replace(/\r\n/g, '\n').split('\n');
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i].trim();
+                if (line === '') flush();
+                else pending.push(line);
+            }
+            flush();
+            return out;
+        },
 
         scan: function (line) {
             // Array.from iterates code points, so a character outside the BMP

@@ -22,13 +22,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * The cell rule as the browser applies it.
+ * The format as the browser reads it.
  *
- * <p>The rule moved to JavaScript when the wire stopped carrying pre-assembled
- * cells, so it is tested the way the Java was: on GraalVM, under plain JUnit,
- * in the same build. {@link #agreesWithTheJavaItWasPortedFrom} is the one that
- * matters — it reads both implementations over the real articles rather than
- * over cases I thought to invent.</p>
+ * <p>Both rules moved to JavaScript when the wire stopped carrying a parse:
+ * the block rule of {@code ArticleParser} and the cell rule of {@code Cells}.
+ * They are tested the way the Java was — on GraalVM, under plain JUnit, in the
+ * same build. {@link #theJsParseOfTheRawFileAgreesWithTheJavaOne} is the one
+ * that matters: it runs both parsers over the real articles, from the file
+ * down, rather than over cases I thought to invent.</p>
  */
 class ArticleScannerTest extends JsModuleTestBase {
 
@@ -162,18 +163,48 @@ class ArticleScannerTest extends JsModuleTestBase {
     // ── Parity with the model ──────────────────────────────────────────
 
     @Test
-    void agreesWithTheJavaItWasPortedFrom() {
+    void theJsParseOfTheRawFileAgreesWithTheJavaOne() {
+        // The golden parse check — the thing that lets /article send the file.
+        //
+        // The server used to parse on the way out, so the wire was proof the
+        // article was readable. It does not any more: it resolves an address,
+        // reads the resource and quotes it. The check that used to happen once
+        // per request now happens once per build, here, over the whole corpus
+        // rather than over cases I thought to invent.
+        //
+        // It runs from the SOURCE down: blocks first, then the cells of every
+        // line. Blocks are ArticleParser's rule and cells are Cells' rule, and
+        // both are ported, so both are compared. Nothing reconstructs a source
+        // line — a reconstruction is exactly what was removed.
         int linesChecked = 0;
         for (ArticleCollection collection : DemoLibrary.INSTANCE.tree().collections()) {
           for (ArticleRef ref : collection.articles()) {
+            String source = Articles.sourceOf(ref).orElseThrow();
             Article article = Articles.read(collection.address(ref.id()), ref)
                                       .orElseThrow().orThrow();
-            for (Block block : article.blocks()) {
-                for (List<Token> tokens : linesOf(block)) {
-                    List<Cell> java = Cells.of(tokens);
-                    String source = render(java);
-                    assertEquals(describe(java), describeJs(scan(source)),
-                            () -> "the scanner disagrees with Cells on: " + source);
+
+            Value jsBlocks = scanner.getMember("blocks").execute(source);
+            List<Block> blocks = article.blocks();
+            assertEquals(blocks.size(), (int) jsBlocks.getArraySize(),
+                    () -> "the two parsers disagree on how many blocks " + ref.id()
+                        + " has");
+
+            for (int b = 0; b < blocks.size(); b++) {
+                Block block = blocks.get(b);
+                Value js = jsBlocks.getArrayElement(b);
+                assertEquals(kindOf(block), js.getMember("kind").asString(),
+                        () -> "block kind differs in " + ref.id());
+
+                List<List<Token>> javaLines = linesOf(block);
+                List<String> jsLines = linesOfJs(js);
+                assertEquals(javaLines.size(), jsLines.size(),
+                        () -> "line count differs in a block of " + ref.id());
+
+                for (int l = 0; l < javaLines.size(); l++) {
+                    String line = jsLines.get(l);
+                    assertEquals(describe(Cells.of(javaLines.get(l))),
+                                 describeJs(scan(line)),
+                            () -> "the scanner disagrees with Cells on: " + line);
                     linesChecked++;
                 }
             }
@@ -229,24 +260,25 @@ class ArticleScannerTest extends JsModuleTestBase {
         };
     }
 
-    /** The source line these cells were written from. */
-    private static String render(List<Cell> cells) {
-        var sb = new StringBuilder();
-        for (Cell cell : cells) {
-            switch (cell) {
-                case Cell.Char c -> sb.append(zi(c.character()));
-                case Cell.CharWithPunctuation c ->
-                        sb.append(c.leading()).append(zi(c.character())).append(c.trailing());
-                case Cell.Plain p -> sb.append(p.text());
-            }
-        }
-        return sb.toString();
+    private static String kindOf(Block block) {
+        return switch (block) {
+            case Block.Paragraph p -> "p";
+            case Block.Verse v -> "verse";
+            case Block.Illustration i -> "img";
+        };
     }
 
-    private static String zi(Token.Zi zi) {
-        return zi.authored()
-                ? zi.zi().value() + "{" + zi.reading().toDiacritic() + "}"
-                : zi.zi().value();
+    /** The lines of one block as the module returns them. */
+    private static List<String> linesOfJs(Value block) {
+        if ("p".equals(block.getMember("kind").asString())) {
+            return List.of(block.getMember("text").asString());
+        }
+        Value lines = block.getMember("lines");
+        var out = new ArrayList<String>();
+        for (long i = 0; i < lines.getArraySize(); i++) {
+            out.add(lines.getArrayElement(i).asString());
+        }
+        return out;
     }
 
     /** A comparable rendering of either side's cells. */

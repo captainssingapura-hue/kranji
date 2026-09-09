@@ -438,7 +438,7 @@ public final class ArticleReaderWidget
                 "        });",
                 "",
                 "        board = buildArticleBoard({",
-                "            db: db, owner: owner, body: body, blocks: mod.blocks,",
+                "            db: db, owner: owner, body: body, blocks: text.blocksOf(mod),",
                 "            cellFactory: cellFactory, cellsOf: text.cellsOf,",
                 "            indented: text.indented, chunk: banding.chunk, columns: cellsPerRow,",
                 "            onSelect: function (cell) {",

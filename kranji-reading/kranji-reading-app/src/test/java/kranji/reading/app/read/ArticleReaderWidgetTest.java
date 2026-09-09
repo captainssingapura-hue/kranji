@@ -1,6 +1,8 @@
 package kranji.reading.app.read;
 
+import kranji.reading.content.Articles;
 import kranji.reading.library.ArticleAddress;
+import kranji.reading.library.ArticleRef;
 import kranji.reading.library.Libraries;
 import org.junit.jupiter.api.Test;
 
@@ -30,11 +32,20 @@ class ArticleReaderWidgetTest {
         // Resolving is half of it. An address can name a real entry whose text
         // is missing or malformed, and the reader would then open on an error
         // module - which is the same blank screen from the reader's side.
+        //
+        // /article no longer parses, so this asks the two halves separately:
+        // that the module carries the file, and that the file parses. The
+        // second half used to be implied by the first.
         ArticleAddress opening = ArticleReaderWidget.opensAt();
         String module = ArticleGetAction.moduleFor(opening.toString());
-        assertTrue(module.contains("export const blocks = [\n"),
-                () -> "opening article served no blocks: " + module);
+        assertTrue(module.contains("export const source = \""),
+                () -> "opening article served no source: " + module);
+        assertTrue(!module.contains("export const source = \"\""),
+                () -> "opening article served an empty source: " + module);
         assertTrue(!module.contains("export const problem"),
                 () -> "opening article served an error module: " + module);
+
+        ArticleRef ref = Libraries.mounted().tree().find(opening).orElseThrow();
+        Articles.read(opening, ref).orElseThrow().orThrow();
     }
 }

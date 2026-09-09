@@ -59,33 +59,40 @@ the thing being avoided.
 Selection is by extension. A third format is a new `permits` entry, not a new
 pipeline.
 
-## The wire stays singular
+## The wire is the file
 
-An ES module, like `/zi-data` and `/zi-detail`:
+An ES module, like `/zi-data` and `/zi-detail` — but carrying the source, not a
+parse of it:
 
 ```js
-export const id = "xiaoming-day";
-export const title = "小明的一天";
-export const blocks = [
-  { kind: "p", tokens: [
-      { z: "他", r: "tā" },
-      { z: "银", r: "yín" },
-      { z: "行", r: "háng", o: true },   // o = authored override
-      { t: "。" }                        // non-Han: text only, never a reading
-  ]},
-  { kind: "img", src: "/article-asset?id=xiaoming-day&file=cat.png", alt: "一只猫" }
-];
+export const id     = "kranji.reader.demo.tangshi:jing-ye-si";
+export const title  = "静夜思";
+export const source = "床前明月光，\n疑是地{dì}上霜。\n举头望明月，\n低头思故乡。\n";
 ```
 
-It is **block-polymorphic** — `p`, `verse`, `img` are a sealed set the renderer
-handles exhaustively — and **format-singular**. Making the format vary would
-push syntax variation into the browser, so every new input format would need a
-new renderer. Polymorphism at the door; one shape behind it.
+It sent tokens once — every character with its reading resolved — and the
+reasoning was that the wire should be singular so that a new input format needs
+no new renderer. The singularity was right and the level was wrong. A reading
+the corpus knows is not the article's to state, and restating it froze a
+principal into every article that used the character: correcting 地 in the
+corpus would leave a thousand articles serving the old reading.
 
-The server ships **every** reading and never decides which to display. The
-client filters against its known-set from IndexedDB. That keeps the adaptive
-rule where the profile lives, and keeps an article byte-identical and cacheable
-for every reader.
+So the wire carries what only the article knows, which is its own text. The
+server resolves an address, reads the resource and quotes it. `ArticleScanner`
+in the browser splits blocks and squares — the block rule of `ArticleParser`,
+the cell rule of `Cells`, both ported — and fills readings from the syllable
+map it already holds.
+
+Polymorphism still stops at the door: one format on the wire, and a format
+whose entire structure is "a blank line ends a block, one line is a paragraph
+and several are a verse" is small enough to be read in either language. That
+the two agree is checked at build time, over the whole corpus, in
+`ArticleScannerTest`. A serve-time parse could only reject a bad article once a
+child had asked for it; a build-time one cannot ship it.
+
+The client still decides what to display. It filters against its known-set from
+IndexedDB, which keeps the adaptive rule where the profile lives and keeps an
+article byte-identical and cacheable for every reader.
 
 ## Illustrations
 
