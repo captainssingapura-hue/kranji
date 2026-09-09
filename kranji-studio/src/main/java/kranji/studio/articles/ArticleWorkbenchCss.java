@@ -522,6 +522,34 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
     }
 
     /**
+     * A square inside a grid cell, as opposed to one in a row of divs.
+     *
+     * <p>{@link aw_sq} cannot be used here and the reason is worth writing
+     * down, because it looked like it could. That class carries a fixed box,
+     * its own hairline and {@code margin: -1px 0 0 -1px} — the negative margin
+     * being how adjacent <em>divs</em> in a flex row collapse their borders
+     * into one line. Put it inside a {@code td} and all three fight the table:
+     * the border doubles the grid's own hairline into what reads as a narrow
+     * empty column between every pair of characters, and the negative margin
+     * shifts the box a pixel over its neighbour so the cursor appears to cover
+     * two cells. Both were reported as bugs, and both were this class.</p>
+     *
+     * <p>So this one draws nothing structural. It sizes the cell — the grid
+     * takes its column width from what is inside — and is {@code relative} so
+     * that {@link aw_sq_zi} and {@link aw_sq_ann} have something to be absolute
+     * against. The ruling is the grid's own hairline, which is already there.</p>
+     */
+    public record aw_cell() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                position: relative;
+                box-sizing: border-box;
+                width: 34px;
+                height: 34px;
+                """;
+        }
+    }
+
+    /**
      * The strip above the page: what the square under the cursor is not showing.
      *
      * <p>A run is one square holding a placeholder, because a word does not fit
@@ -805,7 +833,7 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
                 new aw_sq_ann(), new aw_sq_punct(), new aw_sq_run(),
                 new aw_sq_bold(), new aw_sq_marker(),
                 new aw_sq_indent(), new aw_sq_pad(),
-                new aw_strip(), new aw_strip_text(),
+                new aw_cell(), new aw_strip(), new aw_strip_text(),
                 new aw_tree(), new aw_node(),
                 new aw_d0(), new aw_d1(), new aw_d2(), new aw_d3(),
                 new aw_path(), new aw_name(), new aw_part(), new aw_id(),

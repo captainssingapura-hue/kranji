@@ -22,7 +22,7 @@
 /**
  * opts = {
  *   css, container,
- *   classes: { sq, zi, ann, bold, punct, run, marker, indent },
+ *   classes: { cell, zi, ann, bold, punct, run, marker, indent },
  *   onCursor: fn(square)   // the square under the cursor, or null
  * }
  * Returns { draw(branch, plan), destroy() }.
@@ -93,12 +93,12 @@ function createKmdBoard(opts) {
         var branch = live;
 
         function classesFor(v) {
-            if (!v) return [C.sq, C.indent];
-            if (v.k === 'r') return v.b ? [C.sq, C.run, C.bold] : [C.sq, C.run];
-            if (v.k === 's') return [C.sq, C.punct];
-            if (v.k === 't') return [C.sq, C.marker];
-            if (v.k === 'i') return [C.sq, C.indent];
-            return v.b ? [C.sq, C.bold] : [C.sq];
+            if (!v) return [C.cell, C.indent];
+            if (v.k === 'r') return v.b ? [C.cell, C.run, C.bold] : [C.cell, C.run];
+            if (v.k === 's') return [C.cell, C.punct];
+            if (v.k === 't') return [C.cell, C.marker];
+            if (v.k === 'i') return [C.cell, C.indent];
+            return v.b ? [C.cell, C.bold] : [C.cell];
         }
 
         // A run shows its first character and an ellipsis, because a word does
