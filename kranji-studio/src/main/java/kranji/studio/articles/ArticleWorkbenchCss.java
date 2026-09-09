@@ -522,6 +522,29 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
     }
 
     /**
+     * What the grid mounts into: it shrinks to its content instead of filling
+     * the pane.
+     *
+     * <p>{@code .hgr-table} is {@code width: 100%}, so a grid takes whatever
+     * it is given — and for a page of squares that means the squares stop
+     * being square the moment the pane is wider than twenty of them. Widening
+     * the window stretched every cell into a letterbox.</p>
+     *
+     * <p>{@code width: fit-content} makes the hundred per cent resolve against
+     * the content instead. The reader met this from the other side and its
+     * {@code kr_gr_host} says the same thing: the board is a fixed shape, not a
+     * layout that adapts. Block rather than {@code inline-block}, so a second
+     * board never floats up beside the first on a wide pane.</p>
+     */
+    public record aw_board_host() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                display: block;
+                width: fit-content;
+                """;
+        }
+    }
+
+    /**
      * A square inside a grid cell, as opposed to one in a row of divs.
      *
      * <p>{@link aw_sq} cannot be used here and the reason is worth writing
@@ -833,7 +856,8 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
                 new aw_sq_ann(), new aw_sq_punct(), new aw_sq_run(),
                 new aw_sq_bold(), new aw_sq_marker(),
                 new aw_sq_indent(), new aw_sq_pad(),
-                new aw_cell(), new aw_strip(), new aw_strip_text(),
+                new aw_cell(), new aw_board_host(),
+                new aw_strip(), new aw_strip_text(),
                 new aw_tree(), new aw_node(),
                 new aw_d0(), new aw_d1(), new aw_d2(), new aw_d3(),
                 new aw_path(), new aw_name(), new aw_part(), new aw_id(),
