@@ -522,6 +522,28 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
     }
 
     /**
+     * A ring on whatever holds the keyboard, for panes with two things that do.
+     *
+     * <p>Set beside {@link aw_list} on the tree, because the tree and the grid
+     * now share a tab order and a reader has to be able to see which of them an
+     * arrow key will move. The grid needs nothing: its own cursor cell is
+     * outlined already, and that outline <i>is</i> where the keys are going.</p>
+     *
+     * <p>{@code :focus-visible} rather than {@code :focus}, so a click does not
+     * leave a ring behind. Somebody who clicked a row can see what they clicked;
+     * the ring is for somebody who arrived by Tab and has nothing else to go
+     * on.</p>
+     */
+    public record aw_focusable() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String pseudoState() { return ":focus-visible"; }
+        @Override public String body() { return """
+                outline: 2px solid var(--color-accent, var(--color-text-secondary));
+                outline-offset: -2px;
+                """;
+        }
+    }
+
+    /**
      * What the grid mounts into: it shrinks to its content instead of filling
      * the pane.
      *
@@ -856,7 +878,7 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
                 new aw_sq_ann(), new aw_sq_punct(), new aw_sq_run(),
                 new aw_sq_bold(), new aw_sq_marker(),
                 new aw_sq_indent(), new aw_sq_pad(),
-                new aw_cell(), new aw_board_host(),
+                new aw_cell(), new aw_board_host(), new aw_focusable(),
                 new aw_strip(), new aw_strip_text(),
                 new aw_tree(), new aw_node(),
                 new aw_d0(), new aw_d1(), new aw_d2(), new aw_d3(),

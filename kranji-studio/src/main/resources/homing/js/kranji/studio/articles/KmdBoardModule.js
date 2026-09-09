@@ -174,6 +174,18 @@ function createKmdBoard(opts) {
             return grid;
         },
 
+        /**
+         * Puts the keyboard on the grid.
+         *
+         * <p>Through the grid's own {@code focus}, not {@code table.focus()} —
+         * the table is tabbable but focusing it by hand does not take in this
+         * shell, and the grid knows where its cursor is and what to scroll.
+         * The reading app's board does the same thing for the same reason.</p>
+         */
+        focus: function () {
+            if (grid && grid.focus) { try { grid.focus(); } catch (e) {} }
+        },
+
         destroy: function () {
             if (grid && grid.destroy) { try { grid.destroy(); } catch (e) {} }
             grid = null;
