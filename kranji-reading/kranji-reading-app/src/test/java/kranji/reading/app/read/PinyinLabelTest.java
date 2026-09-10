@@ -101,4 +101,51 @@ class PinyinLabelTest {
         assertEquals(UNREADABLE + " · 五言(wǔ yán)",
                 PinyinLabel.sounded(UNREADABLE + " · 五言"));
     }
+
+    // ── When the principal is wrong for a title ────────────────────────
+
+    @Test
+    void aLabelMayGiveTheReadingItself() {
+        // 地's principal is de - the particle - because a principal is chosen
+        // over running text and the particle is everywhere in it. In a title
+        // it is almost always dì, and a title has no context to work that out
+        // from, so the label says so in the syntax an article already uses.
+        assertEquals("地图(dì tú)", PinyinLabel.sounded("地{dì}图"));
+        assertEquals("地图(de tú)", PinyinLabel.sounded("地图"),
+                "without an override the principal still stands");
+    }
+
+    @Test
+    void theBracesAreAnInstructionRatherThanContent() {
+        // What a reader sees must be the name, not the annotation's source.
+        assertEquals(-1, PinyinLabel.sounded("地{dì}图").indexOf('{'),
+                "an override must not reach the screen");
+    }
+
+    @Test
+    void anOverrideMayBeSpeltEitherWay() {
+        // The same two spellings an article's override accepts.
+        assertEquals(PinyinLabel.sounded("地{dì}图"), PinyinLabel.sounded("地{di4}图"));
+    }
+
+    @Test
+    void anOverrideAppliesToOneCharacterRatherThanTheRun() {
+        // The rest of the run keeps its principal, so a label overrides the
+        // character it is wrong about and nothing else.
+        assertEquals("扫地(sǎo dì)", PinyinLabel.sounded("扫地{dì}"));
+    }
+
+    @Test
+    void anOverrideThatIsNotASyllableSilencesTheRun() {
+        // Same rule as an unreadable character: a label that says nothing is
+        // honest, and one that says something wrong is not. Nothing throws -
+        // a typo in a catalogue must not take the tree down.
+        assertEquals("地图", PinyinLabel.sounded("地{nonsense}图"));
+    }
+
+    @Test
+    void anOverrideWorksInsideALongerLabel() {
+        assertEquals("绕口令(rào kǒu lìng) · 长句(cháng jù)",
+                PinyinLabel.sounded("绕口令 · 长{cháng}句"));
+    }
 }
