@@ -12,11 +12,19 @@ codebase refuses everywhere else.
 
 `.txt` articles are unaffected, for ever. The file extension chooses the parser.
 
+**And the extension is `.kmd`, not `.md`.** What this document specifies is not
+CommonMark: it adds five things markdown has no way to say, and it *refuses*
+tables, links, images and raw HTML rather than passing them through. A file
+named `.md` tells everything downstream — an editor, a viewer, a linter, the
+next person's script — that it is markdown, and each of them is then quietly
+wrong about all of it. The cost is one line of editor configuration to get
+highlighting back; what it buys is a name that is true.
+
 ---
 
 ## The conflict you must know about first
 
-> **In `.md`, a line break inside a paragraph means nothing.**
+> **In markdown, a line break inside a paragraph means nothing.**
 
 The `.txt` format says *one line is a paragraph and several lines are a verse*,
 so a poem needs no markup at all. Markdown says the opposite: consecutive lines
@@ -24,7 +32,7 @@ are one paragraph, and every renderer in the world joins them.
 
 We follow markdown, because a file that previews wrongly in every other tool is
 not markdown. **A poem therefore needs a fence** — extension E4 below. This is
-the one place where moving a `.txt` article to `.md` changes its meaning, and it
+the one place where moving a `.txt` article to `.kmd` changes its meaning, and it
 changes it silently unless you know.
 
 ---
@@ -56,8 +64,8 @@ changes it silently unless you know.
 | Syntax | Verdict | Becomes |
 |---|---|---|
 | `字{dì}` | keep — **E1** | the reading of that character |
-| `‹text›` | keep — **E3** | a non-Chinese run, *n* squares wide |
-| non-Chinese, **unwrapped** | **error** — E3 | — the author is told to write `‹…›` |
+| `‹text›` | keep — **E3** | optional; marks where `*italic*` applies |
+| non-Chinese, **unwrapped** | keep | a run — one square, whatever its length |
 | `**bold**` | keep — **E5** | emphasis, `strong` |
 | `*italic*` **inside `‹…›`** | keep — **E5** | emphasis, `em` |
 | `*italic*` **anywhere else** | **drop, warn** | the text, unemphasised |
@@ -132,53 +140,85 @@ Everything between them is ordinary typography.
 The delimiters are markup: they do not appear in the reading. Inside, `**bold**`
 and `*italic*` are parsed and kept.
 
-#### Why it is delimited, and not detected
+#### Why it is detected, and what the delimiters are still for
 
-The obvious alternative is to take any maximal run of non-Han as a run
-automatically — the scanner already groups that way. **It cannot work, and the
-reason is emphasis.**
+This section used to argue the opposite — that runs *could not* be detected and
+had to be marked — and the argument was right about the wrong stage. It went:
+`**` is itself non-Han, so in `属于 **Premier** 之外` the maximal non-Han stretch
+is ` **Premier** ` *including the asterisks*, and detection cannot tell a marker
+from the text it marks.
 
-`**` is itself non-Han. In `属于 **Premier** 之外`, the maximal non-Han run is
-` **Premier** ` *including the asterisks*, so the marker and its content land in
-the same undifferentiated blob. Automatic detection cannot tell the emphasis
-from the text it emphasises, which is exactly the distinction E3 exists to make.
-A delimiter that is not markdown syntax settles it: what is inside is parsed,
-what is outside is not.
+True of the **raw line**. Detection does not happen there. By the time squares
+are built, emphasis has already been parsed into spans, and a run is a maximal
+stretch of one span that is neither Han nor a mark — so the asterisks are long
+gone and `Premier` is a run with `strong` on it. The objection was about
+scanning text; the scanner works on structure.
 
-#### It is required, and the whitelist is short
+So `‹…›` is not needed to *find* a run, and is not needed to size one either.
+What it is still for is E5: inside it, `*italic*` means italic, because the
+words in it are the kind that italicise. That is the whole of its remaining
+job — and it is enough to keep it.
 
-**Anything not Chinese and not a mark is an error unless it is wrapped.** Not a
-warning: a square holds one character, so something has to decide that
-`markdown` is one word rather than eight things, and the only party who can say
-so is the author. Inferring it worked and was still a guess.
+#### It used to be required. It is not any more
+
+**This is the biggest thing that has changed about the subset, so it is worth
+stating what it was.** Anything not Chinese and not a mark was an **error**
+unless it was wrapped. Not a warning — the argument was that a square holds one
+character, so something has to decide that `markdown` is one word rather than
+eight things, and the only party who can say so is the author.
 
 ```
-会像 markdown 那样接在一起。      ← error: write ‹markdown›
-Valve 在 1999 年做了 Beta 版。     ← three errors, one per stretch
+会像 markdown 那样接在一起。      ← was an error: write ‹markdown›
+Valve 在 1999 年做了 Beta 版。     ← was three errors, one per stretch
 ```
 
-The error names the fix rather than the offence — *"'markdown' is not Chinese
-and is not wrapped; write ‹markdown›"* — and comes once per contiguous stretch,
-so eight letters are one error.
+The argument was sound and its premise stopped being true. **A 字 is a square, a
+mark is a square, and everything else is a *run* in one square** — so nobody has
+to decide how wide `markdown` is, because it is one, the same as `T`.
 
-Two groups need no delimiters, and between them they cover every non-Han
-character a Chinese sentence normally contains:
+So all of this now renders exactly as written, and `‹…›` is **optional
+markup**. What it still does is E5: it is the only place `*italic*` means
+anything, because Latin italicises and Chinese does not.
 
 | | | |
 |---|---|---|
-| **Marks** | `。，、！？：；…` `）】》」』’”` `（【《「『‘“` `—` `―` `～` `·` `／` | 每个标点占一格 — each takes a square, like every other mark on 稿纸 |
+| **A 字** | 一 | one square |
+| **A mark** | `。` `—` `（` | one square each, 每个标点占一格 |
+| **A run** | `markdown` `1999` `Dust II` | **one square, whatever its length** |
 | **The delimiters** | `‹` `›` | markup; they never reach the page |
 
-**That table is `Mark`, and `Mark` is what the parser asks.** The list of marks
-and the list of things needing no delimiters are the same list by construction
-rather than by two people agreeing — see *A typed model for the marks* below.
+A run is a maximal stretch that is neither Han nor a mark, and it ends at the
+next one of those or at an emphasis boundary — so `**Pre**mier` is two runs,
+which is rare and better than a square holding two weights. Its own spacing is
+kept and the ends are stripped: `Dust II` is one run holding its space, because
+that space is inside the word; the space between the run and 的 is not, because
+that is the gap two squares already have.
 
-**Digits are on neither side, deliberately.** `1999` is four characters and one
-word, so it wants wrapping like any other; on 稿纸 numerals are written two to
-a square, and until that is implemented `‹1999›` is a run two squares wide.
+#### The single cell is temporary, and known to be
 
-Latin punctuation stays inside its run: the full stop in `‹Dust II.›` belongs to
-the Latin, not to the page.
+One square cannot show `Apartments`. What it shows is a **placeholder** — the
+first character and an ellipsis — with the whole word on the cell, so a hover or
+a selection says what it is. A blank box would be worse than useless: three of
+them in a sentence and nothing tells them apart.
+
+The arrangement this stands in for is a run spanning as many **merged cells** as
+it has characters. RelationGrid cannot merge yet. When it can, the width becomes
+a rendering choice — 1 or *n* — and neither the detection nor anything else in
+the model has to move, which is the whole reason detection is defined here as a
+fact about the document rather than about pixels.
+
+**The reason is not density.** Measured on the Italy article, the most
+Latin-heavy document there is: 178 of 2,857 squares are foreign, so collapsing
+every run saves 137 squares — about 4%, some seven rows in 172. The reason is
+that a foreign word is one thing to *read* and not ten characters to *practise*,
+and giving each letter a box says it is a 字.
+
+What went with the rule is a good deal of machinery: a run was one unit several
+squares wide, measured against a Helvetica advance table, placed whole, moved
+whole when it did not fit, hyphenated when it could never fit, and backed by
+placeholder squares because RelationGrid has no merged cells. Marks shared boxes
+and hung past the margin. **A rule that fits in one sentence beat a model that
+needed six**, and it costs the author nothing to write.
 
 #### A typed model for the marks
 
@@ -199,8 +239,8 @@ one square and how `（` ended up stranded at a margin.
 | `DOUBLED` — `—` `―` `…` | alone | no | yes |
 | `JOINER` — `～` `·` `／` | alone | no | yes |
 
-Marks share a square only with their own **side**, which is why `”。` packs and
-`”“` does not. `ALONE` shares with nothing.
+The `side` column is gone from the code: it said which marks shared a square,
+and nothing shares one now. What is left is the two 禁则 columns.
 
 `DOUBLED.mayBeginLine = false` is the field to look at if it ever seems wrong.
 The strict rule in GB/T 15834 is only that `——` must not be *split* across two
@@ -228,37 +268,41 @@ existed only to paper over it — one making a bracket join its run, one making
 characters wide. **Both are gone.** No full-width mark is inside a run at all
 any more.
 
-#### Two marks in a square
+#### One mark, one square
 
-`”。` goes in one box, because two boxes there leaves a hole in the line — which
-is what a hand does. Adjacent marks **of the same class** share a square, up to
-`GridPlanner.MAX_MARKS`: two is the ordinary case and three is the squeeze.
+Marks used to double up: `”。` went in one box, because two boxes there leaves a
+hole in the line, and that is genuinely what a hand does on 稿纸. Up to three
+would share, of the same class only.
 
-Same class only. `’”` close together and `“‘` open together, but a `“` starting
-the next quotation gets its own square, because it belongs to what follows
-rather than to what came before.
+**They do not any more.** One character, one square, marks included — and where
+the author wrote two marks there are now two boxes, hole and all. What that
+bought is that a mark's square no longer depends on what happens to be beside
+it, which was the source of most of the arrangement's complexity.
 
-`—` `―` `…` `～` `·` `／` never share. 破折号 and 省略号 are written double,
-`——` and `……`, and each half fills a square; packing them would turn a dash
-into a hyphen.
+#### 禁则, which now has to be written down
 
-#### 禁则, and the paper trick
+A mark must not begin a line. This used to come free: **a mark that found no
+room hung past the right edge**, the row's last cell running a little wider to
+take it — which is what you do writing a composition when a full stop arrives at
+the margin. Nothing moved, so a row's contents never depended on what came after
+them, and `——` could not be split because the second dash hung beside the first.
 
-A mark must not begin a line. Rather than push the character before it down, or
-squeeze the mark into that character's box, **a mark that finds no room hangs
-past the right edge** and the row's last cell runs a little wider to take it.
+With every mark in a square of its own, hanging is gone and the rule has to move
+something:
 
-That is not an invention. It is what you do writing a composition when a full
-stop arrives at the margin: carry on past the ruling rather than start the next
-line with it. And it is why the rule needs almost no code — nothing moves, so a
-row's contents never depend on what comes after them.
+- A **closing** mark belongs to what precedes it, so the character before it
+  comes down *with* it. Not just one character: the whole trailing run of
+  closing marks and the square they all attach to, or solving `。` would leave
+  `”` at the head of a row instead.
+- An **opening** mark belongs to what follows it, so one left at the end of a
+  row is carried onto the next.
 
-One rule comes free with it: `——` cannot be split across rows, because the
-second dash hangs beside the first instead of opening the next row.
+`——` still cannot be split, but for a different reason: the second dash drags
+the first down under the closing rule.
 
-The other half of 禁则 needs one line. An opening mark must not *end* a row, and
-hanging cannot help — the mark belongs to what follows it, and what follows is
-on the next row — so one that would land last moves down instead.
+Neither can be decided where the mark is placed — whether `（` ends a row depends
+on what comes after it, and whether `。` begins one depends on what came before —
+so both are decided at the row boundary, which is the only place that knows.
 
 #### Why these two characters
 
@@ -278,23 +322,22 @@ definition — CommonMark does no emphasis parsing inside one — so
 extension is for. **Backticks are now simply an error**, like any other
 construct not listed above.
 
-#### Width: a run is *n* squares
+#### Width: a run has none, because a character is a square
 
-A run occupies `ceil(runWidth / cellWidth)` squares, measured from the text
-rather than from its character count — `Apartments` is not ten squares, it is
-however many its rendered width needs, which at a 62px cell holding a 42px
-glyph is 3.46, so four. `SquareWidth` computes this from Helvetica advances and
-the workbench confirms it against a real browser font: 3.51 drawn.
+A run used to occupy `ceil(runWidth / cellWidth)` squares, measured from its
+rendered text rather than its character count — `Apartments` was not ten squares
+but 3.46 of them at a 62px cell holding a 42px glyph, so four. `SquareWidth`
+computed that from a Helvetica advance table, and the workbench confirmed it
+against a real browser: 3.51 drawn, every ceiling agreeing.
 
-**Any non-Chinese sequence, not only a marked one.** `‹…›` says the author
-meant these letters as one unit; it does not say how wide they are. A bare
-`markdown` needs the same four squares whether or not anybody wrapped it, and
-giving it one was a bug that overflowed into the characters beside it. What the
-marking changes is what a workbench can point at.
+**That is all gone.** `Apartments` is ONE square, and so is `T`.
+The measurement was accurate, validated, and answering a question nobody needs
+asked once a square holds one character — so `SquareWidth` is deleted rather
+than left sitting there looking like wiring.
 
-**Everything up to the final render works on this today.** Parsing, the token
-model, segmentation, the census and the length count all treat the run as
-one unit with a width; nothing about them waits on the grid.
+What went with it: the run's width, the `Cont` placeholders that made up its
+claim, moving a run whole to the next row, and hyphenating one too wide for any
+row. A row is full when it has as many squares as it has columns.
 
 The render does wait. `RelGridCellsModule` builds one `div` per column and
 `RelGridLayoutModule` sizes them through `<col>` elements — there is no span or
@@ -320,7 +363,7 @@ table.
 
 The duplication is real and deliberate: the reader's model describes squares
 that are all one wide, and widening it is a change to the product that ought to
-wait until the product serves `.md`. When it does, `Token.Run` is still the
+wait until the product serves `.kmd`. When it does, `Token.Run` is still the
 right shape and `Square.Run` is what it will be built from.
 
 #### Placeholders, until the grid can merge

@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 /**
@@ -57,7 +58,7 @@ public final class ArticleGeneratorMain {
 
         List<Draft> read = read(drafts);
         if (read.isEmpty()) {
-            System.err.println("no .md drafts in " + drafts.toAbsolutePath());
+            System.err.println("no .kmd drafts in " + drafts.toAbsolutePath());
             System.exit(2);
             return;
         }
@@ -80,19 +81,33 @@ public final class ArticleGeneratorMain {
         System.out.println(read.size() + " draft(s) -> " + result.files().size() + " file(s)");
     }
 
-    /** Every {@code .md} in the folder, in name order so a run is repeatable. */
+    /**
+     * Every {@code .kmd} under the folder, in path order so a run is repeatable.
+     *
+     * <p>A draft is named by where it sits rather than by its file name, so a
+     * problem in {@code gushi/tang/deng-guan.kmd} says which one that is. The
+     * folder is a tree for the author's sake and nothing more — it says nothing
+     * about the address anything publishes under.</p>
+     */
     private static List<Draft> read(Path dir) throws IOException {
         if (!Files.isDirectory(dir)) return List.of();
-        try (Stream<Path> files = Files.list(dir)) {
+        try (Stream<Path> files = Files.walk(dir)) {
             var out = new ArrayList<Draft>();
-            files.filter(p -> p.toString().endsWith(".md")).sorted().forEach(p -> {
-                try {
-                    out.add(new Draft(p.getFileName().toString(),
-                                      Files.readString(p, StandardCharsets.UTF_8)));
-                } catch (IOException e) {
-                    throw new UncheckedIOException("could not read " + p, e);
-                }
-            });
+            files.filter(Files::isRegularFile)
+                 .map(p -> dir.relativize(p).toString().replace('\\', '/'))
+                 .filter(p -> p.toLowerCase(Locale.ROOT).endsWith(MdSourceFolder.EXTENSION))
+                 // The editor skips hidden folders, and a generator that saw
+                 // one more draft than the editor shows would be a puzzle.
+                 .filter(p -> !p.startsWith(".") && !p.contains("/."))
+                 .sorted()
+                 .forEach(p -> {
+                     try {
+                         out.add(new Draft(p, Files.readString(dir.resolve(p),
+                                                               StandardCharsets.UTF_8)));
+                     } catch (IOException e) {
+                         throw new UncheckedIOException("could not read " + dir.resolve(p), e);
+                     }
+                 });
             return List.copyOf(out);
         }
     }

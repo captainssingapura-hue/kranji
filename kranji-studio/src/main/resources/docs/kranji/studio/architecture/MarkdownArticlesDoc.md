@@ -143,7 +143,7 @@ That property is load-bearing at 608 articles — it is why the whole library ca
 be listed without opening a file. Segments come *from* the file, so something
 has to give.
 
-**Resolve it with codegen, not runtime parsing.** A build step reads the `.md`
+**Resolve it with codegen, not runtime parsing.** A build step reads the `.kmd`
 and emits the section catalogue as Java. Listing stays parse-free, authors keep
 one file, and the repository already has `kranji-codegen` plus the seed-digest
 precedent for *generated output must match its source or the build fails*.
@@ -209,7 +209,7 @@ truth and **require the `#` line to match it**, checked at build — readable
 file, one identity, no drift.
 
 **Parse at serve time, not as a build step.** Chosen by file extension, in the
-same `ArticleParser` family. A build-time `.md → .txt` conversion means two
+same `ArticleParser` family. A build-time `.kmd → .txt` conversion means two
 files per article and authors editing the wrong one. This is separate from the
 *catalogue* codegen above: the section index is generated, the body is not.
 
@@ -223,7 +223,7 @@ files per article and authors editing the wrong one. This is separate from the
 3. ~~**Segmentation**~~ — `Segments` builds the tree and the figures above are
    measured rather than estimated.
 4. ~~**The generator**~~ — `ArticleGenerator` and `ArticleGeneratorMain`. A
-   folder of `.md` becomes one JSON resource per section beside a catalogue in
+   folder of `.kmd` becomes one JSON resource per section beside a catalogue in
    Java, so listing never parses and nothing parses markdown at request time —
    by the time a reader asks, there is no markdown left. It writes nothing while
    anything is wrong, because a half-generated library is worse than none.
@@ -234,6 +234,17 @@ files per article and authors editing the wrong one. This is separate from the
    it for ever after, gets the same guarantee and leaves the file alone. The
    workbench shows which headings still need one.
 
+   An address is the **path** of slugs from the document down —
+   `yu.yang-zi.qian-hou`. `LocalId` is a dotted name already, so this is the
+   address the model was built for rather than a new one. What it buys is that
+   uniqueness becomes a question about **siblings**, which is local, rather than
+   about the whole collection, which would be a registry: two chapters may each
+   have a 前后 and neither author has to know about the other. The only ids that
+   must be unique across a collection are the documents' own — and those are
+   siblings too, of each other. One consequence is worth stating: a heading with
+   no prose of its own must still be pinned when anything under it has some,
+   because its slug is a segment of its children's addresses.
+
 ### What the generator did not do
 
 - **The reader cannot read the output yet.** `ArticleRef.resource` now names a
@@ -242,9 +253,13 @@ files per article and authors editing the wrong one. This is separate from the
   next piece, and it is where the format machinery has to leave
   `kranji-studio` — `MdSubsetParser` and friends live there because that is
   where they were needed first, not because that is where they belong.
-- **The tree is flattened.** A `###` under a `##` becomes another article in the
-  same ordered collection. `ArticleSeries` is what restores the nesting, and it
-  is still the third case the sealed `ArticleEntry` wants.
+- **The catalogue is still flat.** A `###` under a `##` becomes another article
+  in the same ordered collection, because an `ArticleRef` has no notion of being
+  under anything. What changed is that the *address* now carries the nesting —
+  `yu.yang-zi.qian-hou` says where it sits — so the tree is recoverable from the
+  ids, where before it lived only in the index's levels. `ArticleSeries` is what
+  would make the catalogue itself say it, and it is still the third case the
+  sealed `ArticleEntry` wants.
 - **It is a CLI, not a build binding.** Nothing runs it automatically. The
   digest precedent — *generated output must match its source or the build
   fails* — applies here and is not yet applied.

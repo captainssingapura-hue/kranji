@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * <p>{@code SeedIsImmutableTest} hashes what is committed rather than
  * regenerating it, because its generator needs an 8MB Unihan drop that is not
  * tracked — a regenerate-and-diff there would pass by being skipped on every
- * clean checkout. Here the input <i>is</i> tracked: {@code mvp-source.md} sits
+ * clean checkout. Here the input <i>is</i> tracked: {@code mvp-source.kmd} sits
  * beside the output it produced, so this can ask the stronger question.</p>
  *
  * <p>What it protects against is the ordinary thing: somebody improves the
@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class MvpIsCurrentTest {
 
-    private static final Path SOURCE = Path.of("src/test/resources/samples/mvp-source.md");
+    private static final Path SOURCE = Path.of("src/test/resources/samples/mvp-source.kmd");
     private static final Path COMMITTED = Path.of("src/main/resources");
 
     /** Exactly the arguments {@code ArticleGeneratorMain} was given. */
@@ -111,9 +111,9 @@ class MvpIsCurrentTest {
         assertEquals(5, children.size(), "the document's prose and four sections");
 
         var yangZi = children.getJsonObject(2);
-        assertEquals("yang-zi", yangZi.getString("segment"));
+        assertEquals("yu.yang-zi", yangZi.getString("segment"));
         assertEquals(1, yangZi.getJsonArray("children").size(), "二之一 sits under it");
-        assertEquals("qian-hou",
+        assertEquals("yu.yang-zi.qian-hou",
                 yangZi.getJsonArray("children").getJsonObject(0).getString("segment"));
     }
 
@@ -132,7 +132,7 @@ class MvpIsCurrentTest {
     void aSectionComesBackArrangedAndNeverAsMarkdown() {
         // The whole path: a resource holding structure, read and laid into
         // rows. Nothing between the source and here has seen markdown.
-        String served = MvpSectionGetAction.section("gu-ren", 20);
+        String served = MvpSectionGetAction.section("yu.gu-ren", 20);
 
         assertTrue(served.contains("\"plan\":"), served);
         assertTrue(served.contains("\"columns\":20"), served);
@@ -150,8 +150,8 @@ class MvpIsCurrentTest {
 
     @Test
     void aNarrowerPageIsADifferentArrangementOfTheSameSection() {
-        String wide = MvpSectionGetAction.section("yang-zi", 20);
-        String narrow = MvpSectionGetAction.section("yang-zi", 10);
+        String wide = MvpSectionGetAction.section("yu.yang-zi", 20);
+        String narrow = MvpSectionGetAction.section("yu.yang-zi", 10);
 
         assertFalse(wide.equals(narrow), "the arrangement depends on the reader");
         assertTrue(narrow.contains("\"columns\":10"));

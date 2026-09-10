@@ -22,23 +22,37 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * The cell rule as the browser applies it.
+ * The format as the browser reads it.
  *
- * <p>The rule moved to JavaScript when the wire stopped carrying pre-assembled
- * cells, so it is tested the way the Java was: on GraalVM, under plain JUnit,
- * in the same build. {@link #agreesWithTheJavaItWasPortedFrom} is the one that
- * matters — it reads both implementations over the real articles rather than
- * over cases I thought to invent.</p>
+ * <p>Both rules moved to JavaScript when the wire stopped carrying a parse:
+ * the block rule of {@code ArticleParser} and the cell rule of {@code Cells}.
+ * They are tested the way the Java was — on GraalVM, under plain JUnit, in the
+ * same build. {@link #theJsParseOfTheRawFileAgreesWithTheJavaOne} is the one
+ * that matters: it runs both parsers over the real articles, from the file
+ * down, rather than over cases I thought to invent.</p>
  */
 class ArticleScannerTest extends JsModuleTestBase {
 
     private static final String MODULE =
             "/homing/js/kranji/reading/app/read/ArticleScannerModule.js";
 
+    /**
+     * The scanner's one import: it canonicalises an authored reading, because
+     * the wire carries the file as written and {@code dì} has to become
+     * {@code di4} before anything below the display layer sees it.
+     *
+     * <p>Loaded by hand here because this harness resolves nothing — in the
+     * browser the module manifest does it. Mirroring that is the price of
+     * testing the module rather than a copy of it.</p>
+     */
+    private static final String SWF =
+            "/homing/js/kranji/reading/app/ui/PinyinSwfModule.js";
+
     private Value scanner;
 
     @BeforeEach
     void load() {
+        loadModule(SWF);
         loadModule(MODULE);
         scanner = global("createArticleScanner").execute();
     }
@@ -114,7 +128,8 @@ class ArticleScannerTest extends JsModuleTestBase {
         List<Value> cells = scan("地{dì}上");
         assertEquals(2, cells.size(), "the braces are syntax, not a cell");
         assertEquals("地", member(cells.get(0), "z"));
-        assertEquals("dì", member(cells.get(0), "r"));
+        assertEquals("di4", member(cells.get(0), "r"),
+                "canonicalised on the way in: the file says dì, the system says di4");
         assertTrue(cells.get(0).getMember("o").asBoolean());
         assertEquals("上", member(cells.get(1), "z"));
         assertFalse(cells.get(1).hasMember("r"),
@@ -125,7 +140,8 @@ class ArticleScannerTest extends JsModuleTestBase {
     void anAuthoredReadingSurvivesTrailingPunctuation() {
         List<Value> cells = scan("地{dì}。");
         assertEquals(1, cells.size());
-        assertEquals("dì", member(cells.get(0), "r"));
+        assertEquals("di4", member(cells.get(0), "r"),
+                "canonicalised on the way in: the file says dì, the system says di4");
         assertEquals("。", member(cells.get(0), "p"));
     }
 
@@ -147,18 +163,48 @@ class ArticleScannerTest extends JsModuleTestBase {
     // ── Parity with the model ──────────────────────────────────────────
 
     @Test
-    void agreesWithTheJavaItWasPortedFrom() {
+    void theJsParseOfTheRawFileAgreesWithTheJavaOne() {
+        // The golden parse check — the thing that lets /article send the file.
+        //
+        // The server used to parse on the way out, so the wire was proof the
+        // article was readable. It does not any more: it resolves an address,
+        // reads the resource and quotes it. The check that used to happen once
+        // per request now happens once per build, here, over the whole corpus
+        // rather than over cases I thought to invent.
+        //
+        // It runs from the SOURCE down: blocks first, then the cells of every
+        // line. Blocks are ArticleParser's rule and cells are Cells' rule, and
+        // both are ported, so both are compared. Nothing reconstructs a source
+        // line — a reconstruction is exactly what was removed.
         int linesChecked = 0;
         for (ArticleCollection collection : DemoLibrary.INSTANCE.tree().collections()) {
           for (ArticleRef ref : collection.articles()) {
+            String source = Articles.sourceOf(ref).orElseThrow();
             Article article = Articles.read(collection.address(ref.id()), ref)
                                       .orElseThrow().orThrow();
-            for (Block block : article.blocks()) {
-                for (List<Token> tokens : linesOf(block)) {
-                    List<Cell> java = Cells.of(tokens);
-                    String source = render(java);
-                    assertEquals(describe(java), describeJs(scan(source)),
-                            () -> "the scanner disagrees with Cells on: " + source);
+
+            Value jsBlocks = scanner.getMember("blocks").execute(source);
+            List<Block> blocks = article.blocks();
+            assertEquals(blocks.size(), (int) jsBlocks.getArraySize(),
+                    () -> "the two parsers disagree on how many blocks " + ref.id()
+                        + " has");
+
+            for (int b = 0; b < blocks.size(); b++) {
+                Block block = blocks.get(b);
+                Value js = jsBlocks.getArrayElement(b);
+                assertEquals(kindOf(block), js.getMember("kind").asString(),
+                        () -> "block kind differs in " + ref.id());
+
+                List<List<Token>> javaLines = linesOf(block);
+                List<String> jsLines = linesOfJs(js);
+                assertEquals(javaLines.size(), jsLines.size(),
+                        () -> "line count differs in a block of " + ref.id());
+
+                for (int l = 0; l < javaLines.size(); l++) {
+                    String line = jsLines.get(l);
+                    assertEquals(describe(Cells.of(javaLines.get(l))),
+                                 describeJs(scan(line)),
+                            () -> "the scanner disagrees with Cells on: " + line);
                     linesChecked++;
                 }
             }
@@ -166,6 +212,44 @@ class ArticleScannerTest extends JsModuleTestBase {
         }
         assertTrue(linesChecked >= 40,
                 "expected the bundled articles to contribute lines, got " + linesChecked);
+    }
+
+    @Test
+    void everyReadingIsCanonicalWhenTheFileIsScannedAsWritten() {
+        // The check that lets the wire carry the file unchanged.
+        //
+        // It used to be the server's: /article parsed the source and rebuilt
+        // each line from tokens, and the rebuild wrote the canonical form. On
+        // the bundled articles that rewrote 26 lines in 88 - every one an
+        // authored reading, dì becoming di4. Send the file instead and the
+        // diacritic arrives at a cell, which is exactly where PinyinSwfModule
+        // says it must never be: below the display layer a reading is a key,
+        // in IndexedDB and in a Java registry, and two spellings are two keys.
+        //
+        // So the scanner canonicalises, and this is what says it did. Scanned
+        // from the SOURCE rather than from a reconstruction of it, because a
+        // reconstruction is the thing being removed.
+        Value swf = global("createPinyinSwf").execute();
+        int authored = 0;
+
+        for (ArticleCollection collection : DemoLibrary.INSTANCE.tree().collections()) {
+            for (ArticleRef ref : collection.articles()) {
+                String source = Articles.sourceOf(ref).orElseThrow();
+                for (String line : source.split("\\R")) {
+                    if (line.isBlank()) continue;
+                    for (Value cell : scan(line.strip())) {
+                        String reading = member(cell, "r");
+                        if (reading == null) continue;
+                        authored++;
+                        assertTrue(swf.getMember("isCanonical").execute(reading).asBoolean(),
+                                () -> "'" + reading + "' reached a cell uncanonicalised, "
+                                    + "from: " + line.strip());
+                    }
+                }
+            }
+        }
+        assertTrue(authored >= 20, "the bundled articles should carry authored readings, "
+                + "or this passes by finding none: " + authored);
     }
 
     private static List<List<Token>> linesOf(Block block) {
@@ -176,24 +260,25 @@ class ArticleScannerTest extends JsModuleTestBase {
         };
     }
 
-    /** The source line these cells were written from. */
-    private static String render(List<Cell> cells) {
-        var sb = new StringBuilder();
-        for (Cell cell : cells) {
-            switch (cell) {
-                case Cell.Char c -> sb.append(zi(c.character()));
-                case Cell.CharWithPunctuation c ->
-                        sb.append(c.leading()).append(zi(c.character())).append(c.trailing());
-                case Cell.Plain p -> sb.append(p.text());
-            }
-        }
-        return sb.toString();
+    private static String kindOf(Block block) {
+        return switch (block) {
+            case Block.Paragraph p -> "p";
+            case Block.Verse v -> "verse";
+            case Block.Illustration i -> "img";
+        };
     }
 
-    private static String zi(Token.Zi zi) {
-        return zi.authored()
-                ? zi.zi().value() + "{" + zi.reading().toDiacritic() + "}"
-                : zi.zi().value();
+    /** The lines of one block as the module returns them. */
+    private static List<String> linesOfJs(Value block) {
+        if ("p".equals(block.getMember("kind").asString())) {
+            return List.of(block.getMember("text").asString());
+        }
+        Value lines = block.getMember("lines");
+        var out = new ArrayList<String>();
+        for (long i = 0; i < lines.getArraySize(); i++) {
+            out.add(lines.getArrayElement(i).asString());
+        }
+        return out;
     }
 
     /** A comparable rendering of either side's cells. */
@@ -234,7 +319,7 @@ class ArticleScannerTest extends JsModuleTestBase {
         // the scanner is not expected to know them.
         return "lp=" + leading
              + " z=" + zi.zi().value()
-             + " r=" + (zi.authored() ? zi.reading().toDiacritic() : "")
+             + " r=" + (zi.authored() ? zi.reading().numbered() : "")
              + " p=" + trailing;
     }
 }

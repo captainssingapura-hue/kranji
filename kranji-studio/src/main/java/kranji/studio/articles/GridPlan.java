@@ -46,25 +46,14 @@ public record GridPlan(int columns, List<Row> rows) {
         }
 
         /**
-         * Grid positions used.
+         * Grid positions used, which is simply how many squares are in it.
          *
-         * <p>A run's head takes one position and its claim is made up by the
-         * {@link Square.Cont}s following it, so this counts squares rather than
-         * widths — {@link Square#width()} is what the wrapper budgets with.</p>
-         *
-         * <p>What hangs past the right edge is not a position. That is the
-         * point of hanging: the row is still {@code columns} wide and the last
-         * cell simply runs a little further, the way it does on paper when a
-         * full stop arrives at the margin.</p>
+         * <p>It was worth a method when it was not: a run's head took one
+         * position and claimed several, and a hanging mark took none at all.
+         * One character to a square makes it a count, and the method stays only
+         * because callers read better for it.</p>
          */
-        public int used() {
-            return (int) squares.stream().filter(s -> !s.hanging()).count();
-        }
-
-        /** The marks hanging past the right edge, if any. */
-        public List<Square> hanging() {
-            return squares.stream().filter(Square::hanging).toList();
-        }
+        public int used() { return squares.size(); }
     }
 
     /** How many rows the whole document came to. */

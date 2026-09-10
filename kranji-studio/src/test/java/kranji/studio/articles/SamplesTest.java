@@ -9,11 +9,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -46,20 +47,20 @@ class SamplesTest {
     private static final int WIDEST = 24;
 
     /**
-     * The drafts written to be refused.
+     * The drafts written to be refused. There are none left.
      *
-     * <p>Named here rather than kept in another folder, because the point of
-     * one is to be opened in the workbench and read alongside the error it
-     * produces.</p>
+     * <p>{@code unwrapped.kmd} was the only one, and what refused it - the rule
+     * that anything not Chinese had to be bracketed - is gone. The set stays
+     * because a sample written to be refused is still a thing worth having.</p>
      */
-    private static final Set<String> REJECTED = Set.of("unwrapped.md");
+    private static final Set<String> REJECTED = Set.of();
 
     private static List<Path> all() throws IOException {
         assertTrue(Files.isDirectory(SAMPLES), () -> "no samples at " + SAMPLES.toAbsolutePath());
         try (Stream<Path> files = Files.list(SAMPLES)) {
-            List<Path> md = files.filter(p -> p.toString().endsWith(".md")).sorted().toList();
-            assertFalse(md.isEmpty(), "the samples folder is empty");
-            return md;
+            List<Path> kmd = files.filter(p -> p.toString().endsWith(".kmd")).sorted().toList();
+            assertFalse(kmd.isEmpty(), "the samples folder is empty");
+            return kmd;
         }
     }
 
@@ -79,10 +80,9 @@ class SamplesTest {
         var sb = new StringBuilder();
         for (Square s : r.squares()) {
             if (s instanceof Square.Zi z)           sb.append(z.zi());
+            else if (s instanceof Square.Run run)   sb.append(run.text());
             else if (s instanceof Square.Marker m)  sb.append(m.text());
-            else if (s instanceof Square.Punct p)   sb.append(p.hanging() ? "|" : "").append(p.marks());
-            else if (s instanceof Square.Run run)   sb.append('[').append(run.text()).append(']');
-            else if (s instanceof Square.Cont)      sb.append('_');
+            else if (s instanceof Square.Punct p)   sb.append(p.mark());
             else                                    sb.append('.');
         }
         return sb.toString();
@@ -97,28 +97,30 @@ class SamplesTest {
     }
 
     @Test
-    void unwrappedTextIsRefusedAndTheErrorSaysWhatToWrite() throws IOException {
-        // Not a warning. A square holds one character, so nobody but the author
-        // can say that eight letters are one word - and a document that renders
-        // on a guess is a document nobody was asked about.
-        var parsed = parse(SAMPLES.resolve("unwrapped.md"));
+    void theSampleWrittenToBeRefusedIsNoLongerRefused() throws IOException {
+        // unwrapped.kmd exists because a bare `markdown` used to be an ERROR
+        // naming the fix: a square held one character, and nobody but the
+        // author could say that eight letters were one word.
+        //
+        // One character to a square answers that without asking. The file is
+        // kept, and what it now demonstrates is the opposite thing - that a
+        // draft nobody bracketed renders exactly as written.
+        var parsed = parse(SAMPLES.resolve("unwrapped.kmd"));
 
-        assertFalse(parsed.ok(), "it is written to be refused");
-        String said = String.join(" | ",
-                parsed.errors().stream().map(ParseFinding::message).toList());
+        assertTrue(parsed.ok(), () -> "should render now: " + parsed.errors());
+        assertEquals(List.<ParseFinding>of(), parsed.errors());
 
-        // One error per stretch, naming the fix rather than the offence.
-        assertTrue(said.contains("‹markdown›"), said);
-        assertTrue(said.contains("‹Valve›"), said);
-        assertTrue(said.contains("‹1999›"), said);
-        assertTrue(said.contains("‹3/5›"), said);
+        String drawn = drawn(GridPlanner.plan(parsed.blocks().orElseThrow(), 20));
+        assertTrue(drawn.contains("markdown"), drawn);
+        assertTrue(drawn.contains("Valve"), drawn);
+        assertTrue(drawn.contains("1999"), drawn);
     }
 
     @Test
     void aMarkNeedsNoDelimitersAndAnOverrideSurvivesTheCheck() throws IOException {
-        // The whitelist is Mark, so what needs wrapping and what does not are
-        // the same list. An override's reading is markup rather than content
-        // and must not be reported as loose Latin.
+        // Nothing needs wrapping any more, so the only way to fail this is a
+        // construct the subset genuinely refuses - a table, a link, raw HTML.
+        // An override.s reading is markup and must not be mistaken for one.
         for (Path file : samples()) {
             var parsed = parse(file);
             assertTrue(parsed.errors().isEmpty(),
@@ -128,11 +130,11 @@ class SamplesTest {
 
     @Test
     void theGeneratorRefusesASampleWhoseHeadingsHaveNoIds() throws IOException {
-        // blocks.md is written with unpinned headings, because the workbench
+        // blocks.kmd is written with unpinned headings, because the workbench
         // shows them as such. The generator is the other end of that: an
         // address it cannot find is one it will not invent.
-        var draft = new ArticleGenerator.Draft("blocks.md",
-                Files.readString(SAMPLES.resolve("blocks.md"), StandardCharsets.UTF_8));
+        var draft = new ArticleGenerator.Draft("blocks.kmd",
+                Files.readString(SAMPLES.resolve("blocks.kmd"), StandardCharsets.UTF_8));
         var result = ArticleGenerator.generate(List.of(draft),
                 ArticleGenerator.Options.of("x", "X", "x"));
 
@@ -159,19 +161,19 @@ class SamplesTest {
 
     @Test
     void noMarkEverBeginsARow() throws IOException {
-        // 禁则's first half. It should be impossible rather than checked - a
-        // mark with no room hangs instead of wrapping - so this is here to
-        // catch the day that stops being true.
+        // 禁则.s first half. It used to come free - a mark with no room hung
+        // past the edge rather than wrapping - and now the planner has to move
+        // the character before it down. Which makes this a real check.
         for (Path file : samples()) {
             var blocks = parse(file).blocks().orElseThrow();
             for (int columns = NARROWEST; columns <= WIDEST; columns++) {
                 for (Row r : GridPlanner.plan(blocks, columns).rows()) {
-                    List<Square> inside = inside(r);
+                    List<Square> inside = r.squares();
                     if (inside.isEmpty()) continue;
                     if (!(inside.get(0) instanceof Square.Punct first)) continue;
                     int width = columns;
-                    assertFalse(Cells.CLOSING.contains(first.first()), () -> file.getFileName()
-                            + " at " + width + "/row begins with " + first.marks() + ": " + said(r));
+                    assertFalse(Cells.CLOSING.contains(first.mark()), () -> file.getFileName()
+                            + " at " + width + "/row begins with " + first.mark() + ": " + said(r));
                 }
             }
         }
@@ -189,36 +191,15 @@ class SamplesTest {
                 List<Row> rows = GridPlanner.plan(blocks, columns).rows();
                 for (int i = 0; i < rows.size(); i++) {
                     Row r = rows.get(i);
-                    List<Square> inside = inside(r);
+                    List<Square> inside = r.squares();
                     if (inside.isEmpty()) continue;
                     // The author's own line ending is not a wrap. A bracket
                     // left open at the end of a paragraph is the author's.
                     if (i + 1 >= rows.size() || rows.get(i + 1).block() != r.block()) continue;
                     if (!(inside.get(inside.size() - 1) instanceof Square.Punct last)) continue;
                     int width = columns;
-                    assertFalse(Cells.OPENING.contains(last.first()), () -> file.getFileName()
-                            + " at " + width + "/row ends with " + last.marks() + ": " + said(r));
-                }
-            }
-        }
-    }
-
-    @Test
-    void nothingHangsExceptAtTheVeryEnd() throws IOException {
-        // Hanging is a placement past the right edge. One in the middle of a
-        // row would mean the arithmetic in Row.used() had stopped describing
-        // anything.
-        for (Path file : samples()) {
-            var blocks = parse(file).blocks().orElseThrow();
-            for (int columns = NARROWEST; columns <= WIDEST; columns++) {
-                for (Row r : GridPlanner.plan(blocks, columns).rows()) {
-                    List<Square> squares = r.squares();
-                    boolean hung = false;
-                    for (Square s : squares) {
-                        if (s.hanging()) { hung = true; continue; }
-                        assertFalse(hung, () -> file.getFileName() + ": a square follows one that "
-                                + "hangs past the edge: " + said(r));
-                    }
+                    assertFalse(Cells.OPENING.contains(last.mark()), () -> file.getFileName()
+                            + " at " + width + "/row ends with " + last.mark() + ": " + said(r));
                 }
             }
         }
@@ -254,16 +235,10 @@ class SamplesTest {
         for (Row r : plan.rows()) {
             for (Square s : r.squares()) {
                 if (s instanceof Square.Zi z)          sb.append(z.zi());
-                else if (s instanceof Square.Punct p)  sb.append(p.marks());
-                else if (s instanceof Square.Run run)  sb.append(run.text());
+                else if (s instanceof Square.Punct p)  sb.append(p.mark());
+                else if (s instanceof Square.Run run) sb.append(run.text());
             }
         }
         return sb.toString();
-    }
-
-    private static List<Square> inside(Row r) {
-        var out = new ArrayList<Square>();
-        for (Square s : r.squares()) if (!s.hanging()) out.add(s);
-        return out;
     }
 }

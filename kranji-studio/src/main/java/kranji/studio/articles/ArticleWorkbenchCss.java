@@ -93,8 +93,41 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         }
     }
 
-    public record aw_item() implements CssClass<ArticleWorkbenchCss> {
+    // ── The shelf of roots ─────────────────────────────────────────────
+
+    /** Where a root is typed in, above the list it joins. */
+    public record aw_shelf_bar() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
+                display: flex;
+                gap: var(--space-2, 8px);
+                padding: var(--space-2, 8px);
+                border-bottom: 1px solid var(--color-border);
+                """;
+        }
+    }
+
+    public record aw_shelf_input() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                flex: 1 1 auto;
+                min-width: 0;
+                border: 1px solid var(--color-border);
+                border-radius: 6px;
+                background: var(--color-surface);
+                color: var(--color-text-primary);
+                padding: 3px 8px;
+                font: inherit;
+                font-family: ui-monospace, monospace;
+                font-size: 12px;
+                """;
+        }
+    }
+
+    /** One folder on the shelf. */
+    public record aw_shelf_row() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                display: flex;
+                align-items: baseline;
+                gap: var(--space-2, 8px);
                 padding: 6px 8px;
                 border-radius: 6px;
                 cursor: pointer;
@@ -104,8 +137,12 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         }
     }
 
-    public record aw_item_on() implements CssClass<ArticleWorkbenchCss> {
+    /** The one the navigator is showing. */
+    public record aw_shelf_on() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
+                display: flex;
+                align-items: baseline;
+                gap: var(--space-2, 8px);
                 padding: 6px 8px;
                 border-radius: 6px;
                 cursor: pointer;
@@ -117,13 +154,45 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         }
     }
 
-    /** How big a draft is, in characters. Bytes would be 2.6x on Chinese. */
-    public record aw_size() implements CssClass<ArticleWorkbenchCss> {
+    /** The whole path, under the folder's name. */
+    public record aw_shelf_path() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
                 display: block;
                 font-size: 11px;
+                font-family: ui-monospace, monospace;
                 color: var(--color-text-muted);
-                font-variant-numeric: tabular-nums;
+                word-break: break-all;
+                """;
+        }
+    }
+
+    /**
+     * A root whose folder is not there.
+     *
+     * <p>Shown rather than dropped: a folder on a drive that is not mounted is
+     * still a root somebody chose, and quietly removing it would be the tool
+     * losing their work for them.</p>
+     */
+    public record aw_shelf_gone() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                font-size: 11px;
+                color: var(--color-status-warning, var(--color-text-muted));
+                """;
+        }
+    }
+
+    /** Take a folder off the shelf. The folder itself is untouched. */
+    public record aw_shelf_x() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                margin-left: auto;
+                appearance: none;
+                border: none;
+                background: none;
+                color: var(--color-text-muted);
+                cursor: pointer;
+                font: inherit;
+                line-height: 1;
+                padding: 0 4px;
                 """;
         }
     }
@@ -350,8 +419,7 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
      * One square: 34px, holding a 23px glyph.
      *
      * <p>The reader's medium is 62/42. This is the same 1.48 ratio at bench
-     * scale — {@link SquareWidth} computes against that ratio, so a run drawn
-     * here claims the squares it will claim in the reader.</p>
+     * scale, so what an author checks here is the shape a child will read.</p>
      */
     public record aw_sq() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
@@ -416,51 +484,23 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
         }
     }
 
-    /** Two or three marks sharing one square, side by side. */
-    public record aw_sq_pack() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                position: absolute;
-                inset: 0;
-                display: flex;
-                align-items: center;
-                padding-top: 7px;
-                """;
-        }
-    }
-
     /**
-     * One mark of a packed square.
+     * A run that is not Chinese: one square standing in for a whole word.
      *
-     * <p>Squeezed rather than shrunk. A smaller 。 is a different mark; a
-     * narrower one is the same mark written tight, which is what a hand does
-     * when it fits {@code ”，} into one box.</p>
-     */
-    public record aw_sq_half() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                flex: 1 1 0;
-                min-width: 0;
-                text-align: center;
-                font-size: 23px;
-                line-height: 1;
-                transform: scaleX(0.55);
-                """;
-        }
-    }
-
-    /**
-     * A square hanging past the right edge of its row.
+     * <p>Set in the body face rather than the reading face, and a shade lighter
+     * than a 字 — this is not a character to practise, and drawing it exactly
+     * as though it were 马 would say it was.</p>
      *
-     * <p>Narrower, and with no ruling between it and the square before it — so
-     * the row's last cell simply reads as a little fatter. That is what a
-     * person does when a full stop lands at the margin of a composition: carry
-     * on past the ruling rather than begin the next line with it.</p>
+     * <p>{@code cursor: help} is the only affordance a placeholder has. What it
+     * stands for is on the cell's title, and nothing else on the page says
+     * there is anything to hover.</p>
      */
-    public record aw_sq_hang() implements CssClass<ArticleWorkbenchCss> {
+    public record aw_sq_run() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
-                width: 22px;
-                border-left: 0;
-                margin-left: 0;
+                font-family: system-ui, sans-serif;
+                color: var(--color-text-secondary, var(--color-text-primary));
                 background: var(--color-surface-raised, var(--color-surface));
+                cursor: help;
                 """;
         }
     }
@@ -482,73 +522,108 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
     }
 
     /**
-     * A run's head.
+     * A ring on whatever holds the keyboard, for panes with two things that do.
      *
-     * <p>Its text overflows the box on purpose: the run owns the placeholders
-     * beside it, and spilling across them is the closest a grid with no merged
-     * cells can come to showing that it is one thing.</p>
+     * <p>Set beside {@link aw_list} on the tree, because the tree and the grid
+     * now share a tab order and a reader has to be able to see which of them an
+     * arrow key will move. The grid needs nothing: its own cursor cell is
+     * outlined already, and that outline <i>is</i> where the keys are going.</p>
+     *
+     * <p>{@code :focus-visible} rather than {@code :focus}, so a click does not
+     * leave a ring behind. Somebody who clicked a row can see what they clicked;
+     * the ring is for somebody who arrived by Tab and has nothing else to go
+     * on.</p>
      */
-    public record aw_sq_run() implements CssClass<ArticleWorkbenchCss> {
+    public record aw_focusable() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String pseudoState() { return ":focus-visible"; }
         @Override public String body() { return """
-                background: var(--color-surface-raised, var(--color-surface));
-                overflow: visible;
-                z-index: 1;
+                outline: 2px solid var(--color-accent, var(--color-text-secondary));
+                outline-offset: -2px;
                 """;
         }
     }
 
     /**
-     * A run's text, at the size the width was computed against.
+     * What the grid mounts into: it shrinks to its content instead of filling
+     * the pane.
      *
-     * <p>23px, the same as {@link aw_sq_zi} — and that is not a coincidence to
-     * be tidied away later. {@link SquareWidth} measures a run in ems of the
-     * text drawn <em>inside</em> a square and divides by 62/42; drawing it at
-     * any other size makes the squares view lie about the fit. It was 15px
-     * once, which left every run looking half the width it had claimed.</p>
+     * <p>{@code .hgr-table} is {@code width: 100%}, so a grid takes whatever
+     * it is given — and for a page of squares that means the squares stop
+     * being square the moment the pane is wider than twenty of them. Widening
+     * the window stretched every cell into a letterbox.</p>
+     *
+     * <p>{@code width: fit-content} makes the hundred per cent resolve against
+     * the content instead. The reader met this from the other side and its
+     * {@code kr_gr_host} says the same thing: the board is a fixed shape, not a
+     * layout that adapts. Block rather than {@code inline-block}, so a second
+     * board never floats up beside the first on a wide pane.</p>
      */
-    public record aw_sq_run_text() implements CssClass<ArticleWorkbenchCss> {
+    public record aw_board_host() implements CssClass<ArticleWorkbenchCss> {
         @Override public String body() { return """
-                position: absolute;
-                inset: 0;
+                display: block;
+                width: fit-content;
+                """;
+        }
+    }
+
+    /**
+     * A square inside a grid cell, as opposed to one in a row of divs.
+     *
+     * <p>{@link aw_sq} cannot be used here and the reason is worth writing
+     * down, because it looked like it could. That class carries a fixed box,
+     * its own hairline and {@code margin: -1px 0 0 -1px} — the negative margin
+     * being how adjacent <em>divs</em> in a flex row collapse their borders
+     * into one line. Put it inside a {@code td} and all three fight the table:
+     * the border doubles the grid's own hairline into what reads as a narrow
+     * empty column between every pair of characters, and the negative margin
+     * shifts the box a pixel over its neighbour so the cursor appears to cover
+     * two cells. Both were reported as bugs, and both were this class.</p>
+     *
+     * <p>So this one draws nothing structural. It sizes the cell — the grid
+     * takes its column width from what is inside — and is {@code relative} so
+     * that {@link aw_sq_zi} and {@link aw_sq_ann} have something to be absolute
+     * against. The ruling is the grid's own hairline, which is already there.</p>
+     */
+    public record aw_cell() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                position: relative;
+                box-sizing: border-box;
+                width: 34px;
+                height: 34px;
+                """;
+        }
+    }
+
+    /**
+     * The strip above the page: what the square under the cursor is not showing.
+     *
+     * <p>A run is one square holding a placeholder, because a word does not fit
+     * in a box. This is where the word goes, and it is above the page rather
+     * than beside the square because the grid is walked with arrow keys — a
+     * tooltip needs a pointer and a reader may not have one.</p>
+     *
+     * <p>It keeps its height when it is empty. A strip that collapsed would
+     * shift the whole page up every time the cursor left a run, which is a
+     * worse distraction than a blank line.</p>
+     */
+    public record aw_strip() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
+                flex: 0 0 auto;
                 display: flex;
                 align-items: center;
-                padding-top: 7px;
-                padding-left: 1px;
-                white-space: nowrap;
-                font-size: 23px;
-                line-height: 1;
+                min-height: 28px;
+                padding: 0 var(--space-3, 12px);
+                border-bottom: 1px solid var(--color-border);
+                """;
+        }
+    }
+
+    /** The word itself. Marked as standing in for something, not as a label. */
+    public record aw_strip_text() implements CssClass<ArticleWorkbenchCss> {
+        @Override public String body() { return """
                 font-family: system-ui, sans-serif;
-                """;
-        }
-    }
-
-    /** How many squares it asked for, and whether the page was too narrow. */
-    public record aw_sq_tag() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                position: absolute;
-                left: 1px;
-                top: 0;
-                font-size: 8px;
-                line-height: 1;
-                color: var(--color-accent, var(--color-text-muted));
-                font-variant-numeric: tabular-nums;
-                """;
-        }
-    }
-
-    /**
-     * A square a run claimed and cannot fill.
-     *
-     * <p>Hatched, so it reads as spoken for rather than as empty page. This is
-     * the placeholder that disappears when RelationGrid gains merged cells; it
-     * is drawn to be conspicuous because it is temporary.</p>
-     */
-    public record aw_sq_cont() implements CssClass<ArticleWorkbenchCss> {
-        @Override public String body() { return """
-                background: repeating-linear-gradient(
-                        135deg,
-                        transparent 0 4px,
-                        var(--color-border) 4px 5px);
+                font-size: 15px;
+                color: var(--color-accent, var(--color-text-primary));
                 """;
         }
     }
@@ -790,18 +865,21 @@ public record ArticleWorkbenchCss() implements CssGroup<ArticleWorkbenchCss> {
     public List<CssClass<ArticleWorkbenchCss>> cssClasses() {
         return List.of(
                 new aw_root(), new aw_head(), new aw_btn(), new aw_split(),
-                new aw_list(), new aw_item(), new aw_item_on(), new aw_size(),
+                new aw_list(),
+                new aw_shelf_bar(), new aw_shelf_input(), new aw_shelf_row(),
+                new aw_shelf_on(), new aw_shelf_path(), new aw_shelf_gone(),
+                new aw_shelf_x(),
                 new aw_main(), new aw_preview(), new aw_page(),
                 new aw_title(), new aw_h2(), new aw_h3(), new aw_pin(),
                 new aw_unpinned(), new aw_p(), new aw_li(), new aw_marker(),
                 new aw_quote(), new aw_verse(), new aw_vline(), new aw_run(),
                 new aw_ruby(), new aw_rt(), new aw_msg(),
                 new aw_sheet(), new aw_row(), new aw_sq(), new aw_sq_zi(),
-                new aw_sq_ann(), new aw_sq_punct(), new aw_sq_pack(), new aw_sq_half(),
-                new aw_sq_hang(), new aw_sq_bold(),
-                new aw_sq_marker(), new aw_sq_run(),
-                new aw_sq_run_text(), new aw_sq_tag(),
-                new aw_sq_cont(), new aw_sq_indent(), new aw_sq_pad(),
+                new aw_sq_ann(), new aw_sq_punct(), new aw_sq_run(),
+                new aw_sq_bold(), new aw_sq_marker(),
+                new aw_sq_indent(), new aw_sq_pad(),
+                new aw_cell(), new aw_board_host(), new aw_focusable(),
+                new aw_strip(), new aw_strip_text(),
                 new aw_tree(), new aw_node(),
                 new aw_d0(), new aw_d1(), new aw_d2(), new aw_d3(),
                 new aw_path(), new aw_name(), new aw_part(), new aw_id(),

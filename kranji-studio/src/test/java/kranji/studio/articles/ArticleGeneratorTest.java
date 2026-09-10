@@ -1,5 +1,7 @@
 package kranji.studio.articles;
 
+import io.vertx.core.json.JsonObject;
+import kranji.reading.library.LocalId;
 import kranji.studio.articles.ArticleGenerator.Draft;
 import kranji.studio.articles.ArticleGenerator.Emitted;
 import kranji.studio.articles.ArticleGenerator.Options;
@@ -34,7 +36,7 @@ class ArticleGeneratorTest {
     private static Result generate(String... sources) {
         var drafts = new java.util.ArrayList<Draft>();
         for (int i = 0; i < sources.length; i++) {
-            drafts.add(new Draft("draft" + (i + 1) + ".md", sources[i]));
+            drafts.add(new Draft("draft" + (i + 1) + ".kmd", sources[i]));
         }
         return ArticleGenerator.generate(drafts, OPTIONS);
     }
@@ -72,11 +74,14 @@ class ArticleGeneratorTest {
     void aDraftTheSubsetRefusesStopsTheWholeRun() {
         // Nothing is written while a problem stands. A half-generated library
         // is worse than none, because the half that generated looks finished.
-        Result result = generate(GOOD, "# 标题 {#t}\n\n会像 markdown 那样。\n");
+        // A table. This used to be a bare `markdown`, back when anything not
+        // Chinese had to be bracketed — and that is no longer refused, so the
+        // fixture had to become something the subset still genuinely rejects.
+        Result result = generate(GOOD, "# 标题 {#t}\n\n正文。\n\n| a | b |\n");
 
         assertFalse(result.ok());
         assertTrue(result.files().isEmpty(), "not even the draft that was fine");
-        assertTrue(result.problems().stream().anyMatch(p -> p.message().contains("‹markdown›")),
+        assertTrue(result.problems().stream().anyMatch(p -> p.message().contains("table")),
                 result.problems().toString());
     }
 
@@ -93,9 +98,10 @@ class ArticleGeneratorTest {
     }
 
     @Test
-    void aHeadingWithNoProseNeedsNoIdBecauseNobodyOpensIt() {
-        // 「## 四」holding only 「###」 children is a heading in the document,
-        // not a thing a reader opens.
+    void aHeadingWithNoProseStillNeedsAnIdWhenSomethingUnderItHasSome() {
+        // 「## 四」holding only 「###」 children is still not a thing a reader
+        // opens — but its slug is a segment of its children's addresses, so it
+        // has to be an author's choice rather than a gap.
         Result result = generate("""
                 # 标题 {#t}
 
@@ -108,7 +114,91 @@ class ArticleGeneratorTest {
                 甲。
                 """);
 
+        assertFalse(result.ok());
+        String said = result.problems().toString();
+        assertTrue(said.contains("'四' has no id"), said);
+    }
+
+    @Test
+    void aHeadingThatBearsNothingNeedsNoId() {
+        // Nothing is addressed through it, so there is nothing to name.
+        Result result = generate("# 标题 {#t}\n\n开头。\n\n## 空\n");
+
         assertTrue(result.ok(), result.problems().toString());
+    }
+
+    // ── Siblings, which is the whole of the uniqueness rule ────────────
+
+    @Test
+    void twoSectionsUnderOneHeadingMayNotShareASlug() {
+        Result result = generate("""
+                # 标题 {#t}
+
+                开头。
+
+                ## 一 {#same}
+
+                甲。
+
+                ## 二 {#same}
+
+                乙。
+                """);
+
+        assertFalse(result.ok());
+        String said = result.problems().toString();
+        assertTrue(said.contains("'same' is the id of two sections under '标题'"), said);
+    }
+
+    @Test
+    void thatSameSlugUnderTwoDifferentHeadingsIsFine() {
+        // The point of addressing by path. Two chapters may each have a 前后,
+        // and neither author has to know about the other.
+        Result result = generate("""
+                # 标题 {#t}
+
+                开头。
+
+                ## 一 {#yi}
+
+                甲。
+
+                ### 前后 {#qian-hou}
+
+                甲之一。
+
+                ## 二 {#er}
+
+                乙。
+
+                ### 前后 {#qian-hou}
+
+                乙之一。
+                """);
+
+        assertTrue(result.ok(), result.problems().toString());
+        List<String> paths = result.files().stream().map(Emitted::path).toList();
+        assertTrue(paths.contains("kranji/articles/generated/t.yi.qian-hou.json"), paths.toString());
+        assertTrue(paths.contains("kranji/articles/generated/t.er.qian-hou.json"), paths.toString());
+    }
+
+    @Test
+    void twoDocumentsMayNotShareAnIdBecauseTheyAreSiblingsToo() {
+        Result result = generate("# 甲 {#same}\n\n甲文。\n", "# 乙 {#same}\n\n乙文。\n");
+
+        assertFalse(result.ok());
+        assertTrue(result.problems().toString().contains("already another document's id"),
+                result.problems().toString());
+    }
+
+    @Test
+    void aDocumentMayNotBeCalledIndex() {
+        // It would be written as index.json, over the collection's listing.
+        Result result = generate("# 目录 {#index}\n\n正文。\n");
+
+        assertFalse(result.ok());
+        assertTrue(result.problems().toString().contains("collection's own index"),
+                result.problems().toString());
     }
 
     // ── What it emits ──────────────────────────────────────────────────
@@ -121,9 +211,9 @@ class ArticleGeneratorTest {
         List<String> paths = result.files().stream().map(Emitted::path).toList();
         assertEquals(List.of(
                 "kranji/articles/generated/chang.json",
-                "kranji/articles/generated/bei-jing.json",
-                "kranji/articles/generated/jie-gou.json",
-                "kranji/articles/generated/xi-jie.json",
+                "kranji/articles/generated/chang.bei-jing.json",
+                "kranji/articles/generated/chang.jie-gou.json",
+                "kranji/articles/generated/chang.jie-gou.xi-jie.json",
                 "kranji/articles/generated/index.json",
                 "kranji/library/generated/GeneratedCollections.java"), paths);
     }
@@ -134,7 +224,8 @@ class ArticleGeneratorTest {
         // anything, so the level travels here until ArticleSeries exists.
         String index = file(generate(GOOD), "index.json");
 
-        assertTrue(index.contains("\"id\":\"xi-jie\",\"title\":\"二之一\",\"level\":3"), index);
+        assertTrue(index.contains(
+                "\"id\":\"chang.jie-gou.xi-jie\",\"title\":\"二之一\",\"level\":3"), index);
         assertTrue(index.contains("\"level\":1"), "the document's own prose");
     }
 
@@ -155,8 +246,8 @@ class ArticleGeneratorTest {
         String java = file(generate(GOOD), ".java");
 
         assertTrue(java.contains("package kranji.library.generated;"), java);
-        assertTrue(java.contains("ArticleRef.of(\"bei-jing\", \"一、背景\", "
-                + "\"/kranji/articles/generated/bei-jing.json\")"), java);
+        assertTrue(java.contains("ArticleRef.of(\"chang.bei-jing\", \"一、背景\", "
+                + "\"/kranji/articles/generated/chang.bei-jing.json\")"), java);
         assertTrue(java.contains("public static List<ArticleCollection> all()"), java);
     }
 
@@ -167,6 +258,23 @@ class ArticleGeneratorTest {
         Result result = generate(GOOD);
 
         assertTrue(file(result, "chang.json").contains("开头一段。"));
+    }
+
+    @Test
+    void everyAddressItWritesIsALegalLocalId() {
+        // The claim the whole path scheme rests on: LocalId is a dotted name
+        // already, so this is the address the model was built for rather than
+        // a new one. Names validates at construction, so only constructing one
+        // asks the question - the catalogue compiling does not.
+        String index = file(generate(GOOD), "index.json");
+        var sections = new JsonObject(index)
+                .getJsonArray("documents").getJsonObject(0).getJsonArray("sections");
+
+        assertTrue(sections.size() >= 4, index);
+        for (int i = 0; i < sections.size(); i++) {
+            String id = sections.getJsonObject(i).getString("id");
+            assertEquals(id, LocalId.named(id).value(), "a generated address the model refuses");
+        }
     }
 
     @Test

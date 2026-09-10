@@ -1,12 +1,12 @@
 // =============================================================================
 // ArticleTextModule — an article's text, in the shapes the reader draws from.
 //
-// Three questions that all have the same subject and none of which are about
-// the pane: which lines an article is made of, what squares a line becomes,
-// and how a paragraph's first line is set in. Four callers wanted them - the
-// board, the title, the readability line and the loader - and while they were
-// closures inside the widget they were four callers reaching into one
-// function's scope.
+// Four questions that all have the same subject and none of which are about
+// the pane: which blocks a file is written in, which lines an article is made
+// of, what squares a line becomes, and how a paragraph's first line is set in.
+// Four callers wanted them - the board, the title, the readability line and
+// the loader - and while they were closures inside the widget they were four
+// callers reaching into one function's scope.
 //
 // Nothing here touches the DOM, so it can be asked these questions under
 // GraalVM with no browser: the scan rule is ArticleScannerModule's and the
@@ -18,11 +18,26 @@
  *   scanner,     // createArticleScanner()
  *   readings     // createArticleReadings(...)
  * }
- * Returns { cellsOf(line), indented(cells), textsOf(mod) }.
+ * Returns { blocksOf(mod), cellsOf(line), indented(cells), textsOf(mod) }.
  */
 function createArticleText(opts) {
 
+    /**
+     * The article, as blocks.
+     *
+     * <p>/article sends the file rather than a parse of it, so the block rule
+     * is applied here - by the scanner, which is the one parser for the format
+     * and the one thing checked against the Java at build time. Callers get
+     * the shape they always got: { kind:'p', text } or { kind:'verse', lines }.
+     * </p>
+     */
+    function blocksOf(mod) {
+        return opts.scanner.blocks((mod && mod.source) || '');
+    }
+
     return {
+
+        blocksOf: blocksOf,
 
         /**
          * One authored line -> the squares it is written in.
@@ -52,7 +67,7 @@ function createArticleText(opts) {
          */
         textsOf: function (mod) {
             var out = [];
-            var blocks = (mod && mod.blocks) || [];
+            var blocks = blocksOf(mod);
             for (var b = 0; b < blocks.length; b++) {
                 var block = blocks[b];
                 if (block.kind === 'verse') out = out.concat(block.lines);

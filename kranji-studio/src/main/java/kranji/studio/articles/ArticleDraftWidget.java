@@ -10,13 +10,19 @@ import java.util.List;
 /**
  * The article workbench: a folder of drafts, and what the subset makes of one.
  *
- * <h2>One widget, not two</h2>
+ * <h2>It gave up its list, as it said it would</h2>
  *
- * <p>The list and the preview are the same pane deliberately. A draft list is
- * not something anybody reads on its own — it exists to choose from — and
- * splitting them would mean a party, a secretary and a message type before the
- * bench could show anything at all. When the library view arrives from the
- * reader this pane gives up its list and keeps its right-hand side.</p>
+ * <p>This pane used to hold the folder on its left, and the note here used to
+ * say that splitting them would cost a party, a secretary and a message type
+ * before the bench could show anything at all. That turned out to be the right
+ * price rather than too high a one: the folder is
+ * {@link ArticleNavigatorWidget} now, and what bought the split is that two
+ * navigators can follow two different roots while this pane shows whichever
+ * draft was picked last.</p>
+ *
+ * <p>So it keeps its right-hand side and knows nothing about folders. It is
+ * told a root and a draft on the shelf bus — both, because a draft id is
+ * relative to its root — and reads that one file.</p>
  *
  * <h2>What it shows, and what it does not</h2>
  *
@@ -34,18 +40,18 @@ import java.util.List;
  * <h2>Two branches, and nothing cleared by hand</h2>
  *
  * <p>The frame is built on the widget's own branch and outlives every draft.
- * The list lives on a {@code drafts} branch and the document on a {@code doc}
- * branch, and each is replaced by dissolving the old one — which is the only
- * way this pane can know that what left the screen also left the tree. It is
- * worth naming what this replaced: the first version assigned {@code innerHTML}
- * and built the rest with {@code document.createElement}, so nothing it put on
- * screen was owned by anything.</p>
+ * The document lives on a {@code doc} branch and is replaced by dissolving the
+ * old one — which is the only way this pane can know that what left the screen
+ * also left the tree. It is worth naming what this replaced: the first version
+ * assigned {@code innerHTML} and built the rest with
+ * {@code document.createElement}, so nothing it put on screen was owned by
+ * anything.</p>
  *
  * <h2>Nothing is cached</h2>
  *
- * <p>Refresh re-reads the folder, and choosing a draft re-fetches it. The loop
- * this exists for is save, look, fix, and a bench that showed the file you
- * saved a minute ago would be worse than no bench.</p>
+ * <p>Refresh re-reads the open draft. The loop this exists for is save, look,
+ * fix, and a bench that showed the file you saved a minute ago would be worse
+ * than no bench.</p>
  *
  * <p>No CJK literal appears in this file. Every character on screen came from a
  * draft on disk.</p>
@@ -72,10 +78,6 @@ public final class ArticleDraftWidget
                         new ArticleWorkbenchCss.aw_head(),
                         new ArticleWorkbenchCss.aw_btn(),
                         new ArticleWorkbenchCss.aw_split(),
-                        new ArticleWorkbenchCss.aw_list(),
-                        new ArticleWorkbenchCss.aw_item(),
-                        new ArticleWorkbenchCss.aw_item_on(),
-                        new ArticleWorkbenchCss.aw_size(),
                         new ArticleWorkbenchCss.aw_main(),
                         new ArticleWorkbenchCss.aw_preview(),
                         new ArticleWorkbenchCss.aw_page(),
@@ -100,15 +102,9 @@ public final class ArticleDraftWidget
                         new ArticleWorkbenchCss.aw_sq_zi(),
                         new ArticleWorkbenchCss.aw_sq_ann(),
                         new ArticleWorkbenchCss.aw_sq_punct(),
-                        new ArticleWorkbenchCss.aw_sq_pack(),
-                        new ArticleWorkbenchCss.aw_sq_half(),
-                        new ArticleWorkbenchCss.aw_sq_hang(),
+                        new ArticleWorkbenchCss.aw_sq_run(),
                         new ArticleWorkbenchCss.aw_sq_bold(),
                         new ArticleWorkbenchCss.aw_sq_marker(),
-                        new ArticleWorkbenchCss.aw_sq_run(),
-                        new ArticleWorkbenchCss.aw_sq_run_text(),
-                        new ArticleWorkbenchCss.aw_sq_tag(),
-                        new ArticleWorkbenchCss.aw_sq_cont(),
                         new ArticleWorkbenchCss.aw_sq_indent(),
                         new ArticleWorkbenchCss.aw_sq_pad(),
                         new ArticleWorkbenchCss.aw_tree(),
@@ -197,10 +193,6 @@ public final class ArticleDraftWidget
                 "    css.setClass(split, aw_split);",
                 "    root.appendChild(split);",
                 "",
-                "    var list = branch.createElement('list', 'div');",
-                "    css.setClass(list, aw_list);",
-                "    split.appendChild(list);",
-                "",
                 "    var main = branch.createElement('main', 'div');",
                 "    css.setClass(main, aw_main);",
                 "    split.appendChild(main);",
@@ -240,11 +232,8 @@ public final class ArticleDraftWidget
                 "        css: css,",
                 "        classes: {",
                 "            sheet: aw_sheet, row: aw_row, sq: aw_sq, zi: aw_sq_zi,",
-                "            ann: aw_sq_ann, punct: aw_sq_punct,",
-                "            pack: aw_sq_pack, half: aw_sq_half, hang: aw_sq_hang,",
+                "            ann: aw_sq_ann, punct: aw_sq_punct, run: aw_sq_run,",
                 "            bold: aw_sq_bold, marker: aw_sq_marker,",
-                "            run: aw_sq_run,",
-                "            runText: aw_sq_run_text, tag: aw_sq_tag, cont: aw_sq_cont,",
                 "            indent: aw_sq_indent, pad: aw_sq_pad",
                 "        }",
                 "    });",
@@ -334,7 +323,7 @@ public final class ArticleDraftWidget
                 "    widthBtn.addEventListener('click', function () {",
                 "        width = (width + 1) % WIDTHS.length;",
                 "        labels();",
-                "        if (chosen) open(chosen);",
+                "        if (chosen) load();",
                 "    });",
                 "",
                 "    // Never from the browser's cache. This bench exists to be looked",
@@ -342,69 +331,72 @@ public final class ArticleDraftWidget
                 "    // Refresh button that does nothing - which is worse than none.",
                 "    var FRESH = { cache: 'no-store' };",
                 "",
-                "    function open(id) {",
+                "    // Which draft, and under which root. Both, because a draft id is",
+                "    // relative to its root: the same id in another folder is either",
+                "    // nothing or - far worse - a different file at the same path.",
+                "    var chosenRoot = '';",
+                "",
+                "    function open(rootId, id, label) {",
                 "        chosen = id;",
-                "        paintList();",
+                "        chosenRoot = rootId || '';",
+                "        if (!id) { where.textContent = ''; note('Nothing chosen.'); return; }",
+                "        where.textContent = label || '';",
                 "        note('Reading\\u2026');",
-                "        fetch('/article-draft?id=' + encodeURIComponent(id)",
+                "        fetch('/article-draft?root=' + encodeURIComponent(chosenRoot)",
+                "            + '&id=' + encodeURIComponent(id)",
                 "            + '&columns=' + WIDTHS[width], FRESH)",
                 "            .then(function (r) { return r.json(); })",
                 "            .then(show)",
                 "            .catch(function (e) { note('Could not read it: ' + e); });",
                 "    }",
                 "",
-                "    // ── The folder ─────────────────────────────────────────────",
-                "",
-                "    var drafts = [];",
-                "",
-                "    function paintList() {",
-                "        var b = fresh('drafts');",
-                "        if (!drafts.length) {",
-                "            var none = b.createElement('none', 'div');",
-                "            css.setClass(none, aw_status);",
-                "            none.textContent = 'No .md files here yet.';",
-                "            list.appendChild(none);",
-                "            return;",
-                "        }",
-                "        for (var i = 0; i < drafts.length; i++) {",
-                "            (function (d, n) {",
-                "                var item = b.createElement('d' + n, 'div');",
-                "                css.setClass(item, d.id === chosen ? aw_item_on : aw_item);",
-                "                item.textContent = d.name;",
-                "                var size = b.createElement('s' + n, 'span');",
-                "                css.setClass(size, aw_size);",
-                "                // Characters. Bytes would read 2.6x on Chinese.",
-                "                size.textContent = d.chars + ' characters';",
-                "                item.appendChild(size);",
-                "                item.addEventListener('click', function () { open(d.id); });",
-                "                list.appendChild(item);",
-                "            })(drafts[i], i);",
-                "        }",
-                "    }",
-                "",
+                "    /** Re-read what is open. This is the whole of Refresh now. */",
                 "    function load() {",
-                "        fetch('/article-draft', FRESH)",
-                "            .then(function (r) { return r.json(); })",
-                "            .then(function (d) {",
-                "                where.textContent = d.dir;",
-                "                drafts = d.drafts || [];",
-                "                paintList();",
-                "                if (!drafts.length) { chosen = null; note('Nothing to show.'); return; }",
-                "                // Re-read whatever is open. Refreshing the folder and",
-                "                // leaving the document as it was is the one thing this",
-                "                // must not do: the loop it serves is save, look, fix.",
-                "                var here = drafts.some(function (x) { return x.id === chosen; });",
-                "                open(here ? chosen : drafts[0].id);",
-                "            })",
-                "            .catch(function (e) { where.textContent = 'Could not list: ' + e; });",
+                "        if (!chosen) { note('Choose a draft in the navigator.'); return; }",
+                "        open(chosenRoot, chosen, where.textContent);",
                 "    }",
                 "",
                 "    refresh.addEventListener('click', function () { load(); });",
-                "    load();",
+                "",
+                "    // ── The bus ────────────────────────────────────────────────",
+                "",
+                "    // The tree that used to sit on the left is its own pane now, which",
+                "    // is what lets two of them follow two different roots. What this",
+                "    // gave up is knowing anything about the folder; what it gained is",
+                "    // that it no longer has to.",
+                "    var __party = (workspaceCtx && workspaceCtx.articleShelf)",
+                "                ? workspaceCtx.articleShelf : null;",
+                "    var __actorId = null;",
+                "",
+                "    if (__party) {",
+                "        __actorId = 'article-draft-'",
+                "                  + Math.random().toString(36).slice(2, 8);",
+                "        __party.joinActor({",
+                "            id: __actorId,",
+                "            parentSecretary: 'articleShelf',",
+                "            reactors: {",
+                "                ShelfChanged: function (msg) {",
+                "                    // A root changing clears the draft, so this arrives as",
+                "                    // an empty id and the pane says so rather than keeping",
+                "                    // a document from a folder nobody is looking at.",
+                "                    open(msg.root, msg.draft, msg.name);",
+                "                }",
+                "            }",
+                "        });",
+                "        // Ask, rather than wait for the next change. A pane opened after",
+                "        // a draft was already chosen would otherwise sit empty until",
+                "        // somebody clicked something they had already clicked.",
+                "        __party.tellFrom(__actorId, { kind: 'WhatIsChosen' });",
+                "    }",
+                "",
+                "    if (!chosen) note('Choose a draft in the navigator.');",
                 "",
                 "    return {",
                 "        root: root,",
-                "        setActive: function (active) { if (active) load(); }",
+                "        setActive: function (active) { if (active) load(); },",
+                "        partyDeregister: function () {",
+                "            if (__party && __actorId) __party.leaveActor(__actorId);",
+                "        }",
                 "    };"
         );
     }

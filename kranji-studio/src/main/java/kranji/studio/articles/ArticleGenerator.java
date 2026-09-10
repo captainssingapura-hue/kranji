@@ -3,9 +3,8 @@ package kranji.studio.articles;
 import kranji.reading.content.ParseFinding;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A folder of drafts, turned into something the library can serve.
@@ -16,7 +15,7 @@ import java.util.Map;
  * parses.</blockquote>
  *
  * <p>That property is what makes 608 articles listable without opening a file,
- * and a {@code .md} document breaks it: its sections come <i>from</i> the file.
+ * and a {@code .kmd} document breaks it: its sections come <i>from</i> the file.
  * So the file is read once, at build time, and what ships is a catalogue in
  * Java beside one resource per section. Nothing parses markdown at request
  * time, and nothing can: by the time a reader asks, there is no markdown
@@ -46,6 +45,18 @@ import java.util.Map;
  * after, and nothing in the build is in a position to change it. A generator
  * that derived ids from heading text would re-address the library every time
  * somebody improved a title.</p>
+ *
+ * <h2>An address is a path, because a document is a tree</h2>
+ *
+ * <p>A section's address is the slugs from the document down, dotted:
+ * {@code yu.yang-zi.qian-hou}. {@code LocalId} is a dotted name already, so
+ * this is the address the model was built for rather than a new one.</p>
+ *
+ * <p>What it buys is that uniqueness becomes a question about <b>siblings</b>,
+ * which is local, rather than about the whole collection, which would be a
+ * registry. Two chapters may each have a 前后 and neither author has to know
+ * about the other. The only ids that must be unique across a collection are
+ * the documents' own — and those are siblings too, of each other.</p>
  */
 public final class ArticleGenerator {
 
@@ -99,13 +110,17 @@ public final class ArticleGenerator {
         }
     }
 
+    /** The one name a document may not take: it is the collection's listing. */
+    private static final String INDEX = "index";
+
     public static Result generate(List<Draft> drafts, Options options) {
         var files = new ArrayList<Emitted>();
         var problems = new ArrayList<Problem>();
-        // Ordered, because the catalogue is written in the order drafts were
+        // A list, because the catalogue is written in the order drafts were
         // given and a generator whose output depends on a hash iteration order
         // produces a diff every time it runs.
-        var documents = new LinkedHashMap<String, List<Section>>();
+        var documents = new ArrayList<Document>();
+        var taken = new HashSet<String>();
 
         for (Draft draft : drafts) {
             MdSubsetParser.Parsed parsed = MdSubsetParser.parse(draft.source());
@@ -116,52 +131,90 @@ public final class ArticleGenerator {
 
             Segment root = Segments.of(parsed.blocks().orElseThrow(), Segments.NO_BUDGET);
             var sections = new ArrayList<Section>();
-            collect(root, draft, sections, problems);
+            collect(root, "", draft, sections, problems);
             if (sections.isEmpty()) {
                 problems.add(new Problem(draft.name(), 1, "nothing to serve: no prose"));
                 continue;
             }
-            documents.put(root.title(), sections);
+            // Documents are siblings of each other, so they answer to the same
+            // rule as sections do — theirs is the first segment of every
+            // address underneath them. An unpinned one is already reported.
+            if (root.pinned()) {
+                if (INDEX.equals(root.id())) {
+                    problems.add(new Problem(draft.name(), 0, "'" + INDEX + "' is the name of the "
+                            + "collection's own index; give the document another {#slug}"));
+                } else if (!taken.add(root.id())) {
+                    problems.add(new Problem(draft.name(), 0, "'" + root.id() + "' is already "
+                            + "another document's id; give this one another {#slug}"));
+                }
+            }
+            documents.add(new Document(root.id(), root.title(), sections));
         }
 
         if (!problems.isEmpty()) return new Result(List.of(), problems);
 
-        for (var sections : documents.values()) {
-            for (Section section : sections) {
+        for (Document document : documents) {
+            for (Section section : document.sections()) {
                 files.add(new Emitted(options.resources() + "/" + section.id() + ".json",
                                       body(section)));
             }
         }
-        files.add(new Emitted(options.resources() + "/index.json", index(documents)));
+        files.add(new Emitted(options.resources() + "/" + INDEX + ".json", index(documents)));
         files.add(new Emitted(javaPath(options), catalogue(documents, options)));
         return new Result(files, problems);
     }
 
-    /** One section on the way out: an id, a title, and the prose under it. */
+    /** One document on the way out: its own address, its title, its sections. */
+    private record Document(String id, String title, List<Section> sections) {}
+
+    /** One section on the way out: an address, a title, and the prose under it. */
     private record Section(String id, String title, int level, Segment segment) {}
 
     /**
-     * The sections of one document, in reading order.
+     * The sections of one document, in reading order, addressed by their path.
      *
-     * <p>A segment with no prose of its own is not a section — {@code ## 四}
-     * holding only {@code ###} children is a heading in the document and
-     * nothing a reader opens. It still needs an id, because its children are
-     * addressed under nothing otherwise; that is a rule worth having and not
-     * one this enforces yet.</p>
+     * <p>The address is built on the way down — {@code prefix} is the address
+     * of whatever holds this — so a slug only has to be unique among the
+     * children of one heading. That check is the {@code taken} set below, and
+     * it is the whole of the uniqueness policy.</p>
+     *
+     * <p>A heading with no prose of its own is still not a section: {@code ## 四}
+     * holding only {@code ###} children is nothing a reader opens. It must be
+     * pinned all the same, because its slug is a segment of its children's
+     * addresses. A heading that bears nothing at all needs no id, because
+     * nothing is addressed through it.</p>
+     *
+     * @return whether anything here or under it became a section
      */
-    private static void collect(Segment segment, Draft draft,
-                                List<Section> into, List<Problem> problems) {
-        if (!segment.blocks().isEmpty()) {
-            if (!segment.pinned()) {
-                problems.add(new Problem(draft.name(), 0,
-                        "'" + (segment.title().isEmpty() ? segment.path() : segment.title())
-                        + "' has no id; write {#some-slug} on its heading"));
-            } else {
-                into.add(new Section(segment.id(), segment.title(),
-                                     segment.level(), segment));
+    private static boolean collect(Segment segment, String prefix, Draft draft,
+                                   List<Section> into, List<Problem> problems) {
+        String id = prefix.isEmpty() ? segment.id() : prefix + "." + segment.id();
+        boolean bears = !segment.blocks().isEmpty();
+        if (bears) into.add(new Section(id, segment.title(), segment.level(), segment));
+
+        var taken = new HashSet<String>();
+        for (Segment child : segment.children()) {
+            if (!collect(child, id, draft, into, problems)) continue;
+            bears = true;
+            // An unpinned child is reported by its own frame; adding '' here
+            // would report it a second time as a collision with itself.
+            if (child.pinned() && !taken.add(child.id())) {
+                problems.add(new Problem(draft.name(), 0, "'" + child.id()
+                        + "' is the id of two sections under '" + named(segment)
+                        + "'; siblings need different {#slug}s"));
             }
         }
-        for (Segment child : segment.children()) collect(child, draft, into, problems);
+
+        if (bears && !segment.pinned()) {
+            problems.add(new Problem(draft.name(), 0,
+                    "'" + named(segment) + "' has no id; write {#some-slug} on its heading"));
+        }
+        return bears;
+    }
+
+    /** A heading by its title, or by its position when it has none. */
+    private static String named(Segment segment) {
+        return segment.title().isEmpty() ? segment.path() : segment.title();
     }
 
     // ── What ships ─────────────────────────────────────────────────────
@@ -193,15 +246,15 @@ public final class ArticleGenerator {
      * <p>Generated, so reading it is not parsing a document: it is one small
      * file listing what the documents are, read once.</p>
      */
-    private static String index(Map<String, List<Section>> documents) {
+    private static String index(List<Document> documents) {
         var js = new StringBuilder("{\"documents\":[");
         boolean firstDoc = true;
-        for (var entry : documents.entrySet()) {
+        for (Document document : documents) {
             if (!firstDoc) js.append(',');
             firstDoc = false;
-            List<Section> sections = entry.getValue();
-            js.append("{\"title\":").append(MdJson.quote(entry.getKey()))
-              .append(",\"id\":").append(MdJson.quote(sections.get(0).id()))
+            List<Section> sections = document.sections();
+            js.append("{\"title\":").append(MdJson.quote(document.title()))
+              .append(",\"id\":").append(MdJson.quote(document.id()))
               .append(",\"sections\":[");
             for (int i = 0; i < sections.size(); i++) {
                 Section s = sections.get(i);
@@ -228,7 +281,7 @@ public final class ArticleGenerator {
      * every string a literal — so listing the library is reading a field, which
      * is the property the whole arrangement exists to keep.</p>
      */
-    private static String catalogue(Map<String, List<Section>> documents, Options options) {
+    private static String catalogue(List<Document> documents, Options options) {
         var java = new StringBuilder();
         java.append("package ").append(options.pkg()).append(";\n\n")
             .append("import kranji.reading.library.ArticleCollection;\n")
@@ -248,17 +301,17 @@ public final class ArticleGenerator {
             .append("    private ").append(options.className()).append("() {}\n\n");
 
         int n = 0;
-        for (var entry : documents.entrySet()) {
+        for (Document document : documents) {
             String field = "DOC_" + (++n);
-            java.append("    /** ").append(escape(entry.getKey())).append(" */\n")
+            java.append("    /** ").append(escape(document.title())).append(" */\n")
                 .append("    public static final ArticleCollection ").append(field)
                 .append(" = new Doc(\n")
                 .append("            CollectionId.named(\"").append(options.pkg())
                 .append(".doc").append(n).append("\"),\n")
-                .append("            \"").append(escape(entry.getKey())).append("\",\n")
+                .append("            \"").append(escape(document.title())).append("\",\n")
                 .append("            \"\",\n")
                 .append("            List.of(\n");
-            List<Section> sections = entry.getValue();
+            List<Section> sections = document.sections();
             for (int i = 0; i < sections.size(); i++) {
                 Section s = sections.get(i);
                 java.append("                    ArticleRef.of(\"").append(s.id())

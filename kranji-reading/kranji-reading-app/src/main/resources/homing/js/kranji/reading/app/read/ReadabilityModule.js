@@ -124,7 +124,11 @@ function createArticleFit(opts) {
 
     function say() {
         if (!current || !current.id) return;
-        var says = current.length + ' characters.';
+        // Counted here, not carried on the wire. /article sends the file, so
+        // there is no server-side length to disagree with this one - and this
+        // is the count the percentage below is taken over, which is what makes
+        // "480 characters, you can read 94%" one statement rather than two.
+        var says = (census ? census.total : 0) + ' characters.';
         var fit = census && readability.of(census, opts.known());
         if (fit) {
             says += '  You can read ' + Math.round(fit.ratio * 100) + '%'

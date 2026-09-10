@@ -11,49 +11,48 @@ import java.util.Optional;
 /**
  * A parsed document, arranged into squares.
  *
- * <h2>Three jobs</h2>
+ * <h2>Two jobs</h2>
  *
- * <p><b>Squares.</b> A character is a square and so is a mark. Adjacent marks
- * of the same class share one, the way {@code ”，} shares a box on 稿纸.</p>
- *
- * <p><b>Runs.</b> A non-Chinese sequence is one typographic unit needing
- * several squares — {@code ‹Tunnel›} and a bare {@code markdown} alike. It
- * becomes a {@link Square.Run} carrying its width, plus as many
- * {@link Square.Cont} placeholders as it claimed.</p>
+ * <p><b>Squares.</b> A 字 is a square and so is a mark. Everything else —
+ * a word, a number, a symbol — collects into a {@link Square.Run}, and a run is
+ * <b>one square whatever its length</b>. Nothing shares, spans or hangs.</p>
  *
  * <p><b>Wrapping.</b> Prose wraps at the column count; verse does not, because
  * a poem's lines are the author's.</p>
  *
- * <h2>禁则, and why there is barely any code for it</h2>
+ * <h2>What this used to do instead</h2>
  *
- * <p>A mark must not begin a line. Rather than push the character before it
- * down, or squeeze the mark into that character's box, a mark that finds no
- * room <b>hangs past the right edge</b> and the row's last cell runs wider to
- * take it — which is what a person does when a full stop lands at the margin
- * of a composition.</p>
+ * <p>A {@code ‹…›} run was one unit several squares wide, placed whole, moved
+ * whole when it did not fit, and cut with a hyphen when it could never fit;
+ * behind it went placeholder squares, because RelationGrid has no merged cells.
+ * Marks shared boxes and hung past the margin. All of it worked and all of it
+ * is gone — a rule that fits in one sentence beat a model that needed six.</p>
  *
- * <p>Two rules come free with it. {@code ——} and {@code ……} cannot be split
- * across rows, because the second half hangs beside the first rather than
- * opening the next row. And nothing has to move, so a row's contents never
- * depend on what comes after them.</p>
+ * <p>It also cost the author something, and that is the part worth naming.
+ * Wrapping was <b>compulsory</b>: a bare {@code markdown} was an error, because
+ * a square held one character and nobody but the author could say that eight
+ * letters were one word. Nothing needs to know that now. {@code markdown} is
+ * eight squares because it is eight characters.</p>
  *
- * <p>The other half of 禁则 needs one line: an opening mark must not <em>end</em>
- * a row, so one that would land last moves down instead. Hanging cannot help
- * there — the mark belongs to what follows it, and what follows is on the next
- * row.</p>
+ * <h2>禁则</h2>
  *
- * <h2>Where a hyphen comes from</h2>
+ * <p>Hanging used to make half of this free — a mark with no room hung off the
+ * end of the row rather than starting the next one, so it could not begin a
+ * line. With every mark in its own square that is gone and the rule has to be
+ * stated:</p>
  *
- * <p>One place only. A run that does not fit in what is left of a row moves to
- * the next row whole — which is what Chinese typesetting does with a Latin
- * word, and it needs no hyphen. A run wider than the entire row has nowhere to
- * move to, so it is cut and the pieces carry one.</p>
+ * <ul>
+ *   <li>A <b>closing</b> mark belongs to what precedes it, so it never begins a
+ *       row. Where a row has no room, the character before it comes down
+ *       <i>with</i> it.</li>
+ *   <li>An <b>opening</b> mark belongs to what follows it, so it never ends a
+ *       row. One left at the end is carried onto the next.</li>
+ * </ul>
  *
- * <p>The cut is at whatever character fits, which is not where a dictionary
- * would hyphenate. That is deliberate: real hyphenation needs a language and a
- * pattern table, and guessing badly at one is worse for a child learning to
- * read than an obviously mechanical break. It happens only to a run wider than
- * the whole page, where the alternative is not rendering it.</p>
+ * <p>Neither can be decided when the mark is placed: whether {@code （} ends a
+ * row depends on what comes after, and whether {@code 。} begins one depends on
+ * what came before. So both are decided at the row boundary, which is the only
+ * place that knows.</p>
  */
 public final class GridPlanner {
 
@@ -68,29 +67,15 @@ public final class GridPlanner {
      */
     public static final int DEFAULT_COLUMNS = 20;
 
-    /**
-     * How many marks will share a square.
-     *
-     * <p>Two is the ordinary case — {@code ”，} — and three is the squeeze a
-     * crowded line will take. Past that a person starts a new box, and so does
-     * this.</p>
-     */
-    public static final int MAX_MARKS = 3;
-
-    /** A fragment shorter than this is not worth leaving at the end of a row. */
-    private static final int MIN_FRAGMENT = 2;
-
     /** 首行缩进两格 — and the whole of a poem. */
     private static final List<Square> INDENT =
             List.of(new Square.Indent(), new Square.Indent());
 
     private static final String BULLET = "•";
-    private static final String HYPHEN = "-";
 
     public static GridPlan plan(List<Block> blocks, int columns) {
         int width = Math.max(1, columns);
         var rows = new ArrayList<Row>();
-        var ids = new int[1];
 
         for (int b = 0; b < blocks.size(); b++) {
             Block block = blocks.get(b);
@@ -103,13 +88,13 @@ public final class GridPlanner {
                 // indented to show where it starts; a poem is set in from the
                 // margin as a whole, and a second line back at the edge would
                 // read as prose that had wrapped.
-                case "verse" -> lay(rows, "verse", b, width, INDENT, lines(block, ids), true);
-                case "p" -> lay(rows, "p", b, width, INDENT, lines(block, ids), false);
+                case "verse" -> lay(rows, "verse", b, width, INDENT, lines(block), true);
+                case "p" -> lay(rows, "p", b, width, INDENT, lines(block), false);
                 case "li" -> lay(rows, "li", b, width,
-                        List.of(new Square.Marker(BULLET)), lines(block, ids), false);
+                        List.of(new Square.Marker(BULLET)), lines(block), false);
                 case "oli" -> lay(rows, "oli", b, width,
-                        List.of(new Square.Marker(block.level() + ".")), lines(block, ids), false);
-                default -> lay(rows, block.kind(), b, width, List.of(), lines(block, ids), false);
+                        List.of(new Square.Marker(block.level() + ".")), lines(block), false);
+                default -> lay(rows, block.kind(), b, width, List.of(), lines(block), false);
             }
         }
         return new GridPlan(width, rows);
@@ -119,8 +104,8 @@ public final class GridPlanner {
         return plan(blocks, DEFAULT_COLUMNS);
     }
 
-    private static List<List<Square>> lines(Block block, int[] ids) {
-        return block.lines().stream().map(line -> squaresOf(line, ids)).toList();
+    private static List<List<Square>> lines(Block block) {
+        return block.lines().stream().map(GridPlanner::squaresOf).toList();
     }
 
     // ── Wrapping ───────────────────────────────────────────────────────
@@ -164,108 +149,51 @@ public final class GridPlanner {
             this.rows = rows; this.kind = kind; this.block = block; this.columns = columns;
         }
 
-        /** Positions used. What hangs past the edge is not one of them. */
-        private int used() {
-            int n = 0;
-            for (Square s : cur) if (!s.hanging()) n++;
-            return n;
-        }
-
-        private int left() { return columns - used(); }
+        private int left() { return columns - cur.size(); }
 
         void open(List<Square> opener) { cur.addAll(opener); }
 
         void add(Square sq) {
-            if (sq instanceof Square.Punct p) { punct(p); return; }
-            if (sq instanceof Square.Run run) { run(run); return; }
+            if (sq instanceof Square.Punct p && closing(p)) { closer(p); return; }
             if (left() < 1) newRow();
             cur.add(sq);
         }
 
         /**
-         * A mark. It never begins a row.
+         * A closing mark, which must not begin a row.
          *
-         * <p>With no room left it hangs off the end of this one instead of
-         * starting the next, which is the whole of 禁则's first half.</p>
+         * <p>It belongs to the character before it, so when the row is full the
+         * two go down together rather than the mark opening the next line on
+         * its own. That is the move hanging used to avoid having to make.</p>
          *
-         * <p>An opening mark needs nothing here. Whether it ends a row is not
-         * known when it is placed — that depends on whether what it opens still
-         * fits, and a run three squares wide may not — so the check belongs
-         * where the row actually ends. See {@link #newRow()}.</p>
+         * <p>A row of one square has nothing to send down with it — on a page
+         * that narrow there is no arrangement that satisfies the rule, and
+         * looping to find one would not terminate. It takes the new row.</p>
          */
-        private void punct(Square.Punct p) {
+        private void closer(Square.Punct p) {
             if (left() >= 1) { cur.add(p); return; }
-            // Hanging is for a mark that must not BEGIN a line. An opening
-            // mark's trouble is the opposite one, and hanging it would strand
-            // it at the end of a row whose next row holds the thing it opens.
-            if (opening(p)) { newRow(); cur.add(p); return; }
-            cur.add(new Square.Punct(p.marks(), true));
-        }
 
-        /** A run, moved rather than split — unless it can never fit a row. */
-        private void run(Square.Run run) {
-            if (run.width() > columns) { cut(run); return; }
-            if (run.width() > left()) newRow();
-            // The new row may have opened with a mark carried down from the
-            // last one, and on a narrow page that can be the square the run
-            // needed. Cutting is what is left; it places whatever fits.
-            if (run.width() > left()) { cut(run); return; }
-            place(run);
-        }
+            // Everything that has to come down with it. Not just the square
+            // before: that square may itself be a closing mark, and moving one
+            // mark down to sit under another only relocates the problem —
+            // 甲”。 at a two-square margin put ” at the head of a row by
+            // solving 。 first. So the whole trailing run of closing marks
+            // moves, plus the one square they all belong to.
+            int at = cur.size();
+            while (at > 0 && cur.get(at - 1) instanceof Square.Punct q && closing(q)) at--;
+            if (at > 0) at--;
 
-        /** The head, then the squares it claimed. */
-        private void place(Square.Run run) {
-            cur.add(run);
-            for (int i = 1; i < run.width(); i++) cur.add(new Square.Cont(run.id()));
-        }
+            // Nothing left above it, or what must move will not fit a row of
+            // its own. On a page that narrow no arrangement satisfies the rule,
+            // and searching for one would not terminate — so the mark takes the
+            // new row and 禁则 goes unserved rather than the planner hanging.
+            if (at <= 0 || cur.size() - at + 1 > columns) { newRow(); cur.add(p); return; }
 
-        /**
-         * A run wider than the page, cut into pieces that fit.
-         *
-         * <p>Each piece but the last gains a hyphen, and every piece keeps the
-         * run's id — so when merged cells arrive, a renderer can still see that
-         * these were one run before the page was too narrow for it.</p>
-         */
-        private void cut(Square.Run run) {
-            List<Ch> chars = flatten(run.parts());
-            int at = 0;
-            boolean broken = false;
-
-            while (at < chars.size()) {
-                if (left() < MIN_FRAGMENT) newRow();
-
-                // The tail may fit as it is, and then no hyphen is invented.
-                String rest = textOf(chars, at, chars.size());
-                int restWidth = SquareWidth.squares(rest);
-                if (restWidth <= left()) {
-                    place(new Square.Run(spansOf(chars, at, chars.size(), ""),
-                                         restWidth, run.id(), broken));
-                    return;
-                }
-
-                int take = fits(chars, at, left());
-                // Guaranteed on a fresh row: one character and a hyphen is
-                // under a square for every character there is.
-                if (take == 0) { newRow(); take = Math.max(1, fits(chars, at, left())); }
-
-                String piece = textOf(chars, at, at + take) + HYPHEN;
-                place(new Square.Run(spansOf(chars, at, at + take, HYPHEN),
-                                     SquareWidth.squares(piece), run.id(), true));
-                at += take;
-                broken = true;
-                newRow();
-            }
-        }
-
-        /** How many characters from `at` fit in `budget` squares with a hyphen. */
-        private int fits(List<Ch> chars, int at, int budget) {
-            int take = 0;
-            for (int n = 1; at + n <= chars.size(); n++) {
-                String piece = textOf(chars, at, at + n) + HYPHEN;
-                if (SquareWidth.squares(piece) > budget) break;
-                take = n;
-            }
-            return take;
+            var move = new ArrayList<>(cur.subList(at, cur.size()));
+            cur = new ArrayList<>(cur.subList(0, at));
+            newRow();
+            cur.addAll(move);
+            cur.add(p);
         }
 
         /**
@@ -273,11 +201,9 @@ public final class GridPlanner {
          *
          * <p>An opening mark must not end a row, and this is the only place
          * that can know whether one has. When {@code （} is placed there may be
-         * room for it and no way to tell yet whether what it opens will fit —
-         * {@code （Tunnel）} needs four squares and a run does not shrink. So
-         * the mark goes down where it was, and any opening marks left at the
-         * end of the row are carried onto the next one, where the thing they
-         * open is about to be written.</p>
+         * room for it and no way to tell yet whether what it opens will fit. So
+         * any opening marks left at the end of the row are carried onto the next
+         * one, where the thing they open is about to be written.</p>
          *
          * <p>A row of nothing but opening marks has nowhere to carry them to,
          * and carrying them for ever would not terminate. It keeps them.</p>
@@ -307,159 +233,75 @@ public final class GridPlanner {
         }
     }
 
-    /** A mark that must not end a row - it belongs to what follows it. */
+    /** A mark that must not end a row — it belongs to what follows it. */
     private static boolean opening(Square.Punct p) {
-        return Mark.of(p.first()).map(m -> !m.mayEndLine()).orElse(false);
+        return Mark.of(p.mark()).map(m -> !m.mayEndLine()).orElse(false);
+    }
+
+    /** A mark that must not begin a row — it belongs to what precedes it. */
+    private static boolean closing(Square.Punct p) {
+        return Mark.of(p.mark()).map(m -> !m.mayBeginLine()).orElse(false);
     }
 
     // ── Squares from spans ─────────────────────────────────────────────
 
     /** One line's spans, as squares. */
-    private static List<Square> squaresOf(List<Span> line, int[] ids) {
+    private static List<Square> squaresOf(List<Span> line) {
         var out = new ArrayList<Square>();
-        var plain = new StringBuilder();
-
-        for (int i = 0; i < line.size(); ) {
-            Span s = line.get(i);
-
-            if (s.inRun()) {
-                int j = i;
-                var parts = new ArrayList<Span>();
-                while (j < line.size() && line.get(j).inRun()) parts.add(line.get(j++));
-                flush(out, plain, ids);
-                out.add(run(parts, ids));
-                i = j;
-                continue;
-            }
-
+        for (Span s : line) {
             boolean bold = s.emphasis().equals("strong");
+            // A pinned reading is a fact about one character, and the parser
+            // only ever puts one in a ruby span.
             if (s.kind().equals("ruby")) {
-                flush(out, plain, ids);
                 out.add(new Square.Zi(s.text(), s.reading(), bold));
-                i++;
                 continue;
             }
-
-            scan(s.text(), bold, out, plain, ids);
-            i++;
+            scan(s.text(), bold, out);
         }
-
-        flush(out, plain, ids);
         return out;
     }
 
-    private static Square.Run run(List<Span> parts, int[] ids) {
-        String text = parts.stream().map(Span::text).reduce("", String::concat);
-        return new Square.Run(parts, SquareWidth.squares(text), ids[0]++, false);
-    }
-
-    /** Character by character: a 字, a mark, or something to collect. */
-    private static void scan(String text, boolean bold, List<Square> out,
-                             StringBuilder plain, int[] ids) {
+    /**
+     * Character by character: a 字, a mark, or something collecting into a run.
+     *
+     * <p>A 字 and a mark are each a square as they arrive. Everything else
+     * accumulates, and what ends it is the next Han character, the next mark,
+     * or the end of the span — so a run cannot cross an emphasis boundary,
+     * which makes {@code **Pre**mier} two runs. That is rare and the
+     * alternative is a square holding two weights.</p>
+     *
+     * <p>Whitespace collects rather than being skipped, so {@code Dust II}
+     * keeps its own space, and then the ends are stripped so the space between
+     * a run and the character beside it does not. That gap is one two squares
+     * already have.</p>
+     */
+    private static void scan(String text, boolean bold, List<Square> out) {
+        var run = new StringBuilder();
         for (int i = 0; i < text.length(); ) {
             int cp = text.codePointAt(i);
             i += Character.charCount(cp);
             String ch = new String(Character.toChars(cp));
 
             if (Character.UnicodeScript.of(cp) == Character.UnicodeScript.HAN) {
-                flush(out, plain, ids);
+                flush(out, run, bold);
                 out.add(new Square.Zi(ch, "", bold));
                 continue;
             }
             Optional<Mark> mark = Mark.of(ch);
             if (mark.isPresent()) {
-                flush(out, plain, ids);
-                mark(out, mark.get());
+                flush(out, run, bold);
+                out.add(new Square.Punct(mark.get().text()));
                 continue;
             }
-            // Whatever is left is inside a ‹…› run or the parser refused the
-            // document: a full stop in "Dust II." is Latin punctuation and
-            // travels with its Latin. Kept as a fallback so a plan can still be
-            // asked for over blocks that never came from the parser.
-            plain.append(ch);
+            run.append(ch);
         }
+        flush(out, run, bold);
     }
 
-    /** A mark, sharing the previous square when the two belong in one. */
-    private static void mark(List<Square> out, Mark mark) {
-        if (!out.isEmpty()
-                && out.get(out.size() - 1) instanceof Square.Punct prev
-                && prev.marks().length() < MAX_MARKS
-                && Mark.of(prev.last()).map(m -> m.packsWith(mark)).orElse(false)) {
-            out.set(out.size() - 1, new Square.Punct(prev.marks() + mark.text(), false));
-            return;
-        }
-        out.add(new Square.Punct(mark.text(), false));
-    }
-
-    /**
-     * The non-Chinese text collected so far, as a run.
-     *
-     * <p>A fallback. The parser refuses anything non-Chinese that was not
-     * wrapped, so in a document that rendered there is nothing here to collect —
-     * but a plan can be asked for over blocks that never came from the parser,
-     * and it should not lose them.</p>
-     *
-     * <p>Stripped at the ends. The space between a character and a Latin word
-     * is not a square — it is the gap that already exists between two
-     * squares.</p>
-     */
-    private static void flush(List<Square> out, StringBuilder plain, int[] ids) {
-        String text = take(plain).strip();
-        if (text.isEmpty()) return;
-        out.add(run(List.of(new Span("text", text, "", "", false)), ids));
-    }
-
-    private static String take(StringBuilder sb) {
-        String s = sb.toString();
-        sb.setLength(0);
-        return s;
-    }
-
-    // ── Cutting a run ──────────────────────────────────────────────────
-
-    /** One character of a run, with the emphasis it was written under. */
-    private record Ch(String text, String emphasis) {}
-
-    private static List<Ch> flatten(List<Span> parts) {
-        var out = new ArrayList<Ch>();
-        for (Span s : parts) {
-            String t = s.text();
-            for (int i = 0; i < t.length(); ) {
-                int cp = t.codePointAt(i);
-                i += Character.charCount(cp);
-                out.add(new Ch(new String(Character.toChars(cp)), s.emphasis()));
-            }
-        }
-        return out;
-    }
-
-    private static String textOf(List<Ch> chars, int from, int to) {
-        var sb = new StringBuilder();
-        for (int i = from; i < to; i++) sb.append(chars.get(i).text());
-        return sb.toString();
-    }
-
-    /** Rebuilds spans from a slice, merging characters that share an emphasis. */
-    private static List<Span> spansOf(List<Ch> chars, int from, int to, String extra) {
-        var out = new ArrayList<Span>();
-        var run = new StringBuilder();
-        String weight = null;
-        for (int i = from; i < to; i++) {
-            Ch c = chars.get(i);
-            if (weight == null) weight = c.emphasis();
-            if (!c.emphasis().equals(weight)) {
-                out.add(new Span("text", take(run), "", weight, true));
-                weight = c.emphasis();
-            }
-            run.append(c.text());
-        }
-        // The hyphen joins the last piece, so it is emphasised the way the
-        // characters beside it are rather than standing out on its own.
-        if (!extra.isEmpty()) run.append(extra);
-        if (run.length() > 0) {
-            out.add(new Span("text", take(run), "", weight == null ? "" : weight, true));
-        }
-        return out;
+    /** What has collected, as one square. Nothing, when it is only spacing. */
+    private static void flush(List<Square> out, StringBuilder run, boolean bold) {
+        String text = run.toString().strip();
+        run.setLength(0);
+        if (!text.isEmpty()) out.add(new Square.Run(text, bold));
     }
 }

@@ -47,7 +47,7 @@
           reproducible tomorrow. Pinning trades that for having to step the
           version deliberately, which is the right way round.
         -->
-        <homing.core.version>0.8.0</homing.core.version>
+        <homing.core.version>0.8.2</homing.core.version>
         <jontology.version>0.0.1</jontology.version>
     </properties>
 
