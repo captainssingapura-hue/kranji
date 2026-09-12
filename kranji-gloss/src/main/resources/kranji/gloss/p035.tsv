@@ -12,9 +12,11 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 4
+# Rows: 6
 # codepoint	glyph	reading	priority	meaning	examples	because
 20134	亦	yi4	P	also (in old writing)	亦然	
 25285	担	dan1	P	to carry on a shoulder pole	担水	
 25285	担	dan1	S	to take on; to bear	担心|承担	
 25285	担	dan4	P	a load; a burden	重担|担子	
+34880	血	xue4	P	blood	血液|流血	
+34880	血	xie3	P	(the colloquial reading) blood	流血了|鸡血	

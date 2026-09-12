@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 14
+# Rows: 16
 # codepoint	glyph	reading	priority	meaning	examples	because
 20102	了	le0	P	(marks that something has happened)	到了|丢了	
 30000	田	tian2	P	a field	田里	
@@ -28,3 +28,5 @@
 21516	同	tong2	P	the same; alike	相同	
 21516	同	tong2	S	together; with	一同	
 21516	同	tong4	P	(in 胡同) a lane	胡同	
+37070	郎	lang2	P	a young man; (a title) gentleman	新郎|郎中	
+37070	郎	lang4	P	(in 屎壳郎) the dung beetle	屎壳郎	
