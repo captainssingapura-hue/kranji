@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 11
+# Rows: 13
 # codepoint	glyph	reading	priority	meaning	examples	because
 26469	来	lai2	P	to come	来了|起来	
 33337	船	chuan2	P	a boat	小船	
@@ -25,3 +25,5 @@
 31216	称	cheng1	S	to weigh	称重	
 31216	称	cheng1	S	to praise	称赞	
 31216	称	chen4	P	to fit; to suit	称心|对称	
+21520	吐	tu3	P	to spit out; to say	吐痰|谈吐	
+21520	吐	tu4	P	to vomit	呕吐|吐了	

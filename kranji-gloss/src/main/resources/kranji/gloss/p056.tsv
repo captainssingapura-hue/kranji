@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 12
+# Rows: 14
 # codepoint	glyph	reading	priority	meaning	examples	because
 32780	而	er2	P	and	而后	
 32780	而	er2	S	yet	然而	
@@ -26,3 +26,5 @@
 20256	传	zhuan4	P	a biography; a tale	传记|水浒传	
 21367	卷	juan3	P	to roll up; a roll	卷起|春卷	
 21367	卷	juan4	P	a volume; an exam paper	试卷|第一卷	
+32982	胖	pang4	P	fat; plump	胖子|发胖	
+32982	胖	pan2	P	(in 心广体胖) at ease and well-fed	心广体胖	

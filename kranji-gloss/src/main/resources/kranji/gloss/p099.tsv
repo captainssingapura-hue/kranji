@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 10
+# Rows: 13
 # codepoint	glyph	reading	priority	meaning	examples	because
 19996	东	dong1	P	east	东方|东边|山东|东西#1	
 28783	灯	deng1	P	a lamp; a light	台灯	
@@ -24,3 +24,6 @@
 27773	汽	qi4	P	steam; vapour	汽水	
 25955	散	san4	P	to scatter; to break up	散步|分散|解散	
 25955	散	san3	P	loose; scattered	散文|松散	
+22622	塞	sai1	P	to stuff in; a stopper	塞住|瓶塞	
+22622	塞	sai4	P	a frontier; a strategic pass	边塞|塞外	
+22622	塞	se4	P	(the formal reading) to block up	堵塞|闭塞	

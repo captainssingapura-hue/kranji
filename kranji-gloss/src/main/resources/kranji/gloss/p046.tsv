@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 18
+# Rows: 20
 # codepoint	glyph	reading	priority	meaning	examples	because
 36305	跑	pao3	P	to run	跑开	
 23478	家	jia1	P	a home	回家|家里	
@@ -32,3 +32,5 @@
 30952	磨	mo2	P	to grind; to rub; to sharpen	磨刀|磨损	
 30952	磨	mo2	S	to pester; to dawdle	磨蹭	
 30952	磨	mo4	P	a mill; a millstone	石磨|磨坊	
+25195	扫	sao3	P	to sweep	扫地|打扫	
+25195	扫	sao4	P	(in 扫帚) a broom	扫帚	

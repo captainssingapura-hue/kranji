@@ -12,8 +12,10 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 3
+# Rows: 5
 # codepoint	glyph	reading	priority	meaning	examples	because
 21518	后	hou4	P	behind	背后	
 21518	后	hou4	S	after	后来	
 20912	冰	bing1	P	ice	冰水	
+26366	曾	ceng2	P	once; formerly	曾经|未曾	
+26366	曾	zeng1	P	great-grand-; (a surname)	曾孙|曾祖	
