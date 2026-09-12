@@ -12,11 +12,12 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 7
+# Rows: 8
 # codepoint	glyph	reading	priority	meaning	examples	because
 31572	答	da2	P	to answer	回答	
 36824	还	hai2	P	still	还在	
 36824	还	hai2	S	also	还有	
+36824	还	huan2	P	to return; to give back	归还|还钱	
 22987	始	shi3	P	to begin	开始	
 22280	圈	juan4	P	a pen for animals	羊圈	
 22280	圈	quan1	P	a circle; a ring	圆圈	

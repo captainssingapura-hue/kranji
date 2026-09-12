@@ -12,10 +12,12 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 5
+# Rows: 7
 # codepoint	glyph	reading	priority	meaning	examples	because
 21482	只	zhi1	P	(counts animals)	一只鸭|两只蚂蚁	
 31481	竹	zhu2	P	bamboo	竹子	
 25320	拨	bo1	P	to push aside; to dial	拨开	
 23401	孩	hai2	P	a child	孩子	
 21482	只	zhi3	P	only	只有	
+36733	载	zai4	P	to carry; to be loaded with	载重|装载|满载	
+36733	载	zai3	P	a year; to record in print	记载|刊载|三年五载	
