@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 13
+# Rows: 15
 # codepoint	glyph	reading	priority	meaning	examples	because
 19996	东	dong1	P	east	东方|东边|山东|东西#1	
 28783	灯	deng1	P	a lamp; a light	台灯	
@@ -27,3 +27,5 @@
 22622	塞	sai1	P	to stuff in; a stopper	塞住|瓶塞	
 22622	塞	sai4	P	a frontier; a strategic pass	边塞|塞外	
 22622	塞	se4	P	(the formal reading) to block up	堵塞|闭塞	
+22218	囊	nang2	P	a bag; a sac	胶囊|行囊	
+22218	囊	nang1	P	(in 囊揣) weak; cowardly	囊揣	

@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 16
+# Rows: 19
 # codepoint	glyph	reading	priority	meaning	examples	because
 28404	滴	di1	P	a drop	水滴	
 28404	滴	di1	S	to drip	滴水	
@@ -30,3 +30,6 @@
 21738	哪	na3	P	which; where	哪个|哪里	
 21738	哪	na0	P	(a particle of exclamation after -n)	天哪	
 21738	哪	ne2	P	(in the name 哪吒)	哪吒	
+25273	抹	mo3	P	to wipe; to smear; to erase	抹掉|涂抹	
+25273	抹	ma1	P	to wipe a surface	抹布|抹桌子	
+25273	抹	mo4	P	to plaster; to go round	抹墙|转弯抹角	

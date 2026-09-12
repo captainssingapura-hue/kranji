@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 7
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 30333	白	bai2	P	white	白色	
 30333	白	bai2	S	plain; blank	空白	
@@ -21,3 +21,5 @@
 22253	园	yuan2	P	a garden	花园	
 21344	占	zhan4	P	to occupy; to take up	占领|占用	
 21344	占	zhan1	P	to divine	占卜|占卦	
+25384	挨	ai1	P	next to; in order	挨着|挨家挨户	
+25384	挨	ai2	P	to suffer; to endure; to drag out	挨打|挨饿	

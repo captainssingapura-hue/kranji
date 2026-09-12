@@ -12,8 +12,11 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 3
+# Rows: 6
 # codepoint	glyph	reading	priority	meaning	examples	because
 28014	浮	fu2	P	to float	浮起	
 27004	楼	lou2	P	a storey	楼上	
 27004	楼	lou2	S	a building	高楼	
+24378	强	qiang2	P	strong; powerful	强大|坚强|强劲	
+24378	强	qiang3	P	to force; to strive	勉强|强迫	
+24378	强	jiang4	P	stubborn	倔强|强嘴	

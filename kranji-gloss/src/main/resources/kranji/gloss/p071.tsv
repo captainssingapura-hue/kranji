@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 16
+# Rows: 18
 # codepoint	glyph	reading	priority	meaning	examples	because
 19968	一	yi1	P	one	一个|第一|一点	
 20877	再	zai4	P	again	再来	
@@ -30,3 +30,5 @@
 28856	炸	zha2	P	to deep-fry	炸鸡|油炸	
 20271	伯	bo2	P	father's elder brother; eldest	伯伯|伯父	
 20271	伯	bai3	P	(in 大伯子) a husband's elder brother	大伯子	
+25321	择	ze2	P	to choose; to pick	选择|择日	
+25321	择	zhai2	P	(the colloquial reading) to pick over; to sort	择菜|择不开	
