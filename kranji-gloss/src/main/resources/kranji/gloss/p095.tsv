@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 11
+# Rows: 13
 # codepoint	glyph	reading	priority	meaning	examples	because
 21507	吃	chi1	P	to eat	吃饭	
 33021	能	neng2	P	can; to be able	不能	
@@ -25,3 +25,5 @@
 21608	周	zhou1	S	a week	一周	
 21103	副	fu4	P	(counts sets)	一副	
 21103	副	fu4	S	deputy	副手	
+28072	涨	zhang3	P	to rise, of water or prices	涨价|涨潮	
+28072	涨	zhang4	P	to swell; to be flushed	涨红|头昏脑涨	

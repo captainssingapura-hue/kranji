@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 6
+# Rows: 8
 # codepoint	glyph	reading	priority	meaning	examples	because
 21500	叼	diao1	P	to hold in the mouth	叼着	
 26045	施	shi1	P	to carry out; to apply	施行	
@@ -20,3 +20,5 @@
 23621	居	ju1	S	a home	邻居	
 30691	矣	yi3	P	(ends a sentence, in old writing)	晚矣	
 24530	忒	tui1	P	too, excessively	忒好	
+32610	罢	ba4	P	to stop; to dismiss; to finish	罢工|罢了	
+32610	罢	ba0	P	(a particle, like 吧)	也罢	

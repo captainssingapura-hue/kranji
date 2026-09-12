@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 15
+# Rows: 17
 # codepoint	glyph	reading	priority	meaning	examples	because
 22320	地	de0	P	(makes a word describe how something is done)	慢慢地走	the particle is what a reader meets most, and it is the primary sense OF THIS READING; di4 has its own
 22320	地	di4	P	earth; ground; land	地上|土地|地方	
@@ -29,3 +29,5 @@
 25552	提	ti2	P	to carry by a handle; to lift	提起|提高	
 25552	提	ti2	S	to bring up; to put forward	提问	
 25552	提	di1	P	(in 提防) to guard against	提防	
+32420	纤	xian1	P	fine; slender	纤细|纤维	
+32420	纤	qian4	P	a tow-rope	纤夫|拉纤	
