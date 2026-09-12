@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 7
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 24471	得	de0	P	(joins a verb to how it is done)	跑得快	
 24471	得	de2	P	to get; to obtain	得到	three readings, one shape; a polyphone glossed at some readings and not others implies the rest are meaningless
@@ -21,3 +21,5 @@
 33258	自	zi4	P	self	自己	
 33258	自	zi4	S	from	自古	
 36793	边	bian1	P	a side; an edge	河边	
+22855	奇	qi2	P	strange; unusual	奇怪|好奇	
+22855	奇	ji1	P	odd, of a number	奇数	

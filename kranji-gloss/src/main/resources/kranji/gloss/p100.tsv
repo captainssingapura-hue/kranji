@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 10
+# Rows: 12
 # codepoint	glyph	reading	priority	meaning	examples	because
 22320	地	de0	P	(makes a word describe how something is done)	慢慢地走	the particle is what a reader meets most, and it is the primary sense OF THIS READING; di4 has its own
 22320	地	di4	P	earth; ground; land	地上|土地|地方	
@@ -24,3 +24,5 @@
 21512	合	he2	P	to close; to join together	合上|合作	
 21512	合	he2	S	to suit; to fit	合适|适合	
 21512	合	ge3	P	(an old measure) a tenth of a 升	一合米	
+29087	熟	shu2	P	ripe; cooked; familiar	成熟|熟悉	
+29087	熟	shou2	P	(the colloquial reading) ripe; cooked	饭熟了	

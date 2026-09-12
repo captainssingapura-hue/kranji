@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 8
+# Rows: 11
 # codepoint	glyph	reading	priority	meaning	examples	because
 25140	戴	dai4	P	to wear (on the head or face)	戴帽子	
 22312	在	zai4	P	at; in	现在	
@@ -22,3 +22,6 @@
 26049	旁	pang2	P	beside	旁边	
 26049	旁	pang2	S	a side	两旁	
 25342	拾	shi2	P	to pick up; to gather	拾起	
+20999	切	qie4	P	close; intimate; eager	亲切|密切	
+20999	切	qie4	S	(in 一切) all; everything	一切	
+20999	切	qie1	P	to cut; to slice	切菜|切断	

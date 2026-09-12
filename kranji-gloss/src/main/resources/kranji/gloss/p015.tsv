@@ -12,10 +12,11 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 14
+# Rows: 15
 # codepoint	glyph	reading	priority	meaning	examples	because
 20013	中	zhong1	P	the middle	中间	
 20013	中	zhong1	S	in; among	其中	
+20013	中	zhong4	P	to hit the mark; to be struck by	打中|中奖	
 26679	样	yang4	P	a kind	花样	
 26679	样	yang4	S	a way	这样	
 26376	月	yue4	P	the moon	月光	
