@@ -1,5 +1,5 @@
 // =============================================================================
-// GlossSelectionSecretaryModule — the Secretary for the gloss workbench's
+// RelationSelectionSecretaryModule — the Secretary for a relation workbench's
 // selection bus.
 //
 // ONE bus for every entity type, not one per type. A message names the entity
@@ -15,7 +15,7 @@
 // Pure (state, envelope) -> { newState, actions }. No DOM, no captures.
 // =============================================================================
 
-var GlossSelectionSecretary = {
+var RelationSelectionSecretary = {
 
     initial: {
         // entity name -> array of selected pks. Absent means "never selected",

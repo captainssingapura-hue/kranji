@@ -104,6 +104,22 @@
             <version>${project.parent.version}</version>
         </dependency>
 
+        <!--
+            The library bench, for two things it now owns: the relation-grid
+            machinery every workbench grid here is built on, and the coverage
+            workbench. Both used to live in this module. They moved because the
+            bench needs them and cannot depend on the studio, and the studio
+            may depend on anything - so the shared half went to the side that
+            can be reached from both. This also brings the reading app onto the
+            studio's classpath, transitively; nothing here reaches into it, and
+            the studio serves only the modules it registers.
+        -->
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-reading-workbench</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>io.github.captainssingapura-hue.homing.js</groupId>
             <artifactId>homing-conformance</artifactId>

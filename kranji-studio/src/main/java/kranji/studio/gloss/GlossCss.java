@@ -7,9 +7,11 @@ import hue.captains.singapura.js.homing.core.CssImportsFor;
 import java.util.List;
 
 /**
- * The few classes the studio's internal tools need.
+ * The three classes only the sound picker needs.
  *
- * <p>Kept small on purpose. These are workbench tools, not a product surface —
+ * <p>The frame every relation grid shares - root, bar, filter, status, grid
+ * host - is {@code RelationCss} in the library bench now. What stayed is the
+ * picker's own controls. Workbench tools, not a product surface —
  * everything below leans on the framework's own theme variables so a tool
  * inherits whatever the studio is wearing rather than declaring its own look
  * and then drifting from it.</p>
@@ -18,58 +20,6 @@ public record GlossCss() implements CssGroup<GlossCss> {
 
     public static final GlossCss INSTANCE = new GlossCss();
 
-    /** The widget's outermost element. */
-    public record gl_root() implements CssClass<GlossCss> {
-        @Override public String body() { return """
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                box-sizing: border-box;
-                padding: 12px;
-                font-family: system-ui, sans-serif;
-                color: var(--color-text-primary);
-                """;
-        }
-    }
-
-    /** The relation picker and its count, on one line. */
-    public record gl_bar() implements CssClass<GlossCss> {
-        @Override public String body() { return """
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                flex-wrap: wrap;
-                """;
-        }
-    }
-
-    /** What the grid is showing, and how much of it. */
-    public record gl_status() implements CssClass<GlossCss> {
-        @Override public String body() { return """
-                font-size: 12px;
-                color: var(--color-text-muted);
-                margin-left: auto;
-                font-variant-numeric: tabular-nums;
-                """;
-        }
-    }
-
-
-    /** A search box over the rows in hand. */
-    public record gl_find() implements CssClass<GlossCss> {
-        @Override public String body() { return """
-                font: inherit;
-                font-size: 13px;
-                padding: 3px 6px;
-                min-width: 14ch;
-                background: var(--color-surface);
-                color: var(--color-text-primary);
-                border: 1px solid var(--color-border);
-                border-radius: 3px;
-                """;
-        }
-    }
 
     /** A dropdown narrowing the rows to one initial or one final. */
     public record gl_select() implements CssClass<GlossCss> {
@@ -120,29 +70,12 @@ public record GlossCss() implements CssGroup<GlossCss> {
         }
     }
 
-    /** The element a RelationGrid mounts into; it manages its own interior. */
-    public record gl_grid_host() implements CssClass<GlossCss> {
-        @Override public String body() { return """
-                flex: 1 1 auto;
-                min-height: 240px;
-                overflow: auto;
-                border: 1px solid var(--color-border);
-                border-radius: 3px;
-                """;
-        }
-    }
-
     @Override
     public List<CssClass<GlossCss>> cssClasses() {
         return List.of(
-                new gl_root(),
-                new gl_bar(),
-                new gl_status(),
-                new gl_find(),
                 new gl_select(),
                 new gl_button(),
-                new gl_picked(),
-                new gl_grid_host());
+                new gl_picked());
     }
 
     @Override

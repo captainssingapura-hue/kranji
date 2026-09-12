@@ -6,8 +6,7 @@ import hue.captains.singapura.tao.http.action.GetAction;
 import hue.captains.singapura.tao.http.action.Param;
 import hue.captains.singapura.tao.http.action.ParamMarshaller;
 import io.vertx.ext.web.RoutingContext;
-import kranji.simple.gloss.ExampleEntry;
-import kranji.simple.gloss.ZiGloss;
+import kranji.reading.workbench.relation.Relation;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -104,106 +103,11 @@ public final class GlossRelationGetAction
      * is exactly backwards: several citations can name the same phrase.</p>
      */
     public static String moduleFor(String name, List<String> parents, String from) {
-        List<ZiGloss> glosses = GlossWorkbench.glosses().all();
-        List<ExampleEntry> phrases = GlossWorkbench.examples().all();
-
-        List<String> columns = GlossRelations.columnsOf(name == null ? "" : name);
-        if (columns.isEmpty()) return problem(name);
-
-        List<GlossRelations.Row> rows = GlossRelations.rowsOf(name, glosses, phrases);
-        if (parents != null && !parents.isEmpty()) {
-            // A bare `parent=` is one empty value: the caller is saying
-            // "nothing is selected", which must show nothing. No `parent` at
-            // all is a different statement and leaves the relation whole.
-            List<String> keys = GlossRelations.scopeKeysFor(name,
-                    parents.stream().filter(k -> !k.isEmpty()).toList());
-            rows = (from == null || from.isEmpty())
-                    ? GlossRelations.under(rows, keys)
-                    : GlossRelations.withPks(rows,
-                            GlossRelations.refsFrom(from, keys, glosses, phrases));
-        }
-        return module(name, columns, rows);
+        return Relation.moduleFor(GlossRelationSet.INSTANCE, name, parents, from);
     }
 
     /** Whole-relation form, for a root or a picker with no upstream. */
     public static String moduleFor(String name) {
         return moduleFor(name, List.of(), null);
-    }
-
-    /**
-     * Writes one relation.
-     *
-     * <p>Each row carries {@code pk} — its own composite identity, never a
-     * position — and {@code up}, its parent's pk in the relation above. The
-     * second is what a downstream grid filters on, and why the cascade needs no
-     * knowledge of what happened upstream beyond a list of keys.</p>
-     */
-    private static String module(String name, List<String> columns,
-                                 List<GlossRelations.Row> rows) {
-        var js = new StringBuilder();
-        js.append("{\n");
-        js.append("  \"relation\": ").append(quote(name)).append(",\n");
-        String up = GlossRelations.upstreamOf(name);
-        String refSource = GlossRelations.refSourceOf(name);
-        js.append("  \"upstream\": ")
-          .append(up == null ? "null" : quote(up)).append(",\n");
-        js.append("  \"refSource\": ")
-          .append(refSource == null ? "null" : quote(refSource)).append(",\n");
-        // A sentence the relation wants shown above its rows, or null. Only
-        // the coverage root has one - see GlossRelations.noteOf.
-        String note = GlossRelations.noteOf(name);
-        js.append("  \"note\": ").append(note == null ? "null" : quote(note)).append(",\n");
-        js.append("  \"columns\": [");
-        for (int i = 0; i < columns.size(); i++) {
-            js.append(i > 0 ? ", " : "").append(quote(columns.get(i)));
-        }
-        js.append("],\n");
-        js.append("  \"rows\": [\n");
-        for (int r = 0; r < rows.size(); r++) {
-            GlossRelations.Row row = rows.get(r);
-            js.append("    { \"pk\": ").append(quote(row.pk()))
-              .append(", \"up\": ").append(quote(row.up()))
-              .append(", \"label\": ").append(quote(row.label()));
-            for (int c = 0; c < columns.size(); c++) {
-                js.append(", ").append(quote(columns.get(c))).append(": ")
-                  .append(value(row.values().get(c)));
-            }
-            js.append(" }").append(r + 1 < rows.size() ? "," : "").append("\n");
-        }
-        js.append("  ]\n}\n");
-        return js.toString();
-    }
-
-    private static String problem(String name) {
-        return "{\n"
-             + "  \"relation\": " + quote(String.valueOf(name)) + ",\n"
-             + "  \"columns\": [],\n"
-             + "  \"rows\": [],\n"
-             + "  \"problem\": " + quote("no relation named '" + name + "'") + "\n"
-             + "}\n";
-    }
-
-    private static String value(Object v) {
-        return v instanceof Integer || v instanceof Long ? String.valueOf(v) : quote(String.valueOf(v));
-    }
-
-    /** JSON string escaping, enough for the values this data can hold. */
-    private static String quote(String s) {
-        var out = new StringBuilder("\"");
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            switch (c) {
-                case '"'  -> out.append("\\\"");
-                case '\\' -> out.append("\\\\");
-                case '\n' -> out.append("\\n");
-                case '\r' -> out.append("\\r");
-                case '\t' -> out.append("\\t");
-                default   -> {
-                    if (c < 0x20) out.append(String.format("\\u%04x", (int) c));
-                    else out.append(c);
-                }
-            }
-        }
-        return out.append('"').toString();
     }
 }

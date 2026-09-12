@@ -10,7 +10,7 @@ import hue.captains.singapura.tao.http.action.GetAction;
 import hue.captains.singapura.tao.ontology.ValueObject;
 import io.vertx.ext.web.RoutingContext;
 import kranji.reading.app.ReadingFixtures;
-import kranji.reading.app.ReadingServableModules;
+import kranji.reading.workbench.coverage.CoverageRelationGetAction;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -39,6 +39,9 @@ public record LibraryWorkbenchFixtures(Umbrella<LibraryWorkbenchStudio> umbrella
         if (WorkspaceSpecRegistry.INSTANCE.get(ArticleBrowserSpec.INSTANCE.kind()).isEmpty()) {
             WorkspaceSpecRegistry.INSTANCE.register(ArticleBrowserSpec.INSTANCE);
         }
+        if (WorkspaceSpecRegistry.INSTANCE.get(CoverageWorkbenchSpec.INSTANCE.kind()).isEmpty()) {
+            WorkspaceSpecRegistry.INSTANCE.register(CoverageWorkbenchSpec.INSTANCE);
+        }
     }
 
     private DefaultFixtures<LibraryWorkbenchStudio> defaults() {
@@ -56,6 +59,7 @@ public record LibraryWorkbenchFixtures(Umbrella<LibraryWorkbenchStudio> umbrella
     public Map<String, GetAction<RoutingContext, ?, ?, ?>> harnessGetActions() {
         var actions = new LinkedHashMap<>(defaults().harnessGetActions());
         actions.putAll(ReadingFixtures.dataActions());
+        actions.put(CoverageRelationGetAction.PATH, new CoverageRelationGetAction());
         return Map.copyOf(actions);
     }
 
@@ -66,6 +70,6 @@ public record LibraryWorkbenchFixtures(Umbrella<LibraryWorkbenchStudio> umbrella
     }
     @Override
     public Set<String> servableModuleClasses() {
-        return ReadingServableModules.all();
+        return LibraryWorkbenchServableModules.all();
     }
 }

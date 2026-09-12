@@ -15,6 +15,7 @@ import kranji.studio.articles.ArticleDraftGetAction;
 import kranji.studio.articles.ArticleRootsGetAction;
 import kranji.studio.articles.ArticleRootsPostAction;
 import kranji.studio.articles.MvpSectionGetAction;
+import kranji.reading.workbench.coverage.CoverageRelationGetAction;
 import kranji.studio.gloss.GlossRelationGetAction;
 
 import java.util.ArrayList;
@@ -66,6 +67,9 @@ public record KranjiStudioFixtures<S extends Studio<?>>(Umbrella<S> umbrella)
     public Map<String, GetAction<RoutingContext, ?, ?, ?>> harnessGetActions() {
         var actions = new LinkedHashMap<>(defaults().harnessGetActions());
         actions.put(GlossRelationGetAction.PATH, new GlossRelationGetAction());
+        // The coverage grids are the library bench's; mounted here too, they
+        // fetch from the bench's route, so the studio serves it as well.
+        actions.put(CoverageRelationGetAction.PATH, new CoverageRelationGetAction());
         actions.put(ArticleDraftGetAction.PATH, new ArticleDraftGetAction());
         actions.put(ArticleRootsGetAction.PATH, new ArticleRootsGetAction());
         actions.put(MvpSectionGetAction.PATH, new MvpSectionGetAction());

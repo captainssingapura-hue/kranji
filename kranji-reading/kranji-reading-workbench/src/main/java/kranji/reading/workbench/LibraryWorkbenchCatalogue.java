@@ -40,6 +40,12 @@ public record LibraryWorkbenchCatalogue() implements L0_Catalogue<LibraryWorkben
                         new GenericWorkspace.Params(ArticleBrowserSpec.KIND),
                         "Article Browser",
                         "The library and the reader, exactly as a child gets them.");
-        return List.of(Entry.of(this, browser));
+        Navigable<GenericWorkspace.Params, GenericWorkspace> coverage =
+                new Navigable<>(GenericWorkspace.INSTANCE,
+                        new GenericWorkspace.Params(CoverageWorkbenchSpec.KIND),
+                        "Coverage",
+                        "How much of the library the meanings explain - by shelf, by "
+                      + "article, down to the pair a page is missing.");
+        return List.of(Entry.of(this, browser), Entry.of(this, coverage));
     }
 }
