@@ -12,9 +12,11 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 4
+# Rows: 6
 # codepoint	glyph	reading	priority	meaning	examples	because
 31351	穷	qiong2	P	poor	穷人	
 31351	穷	qiong2	S	exhausted	无穷	
 24180	年	nian2	P	a year	今年	
 22362	坚	jian1	P	firm; hard	坚固	
+21049	刹	sha1	P	to brake; to stop	刹车|刹住	
+21049	刹	cha4	P	(in 刹那) an instant; a Buddhist temple	刹那|古刹	

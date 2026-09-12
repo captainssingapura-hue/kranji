@@ -12,13 +12,21 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 8
+# Rows: 16
 # codepoint	glyph	reading	priority	meaning	examples	because
 21644	和	he2	P	and; with	你和我	
 21644	和	he2	S	gentle	和气	
+21644	和	he4	P	to join in; to echo	附和|一唱一和	
+21644	和	hu2	P	to complete a hand at mahjong	和牌	
+21644	和	huo2	P	to knead; to mix with water	和面|和泥	
+21644	和	huo4	P	to mix; to stir	和药|搅和	
+21644	和	huo0	P	(in 暖和, 软和) a suffix	暖和|软和	
 20937	凉	liang2	P	cool	凉水	
 32047	累	lei4	P	tired	很累	
 32047	累	lei2	P	a burden	累赘	
 32047	累	lei3	P	to pile up	积累	
 21543	吧	ba0	P	(softens a suggestion)	走吧	
 21543	吧	ba1	P	a bar	酒吧	
+21442	参	can1	P	to join; to refer to; to visit	参加|参观|参与	
+21442	参	cen1	P	(in 参差) uneven	参差	
+21442	参	shen1	P	ginseng	人参|海参	

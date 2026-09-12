@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 8
+# Rows: 10
 # codepoint	glyph	reading	priority	meaning	examples	because
 22810	多	duo1	P	many; much	很多	
 37051	邻	lin2	P	a neighbour	邻居	
@@ -22,3 +22,5 @@
 19982	与	yu3	P	and; with	与其|与众不同	
 19982	与	yu3	S	to give	赠与	
 19982	与	yu4	P	to take part in	参与	
+21093	剥	bo1	P	(the formal reading) to strip; to exploit	剥削|剥夺	
+21093	剥	bao1	P	to peel; to shell	剥皮|剥花生	
