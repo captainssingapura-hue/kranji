@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 10
+# Rows: 13
 # codepoint	glyph	reading	priority	meaning	examples	because
 37117	都	dou1	P	all; both	都是	
 20250	会	hui4	P	can; to know how	学会	
@@ -24,3 +24,6 @@
 35299	解	jie3	P	to untie; to solve; to explain	解释|解开|了解	
 35299	解	jie4	P	to escort under guard	押解	
 35299	解	xie4	P	(in 解数) skill; tricks	解数	
+37319	采	cai3	P	to pick; to gather	采花|采集	
+37319	采	cai3	S	spirit; expression	神采	
+37319	采	cai4	P	(in 采地) a fief	采地	

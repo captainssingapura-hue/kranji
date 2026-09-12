@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 8
+# Rows: 10
 # codepoint	glyph	reading	priority	meaning	examples	because
 27700	水	shui3	P	water	水滴|水果	
 33457	花	hua1	P	a flower	花草	
@@ -22,3 +22,5 @@
 23458	客	ke4	P	a guest	客人	
 25377	挡	dang3	P	to block; to keep off	挡住|阻挡	
 25377	挡	dang4	P	(in 摒挡) to put in order	摒挡	
+30427	盛	sheng4	P	flourishing; grand	茂盛|盛大	
+30427	盛	cheng2	P	to ladle out; to hold, of a container	盛饭|盛水	

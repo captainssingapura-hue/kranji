@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 10
+# Rows: 12
 # codepoint	glyph	reading	priority	meaning	examples	because
 30462	盾	dun4	P	a shield	盾牌	
 37027	那	na4	P	that	那个	
@@ -24,3 +24,5 @@
 26725	桥	qiao2	P	a bridge	小桥	
 21170	劲	jin4	P	strength; energy; spirit	使劲|干劲|差劲	
 21170	劲	jing4	P	strong; powerful	劲敌|强劲	
+33492	苔	tai2	P	moss	青苔|苔藓	
+33492	苔	tai1	P	(in 舌苔) the coating of the tongue	舌苔	

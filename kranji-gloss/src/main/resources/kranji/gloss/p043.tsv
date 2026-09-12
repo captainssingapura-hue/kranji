@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 11
+# Rows: 14
 # codepoint	glyph	reading	priority	meaning	examples	because
 36807	过	guo4	P	to pass; to cross	走过	
 27515	死	si3	P	to die	死了	
@@ -25,3 +25,6 @@
 21253	包	bao1	P	to wrap	包住	
 21253	包	bao1	S	a bag	书包	
 20142	亮	liang4	P	bright	天亮	
+24182	并	bing4	P	and; side by side; to combine	并且|合并	
+24182	并	bing4	S	(before a negative) not at all	并不	
+24182	并	bing1	P	(in 并州) an ancient region, today's Taiyuan	并州	

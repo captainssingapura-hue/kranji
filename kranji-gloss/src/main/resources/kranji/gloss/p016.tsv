@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 10
+# Rows: 12
 # codepoint	glyph	reading	priority	meaning	examples	because
 26377	有	you3	P	to have	有的	
 26377	有	you3	S	there is	有人	
@@ -24,3 +24,5 @@
 29609	玩	wan2	P	to play	玩水	
 34255	藏	cang2	P	to hide; to store	躲藏|收藏	
 34255	藏	zang4	P	a storehouse; Tibet	西藏|宝藏	
+26680	核	he2	P	a stone of a fruit; a nucleus; to check	核心|核桃	
+26680	核	hu2	P	(the colloquial reading) the stone of a fruit	杏核|枣核	

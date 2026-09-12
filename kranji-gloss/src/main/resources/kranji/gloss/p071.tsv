@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 12
+# Rows: 14
 # codepoint	glyph	reading	priority	meaning	examples	because
 19968	一	yi1	P	one	一个|第一|一点	
 20877	再	zai4	P	again	再来	
@@ -26,3 +26,5 @@
 38148	锄	chu2	S	to hoe	锄地	
 27442	欲	yu4	P	to want	欲求	
 27442	欲	yu4	S	about to	欲言	
+28856	炸	zha4	P	to explode; to blow up	炸弹|爆炸	
+28856	炸	zha2	P	to deep-fry	炸鸡|油炸	
