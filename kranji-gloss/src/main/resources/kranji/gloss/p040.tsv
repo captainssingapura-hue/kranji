@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 7
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 30340	的	de0	P	(marks what belongs to what)	我的	
 27714	求	qiu2	P	to seek; to ask for	求剑	
@@ -21,3 +21,5 @@
 24179	平	ping2	P	flat	平地	
 24179	平	ping2	S	peaceful	平安	
 22260	围	wei2	P	to surround	四周围	
+21654	咖	ka1	P	(in 咖啡) coffee	咖啡	
+21654	咖	ga1	P	(in 咖喱) curry	咖喱	

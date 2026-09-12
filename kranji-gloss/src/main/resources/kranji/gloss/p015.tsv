@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 21
+# Rows: 24
 # codepoint	glyph	reading	priority	meaning	examples	because
 20013	中	zhong1	P	the middle	中间	
 20013	中	zhong1	S	in; among	其中	
@@ -35,3 +35,6 @@
 21326	华	hua4	P	(a surname; in 华山) Mount Hua	华山|华佗	
 33446	芦	lu2	P	a reed	芦苇|葫芦	
 33446	芦	lu3	P	(in 芦菔) an old word for the radish	芦菔	
+22841	夹	jia1	P	to press between; a clip; a folder	夹子|文件夹	
+22841	夹	ga1	P	(in 夹肢窝) the armpit	夹肢窝	
+22841	夹	jia2	P	lined; double-layered, of clothes	夹袄|夹衣	

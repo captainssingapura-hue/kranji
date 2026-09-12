@@ -12,10 +12,11 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 8
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 36827	进	jin4	P	to enter; to go in	进来	
 22788	处	chu4	P	a place	到处	
+22788	处	chu3	P	to deal with; to get along; to be in	处理|相处	
 21475	口	kou3	P	a mouth	开口	
 21475	口	kou3	S	an opening	门口	
 24202	床	chuang2	P	a bed	上床	

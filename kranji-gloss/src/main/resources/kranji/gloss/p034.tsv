@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 10
+# Rows: 12
 # codepoint	glyph	reading	priority	meaning	examples	because
 23567	小	xiao3	P	small; little	小鸟|大小	
 37202	酒	jiu3	P	wine	酒杯	
@@ -24,3 +24,5 @@
 21345	卡	qia3	P	to get stuck; to block; a clip	卡住|发卡	
 26597	查	cha2	P	to check; to look up	检查|查字典	
 26597	查	zha1	P	(a surname)	查良镛	
+23769	峙	zhi4	P	to stand tall; to confront	对峙|耸峙	
+23769	峙	shi4	P	(in 繁峙) a county in Shanxi	繁峙	
