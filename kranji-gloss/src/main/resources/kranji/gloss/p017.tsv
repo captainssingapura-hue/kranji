@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 9
+# Rows: 11
 # codepoint	glyph	reading	priority	meaning	examples	because
 20116	五	wu3	P	five	五个	
 38498	院	yuan4	P	a courtyard	院子	
@@ -23,3 +23,5 @@
 25166	扎	zha1	P	to prick; to plunge into; to station	扎针|扎根	
 25166	扎	za1	P	to tie; to bind; a bundle	扎辫子|一扎	
 25166	扎	zha2	P	(in 挣扎) to struggle	挣扎	
+32438	纶	lun2	P	a silk thread; a fishing line	经纶|垂纶	
+32438	纶	guan1	P	(in 纶巾) a silk-ribbon headscarf	纶巾	

@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 16
+# Rows: 19
 # codepoint	glyph	reading	priority	meaning	examples	because
 21644	和	he2	P	and; with	你和我	
 21644	和	he2	S	gentle	和气	
@@ -30,3 +30,6 @@
 21442	参	can1	P	to join; to refer to; to visit	参加|参观|参与	
 21442	参	cen1	P	(in 参差) uneven	参差	
 21442	参	shen1	P	ginseng	人参|海参	
+31946	糊	hu2	P	to paste; muddled	糊涂|模糊|糊窗户	
+31946	糊	hu1	P	to daub; to plaster over	糊泥	
+31946	糊	hu4	P	a paste; a thick gruel; (in 糊弄) to fool	芝麻糊|糊弄	
