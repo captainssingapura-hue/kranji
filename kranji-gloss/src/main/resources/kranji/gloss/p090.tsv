@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 12
+# Rows: 14
 # codepoint	glyph	reading	priority	meaning	examples	because
 27663	氏	shi4	P	a family name	氏族	
 27663	氏	zhi1	P	an ancient people, in the name 月氏	月氏	
@@ -26,3 +26,5 @@
 20896	冠	guan4	P	first place; a champion	冠军|冠名	
 38470	陆	lu4	P	land; the mainland	大陆|陆地|陆军	
 38470	陆	liu4	P	six, as written on a banknote	陆拾	
+33218	臂	bi4	P	an arm	手臂|双臂	
+33218	臂	bei0	P	(in 胳臂) an arm, in plain speech	胳臂	
