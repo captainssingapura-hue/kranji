@@ -1,5 +1,6 @@
 package kranji.studio.gloss;
 
+import kranji.reading.content.GlossCoverage;
 import kranji.simple.gloss.EgRef;
 import kranji.simple.gloss.ExampleEntry;
 import kranji.simple.gloss.ExampleSense;
@@ -203,14 +204,25 @@ public final class GlossRelations {
             // article that reads it. A number is not actionable until you can
             // see which articles it is made of.
             case "impactArticle" -> "impact";
-            default            -> null;      // sound, phrase, partition
+            // The coverage chain: how much of the mounted library the glosses
+            // explain, from the whole shelf down to the one pair an article is
+            // missing. A third root, because it does not hang off a sound or a
+            // partition - its subject is the LIBRARY, and its first question
+            // is "where are the gaps", which neither of the other chains can
+            // be walked to answer. Unscoped, each level shows everything ranked
+            // worst-first, which is the same "browse whole, narrow by picking"
+            // shape impact has.
+            case "coverage"        -> "coverageShelf";
+            case "coverageMissing" -> "coverage";
+            default            -> null;      // sound, phrase, partition, coverageShelf
         };
     }
 
     /** The relations, in the order a picker should offer them. */
     public static List<String> relations() {
         return List.of("sound", "demand", "sense", "phrase", "phraseSense", "problem",
-                       "partition", "issue", "curated", "impact", "impactArticle");
+                       "partition", "issue", "curated", "impact", "impactArticle",
+                       "coverageShelf", "coverage", "coverageMissing");
     }
 
     public static List<String> columnsOf(String relation) {
@@ -234,6 +246,18 @@ public final class GlossRelations {
             case "impact"      -> List.of("glyph", "reading", "kind", "state",
                                           "blind", "read", "articles", "part", "groups");
             case "impactArticle" -> List.of("article", "group", "reading", "times", "status");
+            // reads% leads on all three, because it is the sort order and the
+            // number a person came to read. A shelf's 'missing' is pairs, an
+            // article's is pairs, and a gap's 'times' is how often THIS article
+            // reads the pair - the library-wide weight sits beside it as
+            // 'reads', so a gap that matters here and nowhere else is visibly
+            // that.
+            case "coverageShelf"   -> List.of("reads%", "group", "shelf", "articles", "complete",
+                                              "pairs", "missing");
+            case "coverage"        -> List.of("reads%", "article", "shelf", "reads", "pairs",
+                                              "missing", "address");
+            case "coverageMissing" -> List.of("glyph", "reading", "times", "reads", "articles",
+                                              "character");
             default            -> List.of();
         };
     }
@@ -382,10 +406,75 @@ public final class GlossRelations {
                     List.of(r.article(), r.group(), r.reading(), r.times(), r.status())))
                     .toList();
 
+
+            // ── Coverage ──────────────────────────────────────────────
+            //
+            // From GlossCoverageSource rather than from the aggregates passed
+            // in: the report is the same one the build fails on, held once.
+            // Percentages are carried as text with one decimal, because a
+            // grid shows what it is given and 0.9487 is not what a person
+            // reads a coverage as.
+
+            // One row per shelf, keyed on the collection id. Worst first, as
+            // the report orders them.
+            case "coverageShelf" -> GlossCoverageSource.report().shelves().stream()
+                    .map(s -> new Row(s.shelfId(), "", s.shelf(),
+                            List.of(percent(s.readRatio()), s.group(), s.shelf(),
+                                    s.articles(), s.articlesComplete(),
+                                    s.pairs(), s.pairs() - s.pairsCovered())))
+                    .toList();
+
+            // One row per article, under its shelf. The pk is the address,
+            // which is what the reader itself opens an article by.
+            case "coverage" -> GlossCoverageSource.report().articles().stream()
+                    .map(a -> new Row(a.address(), a.shelfId(), a.title(),
+                            List.of(percent(a.readRatio()), a.title(), a.shelf(),
+                                    a.reads(), a.pairs(), a.missing().size(), a.address())))
+                    .toList();
+
+            // One row per gap in one article, under the article. Carries the
+            // pair's library-wide weight beside its weight here, looked up
+            // from the worklist, so a person can tell a gap that matters
+            // everywhere from one that matters on this page.
+            case "coverageMissing" -> {
+                var report = GlossCoverageSource.report();
+                var weight = new LinkedHashMap<String, GlossCoverage.Missing>();
+                for (GlossCoverage.Missing m : report.missing()) weight.put(m.key(), m);
+                var out = new ArrayList<Row>();
+                for (GlossCoverage.OfArticle a : report.articles()) {
+                    for (GlossCoverage.Gap gap : a.missing()) {
+                        GlossCoverage.Missing m = weight.get(gap.key());
+                        out.add(new Row(a.address() + "#" + gap.key(), a.address(), gap.glyph(),
+                                List.of(gap.glyph(), gap.reading(), gap.times(),
+                                        m == null ? 0 : m.reads(),
+                                        m == null ? 0 : m.articles(),
+                                        m != null && m.characterKnown()
+                                                ? "known, reading unwritten"
+                                                : "not in the library")));
+                    }
+                }
+                yield List.copyOf(out);
+            }
             default -> List.of();
         };
     }
 
+
+    /**
+     * A sentence to show above a relation, when it has one to say.
+     *
+     * <p>Only the coverage root has one: the headline figure for the whole
+     * library, which no row of a per-shelf grid states and which is the first
+     * thing a person opening it wants. Everything else answers {@code null}
+     * and the grid shows its row count alone, as it always has.</p>
+     */
+    public static String noteOf(String relation) {
+        return "coverageShelf".equals(relation) ? GlossCoverageSource.report().summary() : null;
+    }
+
+    private static String percent(double ratio) {
+        return String.format(java.util.Locale.ROOT, "%.1f%%", 100 * ratio);
+    }
     /** Rows whose parent is one of these keys. An empty selection shows nothing. */
     /**
      * The keys a relation actually scopes on, given what was selected above it.

@@ -55,9 +55,56 @@ class GlossCascadeTest {
         // "problem" is demand's second child, so demand is where the chain
         // branches rather than ends. It scopes on the character of the
         // selected pair - see aProblemScopesOnTheCharacterNotThePair.
+        //
+        // coverageShelf is the fourth root and the one whose subject is not
+        // the gloss data at all but the LIBRARY: how much of it the glosses
+        // explain, shelf by shelf. It cannot hang off a sound or a partition
+        // because neither is how a person asks "where are the gaps", and
+        // grafting it under one would make the first click a filter nobody
+        // wanted.
         var roots = GlossRelations.relations().stream()
                 .filter(r -> GlossRelations.upstreamOf(r) == null).toList();
-        assertEquals(List.of("sound", "phrase", "partition"), roots);
+        assertEquals(List.of("sound", "phrase", "partition", "coverageShelf"), roots);
+    }
+
+    // ── The coverage chain ────────────────────────────────────────────
+
+    @Test
+    void everyArticleHangsUnderAShelfThatExists() {
+        // The containment edge, checked the way the other chains are: a row
+        // whose parent key names no row upstream is unreachable once the
+        // upstream grid is in the chain. Article -> shelf is keyed on the
+        // collection id, which is the one thing about a shelf that cannot be
+        // shared with another under a different heading.
+        var shelves = rows("coverageShelf").stream().map(GlossRelations.Row::pk).toList();
+        assertFalse(shelves.isEmpty(), "the demo library has shelves");
+        for (GlossRelations.Row article : rows("coverage")) {
+            assertTrue(shelves.contains(article.up()),
+                    () -> article.pk() + " hangs under shelf '" + article.up() + "', which is not a row");
+        }
+    }
+
+    @Test
+    void everyGapHangsUnderAnArticleThatExists() {
+        var articles = rows("coverage").stream().map(GlossRelations.Row::pk).toList();
+        for (GlossRelations.Row gap : rows("coverageMissing")) {
+            assertTrue(articles.contains(gap.up()),
+                    () -> gap.pk() + " hangs under article '" + gap.up() + "', which is not a row");
+        }
+    }
+
+    @Test
+    void theCoverageRootCarriesTheWholeLibraryFigureAndNothingElseDoes() {
+        // The status line above the shelf grid says what fraction of the whole
+        // library is covered; no shelf row could, and it is the first number a
+        // person opening the workbench wants. Every other relation says
+        // nothing there and keeps its row count alone.
+        String note = GlossRelations.noteOf("coverageShelf");
+        assertTrue(note != null && note.contains("% of reads"), () -> "note: " + note);
+        for (String relation : GlossRelations.relations()) {
+            if (relation.equals("coverageShelf")) continue;
+            assertEquals(null, GlossRelations.noteOf(relation), relation + " should carry no note");
+        }
     }
 
     // ── The sound filter ──────────────────────────────────────────────

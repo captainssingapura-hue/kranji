@@ -6,6 +6,9 @@ import hue.captains.singapura.js.homing.workspace.WidgetIcon;
 import hue.captains.singapura.js.homing.workspace.WidgetLabel;
 import hue.captains.singapura.js.homing.workspace.shell.PartyDecl;
 import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpec;
+import kranji.studio.gloss.CoverageEntityWidget;
+import kranji.studio.gloss.CoverageMissingEntityWidget;
+import kranji.studio.gloss.CoverageShelfEntityWidget;
 import kranji.studio.gloss.DemandEntityWidget;
 import kranji.studio.gloss.GlossSelectionSecretaryModule;
 import kranji.studio.gloss.PhraseEntityWidget;
@@ -46,6 +49,7 @@ public final class GlossWorkspaceSpec implements WorkspaceSpec {
         // a link in it: demand scopes it, and nothing hangs off it in turn.
         // Filing it under "Character chain" would suggest a walk that goes on.
         WidgetGroup review = WidgetGroup.of("Review");
+        WidgetGroup coverage = WidgetGroup.of("Coverage");
         return List.of(
                 WidgetEntry.of(SoundEntityWidget.class, WidgetLabel.of("Sound"))
                         .withIcon(new WidgetIcon.Emoji("🔊"))
@@ -64,7 +68,16 @@ public final class GlossWorkspaceSpec implements WorkspaceSpec {
                         .withGroup(phrase),
                 WidgetEntry.of(ProblemEntityWidget.class, WidgetLabel.of("Problems"))
                         .withIcon(new WidgetIcon.Emoji("🔎"))    // 🔎
-                        .withGroup(review));
+                        .withGroup(review),
+                WidgetEntry.of(CoverageShelfEntityWidget.class, WidgetLabel.of("Coverage"))
+                        .withIcon(new WidgetIcon.Emoji("📊"))
+                        .withGroup(coverage),
+                WidgetEntry.of(CoverageEntityWidget.class, WidgetLabel.of("Articles"))
+                        .withIcon(new WidgetIcon.Emoji("📰"))
+                        .withGroup(coverage),
+                WidgetEntry.of(CoverageMissingEntityWidget.class, WidgetLabel.of("Missing here"))
+                        .withIcon(new WidgetIcon.Emoji("🕳️"))
+                        .withGroup(coverage));
     }
 
     /**

@@ -149,6 +149,10 @@ public final class GlossRelationGetAction
           .append(up == null ? "null" : quote(up)).append(",\n");
         js.append("  \"refSource\": ")
           .append(refSource == null ? "null" : quote(refSource)).append(",\n");
+        // A sentence the relation wants shown above its rows, or null. Only
+        // the coverage root has one - see GlossRelations.noteOf.
+        String note = GlossRelations.noteOf(name);
+        js.append("  \"note\": ").append(note == null ? "null" : quote(note)).append(",\n");
         js.append("  \"columns\": [");
         for (int i = 0; i < columns.size(); i++) {
             js.append(i > 0 ? ", " : "").append(quote(columns.get(i)));

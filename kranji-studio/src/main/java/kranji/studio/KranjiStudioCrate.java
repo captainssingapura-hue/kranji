@@ -4,6 +4,9 @@ import hue.captains.singapura.js.homing.core.Crate;
 import hue.captains.singapura.js.homing.core.CrateEntry;
 import hue.captains.singapura.js.homing.grid.RelationGridCrate;
 import kranji.studio.gloss.CuratedEntityWidget;
+import kranji.studio.gloss.CoverageEntityWidget;
+import kranji.studio.gloss.CoverageMissingEntityWidget;
+import kranji.studio.gloss.CoverageShelfEntityWidget;
 import kranji.studio.gloss.DemandEntityWidget;
 import kranji.studio.gloss.ImpactArticleEntityWidget;
 import kranji.studio.gloss.ImpactEntityWidget;
@@ -62,6 +65,9 @@ public final class KranjiStudioCrate implements Crate {
                 CrateEntry.of(CuratedEntityWidget.INSTANCE),
                 CrateEntry.of(ImpactEntityWidget.INSTANCE),
                 CrateEntry.of(ImpactArticleEntityWidget.INSTANCE),
+                CrateEntry.of(CoverageShelfEntityWidget.INSTANCE),
+                CrateEntry.of(CoverageEntityWidget.INSTANCE),
+                CrateEntry.of(CoverageMissingEntityWidget.INSTANCE),
 
                 CrateEntry.of(ArticleWorkbenchCss.INSTANCE),
                 CrateEntry.of(MdPreviewModule.INSTANCE),
