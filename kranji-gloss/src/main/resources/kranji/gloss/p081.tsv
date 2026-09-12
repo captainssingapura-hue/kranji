@@ -12,8 +12,10 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 3
+# Rows: 5
 # codepoint	glyph	reading	priority	meaning	examples	because
 19978	上	shang4	P	up; on; above	上山|地上	
 26543	枯	ku1	P	withered; dry	枯木	
 22806	外	wai4	P	outside	外面	
+35835	读	du2	P	to read; to study	读书	
+35835	读	dou4	P	a pause in reading; the punctuation of a classical text	句读	

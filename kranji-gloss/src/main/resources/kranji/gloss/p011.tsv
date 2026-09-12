@@ -12,9 +12,13 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 4
+# Rows: 8
 # codepoint	glyph	reading	priority	meaning	examples	because
 24049	己	ji3	P	oneself	自己	
 24352	张	zhang1	P	to open out	张嘴	
 24352	张	zhang1	S	(counts flat things)	一张纸	
 20110	于	yu2	P	at; in; to	于是	
+25968	数	shu4	P	a number	数字	
+25968	数	shu4	S	mathematics	数学	
+25968	数	shu3	P	to count	数一数	
+25968	数	shuo4	P	often; repeatedly	数见不鲜	

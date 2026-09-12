@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 10
+# Rows: 12
 # codepoint	glyph	reading	priority	meaning	examples	because
 24590	怎	zen3	P	how	怎么	
 34892	行	xing2	P	to walk; to go	行走	
@@ -24,3 +24,5 @@
 34892	行	hang2	P	a row; a line	一行	
 34892	行	heng2	P	attainment; skill	道行	
 23681	岁	sui4	P	a year of age	三岁	
+36710	车	che1	P	a vehicle; a car	汽车|下车	
+36710	车	ju1	P	the chariot, a piece in Chinese chess	车马炮	

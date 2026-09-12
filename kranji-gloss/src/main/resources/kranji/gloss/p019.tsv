@@ -12,7 +12,10 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 2
+# Rows: 5
 # codepoint	glyph	reading	priority	meaning	examples	because
 20320	你	ni3	P	you	你们	
 35874	谢	xie4	P	to thank	谢谢	
+27491	正	zheng4	P	correct; right	正确|改正	
+27491	正	zheng4	S	just now; in the middle of	正在	
+27491	正	zheng1	P	(in 正月) the first month of the lunar year	正月	

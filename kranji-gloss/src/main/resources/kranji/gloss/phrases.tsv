@@ -424,7 +424,7 @@
 发现	0	to discover	
 头发	0	hair	1=fa4
 南方	0	the south	
-南无	0	a Buddhist invocation	0=na1
+南无	0	a Buddhist invocation	0=na1 1=mo2
 卖出	0	to sell off	
 书包	0	a schoolbag	
 势力	0	power	
@@ -603,3 +603,32 @@
 拘泥	0	to be a stickler	1=ni4
 约会	0	an appointment	
 约一斤	0	to weigh out half a kilo	0=yao1
+汽车	0	a car	
+车马炮	0	chariot, horse and cannon - the chess pieces	0=ju1
+别的	0	other; something else	
+别动	0	don't move	
+告别	0	to say goodbye	
+别扭	0	awkward; uncomfortable	0=bie4
+相同	0	the same	
+一同	0	together	
+胡同	0	a lane; an alley	1=tong4
+读书	0	to read; to study	
+句读	0	the pauses that punctuate a classical text	1=dou4
+打人	0	to hit someone	
+打球	0	to play ball	
+打电话	0	to make a phone call	
+一打	0	a dozen	1=da2
+无人	0	nobody; with no one there	
+数字	0	a number; a digit	
+数学	0	mathematics	
+数一数	0	to count them up	0=shu3 2=shu3
+数见不鲜	0	seen so often it is nothing new	0=shuo4
+互相	0	each other	
+相片	0	a photograph	0=xiang4
+照相	0	to take a photograph	1=xiang4
+长相	0	looks; appearance	1=xiang4
+句子	0	a sentence	
+句践	0	Goujian, a king of Yue	0=gou1
+正确	0	correct	
+正在	0	in the middle of doing	
+正月	0	the first month of the lunar year	0=zheng1
