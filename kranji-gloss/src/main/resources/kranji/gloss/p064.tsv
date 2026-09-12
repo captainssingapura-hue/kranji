@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 6
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 33495	苗	miao2	P	a sprout	禾苗	
 36828	远	yuan3	P	far	很远	
@@ -20,3 +20,6 @@
 33394	色	shai3	P	colour (in everyday speech)	掉色	
 28041	涉	she4	P	to wade; to involve	涉水	
 20365	侍	shi4	P	to wait on	侍立	
+30465	省	sheng3	P	a province	省份	
+30465	省	sheng3	S	to save; to economise	节省	
+30465	省	xing3	P	to examine oneself; to visit one's elders	反省|省亲	

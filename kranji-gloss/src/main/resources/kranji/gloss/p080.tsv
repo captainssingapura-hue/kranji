@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 10
+# Rows: 14
 # codepoint	glyph	reading	priority	meaning	examples	because
 30683	矛	mao2	P	a spear	矛头	
 24320	开	kai1	P	to open	开门|打开	
@@ -24,3 +24,7 @@
 23613	尽	jin4	S	the end	尽头	
 20381	依	yi1	P	to rely on	依山	
 20381	依	yi1	S	according to	依次	
+33410	节	jie2	P	a festival; a holiday	春节|节日	
+33410	节	jie2	S	a joint; a section	关节	
+33410	节	jie2	S	to save; to economise	节省|节约	
+33410	节	jie1	P	(in 节骨眼) the critical moment	节骨眼	

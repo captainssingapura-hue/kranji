@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 8
+# Rows: 10
 # codepoint	glyph	reading	priority	meaning	examples	because
 25226	把	ba3	P	to hold	把住	
 25226	把	ba3	S	(marks what is acted on)	把门关上	
@@ -22,3 +22,5 @@
 24418	形	xing2	P	a shape; a form	形状	
 35831	请	qing3	P	please	请进	
 35831	请	qing3	S	to invite	请客	
+23610	尺	chi3	P	a ruler; a chi, a third of a metre	尺子|三尺	
+23610	尺	che3	P	(in 工尺) a note of the old musical scale	工尺	
