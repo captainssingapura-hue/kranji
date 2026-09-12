@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 9
+# Rows: 11
 # codepoint	glyph	reading	priority	meaning	examples	because
 21160	动	dong4	P	to move	动物	
 35199	西	xi1	P	west	西边	
@@ -23,3 +23,5 @@
 26412	本	ben3	S	(counts books)	一本书	
 27927	洗	xi3	P	to wash	洗手|洗澡	
 27927	洗	xian3	P	(a surname)	洗夫人	
+25705	摩	mo2	P	to rub; to touch	摩擦|按摩	
+25705	摩	ma1	P	(in 摩挲) to stroke gently	摩挲	
