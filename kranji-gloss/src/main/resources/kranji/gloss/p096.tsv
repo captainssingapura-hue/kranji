@@ -12,10 +12,13 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 5
+# Rows: 8
 # codepoint	glyph	reading	priority	meaning	examples	because
 23427	它	ta1	P	it (an animal or a thing)	它的	
 29992	用	yong4	P	to use	有用	
 26356	更	geng4	P	more; even more	更好	
 21407	原	yuan2	P	original	原来	
 21407	原	yuan2	S	a plain	平原	
+20498	倒	dao4	P	upside down; to pour out	倒水|倒立	
+20498	倒	dao4	S	yet; on the contrary	倒是	
+20498	倒	dao3	P	to fall over; to topple	摔倒|倒下	

@@ -12,7 +12,19 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 2
+# Rows: 14
 # codepoint	glyph	reading	priority	meaning	examples	because
 22865	契	qi4	P	to carve	契刻	
 22865	契	qi4	S	an agreement	契约	
+24178	干	gan4	P	to do; to work	干活	
+24178	干	gan4	S	a trunk; the main part	树干	
+24178	干	gan1	P	dry	干净|干燥	
+24178	干	gan1	S	(in 若干) a number of	若干	
+25289	拉	la1	P	to pull; to drag	拉开|拉手	
+25289	拉	la1	S	to play a bowed instrument	拉二胡	
+25289	拉	la2	P	to slash; to cut open	拉口子	
+21047	刷	shua1	P	a brush; to brush	刷牙|牙刷	
+21047	刷	shua1	S	to swipe; to scroll	刷卡	
+21047	刷	shua4	P	(in 刷白) pale, of a face	刷白	
+25794	擂	lei2	P	to pound; to beat a drum	擂鼓|自吹自擂	
+25794	擂	lei4	P	(in 擂台) a stage for contests	擂台|打擂	

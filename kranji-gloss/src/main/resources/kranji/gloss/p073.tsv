@@ -12,10 +12,13 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 5
+# Rows: 8
 # codepoint	glyph	reading	priority	meaning	examples	because
 31181	种	zhong3	P	a kind	种类	
 31181	种	zhong3	S	a seed	种子	
 31181	种	zhong4	P	to plant	种田	
 31181	种	chong2	P	(a family name)	种师道	
 24515	心	xin1	P	the heart; the mind	小心	
+24212	应	ying1	P	should; ought to	应该|应当	
+24212	应	ying4	P	to answer; to respond	答应|反应	
+24212	应	ying4	S	to cope with; to deal with	应付	

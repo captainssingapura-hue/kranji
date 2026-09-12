@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 6
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 24456	很	hen3	P	very	很多|很好	
 30011	画	hua4	P	to draw	画画|画蛇	
@@ -20,3 +20,6 @@
 20820	兔	tu4	P	a rabbit	兔子	
 25163	手	shou3	P	a hand	手上	
 23244	嫌	xian2	P	to mind; to dislike	嫌少	
+21527	吗	ma0	P	(makes a question)	好吗|是吗	
+21527	吗	ma2	P	(in 干吗) what for; why	干吗	
+21527	吗	ma3	P	(in 吗啡) morphine	吗啡	

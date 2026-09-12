@@ -12,7 +12,9 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 2
+# Rows: 4
 # codepoint	glyph	reading	priority	meaning	examples	because
 35270	视	shi4	P	to look at	视线	
 23453	宝	bao3	P	a treasure	宝剑	
+30422	盖	gai4	P	a lid; to cover; to build	盖子|盖房子	
+30422	盖	ge3	P	(a surname)	盖聂	

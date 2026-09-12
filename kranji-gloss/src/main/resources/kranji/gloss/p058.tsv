@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 6
+# Rows: 12
 # codepoint	glyph	reading	priority	meaning	examples	because
 27934	洞	dong4	P	a hole; a cave	山洞	
 31166	禾	he2	P	a grain plant	禾苗	
@@ -20,3 +20,9 @@
 38236	镜	jing4	S	a lens	眼镜	
 34903	街	jie1	P	a street	街上	
 20864	冀	ji4	P	to hope for	冀求	
+37327	量	liang4	P	a quantity; capacity	数量|尽量	
+37327	量	liang2	P	to measure	测量|量体温	
+21066	削	xue1	P	(the formal reading) to cut down; to weaken	削弱|剥削	
+21066	削	xiao1	P	to peel; to pare	削苹果|削铅笔	
+25308	拜	bai4	P	to bow; to worship; to pay a visit	拜年|崇拜	
+25308	拜	bai2	P	(in 拜拜) bye-bye	拜拜	

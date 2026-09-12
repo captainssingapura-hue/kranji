@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 6
+# Rows: 8
 # codepoint	glyph	reading	priority	meaning	examples	because
 20174	从	cong2	P	from	从前	
 20174	从	cong2	S	to follow	跟从	
@@ -20,3 +20,5 @@
 21487	可	ke3	P	can; may	可以	
 31890	粒	li4	P	(counts small round things)	一粒米	
 25325	拭	shi4	P	to wipe	擦拭	
+27850	泊	po1	P	a lake; a pool	湖泊|血泊	
+27850	泊	bo2	P	to moor; to stay; unworldly	停泊|淡泊	

@@ -12,9 +12,18 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 4
+# Rows: 13
 # codepoint	glyph	reading	priority	meaning	examples	because
 20116	五	wu3	P	five	五个	
 38498	院	yuan4	P	a courtyard	院子	
 28903	烧	shao1	P	to burn; to cook	烧水	
 26479	杯	bei1	P	a cup	一杯水	
+24055	巷	xiang4	P	a lane; an alley	小巷|巷子	
+24055	巷	hang4	P	(in 巷道) a tunnel in a mine	巷道	
+25166	扎	zha1	P	to prick; to plunge into; to station	扎针|扎根	
+25166	扎	za1	P	to tie; to bind; a bundle	扎辫子|一扎	
+25166	扎	zha2	P	(in 挣扎) to struggle	挣扎	
+32438	纶	lun2	P	a silk thread; a fishing line	经纶|垂纶	
+32438	纶	guan1	P	(in 纶巾) a silk-ribbon headscarf	纶巾	
+35266	观	guan1	P	to watch; to view; a view	参观|观看|观察	
+35266	观	guan4	P	a Taoist temple	道观|白云观	

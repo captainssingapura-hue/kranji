@@ -12,8 +12,16 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 3
+# Rows: 11
 # codepoint	glyph	reading	priority	meaning	examples	because
 22823	大	da4	P	big	大人	
 20197	以	yi3	P	with; by means of	可以	
 32418	红	hong2	P	red	红色	
+23631	屏	ping2	P	a screen	屏幕|屏风	
+23631	屏	bing3	P	to hold one's breath; to shut out	屏住|屏息	
+27873	泡	pao4	P	a bubble; to soak; to steep	泡沫|泡茶	
+27873	泡	pao1	P	puffy; soft and swollen	眼泡|泡桐	
+27974	浆	jiang1	P	a thick liquid; pulp	豆浆|泥浆	
+27974	浆	jiang4	P	to starch cloth	浆洗	
+20399	侯	hou2	P	a marquis; a noble	诸侯|侯爵	
+20399	侯	hou4	P	(in 闽侯) a county in Fujian	闽侯	

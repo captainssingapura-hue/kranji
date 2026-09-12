@@ -12,10 +12,15 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 5
+# Rows: 10
 # codepoint	glyph	reading	priority	meaning	examples	because
 22902	奶	nai3	P	milk	牛奶	
 22902	奶	nai3	S	grandmother	奶奶	
 29366	状	zhuang4	P	a shape	形状	
 29366	状	zhuang4	S	a state	状态	
 36335	路	lu4	P	a road; a way	路上	
+21387	压	ya1	P	to press; pressure	压力|压住	
+21387	压	ya4	P	(in 压根) at all; from the start	压根	
+21488	台	tai2	P	a platform; a stage; a stand	舞台|台灯	
+21488	台	tai2	S	(counts machines)	一台电脑	
+21488	台	tai1	P	(in 天台) a mountain in Zhejiang	天台	

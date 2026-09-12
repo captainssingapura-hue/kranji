@@ -12,9 +12,15 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 4
+# Rows: 10
 # codepoint	glyph	reading	priority	meaning	examples	because
 19981	不	bu4	P	not	不是|不好	
 24930	慢	man4	P	slow	很慢	
 26041	方	fang1	P	a direction	前方	
 26041	方	fang1	S	a square	方形	
+20284	似	si4	P	to seem; like; as if	相似|似乎	
+20284	似	shi4	P	(in 似的) like; as if	似的	
+24324	弄	nong4	P	to do; to handle; to play with	弄坏|弄脏|摆弄	
+24324	弄	long4	P	a lane, in Shanghai	弄堂|里弄	
+31192	秘	mi4	P	secret; mysterious	秘密|神秘|秘书	
+31192	秘	bi4	P	(in 秘鲁) Peru	秘鲁	

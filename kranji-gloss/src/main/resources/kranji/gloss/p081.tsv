@@ -12,8 +12,16 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 3
+# Rows: 11
 # codepoint	glyph	reading	priority	meaning	examples	because
 19978	上	shang4	P	up; on; above	上山|地上	
 26543	枯	ku1	P	withered; dry	枯木	
 22806	外	wai4	P	outside	外面	
+35835	读	du2	P	to read; to study	读书	
+35835	读	dou4	P	a pause in reading; the punctuation of a classical text	句读	
+23614	尾	wei3	P	a tail; the end	尾巴|结尾	
+23614	尾	yi3	P	(colloquial, in 马尾) a horse's tail; a ponytail	马尾	
+25735	撇	pie1	P	to cast aside; to skim	撇开|撇下	
+25735	撇	pie3	P	the left-falling stroke; to curl the lip	撇嘴|一撇	
+31896	粘	zhan1	P	to stick; to glue	粘贴|粘住	
+31896	粘	nian2	P	sticky; glutinous	粘稠|粘米	

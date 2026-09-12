@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+        <artifactId>kranji-reading</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>kranji-reading-workbench</artifactId>
+
+    <description>
+        The workbenches a library author runs against their own articles.
+
+        The reader is for a child and ships to a family's device. The studio
+        is for whoever builds Kranji and holds internal tooling. This is the
+        third seat: somebody who writes and curates a reading library and
+        wants to see it exactly as the reader will - the same widgets, the
+        same routes - beside tools that measure it.
+
+        WHAT IS HERE IS THE BENCH, NOT THE LIBRARY. It declares no articles
+        and mounts none. A library repository adds a small module that depends
+        on this one and on its own collections, and that module is where the
+        real articles arrive - the same way they reach the reader, by
+        discovery, so a workbench run there sees what a reader would.
+
+        It depends on the reading app and composes its widgets; it does not
+        depend on the studio, which the dependency-direction rule forbids for
+        every module but the packaging one. Whatever the studio holds that a
+        library author needs will have to move somewhere both can reach.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.captainssingapura-hue.yong.kranji</groupId>
+            <artifactId>kranji-reading-app</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

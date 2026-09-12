@@ -301,7 +301,7 @@
 道行	0	a monk's attainment	1=heng2
 圈养	0	to raise penned in	0=juan1
 荒地	0	waste ground	
-若干	0	a certain number	
+若干	0	a certain number	1=gan1
 掉色	0	to lose colour	1=shai3
 弯腰	0	to bend at the waist	
 背后	0	behind	
@@ -424,7 +424,7 @@
 发现	0	to discover	
 头发	0	hair	1=fa4
 南方	0	the south	
-南无	0	a Buddhist invocation	0=na1
+南无	0	a Buddhist invocation	0=na1 1=mo2
 卖出	0	to sell off	
 书包	0	a schoolbag	
 势力	0	power	
@@ -603,3 +603,808 @@
 拘泥	0	to be a stickler	1=ni4
 约会	0	an appointment	
 约一斤	0	to weigh out half a kilo	0=yao1
+汽车	0	a car	
+车马炮	0	chariot, horse and cannon - the chess pieces	0=ju1
+别的	0	other; something else	
+别动	0	don't move	
+告别	0	to say goodbye	
+别扭	0	awkward; uncomfortable	0=bie4
+相同	0	the same	
+一同	0	together	
+胡同	0	a lane; an alley	1=tong4
+读书	0	to read; to study	
+句读	0	the pauses that punctuate a classical text	1=dou4
+打人	0	to hit someone	
+打球	0	to play ball	
+打电话	0	to make a phone call	
+一打	0	a dozen	1=da2
+无人	0	nobody; with no one there	
+数字	0	a number; a digit	
+数学	0	mathematics	
+数一数	0	to count them up	0=shu3 2=shu3
+数见不鲜	0	seen so often it is nothing new	0=shuo4
+互相	0	each other	
+相片	0	a photograph	0=xiang4
+照相	0	to take a photograph	1=xiang4
+长相	0	looks; appearance	1=xiang4
+句子	0	a sentence	
+句践	0	Goujian, a king of Yue	0=gou1
+正确	0	correct	
+正在	0	in the middle of doing	
+正月	0	the first month of the lunar year	0=zheng1
+一万	0	ten thousand	
+万俟	0	Moqi, a surname	0=mo4
+哪个	0	which one	
+哪里	0	where	
+天哪	0	heavens!	1=na0
+哪吒	0	Nezha, the boy god	0=ne2
+合上	0	to close (a book, a lid)	
+合作	0	to work together	
+一合米	0	a ge of rice - an old measure	1=ge3
+子弹	0	a bullet	
+炸弹	0	a bomb	
+弹琴	0	to play a stringed instrument	0=tan2
+弹跳	0	to bounce; to spring	0=tan2
+一片	0	a slice; a stretch of	
+卡片	0	a card	
+片子	0	a film; a disc	0=pian1
+广场	0	a square	
+操场	0	a playground; a sports ground	
+一场雨	0	a fall of rain	1=chang2
+干活	0	to do work	
+树干	0	a tree trunk	
+干净	0	clean	0=gan1
+干燥	0	dry	0=gan1
+拉开	0	to pull open	
+拉手	0	to hold hands; a handle	
+拉二胡	0	to play the erhu	
+拉口子	0	to cut a gash	0=la2
+通过	0	to pass through; by means of	
+交通	0	traffic	
+精通	0	to know thoroughly; to master	
+说了一通	0	gave a long talking-to	3=tong4
+困难	0	difficulty; hard	
+难看	0	ugly	
+灾难	0	a disaster	1=nan4
+难民	0	a refugee	0=nan4
+温度	0	temperature	
+度过	0	to spend; to get through (a time)	
+忖度	0	to size up; to guess at	1=duo2
+朝代	0	a dynasty	
+唐朝	0	the Tang dynasty	
+朝着	0	towards	
+朝阳	0	the morning sun	0=zhao1
+朝霞	0	the glow of sunrise	0=zhao1
+倒水	0	to pour water	
+倒立	0	a handstand	
+倒是	0	actually; on the contrary	
+摔倒	0	to fall down	1=dao3
+倒下	0	to fall over	0=dao3
+好吗	0	all right?	
+是吗	0	really?	
+干吗	0	what for; why	1=ma2
+吗啡	0	morphine	0=ma3
+差一点	0	almost; nearly	
+差劲	0	poor; no good	
+差别	0	a difference	0=cha1
+差距	0	a gap	0=cha1
+出差	0	to go on a business trip	1=chai1
+邮差	0	a postman	1=chai1
+参差	0	uneven; irregular	0=cen1 1=ci1
+传说	0	a legend	
+传给	0	to pass to	
+传记	0	a biography	0=zhuan4
+水浒传	0	Water Margin, the novel	2=zhuan4
+作业	0	homework	
+作坊	0	a workshop	0=zuo1 1=fang2
+方便	0	convenient	
+便利	0	convenient; a convenience	
+便是	0	is precisely; then	
+便宜	0	cheap	0=pian2
+冲进去	0	to rush in	
+冲锋	0	to charge	
+冲水	0	to flush; to rinse	
+冲茶	0	to brew tea	
+冲着	0	towards; because of	0=chong4
+衣服	0	clothes	
+校服	0	a school uniform	
+佩服	0	to admire	
+服从	0	to obey	
+一服药	0	a dose of medicine	1=fu4
+洗手	0	to wash one's hands	
+洗澡	0	to bathe	
+洗夫人	0	Lady Xian, a Sui-dynasty leader	0=xian3
+省份	0	a province	
+节省	0	to save; economical	
+反省	0	to reflect on oneself	1=xing3
+省亲	0	to visit one's parents	0=xing3
+压力	0	pressure	
+压住	0	to hold down	
+压根	0	at all; from the very start	0=ya4
+挡住	0	to block	
+阻挡	0	to obstruct	
+摒挡	0	to put in order	1=dang4
+担水	0	to carry water on a pole	
+担心	0	to worry	
+承担	0	to bear; to undertake	
+重担	0	a heavy burden	1=dan4
+担子	0	a load; a burden	0=dan4
+春节	0	Spring Festival	
+节日	0	a festival	
+关节	0	a joint	
+节约	0	to economise	
+节骨眼	0	the critical moment	0=jie1 1=gu1
+贝壳	0	a seashell	
+蛋壳	0	an eggshell	
+地壳	0	the earth's crust	0=di4 1=qiao4
+甲壳	0	a carapace	1=qiao4
+尺子	0	a ruler	
+三尺	0	three chi	
+工尺	0	the old musical notation	1=che3
+转身	0	to turn around	
+转弯	0	to turn a corner	
+转告	0	to pass a message on	
+旋转	0	to spin; to rotate	1=zhuan4
+转圈	0	to go round in circles	0=zhuan4
+亲人	0	a family member	
+母亲	0	mother	
+亲吻	0	to kiss	
+亲家	0	relatives by marriage	0=qing4
+单独	0	alone; on one's own	
+名单	0	a list of names	
+菜单	0	a menu	
+简单	0	simple	
+单于	0	the Xiongnu ruler	0=chan2
+单县	0	Shan County, in Shandong	0=shan4
+奔跑	0	to run	
+奔腾	0	to gallop; to surge	
+奔向	0	to head towards	0=ben4
+投奔	0	to go to someone for shelter	1=ben4
+扁平	0	flat	
+压扁	0	to squash flat	
+扁舟	0	a small boat	0=pian1
+磨刀	0	to sharpen a knife	
+磨损	0	to wear down	
+磨蹭	0	to dawdle	
+石磨	0	a stone mill	1=mo4
+磨坊	0	a mill	0=mo4 1=fang2
+肚子	0	the belly	
+肚脐	0	the navel	
+猪肚	0	pig tripe	1=du3
+牛肚	0	beef tripe	1=du3
+乌龟	0	a tortoise	
+龟壳	0	a tortoise shell	
+龟裂	0	to crack; chapped	0=jun1
+龟兹	0	Qiuci, an ancient kingdom	0=qiu1 1=ci2
+刷牙	0	to brush one's teeth	
+牙刷	0	a toothbrush	
+刷卡	0	to swipe a card	
+刷白	0	pale; white in the face	0=shua4
+卷起	0	to roll up	
+春卷	0	a spring roll	
+试卷	0	an exam paper	1=juan4
+第一卷	0	volume one	2=juan4
+舞台	0	a stage	
+一台电脑	0	one computer	
+天台	0	Tiantai, a mountain	1=tai1
+成员	0	a member	
+演员	0	an actor	
+员工	0	staff; an employee	
+员半千	0	Yuan Banqian, a Tang official	0=yun4
+应该	0	should	
+应当	0	ought to	
+答应	0	to agree; to answer	1=ying4
+反应	0	a reaction; a response	1=ying4
+应付	0	to cope with; to deal with	0=ying4
+荷花	0	a lotus flower	
+荷叶	0	a lotus leaf	
+负荷	0	a load	1=he4
+荷枪	0	to shoulder a rifle	0=he4
+相似	0	similar	
+似乎	0	it seems	
+似的	0	like; as if	0=shi4
+将来	0	the future	
+即将	0	about to	
+将近	0	nearly; close to	
+将军	0	a general	0=jiang4
+大将	0	a great general	1=jiang4
+尾巴	0	a tail	
+结尾	0	the ending	
+马尾	0	a ponytail	1=yi3
+摩擦	0	friction; to rub	
+按摩	0	a massage	
+摩挲	0	to stroke gently	0=ma1
+散步	0	to take a walk	
+分散	0	to disperse	
+解散	0	to dismiss; to break up	
+散文	0	prose	0=san3
+松散	0	loose	1=san3
+燕子	0	a swallow	
+海燕	0	a petrel	
+燕国	0	the state of Yan	0=yan1
+燕山	0	the Yan Mountains	0=yan1
+称为	0	to be called	1=wei2
+名称	0	a name	
+称重	0	to weigh	
+称赞	0	to praise	
+称心	0	satisfactory; to one's liking	0=chen4
+对称	0	symmetrical	1=chen4
+细菌	0	bacteria	
+真菌	0	a fungus	
+菌子	0	a mushroom	0=jun4
+香菌	0	a shiitake mushroom	1=jun4
+与其	0	rather than	
+与众不同	0	out of the ordinary	
+赠与	0	to give; to bestow	
+参与	0	to take part in	1=yu4
+打中	0	to hit the target	1=zhong4
+中奖	0	to win a prize	0=zhong4
+亲切	0	warm; kind	
+密切	0	close	
+一切	0	everything; all	
+切菜	0	to cut vegetables	0=qie1
+切断	0	to cut off	0=qie1
+奇怪	0	strange	
+好奇	0	curious	0=hao4
+奇数	0	an odd number	0=ji1
+屏幕	0	a screen	
+屏风	0	a folding screen	
+屏住	0	to hold (one's breath)	0=bing3
+屏息	0	to hold one's breath	0=bing3
+挑选	0	to choose	
+挑食	0	to be picky about food	
+挑水	0	to carry water on a pole	
+挑战	0	a challenge	0=tiao3
+挑衅	0	to provoke	0=tiao3
+横线	0	a horizontal line	
+横过	0	to cross	
+蛮横	0	overbearing	1=heng4
+横财	0	a windfall	0=heng4
+泡沫	0	foam; bubbles	
+泡茶	0	to brew tea	
+眼泡	0	puffy eyelids	1=pao1
+泡桐	0	the paulownia tree	0=pao1
+豆浆	0	soy milk	
+泥浆	0	mud; slurry	
+浆洗	0	to wash and starch	0=jiang4
+成熟	0	mature; ripe	
+熟悉	0	familiar	
+饭熟了	0	the rice is done	1=shou2
+系统	0	a system	
+关系	0	a relationship	
+联系	0	to contact; a connection	
+系鞋带	0	to tie shoelaces	0=ji4
+系上	0	to fasten	0=ji4
+裂缝	0	a crack	
+门缝	0	the crack of a door	
+缝衣服	0	to sew clothes	0=feng2
+缝补	0	to mend	0=feng2
+葛藤	0	the kudzu vine	
+诸葛亮	0	Zhuge Liang, the strategist	1=ge3
+躲藏	0	to hide	
+收藏	0	to collect	
+西藏	0	Tibet	1=zang4
+宝藏	0	a treasure trove	1=zang4
+血液	0	blood	
+流血	0	to bleed	
+流血了	0	bleeding	1=xie3
+鸡血	0	chicken blood	1=xie3
+解开	0	to untie	
+了解	0	to understand	0=liao3
+押解	0	to escort a prisoner	1=jie4
+解数	0	skill; tricks	0=xie4
+新郎	0	a bridegroom	
+郎中	0	a physician, in old usage	
+屎壳郎	0	the dung beetle	2=lang4
+麻雀	0	a sparrow	
+孔雀	0	a peacock	
+雀子	0	freckles	0=qiao1
+家雀	0	a sparrow, colloquially	1=qiao3
+命令	0	an order	
+令人	0	to make one (feel)	
+令尊	0	your father, honorific	
+令狐	0	Linghu, a surname	0=ling2
+一令纸	0	a ream of paper	1=ling3
+埋葬	0	to bury	
+埋伏	0	an ambush	
+埋怨	0	to complain about; to blame	0=man2
+扇子	0	a fan	
+一扇门	0	a door	
+扇风	0	to fan	0=shan1
+扇动	0	to flap; to stir up	0=shan1
+扫地	0	to sweep the floor	1=di4
+打扫	0	to clean up	
+扫帚	0	a broom	0=sao4
+提起	0	to lift; to mention	
+提高	0	to raise	
+提问	0	to ask a question	
+提防	0	to guard against	0=di1
+曾经	0	once; at one time	
+未曾	0	never yet	
+曾孙	0	a great-grandson	0=zeng1
+曾祖	0	a great-grandfather	0=zeng1
+胖子	0	a fat person	
+发胖	0	to put on weight	
+心广体胖	0	at ease in mind and stout in body	3=pan2
+蒙住	0	to cover up	
+启蒙	0	to enlighten; first lessons	
+蒙人	0	to fool someone	0=meng1
+蒙对了	0	guessed right	0=meng1
+蒙古	0	Mongolia	0=meng3
+内蒙古	0	Inner Mongolia	1=meng3
+数量	0	quantity	
+测量	0	to measure; to survey	1=liang2
+量体温	0	to take a temperature	0=liang2
+使劲	0	to exert oneself	
+干劲	0	drive; enthusiasm	
+劲敌	0	a formidable rival	0=jing4
+强劲	0	strong; powerful	1=jing4
+吐痰	0	to spit	
+谈吐	0	one's way of speaking	
+呕吐	0	to vomit	1=tu4
+吐了	0	threw up	0=tu4
+塞住	0	to stop up	
+瓶塞	0	a bottle stopper	
+边塞	0	a frontier	1=sai4
+塞外	0	beyond the Great Wall	0=sai4
+堵塞	0	to block; a blockage	1=se4
+闭塞	0	blocked; cut off	1=se4
+并且	0	and; moreover	
+合并	0	to merge	
+并不	0	not at all	
+并州	0	Bingzhou, an ancient region	0=bing1
+教育	0	education	
+佛教	0	Buddhism	0=fo2
+教书	0	to teach in a school	0=jiao1
+教你	0	to teach you	0=jiao1
+学期	0	a term; a semester	
+期待	0	to look forward to	
+期年	0	a full year	0=ji1
+核心	0	the core	
+核桃	0	a walnut	
+杏核	0	an apricot stone	1=hu2
+枣核	0	a date stone	1=hu2
+爆炸	0	an explosion	
+炸鸡	0	fried chicken	0=zha2
+油炸	0	deep-fried	1=zha2
+盖子	0	a lid	
+盖房子	0	to build a house	
+盖聂	0	Ge Nie, a swordsman of the Warring States	0=ge3
+茂盛	0	lush; flourishing	
+盛大	0	grand	
+盛饭	0	to serve rice	0=cheng2
+盛水	0	to hold water	0=cheng2
+翅膀	0	a wing	
+膀子	0	an arm; a shoulder	
+膀肿	0	swollen	0=pang1
+膀胱	0	the bladder	0=pang2
+青苔	0	moss	
+苔藓	0	moss; lichen	
+舌苔	0	the coating on the tongue	1=tai1
+采花	0	to pick flowers	
+采集	0	to collect; to gather	
+神采	0	expression; spirit	
+采地	0	a fief	0=cai4 1=di4
+铝合金	0	aluminium alloy	
+铝锅	0	an aluminium pot	
+价格	0	a price	
+价值	0	value	
+震天价响	0	deafeningly loud	2=jie0
+创造	0	to create	
+创新	0	to innovate	
+创伤	0	a wound; trauma	0=chuang1
+创口	0	a wound; a cut	0=chuang1
+中华	0	China	
+华丽	0	gorgeous	
+华山	0	Mount Hua	0=hua4
+华佗	0	Hua Tuo, the physician	0=hua4
+卡车	0	a truck	
+卡住	0	to get stuck	0=qia3
+发卡	0	a hair clip	0=fa4 1=qia3
+吓人	0	frightening	
+吓一跳	0	to be startled	
+恐吓	0	to threaten	1=he4
+恫吓	0	to intimidate	1=he4
+呱呱坠地	0	to be born	3=di4
+呱呱叫	0	top-notch; croaking	0=gua1 1=gua1
+好啊	0	good!; all right!	
+啊	0	(softening the end of a sentence)	
+啊	1	ah! (surprise, admiration)	0=a1
+啊	2	what? (asking again)	0=a2
+啊	3	huh? (doubt)	0=a3
+啊	4	oh; right (realisation)	0=a4
+嘎嘎	0	quack quack	
+嘎调	0	a high note in Peking opera	0=ga2
+嘎子	0	a mischievous kid, in the north	0=ga3
+攒钱	0	to save money	
+积攒	0	to accumulate	
+攒聚	0	to gather together	0=cuan2
+攒动	0	to move in a crowd	0=cuan2
+歌曲	0	a song	1=qu3
+曲子	0	a tune	0=qu3
+检查	0	to check	
+查字典	0	to look up in a dictionary	
+查良镛	0	Zha Liangyong - Jin Yong, the novelist	0=zha1
+湖泊	0	lakes	
+血泊	0	a pool of blood	
+停泊	0	to moor	1=bo2
+淡泊	0	indifferent to fame and gain	1=bo2
+溜冰	0	to skate	
+溜走	0	to slip away	
+一溜烟	0	in a flash	1=liu4
+翘尾巴	0	to cock the tail; to get cocky	
+翘起	0	to stick up	
+翘首	0	to crane one's neck	0=qiao2
+翘楚	0	an outstanding person	0=qiao2
+芦苇	0	reeds	
+葫芦	0	a gourd	
+芦菔	0	the radish, in old usage	0=lu3
+薄纸	0	thin paper	
+薄饼	0	a pancake	
+薄弱	0	weak	0=bo2
+单薄	0	thin; frail	1=bo2
+薄荷	0	mint	0=bo4
+河蚌	0	a freshwater mussel	
+蚌壳	0	a clam shell	
+蚌埠	0	Bengbu, a city in Anhui	0=beng4
+调动	0	to transfer; to mobilise	
+声调	0	a tone	
+曲调	0	a tune	0=qu3
+调整	0	to adjust	0=tiao2
+调皮	0	naughty	0=tiao2
+店铺	0	a shop	
+床铺	0	a bed	
+铺路	0	to pave a road	0=pu1
+铺床	0	to make a bed	0=pu1
+阿姨	0	auntie	
+阿婆	0	granny	
+阿谀	0	to flatter	0=e1
+阿弥陀佛	0	Amitabha Buddha	0=e1 3=fo2
+任务	0	a task	
+责任	0	responsibility	
+任何	0	any	
+任丘	0	Renqiu, in Hebei	0=ren2
+伯伯	0	uncle - father's elder brother	
+伯父	0	uncle	
+大伯子	0	a husband's elder brother	1=bai3
+真假	0	true or false	
+假如	0	if	
+放假	0	to have a holiday	1=jia4
+假期	0	a vacation	0=jia4
+计划	0	a plan	
+划分	0	to divide up	
+划船	0	to row a boat	0=hua2
+划算	0	worthwhile; a good deal	0=hua2
+刨坑	0	to dig a pit	
+刨土	0	to dig the earth	
+刨子	0	a plane, the tool	0=bao4
+刨花	0	wood shavings	0=bao4
+劈柴	0	to chop firewood	
+劈开	0	to split open	
+劈叉	0	to do the splits	0=pi3 1=cha4
+劈腿	0	to do the splits; to two-time	0=pi3
+占领	0	to occupy	
+占用	0	to take up	
+占卜	0	to divine	0=zhan1 1=bu3
+占卦	0	to cast a divination	0=zhan1
+是否	0	whether	
+否认	0	to deny	
+否极泰来	0	after bad luck comes good	0=pi3
+吵闹	0	noisy	
+吵架	0	to quarrel	
+吵吵	0	to kick up a racket	0=chao1 1=chao1
+来呀	0	come on!	
+好呀	0	sure!	
+哎呀	0	oh dear!	1=ya1
+咿呀	0	babbling; creaking	1=ya1
+喷水	0	to spray water	
+喷泉	0	a fountain	
+喷香	0	fragrant; smelling delicious	0=pen4
+胶囊	0	a capsule	
+行囊	0	a travelling bag	
+囊揣	0	weak; cowardly	0=nang1 1=chuai4
+小巷	0	a lane	
+巷子	0	an alley	
+巷道	0	a tunnel in a mine	0=hang4
+强大	0	powerful	
+坚强	0	strong-willed	
+勉强	0	reluctantly; to force	1=qiang3
+强迫	0	to compel	0=qiang3
+倔强	0	stubborn	1=jiang4
+强嘴	0	to talk back	0=jiang4
+扎针	0	to give an injection; acupuncture	
+扎根	0	to take root	
+扎辫子	0	to plait hair	0=za1
+一扎	0	a bundle	1=za1
+挣扎	0	to struggle	1=zha2
+抹掉	0	to wipe off	
+涂抹	0	to smear	
+抹布	0	a rag; a duster	0=ma1
+抹桌子	0	to wipe the table	0=ma1
+抹墙	0	to plaster a wall	0=mo4
+转弯抹角	0	to beat about the bush	2=mo4
+选择	0	to choose	
+择日	0	to pick a day	
+择菜	0	to trim vegetables	0=zhai2
+择不开	0	cannot be untangled	0=zhai2
+挨着	0	next to	
+挨家挨户	0	from house to house	
+挨打	0	to take a beating	0=ai2
+挨饿	0	to go hungry	0=ai2
+撇开	0	to leave aside	
+撇下	0	to abandon	
+撇嘴	0	to curl one's lip	0=pie3
+一撇	0	a left-falling stroke	1=pie3
+涌出	0	to gush out	
+汹涌	0	turbulent; surging	
+河涌	0	a creek, in southern place names	1=chong1
+涨价	0	a price rise	
+涨潮	0	the tide comes in	
+涨红	0	to flush red	0=zhang4
+头昏脑涨	0	dizzy and muddled	3=zhang4
+淋雨	0	to get rained on	
+淋湿	0	soaked	
+过淋	0	to filter	1=lin4
+淋盐	0	to leach salt	0=lin4
+澹泊	0	indifferent to fame and gain	1=bo2
+恬澹	0	quiet and contented	
+澹台	0	Tantai, a surname	0=tan2
+熬夜	0	to stay up late	
+熬粥	0	to cook congee	
+熬白菜	0	stewed cabbage	0=ao1
+鸟笼	0	a birdcage	
+笼子	0	a cage	
+笼罩	0	to envelop	0=long3
+笼统	0	general; vague	0=long3
+粘贴	0	to paste	
+粘住	0	to stick to	
+粘稠	0	thick and sticky	0=nian2
+粘米	0	glutinous rice	0=nian2
+纤细	0	slender	
+纤维	0	fibre	
+纤夫	0	a boat tracker	0=qian4
+拉纤	0	to tow a boat	1=qian4
+纪律	0	discipline	
+世纪	0	a century	
+纪念	0	to commemorate	
+纪晓岚	0	Ji Xiaolan, a Qing scholar	0=ji3
+罢工	0	a strike	
+罢了	0	that's all	
+也罢	0	let it be; all right then	1=ba0
+心脏	0	the heart	
+内脏	0	the internal organs	
+脏衣服	0	dirty clothes	0=zang1
+弄脏	0	to get something dirty	1=zang1
+著名	0	famous	
+著作	0	a written work	
+附著	0	to adhere to	1=zhuo2
+穿著	0	clothing; to wear	1=zhuo2
+角色	0	a role	0=jue2
+主角	0	the lead role	1=jue2
+讨论	0	to discuss	
+理论	0	a theory	
+论语	0	the Analects of Confucius	0=lun2
+车轴	0	an axle	
+画轴	0	a scroll painting	
+压轴	0	the final act on a programme	1=zhou4
+饮料	0	a drink	
+饮水	0	to drink water	
+饮马	0	to water a horse	0=yin4
+饮牛	0	to water cattle	0=yin4
+丧失	0	to lose	
+沮丧	0	dejected	
+丧事	0	a funeral	0=sang1
+奔丧	0	to hurry home for a funeral	1=sang1
+美丽	0	beautiful	
+高丽	0	Goryeo, old Korea	1=li2
+受不了	0	cannot stand it	2=liao3
+了结	0	to settle; to wind up	0=liao3
+供应	0	to supply	1=ying4
+提供	0	to provide	
+供品	0	an offering	0=gong4
+供奉	0	to enshrine; to make offerings to	0=gong4
+诸侯	0	the feudal lords	
+侯爵	0	a marquis	
+闽侯	0	Minhou, a county in Fujian	1=hou4
+鸡冠	0	a cockscomb	
+皇冠	0	a crown	
+冠军	0	a champion	0=guan4
+冠名	0	to give a name to; title sponsorship	0=guan4
+刹车	0	to brake	
+刹住	0	to bring to a halt	
+刹那	0	an instant	0=cha4
+古刹	0	an ancient temple	1=cha4
+削弱	0	to weaken	
+剥削	0	to exploit	
+削苹果	0	to peel an apple	0=xiao1
+削铅笔	0	to sharpen a pencil	0=xiao1
+剥夺	0	to deprive	
+剥皮	0	to skin; to peel	0=bao1
+剥花生	0	to shell peanuts	0=bao1
+勒紧	0	to tighten	
+勒死	0	to strangle	
+勒令	0	to order	0=le4
+勒索	0	to extort	0=le4
+钥匙	0	a key	
+汤匙	0	a soup spoon	1=chi2
+茶匙	0	a teaspoon	1=chi2
+附和	0	to echo; to chime in	1=he4
+一唱一和	0	to sing in chorus; to echo each other	3=he4
+和牌	0	to complete a mahjong hand	0=hu2
+和面	0	to knead dough	0=huo2
+和泥	0	to mix mud	0=huo2
+和药	0	to mix medicine	0=huo4
+搅和	0	to stir; to mess up	1=huo4
+暖和	0	warm	1=huo0
+软和	0	soft	1=huo0
+参加	0	to join; to attend	
+参观	0	to visit	
+人参	0	ginseng	1=shen1
+海参	0	a sea cucumber	1=shen1
+召开	0	to convene	
+号召	0	to call upon; an appeal	
+召公	0	the Duke of Shao	0=shao4
+咖啡	0	coffee	
+咖喱	0	curry	0=ga1
+城堡	0	a castle	
+堡垒	0	a fortress	
+吴堡	0	Wubu, in Shaanxi	1=bu3
+十里堡	0	Shilipu, a place name	2=pu4
+处理	0	to deal with	0=chu3
+相处	0	to get along	1=chu3
+夹子	0	a clip	
+文件夹	0	a folder	
+夹肢窝	0	the armpit	0=ga1
+夹袄	0	a lined jacket	0=jia2
+夹衣	0	lined clothing	0=jia2
+安宁	0	peaceful	
+宁静	0	tranquil	
+宁可	0	would rather	0=ning4
+宁愿	0	would rather	0=ning4
+对峙	0	to confront each other	
+耸峙	0	to tower	
+繁峙	0	Fanshi, in Shanxi	1=shi4
+弄坏	0	to break	
+摆弄	0	to fiddle with	
+弄堂	0	a lane, in Shanghai	0=long4
+里弄	0	lanes and alleys	1=long4
+等待	0	to wait	
+对待	0	to treat	
+待着	0	to stay put	0=dai1
+待在家里	0	to stay at home	0=dai1
+拜年	0	to pay a New Year call	
+崇拜	0	to worship	
+拜拜	0	bye-bye	0=bai2 1=bai2
+擂鼓	0	to beat a drum	
+自吹自擂	0	to blow one's own trumpet	
+擂台	0	a stage for contests; a ring	0=lei4
+打擂	0	to take up a challenge	1=lei4
+斗争	0	a struggle	
+战斗	0	a battle	
+北斗	0	the Big Dipper	1=dou3
+斗笠	0	a conical bamboo hat	0=dou3
+凯旋	0	to return in triumph	
+旋风	0	a whirlwind	0=xuan4
+旋床	0	a lathe	0=xuan4
+晃眼	0	dazzling	
+一晃	0	in a flash	
+摇晃	0	to rock; to sway	1=huang4
+晃动	0	to shake	0=huang4
+技术	0	technology; skill	
+艺术	0	art	
+战术	0	tactics	
+白术	0	atractylodes, a medicinal root	1=zhu2
+旗杆	0	a flagpole	
+电线杆	0	a telegraph pole	
+笔杆	0	a penholder	1=gan3
+一杆枪	0	a rifle	1=gan3
+椅子	0	a chair	
+轮椅	0	a wheelchair	
+椅树	0	the idesia tree	0=yi1
+门槛	0	a threshold	
+槛车	0	a prisoner's cart	0=jian4
+栏槛	0	a railing	1=jian4
+淹没	0	to submerge	1=mo4
+没收	0	to confiscate	0=mo4
+漂亮	0	pretty; beautiful	
+漂流	0	to drift; to go rafting	0=piao1
+漂浮	0	to float	0=piao1
+漂白	0	to bleach	0=piao3
+漂洗	0	to rinse	0=piao3
+瀑布	0	a waterfall	
+瀑河	0	the Bao River, in Hebei	0=bao4
+一番	0	once; a round of	
+轮番	0	by turns	
+番茄	0	a tomato	1=qie2
+番禺	0	Panyu, a district of Guangzhou	0=pan1
+干瘪	0	shrivelled; dried up	0=gan1
+压瘪	0	to squash flat	
+瘪三	0	a tramp, in Shanghai speech	0=bie1
+祭祀	0	to offer sacrifices	
+祭祖	0	to honour one's ancestors	
+祭奠	0	to hold a memorial	
+祭仲	0	Zhai Zhong, a minister of Zheng	0=zhai4
+秘密	0	a secret	
+神秘	0	mysterious	
+秘书	0	a secretary	
+秘鲁	0	Peru	0=bi4
+颠簸	0	to jolt; to toss about	
+簸扬	0	to winnow	
+簸箕	0	a dustpan; a winnowing basket	0=bo4
+糊涂	0	muddled; confused	
+模糊	0	blurred; vague	
+糊窗户	0	to paper a window	
+糊泥	0	to daub with mud	0=hu1
+芝麻糊	0	sesame paste	2=hu4
+糊弄	0	to fool; to do a sloppy job	0=hu4
+经纶	0	statecraft	
+垂纶	0	to let down a fishing line	
+纶巾	0	a silk-ribbon headscarf	0=guan1
+缩小	0	to shrink; to reduce	
+收缩	0	to contract	
+退缩	0	to shrink back	
+缩砂	0	cardamom, a medicinal herb	0=su4
+舍弃	0	to give up; to abandon	
+割舍	0	to part with	
+施舍	0	to give alms	
+宿舍	0	a dormitory	1=she4
+茅舍	0	a thatched hut	1=she4
+芳菲	0	fragrant flowers and grass	
+菲律宾	0	the Philippines	
+菲薄	0	meagre; to belittle	0=fei3 1=bo2
+彩虹	0	a rainbow	
+虹桥	0	a rainbow bridge; Hongqiao	
+出虹	0	a rainbow comes out	1=jiang4
+观看	0	to watch	
+观察	0	to observe	
+道观	0	a Taoist temple	1=guan4
+白云观	0	the White Cloud Temple, in Beijing	2=guan4
+游说	0	to lobby; to canvass	1=shui4
+说客	0	a persuader; a lobbyist	0=shui4
+踏步	0	to mark time; a step	
+踏上	0	to set foot on	
+践踏	0	to trample	
+踏实	0	steady; down-to-earth	0=ta1
+蹊跷	0	odd; fishy	
+蹊径	0	a path; a way	0=xi1
+独辟蹊径	0	to blaze one's own trail	2=xi1
+载重	0	a load; load-bearing	
+装载	0	to load	
+满载	0	fully loaded	
+记载	0	to record; a record	1=zai3
+刊载	0	to publish in print	1=zai3
+三年五载	0	three to five years	3=zai3
+归还	0	to return; to give back	1=huan2
+还钱	0	to pay back money	0=huan2
+重新	0	anew; again	0=chong2
+重复	0	to repeat	0=chong2
+重叠	0	to overlap	0=chong2
+顺遂	0	to go smoothly	
+遂愿	0	to have one's wish fulfilled	
+遂心	0	to one's liking	
+半身不遂	0	paralysed on one side	3=sui2
+钉子	0	a nail	
+螺钉	0	a screw	
+钉扣子	0	to sew on a button	0=ding4
+钉马掌	0	to shoe a horse	0=ding4
+钢铁	0	iron and steel	
+钢笔	0	a fountain pen	
+钢刀布	0	a strop for whetting a blade	0=gang4
+锁钥	0	a lock and key; a strategic gateway	1=yue4
+阙如	0	lacking; wanting	
+阙失	0	a fault; an omission	
+宫阙	0	a palace	1=que4
+城阙	0	a city gate tower	1=que4
+大陆	0	the mainland; a continent	
+陆地	0	dry land	1=di4
+陆军	0	the army	
+陆拾	0	sixty, as written on a banknote	0=liu4
+下降	0	to fall; to decline	
+降落	0	to land	
+降低	0	to lower	
+投降	0	to surrender	1=xiang2
+降服	0	to subdue; to tame	0=xiang2
+露馅	0	to let the cat out of the bag	0=lou4
+露面	0	to show one's face	0=lou4
+商鞅	0	Shang Yang, a Qin statesman	
+牛鞅	0	an ox's yoke strap	1=yang4

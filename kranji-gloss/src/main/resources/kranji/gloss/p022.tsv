@@ -12,7 +12,20 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 2
+# Rows: 15
 # codepoint	glyph	reading	priority	meaning	examples	because
 30524	眼	yan3	P	an eye	眼睛	
 23454	实	shi2	P	real; solid	实在	
+25171	打	da3	P	to hit; to strike	打人	
+25171	打	da3	S	to play (a ball game)	打球	
+25171	打	da3	S	to make (a phone call); to do	打电话	
+25171	打	da2	P	a dozen	一打	
+26080	无	wu2	P	without; there is no	无穷|无人	
+26080	无	mo2	P	(in 南无) a Buddhist word of homage	南无	
+21333	单	dan1	P	single; alone	单独	
+21333	单	dan1	S	a list; a sheet	名单|菜单	
+21333	单	dan1	S	simple	简单	
+21333	单	chan2	P	(in 单于) the ruler of the Xiongnu	单于	
+21333	单	shan4	P	(a surname; a county)	单县	
+33655	荷	he2	P	the lotus	荷花|荷叶	
+33655	荷	he4	P	to carry on the shoulder; a load	负荷|荷枪	

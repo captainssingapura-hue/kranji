@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 11
+# Rows: 18
 # codepoint	glyph	reading	priority	meaning	examples	because
 20960	几	ji3	P	how many	几个	
 20960	几	ji3	S	a few	几天	
@@ -25,3 +25,10 @@
 32676	群	qun2	P	a crowd; a flock	一群	
 21566	吾	wu2	P	I; my (in old writing)	吾人	
 20859	养	yang3	P	to raise; to nourish	养分	
+36716	转	zhuan3	P	to turn; to change direction	转身|转弯	
+36716	转	zhuan3	S	to pass on; to transfer	转告	
+36716	转	zhuan4	P	to revolve; to spin	旋转|转圈	
+29141	燕	yan4	P	a swallow, the bird	燕子|海燕	
+29141	燕	yan1	P	(the ancient state of Yan; a surname)	燕国|燕山	
+22475	埋	mai2	P	to bury	埋葬|埋伏	
+22475	埋	man2	P	(in 埋怨) to blame; to complain	埋怨	

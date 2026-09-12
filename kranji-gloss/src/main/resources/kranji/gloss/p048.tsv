@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 6
+# Rows: 10
 # codepoint	glyph	reading	priority	meaning	examples	because
 39640	高	gao1	P	tall; high	高山	
 20854	其	qi2	P	his; its; that	其中	
@@ -20,3 +20,7 @@
 39135	食	shi2	S	to eat	进食	
 21561	吹	chui1	P	to blow	吹风	
 20046	乎	hu1	P	(ends a question, in old writing)	不亦乐乎	
+33883	葛	ge2	P	the kudzu vine	葛藤	
+33883	葛	ge3	P	(a surname)	诸葛亮	
+20551	假	jia3	P	false; fake; if	真假|假如	
+20551	假	jia4	P	a holiday; leave	放假|假期	

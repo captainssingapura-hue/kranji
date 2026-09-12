@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 8
+# Rows: 15
 # codepoint	glyph	reading	priority	meaning	examples	because
 32780	而	er2	P	and	而后	
 32780	而	er2	S	yet	然而	
@@ -20,5 +20,12 @@
 25104	成	cheng2	S	to succeed	成事	
 37325	重	zhong4	P	heavy	很重	
 37325	重	zhong4	S	important	重要	
+37325	重	chong2	P	again; to repeat; a layer	重新|重复|重叠	
 36214	赶	gan3	P	to hurry	赶快	
 36214	赶	gan3	S	to drive away	赶走	
+20256	传	chuan2	P	to pass on; to spread	传说|传给	
+20256	传	zhuan4	P	a biography; a tale	传记|水浒传	
+21367	卷	juan3	P	to roll up; a roll	卷起|春卷	
+21367	卷	juan4	P	a volume; an exam paper	试卷|第一卷	
+32982	胖	pang4	P	fat; plump	胖子|发胖	
+32982	胖	pan2	P	(in 心广体胖) at ease and well-fed	心广体胖	

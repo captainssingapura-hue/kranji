@@ -12,8 +12,12 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 3
+# Rows: 7
 # codepoint	glyph	reading	priority	meaning	examples	because
 32650	羊	yang2	P	a sheep	山羊	
 26085	日	ri4	P	the sun	日光	
 26085	日	ri4	S	a day	日子	
+21035	别	bie2	P	other; another	别的	
+21035	别	bie2	S	do not	别动	
+21035	别	bie2	S	to part; to take leave	告别	
+21035	别	bie4	P	awkward; unnatural	别扭	

@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 7
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 20004	两	liang3	P	two	两个	
 20307	体	ti3	P	a body	身体	
@@ -21,3 +21,5 @@
 38386	闲	xian2	P	free; at leisure	空闲	
 24448	往	wang3	P	towards	往前	
 24448	往	wang3	S	to go	往来	
+33740	菌	jun1	P	a bacterium; a fungus	细菌|真菌	
+33740	菌	jun4	P	a mushroom	菌子|香菌	

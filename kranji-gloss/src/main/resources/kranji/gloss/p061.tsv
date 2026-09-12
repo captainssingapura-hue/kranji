@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 8
+# Rows: 18
 # codepoint	glyph	reading	priority	meaning	examples	because
 30462	盾	dun4	P	a shield	盾牌	
 37027	那	na4	P	that	那个	
@@ -22,3 +22,13 @@
 21069	前	qian2	S	before	从前	
 27735	汗	han4	P	sweat	出汗	
 26725	桥	qiao2	P	a bridge	小桥	
+21170	劲	jin4	P	strength; energy; spirit	使劲|干劲|差劲	
+21170	劲	jing4	P	strong; powerful	劲敌|强劲	
+33492	苔	tai2	P	moss	青苔|苔藓	
+33492	苔	tai1	P	(in 舌苔) the coating of the tongue	舌苔	
+38138	铺	pu4	P	a shop; a plank bed	店铺|床铺	
+38138	铺	pu1	P	to spread out; to pave	铺路|铺床	
+36724	轴	zhou2	P	an axle; an axis; a scroll	车轴|画轴	
+36724	轴	zhou4	P	(in 压轴) the final item on a programme	压轴	
+30058	番	fan1	P	a time; a turn; foreign	一番|轮番|番茄	
+30058	番	pan1	P	(in 番禺) a district of Guangzhou	番禺	

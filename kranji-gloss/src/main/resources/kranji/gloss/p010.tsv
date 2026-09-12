@@ -12,7 +12,17 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 2
+# Rows: 12
 # codepoint	glyph	reading	priority	meaning	examples	because
 22836	头	tou2	P	head	头上	
 25260	抬	tai2	P	to lift; to carry	抬头	
+25361	挑	tiao1	P	to pick; to choose	挑选|挑食	
+25361	挑	tiao1	S	to carry on a shoulder pole	挑水	
+25361	挑	tiao3	P	to poke; to stir up	挑战|挑衅	
+38592	雀	que4	P	a sparrow; a small bird	麻雀|孔雀	
+38592	雀	qiao1	P	(in 雀子) freckles	雀子	
+38592	雀	qiao3	P	(the colloquial reading) a sparrow	家雀	
+25159	扇	shan4	P	a fan; a leaf of a door	扇子|一扇门	
+25159	扇	shan1	P	to fan; to flap	扇风|扇动	
+21523	吓	xia4	P	to frighten; to be scared	吓人|吓一跳	
+21523	吓	he4	P	to threaten; to intimidate	恐吓|恫吓	

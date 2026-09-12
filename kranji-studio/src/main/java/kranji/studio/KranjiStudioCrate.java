@@ -3,6 +3,7 @@ package kranji.studio;
 import hue.captains.singapura.js.homing.core.Crate;
 import hue.captains.singapura.js.homing.core.CrateEntry;
 import hue.captains.singapura.js.homing.grid.RelationGridCrate;
+import kranji.reading.workbench.LibraryWorkbenchCrate;
 import kranji.studio.gloss.CuratedEntityWidget;
 import kranji.studio.gloss.DemandEntityWidget;
 import kranji.studio.gloss.ImpactArticleEntityWidget;
@@ -10,7 +11,6 @@ import kranji.studio.gloss.ImpactEntityWidget;
 import kranji.studio.gloss.IssueEntityWidget;
 import kranji.studio.gloss.PartitionEntityWidget;
 import kranji.studio.gloss.GlossCss;
-import kranji.studio.gloss.GlossSelectionSecretaryModule;
 import kranji.studio.gloss.PhraseEntityWidget;
 import kranji.studio.gloss.ProblemEntityWidget;
 import kranji.studio.gloss.PhraseSenseEntityWidget;
@@ -50,7 +50,6 @@ public final class KranjiStudioCrate implements Crate {
     public List<CrateEntry> entries() {
         return List.of(
                 CrateEntry.of(GlossCss.INSTANCE),
-                CrateEntry.of(GlossSelectionSecretaryModule.INSTANCE),
                 CrateEntry.of(SoundEntityWidget.INSTANCE),
                 CrateEntry.of(DemandEntityWidget.INSTANCE),
                 CrateEntry.of(SenseEntityWidget.INSTANCE),
@@ -77,6 +76,8 @@ public final class KranjiStudioCrate implements Crate {
 
     @Override
     public List<Crate> requires() {
-        return List.of(RelationGridCrate.INSTANCE);
+        // The bench's crate carries the relation-grid machinery every gloss
+        // grid here is built on, and the coverage widgets the workbench mounts.
+        return List.of(RelationGridCrate.INSTANCE, LibraryWorkbenchCrate.INSTANCE);
     }
 }

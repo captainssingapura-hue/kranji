@@ -30,10 +30,10 @@
  * opts = {
  *   branch, css, host, owner,   // where the cards mount
  *   swf,                        // createPinyinSwf() - the display boundary
- *   cardClass, headClass, readingClass, meaningClass,
+ *   cardClass, headClass, readingClass, meaningClass, missingClass,
  *   examplesClass, partsClass, partClass, partKeyClass
  * }
- * Returns { show(codePoint, readings), refresh(), destroy() }.
+ * Returns { show(codePoint, readings, known), refresh(), destroy() }.
  */
 function createZiReadingCards(opts) {
 
@@ -46,6 +46,23 @@ function createZiReadingCards(opts) {
         ['initial', 'ini'], ['medial', 'med'], ['nucleus', 'nuc'],
         ['coda', 'coda'], ['tone', 'tone'], ['homophones', 'same']
     ];
+
+    // What the library has to say about this character as a whole - set by
+    // show(), read by every card drawn under it.
+    var gloss = { library: true, character: true };
+
+    // The sentence for a missing meaning. Three, because three different
+    // things can be true and a reader is owed the right one: there is no
+    // meanings library in this build at all; there is one and it has not
+    // reached this character; or it knows the character and has not written
+    // this reading. The first is a deployment fact, the second is the case a
+    // coverage count is taken over, and the third is a gap inside a row that
+    // exists. Only the last two are work.
+    function absence() {
+        if (!gloss.library) return '— no meanings library in this build';
+        if (!gloss.character) return '— not in the meanings library yet';
+        return '— no meaning written for this reading yet';
+    }
 
     function freshBranch() {
         if (opts.branch.getBranch('readingCards')) {
@@ -75,9 +92,14 @@ function createZiReadingCards(opts) {
 
             // A reading nothing has glossed still gets its card: it is a
             // reading of this character, and the pane is showing the character
-            // rather than the dictionary.
+            // rather than the dictionary. But the gap is SAID, not left blank.
+            // A blank where a meaning goes reads as "still loading" or "nothing
+            // to say", and it is neither - it is work not yet done, and the
+            // three reasons it might be undone are three different sentences.
             if (r.meaning) {
                 card.appendChild(el(b, 'div', opts.meaningClass, r.meaning));
+            } else {
+                card.appendChild(el(b, 'div', opts.missingClass, absence()));
             }
             if (r.examples) {
                 card.appendChild(el(b, 'div', opts.examplesClass, r.examples));
@@ -102,8 +124,14 @@ function createZiReadingCards(opts) {
 
     return {
 
-        /** Replace the cards. `readings` is what /zi-detail served. */
-        show: function (codePoint, readings) {
+        /**
+         * Replace the cards. `readings` is what /zi-detail served; `known` is
+         * { library, character } - whether there is a meanings library and
+         * whether it has this character - so a card can say why it is empty.
+         */
+        show: function (codePoint, readings, known) {
+            gloss = { library: !known || known.library !== false,
+                      character: !known || known.character !== false };
             rows = [];
             for (var i = 0; i < readings.length; i++) {
                 var r = readings[i];

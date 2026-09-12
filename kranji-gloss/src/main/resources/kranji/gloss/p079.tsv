@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 8
+# Rows: 13
 # codepoint	glyph	reading	priority	meaning	examples	because
 29066	熊	xiong2	P	a bear	大熊猫	
 22905	她	ta1	P	she; her	她的	
@@ -22,3 +22,8 @@
 21491	右	you4	P	right	右手	
 20986	出	chu1	P	to go out	出来	
 20986	出	chu1	S	to produce	出产	
+21592	员	yuan2	P	a member; a person in a role	成员|演员|员工	
+21592	员	yun4	P	(a surname)	员半千	
+31995	系	xi4	P	a system; a series; a relation	系统|关系	
+31995	系	xi4	S	to contact; to link	联系	
+31995	系	ji4	P	to tie; to fasten	系鞋带|系上	

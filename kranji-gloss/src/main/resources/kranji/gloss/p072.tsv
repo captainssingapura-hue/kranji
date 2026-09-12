@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 9
+# Rows: 11
 # codepoint	glyph	reading	priority	meaning	examples	because
 28857	点	dian3	P	a dot	黑点	
 28857	点	dian3	S	a little	一点	
@@ -23,3 +23,5 @@
 24110	帮	bang1	P	to help	帮忙	
 20070	书	shu1	P	a book	书包	
 20070	书	shu1	S	to write	书写	
+21484	召	zhao4	P	to summon; to call	召开|号召	
+21484	召	shao4	P	(in the name 召公) the Duke of Shao	召公	

@@ -12,8 +12,13 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 3
+# Rows: 8
 # codepoint	glyph	reading	priority	meaning	examples	because
 37324	里	li3	P	inside	里面|家里	
 20154	人	ren2	P	a person	大人|人们	
 40657	黑	hei1	P	black; dark	黑色	
+30456	相	xiang1	P	each other; mutually	互相|相同	
+30456	相	xiang4	P	a photograph	相片|照相	
+30456	相	xiang4	S	looks; appearance	长相	
+21568	呀	ya0	P	(a particle at the end of a sentence)	来呀|好呀	
+21568	呀	ya1	P	ah! (surprise); the creak of a door	哎呀|咿呀	

@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 8
+# Rows: 10
 # codepoint	glyph	reading	priority	meaning	examples	because
 21313	十	shi2	P	ten	十个|十分	
 26666	株	zhu1	P	a tree stump	守株	
@@ -22,3 +22,5 @@
 20808	先	xian1	P	first; earlier	先生	
 20505	候	hou4	P	to wait	等候	
 20505	候	hou4	S	a time	时候	
+21010	划	hua4	P	to plan; to delimit	计划|划分	
+21010	划	hua2	P	to row; to scratch; worthwhile	划船|划算	

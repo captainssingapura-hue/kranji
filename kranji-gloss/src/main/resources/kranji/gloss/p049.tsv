@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 7
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 31561	等	deng3	P	to wait	等一下	
 31561	等	deng3	S	a rank	等级	
@@ -21,3 +21,5 @@
 32773	者	zhe3	P	(one who does something)	作者	
 31359	穿	chuan1	P	to wear	穿上	
 31359	穿	chuan1	S	to pass through	穿过	
+38025	钉	ding1	P	a nail	钉子|螺钉	
+38025	钉	ding4	P	to nail; to sew on	钉扣子|钉马掌	

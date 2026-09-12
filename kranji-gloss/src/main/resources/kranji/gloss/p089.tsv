@@ -12,10 +12,14 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 5
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 21602	呢	ne0	P	(softens a question)	怎么呢	
 39277	饭	fan4	P	rice	米饭	
 39277	饭	fan4	S	a meal	吃饭	
 28369	滑	hua2	P	slippery	很滑	
 28369	滑	hua2	S	to slide	滑下	
+25945	教	jiao4	P	education; a religion	教室|教育|佛教	
+25945	教	jiao1	P	to teach	教书|教你	
+35843	调	diao4	P	to transfer; a tune; a tone	调动|声调|曲调	
+35843	调	tiao2	P	to adjust; to mix; to tease	调整|调皮	

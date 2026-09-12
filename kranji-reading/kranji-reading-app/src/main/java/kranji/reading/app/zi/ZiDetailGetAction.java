@@ -116,6 +116,12 @@ public final class ZiDetailGetAction
         }
         js.append("];\n");
 
+        // Whether the meanings library has reached this character at all, and
+        // whether there is a meanings library in this deployment to reach it.
+        // A card with no meaning has three different things to say depending
+        // on which of these is false, and only the server knows.
+        js.append("export const glossary = ").append(!ZiGlossary.isEmpty()).append(";\n");
+        js.append("export const glossed = ").append(ZiGlossary.knows(zi.codePoint())).append(";\n");
         js.append("export const mandarin = ").append(quote(row.mandarin())).append(";\n");
         js.append("export const evidence = ").append(quote(evidenceOf(row))).append(";\n");
         js.append("export const unmodelled = ")
@@ -214,6 +220,8 @@ public final class ZiDetailGetAction
              + "export const principal = \"\";\n"
              + "export const polyphonic = false;\n"
              + "export const readings = [];\n"
+             + "export const glossary = false;\n"
+             + "export const glossed = false;\n"
              + "export const mandarin = \"\";\n"
              + "export const evidence = \"\";\n"
              + "export const unmodelled = \"\";\n"

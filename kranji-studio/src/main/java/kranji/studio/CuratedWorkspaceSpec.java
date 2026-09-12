@@ -7,7 +7,8 @@ import hue.captains.singapura.js.homing.workspace.WidgetLabel;
 import hue.captains.singapura.js.homing.workspace.shell.PartyDecl;
 import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpec;
 import kranji.studio.gloss.CuratedEntityWidget;
-import kranji.studio.gloss.GlossSelectionSecretaryModule;
+import kranji.reading.workbench.relation.RelationSelectionSecretaryModule;
+import kranji.studio.gloss.GlossEntityWidget;
 import kranji.studio.gloss.ImpactArticleEntityWidget;
 import kranji.studio.gloss.ImpactEntityWidget;
 import kranji.studio.gloss.IssueEntityWidget;
@@ -90,9 +91,9 @@ public final class CuratedWorkspaceSpec implements WorkspaceSpec {
     @Override
     public List<PartyDecl> parties() {
         return List.of(
-                PartyDecl.of("glossSelection", GlossSelectionSecretaryModule.INSTANCE,
-                             "GlossSelectionSecretary")
-                         .exposedAs("glossParty")
+                PartyDecl.of(GlossEntityWidget.PARTY, RelationSelectionSecretaryModule.INSTANCE,
+                             "RelationSelectionSecretary")
+                         .exposedAs(GlossEntityWidget.PARTY_EXPOSED)
                          .build());
     }
 }

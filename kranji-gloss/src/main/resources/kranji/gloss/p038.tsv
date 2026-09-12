@@ -12,10 +12,15 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 5
+# Rows: 10
 # codepoint	glyph	reading	priority	meaning	examples	because
 27611	毛	mao2	P	hair; fur	羊毛	
 25490	排	pai2	P	a row	一排	
 25490	排	pai2	S	to arrange	排好	
 22763	士	shi4	P	a scholar; a gentleman	士人	
 21147	力	li4	P	strength; power	力气	
+26399	期	qi1	P	a period; a date; to expect	学期|期待	
+26399	期	ji1	P	(in 期年) a full year	期年	
+22561	堡	bao3	P	a fort; a castle	城堡|堡垒	
+22561	堡	bu3	P	(in place names) a walled village	吴堡	
+22561	堡	pu4	P	(in place names) a post station	十里堡	

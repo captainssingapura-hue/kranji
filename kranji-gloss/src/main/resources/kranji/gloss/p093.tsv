@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 11
+# Rows: 13
 # codepoint	glyph	reading	priority	meaning	examples	because
 34433	蚁	yi3	P	an ant	蚂蚁	
 40493	鸭	ya1	P	a duck	鸭子	
@@ -25,3 +25,5 @@
 19990	世	shi4	P	the world	世上	
 19990	世	shi4	S	an age	一世	
 29484	猬	wei4	P	a hedgehog	刺猬	
+21202	勒	lei1	P	to tighten; to strap	勒紧|勒死	
+21202	勒	le4	P	to rein in; to order; to extort	勒令|勒索	

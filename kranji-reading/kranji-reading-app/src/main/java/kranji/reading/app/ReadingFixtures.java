@@ -61,6 +61,21 @@ public record ReadingFixtures(Umbrella<ReadingStudio> umbrella)
     @Override
     public Map<String, GetAction<RoutingContext, ?, ?, ?>> harnessGetActions() {
         var actions = new LinkedHashMap<>(defaults().harnessGetActions());
+        actions.putAll(dataActions());
+        return Map.copyOf(actions);
+    }
+
+    /**
+     * The routes the reading widgets fetch from, by path.
+     *
+     * <p>Public and static because these belong to the widgets, not to this
+     * studio: any host that mounts a reading widget owes it these routes, and
+     * the library workbench is a second such host. One list, so a route added
+     * for a widget cannot be present in the reader and missing where the same
+     * widget is mounted for a curator.</p>
+     */
+    public static Map<String, GetAction<RoutingContext, ?, ?, ?>> dataActions() {
+        var actions = new LinkedHashMap<String, GetAction<RoutingContext, ?, ?, ?>>();
         actions.put(ZiTreeGetAction.PATH, new ZiTreeGetAction());
         actions.put(ZiDataGetAction.PATH, new ZiDataGetAction());
         actions.put(PhonicSourceGetAction.PATH, new PhonicSourceGetAction());

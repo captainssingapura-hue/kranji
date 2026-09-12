@@ -32,6 +32,7 @@
         <module>kranji-reading-content</module>
         <module>kranji-reading-testkit</module>
         <module>kranji-reading-app</module>
+        <module>kranji-reading-workbench</module>
         <module>kranji-reading-prep</module>
     </modules>
 </project>

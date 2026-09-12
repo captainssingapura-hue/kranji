@@ -6,8 +6,13 @@ import hue.captains.singapura.js.homing.workspace.WidgetIcon;
 import hue.captains.singapura.js.homing.workspace.WidgetLabel;
 import hue.captains.singapura.js.homing.workspace.shell.PartyDecl;
 import hue.captains.singapura.js.homing.workspace.shell.WorkspaceSpec;
+import kranji.reading.workbench.coverage.CoverageArticleWidget;
+import kranji.reading.workbench.coverage.CoverageMissingWidget;
+import kranji.reading.workbench.coverage.CoverageShelfWidget;
+import kranji.reading.workbench.coverage.CoverageWidget;
 import kranji.studio.gloss.DemandEntityWidget;
-import kranji.studio.gloss.GlossSelectionSecretaryModule;
+import kranji.reading.workbench.relation.RelationSelectionSecretaryModule;
+import kranji.studio.gloss.GlossEntityWidget;
 import kranji.studio.gloss.PhraseEntityWidget;
 import kranji.studio.gloss.ProblemEntityWidget;
 import kranji.studio.gloss.PhraseSenseEntityWidget;
@@ -46,6 +51,7 @@ public final class GlossWorkspaceSpec implements WorkspaceSpec {
         // a link in it: demand scopes it, and nothing hangs off it in turn.
         // Filing it under "Character chain" would suggest a walk that goes on.
         WidgetGroup review = WidgetGroup.of("Review");
+        WidgetGroup coverage = WidgetGroup.of("Coverage");
         return List.of(
                 WidgetEntry.of(SoundEntityWidget.class, WidgetLabel.of("Sound"))
                         .withIcon(new WidgetIcon.Emoji("🔊"))
@@ -64,7 +70,16 @@ public final class GlossWorkspaceSpec implements WorkspaceSpec {
                         .withGroup(phrase),
                 WidgetEntry.of(ProblemEntityWidget.class, WidgetLabel.of("Problems"))
                         .withIcon(new WidgetIcon.Emoji("🔎"))    // 🔎
-                        .withGroup(review));
+                        .withGroup(review),
+                WidgetEntry.of(CoverageShelfWidget.class, WidgetLabel.of("Coverage"))
+                        .withIcon(new WidgetIcon.Emoji("📊"))
+                        .withGroup(coverage),
+                WidgetEntry.of(CoverageArticleWidget.class, WidgetLabel.of("Articles"))
+                        .withIcon(new WidgetIcon.Emoji("📰"))
+                        .withGroup(coverage),
+                WidgetEntry.of(CoverageMissingWidget.class, WidgetLabel.of("Missing here"))
+                        .withIcon(new WidgetIcon.Emoji("🕳️"))
+                        .withGroup(coverage));
     }
 
     /**
@@ -77,9 +92,17 @@ public final class GlossWorkspaceSpec implements WorkspaceSpec {
     @Override
     public List<PartyDecl> parties() {
         return List.of(
-                PartyDecl.of("glossSelection", GlossSelectionSecretaryModule.INSTANCE,
-                             "GlossSelectionSecretary")
-                         .exposedAs("glossParty")
+                PartyDecl.of(GlossEntityWidget.PARTY, RelationSelectionSecretaryModule.INSTANCE,
+                             "RelationSelectionSecretary")
+                         .exposedAs(GlossEntityWidget.PARTY_EXPOSED)
+                         .build(),
+                // The coverage grids are the library bench's, mounted here as
+                // well, and they cascade on a bus of their own: a shelf picked
+                // in the coverage chain has nothing to say to a sound picked
+                // in the gloss chain. Same secretary module, second party.
+                PartyDecl.of(CoverageWidget.PARTY, RelationSelectionSecretaryModule.INSTANCE,
+                             "RelationSelectionSecretary")
+                         .exposedAs(CoverageWidget.PARTY_EXPOSED)
                          .build());
     }
 }

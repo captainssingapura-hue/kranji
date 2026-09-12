@@ -12,8 +12,14 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 3
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 26641	树	shu4	P	a tree	大树	
 38155	锋	feng1	P	a sharp point; an edge	锋利	
 33509	若	ruo4	P	if; like	若干	
+19975	万	wan4	P	ten thousand	一万|千万	
+19975	万	mo4	P	(in the surname 万俟)	万俟	
+20379	供	gong1	P	to supply; to provide	供应|提供	
+20379	供	gong4	P	to offer to gods or ancestors; to confess	供品|供奉	
+31085	祭	ji4	P	to offer a sacrifice; to hold a memorial	祭祀|祭祖|祭奠	
+31085	祭	zhai4	P	(a surname)	祭仲	

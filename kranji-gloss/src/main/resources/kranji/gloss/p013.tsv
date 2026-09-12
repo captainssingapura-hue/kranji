@@ -12,5 +12,8 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 0
+# Rows: 3
 # codepoint	glyph	reading	priority	meaning	examples	because
+20415	便	bian4	P	convenient; handy	方便|便利	
+20415	便	bian4	S	then; and so	便是	
+20415	便	pian2	P	(in 便宜) cheap	便宜	

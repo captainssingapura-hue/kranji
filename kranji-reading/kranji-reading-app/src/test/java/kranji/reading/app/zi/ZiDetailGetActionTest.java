@@ -1,9 +1,15 @@
 package kranji.reading.app.zi;
 
+import kranji.phonic.SyllableIndex;
+import kranji.reading.app.gloss.ZiGlossary;
+import kranji.zi.ZiCharUTF8;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * Tests for the per-character module.
@@ -174,5 +180,55 @@ class ZiDetailGetActionTest {
 
         assertTrue(js.contains("export const readings = [];"));
         assertTrue(js.contains("export const problem ="));
+    }
+
+    // ── A missing meaning is said, not left blank ──────────────────────
+
+    @Test
+    void theModuleSaysWhetherTheLibraryHasTheCharacter() {
+        // Two facts a card needs before it can say why it has no meaning:
+        // is there a meanings library at all, and has it reached this
+        // character. Both are booleans on the module, so the view never has
+        // to infer "not covered" from "every reading came back empty" - which
+        // is also what a character whose readings are all glossed as nothing
+        // would look like.
+        String js = ZiDetailGetAction.moduleFor("U+597D");
+        assertTrue(js.contains("export const glossary = true;"),
+                "the test classpath carries the gloss collections");
+        assertTrue(js.contains("export const glossed = true;"),
+                "好 is one of the first characters anybody glossed");
+    }
+
+    @Test
+    void aCharacterTheLibraryHasNotReachedIsSaidToBeMissing() {
+        // Found rather than named. The library grows, and a test pinned to a
+        // character somebody later glossed would fail for the right reason
+        // and be fixed by the wrong one - picking a rarer character - until
+        // there were none left to pick. Searching the corpus for one keeps the
+        // test true for as long as coverage is short of complete, and reports
+        // completeness as the day it can no longer find a subject.
+        Optional<ZiCharUTF8> unglossed = SyllableIndex.instance().syllables().stream()
+                .flatMap(s -> SyllableIndex.instance().charactersOf(s).stream())
+                .filter(zi -> !ZiGlossary.knows(zi.codePoint()))
+                .findFirst();
+        assumeTrue(unglossed.isPresent(), "every corpus character is glossed - nothing to test");
+
+        String js = ZiDetailGetAction.moduleFor(unglossed.get().codePointLabel());
+        assertTrue(js.contains("export const glossed = false;"),
+                () -> unglossed.get().value() + " has no gloss and the module must say so: " + js);
+        assertTrue(js.contains("export const glossary = true;"),
+                "the library exists; it is the character that is missing");
+        assertFalse(js.contains("export const problem"),
+                "a missing meaning is a state of the character, not an error serving it");
+    }
+
+    @Test
+    void theErrorModuleCarriesTheSameShape() {
+        // A view reads glossary/glossed off every module it receives. An error
+        // module that lacked them would make `mod.glossed === false` false for
+        // the wrong reason - undefined - and a card would say nothing at all.
+        String js = ZiDetailGetAction.moduleFor("not a codepoint");
+        assertTrue(js.contains("export const glossary = false;"));
+        assertTrue(js.contains("export const glossed = false;"));
     }
 }

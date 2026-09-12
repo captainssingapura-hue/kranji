@@ -546,6 +546,25 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
         }
     }
 
+    /**
+     * What a card says where a meaning would be, when there is none.
+     *
+     * <p>Styled as a notice rather than as an empty meaning: the accent
+     * colour and a leading mark, so a reader who came to this pane for a
+     * meaning is told at a glance that the library has not got one rather than
+     * left to wonder whether the pane is still loading. Italic, because it is
+     * the pane speaking and not the dictionary.</p>
+     */
+    public record kr_zd_card_missing() implements CssClass<ReadingCss> {
+        @Override public String body() { return """
+                font-size: 13px;
+                line-height: 1.45;
+                font-style: italic;
+                color: var(--color-accent);
+                """;
+        }
+    }
+
     /** The phrases that show the sense in use. */
     public record kr_zd_card_examples() implements CssClass<ReadingCss> {
         @Override public String body() { return """
@@ -1363,6 +1382,7 @@ public record ReadingCss() implements CssGroup<ReadingCss> {
                 new kr_zd_card_reading(),
                 new kr_zd_card_meaning(),
                 new kr_zd_card_examples(),
+                new kr_zd_card_missing(),
                 new kr_zd_card_parts(),
                 new kr_zd_card_part(),
                 new kr_zd_card_part_key(),

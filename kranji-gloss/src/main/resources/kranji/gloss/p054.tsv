@@ -12,6 +12,8 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 1
+# Rows: 3
 # codepoint	glyph	reading	priority	meaning	examples	because
 25910	收	shou1	P	to gather; to receive	收好	
+26415	术	shu4	P	a skill; a method; an art	技术|艺术|战术	
+26415	术	zhu2	P	(in 白术) a medicinal root	白术	

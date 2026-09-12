@@ -12,10 +12,20 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 5
+# Rows: 15
 # codepoint	glyph	reading	priority	meaning	examples	because
 21448	又	you4	P	again	又来了	
 21448	又	you4	S	and also	又高又大	
 23569	少	shao3	P	few; little	不少	
 26195	晓	xiao3	P	dawn	春晓	
 26195	晓	xiao3	S	to know	知晓	
+24377	弹	dan4	P	a bullet; a bomb	子弹|炸弹	
+24377	弹	tan2	P	to pluck; to play a stringed instrument	弹琴	
+24377	弹	tan2	S	to spring; to bounce	弹跳	
+26397	朝	chao2	P	a dynasty; the court	朝代|唐朝	
+26397	朝	chao2	S	towards; facing	朝着	
+26397	朝	zhao1	P	morning	朝阳|朝霞	
+28316	溜	liu1	P	to slip; to slide; to sneak off	溜冰|溜走	
+28316	溜	liu4	P	(in 一溜烟) swift; a row of	一溜烟	
+31548	笼	long2	P	a cage; a basket; a steamer	鸟笼|笼子	
+31548	笼	long3	P	to envelop; to cover	笼罩|笼统	

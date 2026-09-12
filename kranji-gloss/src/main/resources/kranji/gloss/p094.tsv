@@ -12,13 +12,16 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 8
+# Rows: 11
 # codepoint	glyph	reading	priority	meaning	examples	because
 34434	蚂	ma3	P	(part of the word for ant)	蚂蚁	
 20799	儿	er2	P	a child; a son	儿子	
 31505	笑	xiao4	P	to laugh; to smile	笑话	
 26657	校	xiao4	P	a school	学校	
 26354	曲	qu1	P	bent; crooked	弯曲	
+26354	曲	qu3	P	a song; a tune	歌曲|曲子	
 23627	屋	wu1	P	a house	屋子	
 23627	屋	wu1	S	a room	屋里	
 21809	唱	chang4	P	to sing	唱歌	
+23425	宁	ning2	P	peaceful; calm	安宁|宁静	
+23425	宁	ning4	P	would rather	宁可|宁愿	

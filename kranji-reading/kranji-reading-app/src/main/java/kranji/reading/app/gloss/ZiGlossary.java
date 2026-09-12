@@ -75,6 +75,24 @@ public final class ZiGlossary {
     public static int characterCount() { return GLOSSES.characterCount(); }
 
     /**
+     * Whether any collection has an entry for the character at all.
+     *
+     * <p>Distinct from {@link #find} coming back empty, and the distinction is
+     * what a reader needs told. A character with an entry but not this
+     * reading is a gap in one row; a character with no entry is a character
+     * the library has not reached yet, and the two call for different words on
+     * screen. Below the pair, this is the grain a coverage count is taken
+     * at.</p>
+     */
+    public static boolean knows(int codePoint) {
+        try {
+            return GLOSSES.find(new ZiCharUTF8(codePoint)).isPresent();
+        } catch (IllegalArgumentException notHan) {
+            return false;
+        }
+    }
+
+    /**
      * The gloss for one (character, reading), if a collection has it.
      *
      * <p>Keyed on the pair, because that is the grain meaning lives at: 地 di4

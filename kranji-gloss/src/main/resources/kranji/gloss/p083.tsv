@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 7
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 20182	他	ta1	P	he; him	他的|他们	
 22909	好	hao3	P	good; well	好人	
@@ -21,3 +21,5 @@
 20687	像	xiang4	P	to look like	好像	
 20687	像	xiang4	S	an image	画像	
 22303	土	tu3	P	earth; soil	土地	
+38463	阿	a1	P	(a prefix before names and kin terms)	阿姨|阿婆	
+38463	阿	e1	P	to flatter; (in 阿弥陀佛) Amitabha	阿谀|阿弥陀佛	

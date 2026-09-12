@@ -1,5 +1,6 @@
 package kranji.studio.gloss;
 
+import kranji.reading.workbench.relation.Relation;
 import kranji.simple.gloss.ExampleEntry;
 import kranji.simple.gloss.ZiGloss;
 import org.junit.jupiter.api.Test;
@@ -24,12 +25,12 @@ class GlossCascadeTest {
     private static final List<ZiGloss> GLOSSES = GlossWorkbench.glosses().all();
     private static final List<ExampleEntry> PHRASES = GlossWorkbench.examples().all();
 
-    private static List<GlossRelations.Row> rows(String relation) {
+    private static List<Relation.Row> rows(String relation) {
         return GlossRelations.rowsOf(relation, GLOSSES, PHRASES);
     }
 
-    private static List<GlossRelations.Row> under(String relation, String... parents) {
-        return GlossRelations.under(rows(relation), List.of(parents));
+    private static List<Relation.Row> under(String relation, String... parents) {
+        return Relation.under(rows(relation), List.of(parents));
     }
 
     // ── The chain is declared, not hardcoded per widget ────────────────
@@ -55,6 +56,11 @@ class GlossCascadeTest {
         // "problem" is demand's second child, so demand is where the chain
         // branches rather than ends. It scopes on the character of the
         // selected pair - see aProblemScopesOnTheCharacterNotThePair.
+        //
+        // Coverage was briefly a fourth root here. It is a family of its own
+        // now, in the library bench, with its own bus - its subject is the
+        // library rather than the gloss data, and the bench needs it where
+        // the studio cannot be reached from. See CoverageRelationsTest there.
         var roots = GlossRelations.relations().stream()
                 .filter(r -> GlossRelations.upstreamOf(r) == null).toList();
         assertEquals(List.of("sound", "phrase", "partition"), roots);
@@ -69,14 +75,14 @@ class GlossCascadeTest {
         // reaches is a row you cannot get to once the picker is in the chain.
         // Deriving the sounds from the glosses rather than from demand would
         // produce the second for every todo pair.
-        var sounds = rows("sound").stream().map(GlossRelations.Row::pk).toList();
+        var sounds = rows("sound").stream().map(Relation.Row::pk).toList();
         var demanded = rows("demand");
 
         for (String sound : sounds) {
-            assertFalse(GlossRelations.under(demanded, List.of(sound)).isEmpty(),
+            assertFalse(Relation.under(demanded, List.of(sound)).isEmpty(),
                     () -> "no pair reads " + sound);
         }
-        for (GlossRelations.Row pair : demanded) {
+        for (Relation.Row pair : demanded) {
             assertTrue(sounds.contains(pair.up()),
                     () -> pair.pk() + " hangs off '" + pair.up() + "', which no sound row offers");
         }
@@ -99,7 +105,7 @@ class GlossCascadeTest {
         // 地 reads de0 and di4, and those are two different sounds shared with
         // every other character that reads them. Keying the picker on the pair
         // would make it a second demand grid.
-        var de = under("demand", "de0").stream().map(GlossRelations.Row::label).toList();
+        var de = under("demand", "de0").stream().map(Relation.Row::label).toList();
 
         assertTrue(de.contains("地"), de.toString());
         assertTrue(de.size() > 1, "de0 is not 地's alone: " + de);
@@ -116,7 +122,7 @@ class GlossCascadeTest {
         // the articles, so a pair appears where a reader first meets it. 地 di4
         // leads because 疑是地上霜 comes before any 地 de0.
         var both = rows("demand").stream()
-                .filter(r -> r.label().equals("地")).map(GlossRelations.Row::pk).toList();
+                .filter(r -> r.label().equals("地")).map(Relation.Row::pk).toList();
 
         assertEquals(List.of("22320:di4", "22320:de0"), both);
     }
@@ -136,7 +142,7 @@ class GlossCascadeTest {
         // The sense names its examples directly now - there is no join row in
         // between to step through.
         var sense = under("sense", "22320:de0").get(0);
-        var reached = GlossRelations.withPks(rows("phraseSense"),
+        var reached = Relation.withPks(rows("phraseSense"),
                 refs("sense", sense.pk()));
 
         assertEquals(1, reached.size());
@@ -169,9 +175,9 @@ class GlossCascadeTest {
         // of them must show the same single job - scoping on the pair would
         // hide the row unless you happened to pick the reading it is filed
         // under, which is the reading nobody has decided yet.
-        var viaAi3 = GlossRelations.under(rows("problem"),
+        var viaAi3 = Relation.under(rows("problem"),
                 GlossRelations.scopeKeysFor("problem", List.of("27448:ai3")));
-        var viaEi1 = GlossRelations.under(rows("problem"),
+        var viaEi1 = Relation.under(rows("problem"),
                 GlossRelations.scopeKeysFor("problem", List.of("27448:ei1")));
 
         assertEquals(1, viaAi3.size());
@@ -206,7 +212,7 @@ class GlossCascadeTest {
         // Not the same as "no selection". A downstream grid falling back to the
         // whole relation when its parent was cleared is a grid lying about what
         // it is scoped to - and it looks entirely plausible.
-        assertEquals(List.of(), GlossRelations.under(rows("sense"), List.of()));
+        assertEquals(List.of(), Relation.under(rows("sense"), List.of()));
         assertFalse(rows("sense").isEmpty(), "...while the unscoped relation has rows");
     }
 
@@ -235,8 +241,8 @@ class GlossCascadeTest {
         // The dangling-reference check for the sideways edge. Its downstream
         // counterpart is everyPhraseReferencedIsDefined in the validity suite;
         // this one guards the tool rather than the data.
-        var defined = rows("phraseSense").stream().map(GlossRelations.Row::pk).toList();
-        for (GlossRelations.Row row : rows("sense")) {
+        var defined = rows("phraseSense").stream().map(Relation.Row::pk).toList();
+        for (Relation.Row row : rows("sense")) {
             for (String ref : row.refs()) {
                 assertTrue(defined.contains(ref),
                         () -> row.pk() + " refs '" + ref + "', which no phraseSense has");
@@ -250,7 +256,7 @@ class GlossCascadeTest {
         // it had one example, and getting from that to what the example says
         // took two more grids. Now it is one hop.
         String sensePk = "24471:de0/(joins a verb to how it is done)";
-        var reached = GlossRelations.withPks(rows("phraseSense"), refs("sense", sensePk));
+        var reached = Relation.withPks(rows("phraseSense"), refs("sense", sensePk));
 
         assertEquals(1, reached.size());
         assertEquals("跑得快#0", reached.get(0).pk());
@@ -268,12 +274,12 @@ class GlossCascadeTest {
         var sense = GlossRelations.senses(GLOSSES).stream()
                 .filter(s -> s.glyph().equals("东")).findFirst().orElseThrow();
 
-        var reached = GlossRelations.withPks(rows("phraseSense"),
+        var reached = Relation.withPks(rows("phraseSense"),
                 refs("sense", sensePkOf(sense)));
 
-        assertEquals(sense.refs(), reached.stream().map(GlossRelations.Row::pk).toList());
+        assertEquals(sense.refs(), reached.stream().map(Relation.Row::pk).toList());
         assertEquals(List.of("东方#0", "东边#0", "山东#0", "东西#1"),
-                reached.stream().map(GlossRelations.Row::pk).toList());
+                reached.stream().map(Relation.Row::pk).toList());
         assertEquals("east and west", reached.get(3).label(),
                 "the one carrying a sequence mark is the one that needed explaining");
     }
@@ -287,14 +293,14 @@ class GlossCascadeTest {
         // Refs are plural, which is the whole reason the join relation could
         // go. 地上, 土地 and 地方 all show the one sense of 地 di4, and each
         // phrase belongs to itself.
-        var reached = GlossRelations.withPks(rows("phraseSense"),
+        var reached = Relation.withPks(rows("phraseSense"),
                 refs("sense", "22320:di4/earth; ground; land"));
 
         // All three are sense 0 of their own phrase. 土地 pins a reading at
         // character POSITION 1, which is a different index entirely - the two
         // are easy to conflate and this is the row that would catch it.
         assertEquals(List.of("地上#0", "土地#0", "地方#0"),
-                reached.stream().map(GlossRelations.Row::pk).toList());
+                reached.stream().map(Relation.Row::pk).toList());
     }
 
 

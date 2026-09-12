@@ -12,6 +12,9 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 1
+# Rows: 4
 # codepoint	glyph	reading	priority	meaning	examples	because
 30561	睡	shui4	P	to sleep	睡着	
+40863	龟	gui1	P	a tortoise; a turtle	乌龟|龟壳	
+40863	龟	jun1	P	(in 龟裂) to crack, of skin or soil	龟裂	
+40863	龟	qiu1	P	(in 龟兹) an ancient kingdom of the Silk Road	龟兹	

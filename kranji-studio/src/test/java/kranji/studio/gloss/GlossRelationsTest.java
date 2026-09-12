@@ -1,5 +1,6 @@
 package kranji.studio.gloss;
 
+import kranji.reading.workbench.relation.Relation;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -175,7 +176,7 @@ class GlossRelationsTest {
         // written and became a test that failed on finishing it. What the tool
         // owes is an honest count either way, so the states are what is checked:
         // every row says done, todo or extra, and nothing else.
-        for (GlossRelations.Row row : rows) {
+        for (Relation.Row row : rows) {
             String status = String.valueOf(row.values().get(3));
             assertTrue(status.isEmpty() || status.equals("todo") || status.equals("extra"),
                     () -> row.pk() + " carries status '" + status + "'");
@@ -187,7 +188,7 @@ class GlossRelationsTest {
         // Marked, not merely blank. An empty cell reads as "nothing to say";
         // a word reads as "not yet said", and only the second can be filtered.
         var rows = GlossRelations.rowsOf("demand", GLOSSES, PHRASES);
-        for (GlossRelations.Row row : rows) {
+        for (Relation.Row row : rows) {
             boolean todo = row.values().get(3).equals("todo");
             assertEquals(todo, row.values().get(2).equals(""),
                     () -> row.pk() + " is marked " + row.values().get(3)

@@ -6,6 +6,7 @@ import hue.captains.singapura.js.homing.grid.RelationGridModule;
 import hue.captains.singapura.js.homing.grid.StockCellsModule;
 import hue.captains.singapura.js.homing.workspace.LifecycleHint;
 import hue.captains.singapura.js.homing.workspace.WorkspaceWidget;
+import kranji.reading.workbench.relation.RelationCss;
 
 import java.util.List;
 
@@ -69,15 +70,20 @@ public final class SoundEntityWidget extends WorkspaceWidget<WorkspaceWidget._No
                 new ModuleImports<>(
                         List.of(new StockCellsModule.TextCell()),
                         StockCellsModule.INSTANCE),
+                // The frame is the shared relation CSS; only the picker's own
+                // controls - the dropdowns, the two buttons, the picked line -
+                // are the gloss workbench's to style.
                 new ModuleImports<>(List.of(
-                        new GlossCss.gl_root(),
-                        new GlossCss.gl_bar(),
-                        new GlossCss.gl_status(),
-                        new GlossCss.gl_find(),
+                        new RelationCss.rel_root(),
+                        new RelationCss.rel_bar(),
+                        new RelationCss.rel_status(),
+                        new RelationCss.rel_find(),
+                        new RelationCss.rel_grid_host()),
+                        RelationCss.INSTANCE),
+                new ModuleImports<>(List.of(
                         new GlossCss.gl_select(),
                         new GlossCss.gl_button(),
-                        new GlossCss.gl_picked(),
-                        new GlossCss.gl_grid_host()),
+                        new GlossCss.gl_picked()),
                         GlossCss.INSTANCE));
     }
 
@@ -87,10 +93,10 @@ public final class SoundEntityWidget extends WorkspaceWidget<WorkspaceWidget._No
                 "    var ENTITY = 'sound';",
                 "",
                 "    var root = branch.createElement('root', 'div');",
-                "    css.setClass(root, gl_root);",
+                "    css.setClass(root, rel_root);",
                 "",
                 "    var bar = branch.createElement('bar', 'div');",
-                "    css.setClass(bar, gl_bar);",
+                "    css.setClass(bar, rel_bar);",
                 "    root.appendChild(bar);",
                 "",
                 "    // The two filters the sound system actually has. They narrow",
@@ -106,7 +112,7 @@ public final class SoundEntityWidget extends WorkspaceWidget<WorkspaceWidget._No
                 "    bar.appendChild(rhymeSel);",
                 "",
                 "    var find = branch.createElement('find', 'input');",
-                "    css.setClass(find, gl_find);",
+                "    css.setClass(find, rel_find);",
                 "    find.type = 'search';",
                 "    find.placeholder = 'filter sounds';",
                 "    bar.appendChild(find);",
@@ -128,11 +134,11 @@ public final class SoundEntityWidget extends WorkspaceWidget<WorkspaceWidget._No
                 "    bar.appendChild(picked);",
                 "",
                 "    var status = branch.createElement('status', 'div');",
-                "    css.setClass(status, gl_status);",
+                "    css.setClass(status, rel_status);",
                 "    bar.appendChild(status);",
                 "",
                 "    var host = branch.createElement('host', 'div');",
-                "    css.setClass(host, gl_grid_host);",
+                "    css.setClass(host, rel_grid_host);",
                 "    root.appendChild(host);",
                 "",
                 "    var owner = Object.freeze({ toString: function () { return 'gloss/' + ENTITY; } });",

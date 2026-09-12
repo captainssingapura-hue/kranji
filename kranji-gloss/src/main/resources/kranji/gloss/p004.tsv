@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 7
+# Rows: 11
 # codepoint	glyph	reading	priority	meaning	examples	because
 20002	丢	diu1	P	to lose	丢了	
 20002	丢	diu1	S	to throw away	丢掉	
@@ -21,3 +21,7 @@
 23436	完	wan2	S	complete; whole	完全	
 21315	千	qian1	P	a thousand	千万	
 28082	液	ye4	P	a liquid	液体	
+25153	扁	bian3	P	flat	扁平|压扁	
+25153	扁	pian1	P	(in 扁舟) a small boat	扁舟	
+32728	翘	qiao4	P	to stick up; to tilt	翘尾巴|翘起	
+32728	翘	qiao2	P	to raise the head; outstanding	翘首|翘楚	

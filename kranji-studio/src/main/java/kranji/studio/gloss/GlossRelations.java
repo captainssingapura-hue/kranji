@@ -1,5 +1,6 @@
 package kranji.studio.gloss;
 
+import kranji.reading.workbench.relation.Relation.Row;
 import kranji.simple.gloss.EgRef;
 import kranji.simple.gloss.ExampleEntry;
 import kranji.simple.gloss.ExampleSense;
@@ -76,31 +77,14 @@ public final class GlossRelations {
 
 
     // ── The relations as a navigable chain ─────────────────────────────
-
-    /**
-     * One row, ready to be selected against.
-     *
-     * <p>Two keys, and the second is what makes a workbench out of six tables.
-     * {@link #pk} is this row's own identity — the composite key written out,
-     * never a position. {@link #up} is its <b>parent's</b> pk in the relation
-     * upstream of it, which is the entire mechanism behind the cascade: a
-     * downstream widget filters on {@code up ∈ selection} and needs to know
-     * nothing else about what happened above it.</p>
-     *
-     * <p>A root relation has no parent and carries {@code ""}.</p>
-     */
-    public record Row(String pk, String up, String label, List<Object> values,
-                      List<String> refs) {
-
-        public Row {
-            refs = List.copyOf(refs);
-        }
-
-        /** Most rows point nowhere sideways. */
-        public Row(String pk, String up, String label, List<Object> values) {
-            this(pk, up, label, values, List.of());
-        }
-    }
+    //
+    // A row is Relation.Row - two keys, its own and its parent's - and the
+    // scoping helpers are Relation.under and Relation.withPks. Both were
+    // declared here until the library bench needed the same shape for a
+    // second family of relations and could not reach the studio; the record
+    // and the helpers moved to where both can see them, and this file kept
+    // what is about the GLOSS relations: which ones there are, how they
+    // chain, and what their rows hold.
 
     /**
      * The relation a row's {@link Row#refs} name, when it names any.
@@ -142,27 +126,6 @@ public final class GlossRelations {
         return List.copyOf(out);
     }
 
-    /**
-     * Rows whose own pk is one of these, <b>in the order asked for</b>.
-     *
-     * <p>Used when arriving by ref rather than by parent, and the order is the
-     * point. A sense states its examples in the sequence its author chose, and
-     * that sequence is its ranking — so the expansion of 东方|东边|山东|东西#1
-     * must read in that order and not in whatever order the phrase registry
-     * happens to hold them. Iterating the rows instead of the keys silently
-     * reorders the answer to match a list the caller never mentioned.</p>
-     */
-    public static List<Row> withPks(List<Row> rows, List<String> pks) {
-        var byPk = new LinkedHashMap<String, Row>();
-        for (Row row : rows) byPk.put(row.pk(), row);
-
-        var out = new ArrayList<Row>();
-        for (String pk : pks) {
-            Row row = byPk.get(pk);
-            if (row != null) out.add(row);
-        }
-        return List.copyOf(out);
-    }
 
     /** Which relation feeds which. Roots answer null. */
     public static String upstreamOf(String relation) {
@@ -386,7 +349,6 @@ public final class GlossRelations {
         };
     }
 
-    /** Rows whose parent is one of these keys. An empty selection shows nothing. */
     /**
      * The keys a relation actually scopes on, given what was selected above it.
      *
@@ -410,12 +372,6 @@ public final class GlossRelations {
             int colon = key.indexOf(':');
             out.add(colon < 0 ? key : key.substring(0, colon));
         }
-        return List.copyOf(out);
-    }
-
-    public static List<Row> under(List<Row> rows, List<String> parentPks) {
-        var out = new ArrayList<Row>();
-        for (Row row : rows) if (parentPks.contains(row.up())) out.add(row);
         return List.copyOf(out);
     }
 

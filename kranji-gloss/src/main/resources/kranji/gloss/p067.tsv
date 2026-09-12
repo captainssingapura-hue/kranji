@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 6
+# Rows: 8
 # codepoint	glyph	reading	priority	meaning	examples	because
 20570	做	zuo4	P	to do; to make	做人	
 23398	学	xue2	P	to learn; to study	学习	
@@ -20,3 +20,5 @@
 35013	装	zhuang1	S	to pretend	装作	
 20065	乡	xiang1	P	a village	乡下	
 20065	乡	xiang1	S	one's home place	故乡	
+28044	涌	yong3	P	to gush; to surge	涌出|汹涌	
+28044	涌	chong1	P	(in southern place names) a creek	河涌	

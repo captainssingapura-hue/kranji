@@ -12,9 +12,11 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 4
+# Rows: 6
 # codepoint	glyph	reading	priority	meaning	examples	because
 20892	农	nong2	P	farming	农田	
 20892	农	nong2	S	a farmer	农夫	
 33618	荒	huang1	P	wasteland	荒地	
 33618	荒	huang1	S	barren	荒山	
+31800	簸	bo3	P	to winnow; to toss up and down	颠簸|簸扬	
+31800	簸	bo4	P	(in 簸箕) a winnowing basket; a dustpan	簸箕	

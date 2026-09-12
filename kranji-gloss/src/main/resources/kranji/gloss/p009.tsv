@@ -12,7 +12,16 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 2
+# Rows: 11
 # codepoint	glyph	reading	priority	meaning	examples	because
 21320	午	wu3	P	noon	中午	
 20108	二	er4	P	two	二月	
+22330	场	chang3	P	a place for an activity; a ground	市场|广场|操场	
+22330	场	chang2	P	(counts spells of rain, illness, dreams)	一场雨	
+27178	横	heng2	P	horizontal; across	横线|横过	
+27178	横	heng4	P	unruly; fierce; unexpected	蛮横|横财	
+33945	蒙	meng2	P	to cover; to suffer; ignorant	蒙住|启蒙	
+33945	蒙	meng1	P	to fool; to guess wildly	蒙人|蒙对了	
+33945	蒙	meng3	P	Mongolia; Mongolian	蒙古|内蒙古	
+20007	丧	sang4	P	to lose; disheartened	丧失|沮丧	
+20007	丧	sang1	P	mourning; a funeral	丧事|奔丧	

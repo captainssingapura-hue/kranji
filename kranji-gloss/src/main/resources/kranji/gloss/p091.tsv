@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 9
+# Rows: 12
 # codepoint	glyph	reading	priority	meaning	examples	because
 30896	碰	peng4	P	to bump; to touch	碰到	
 26149	春	chun1	P	spring	春天	
@@ -23,3 +23,6 @@
 20998	分	fen1	S	a minute	十分	
 20998	分	fen4	P	a share; a part	过分	
 20493	倍	bei4	P	times; fold	一倍	
+24230	度	du4	P	a degree; an extent	温度	
+24230	度	du4	S	to pass; to spend (time)	度过	
+24230	度	duo2	P	to estimate; to size up	忖度	
