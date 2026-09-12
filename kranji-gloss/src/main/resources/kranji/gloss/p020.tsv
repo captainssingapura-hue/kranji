@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 7
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 31532	第	di4	P	(makes a number an order: first, second)	第一	
 27492	此	ci3	P	this	因此	
@@ -21,3 +21,5 @@
 26381	服	fu2	P	clothes	衣服|校服	
 26381	服	fu2	S	to obey; to be convinced	佩服|服从	
 26381	服	fu4	P	(counts doses of medicine)	一服药	
+26179	晃	huang3	P	to dazzle; to flash past	晃眼|一晃	
+26179	晃	huang4	P	to sway; to shake	摇晃|晃动	

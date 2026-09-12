@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 12
+# Rows: 14
 # codepoint	glyph	reading	priority	meaning	examples	because
 20320	你	ni3	P	you	你们	
 35874	谢	xie4	P	to thank	谢谢	
@@ -26,3 +26,5 @@
 20219	任	ren2	P	(a surname; in 任丘) a county	任丘	
 21128	劈	pi1	P	to chop; to split with an axe	劈柴|劈开	
 21128	劈	pi3	P	to split apart; to strip off	劈叉|劈腿	
+26885	椅	yi3	P	a chair	椅子|轮椅	
+26885	椅	yi1	P	(a tree, the idesia)	椅树	

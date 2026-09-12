@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 11
+# Rows: 13
 # codepoint	glyph	reading	priority	meaning	examples	because
 29422	狮	shi1	P	a lion	狮子	
 26089	早	zao3	P	early	很早	
@@ -25,3 +25,5 @@
 27604	比	bi3	S	than	比你高	
 20029	丽	li4	P	beautiful	美丽|华丽	
 20029	丽	li2	P	(in 高丽) Goryeo, old Korea	高丽	
+27099	槛	kan3	P	(in 门槛) a threshold	门槛	
+27099	槛	jian4	P	a railing; a cage for animals	槛车|栏槛	

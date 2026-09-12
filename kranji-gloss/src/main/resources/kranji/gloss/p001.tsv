@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 8
+# Rows: 14
 # codepoint	glyph	reading	priority	meaning	examples	because
 20302	低	di1	P	low	低声	
 20302	低	di1	S	to lower	低头	
@@ -26,3 +26,5 @@
 27877	泥	ni4	P	to plaster; to be stubborn about	拘泥	
 32422	约	yue1	P	an agreement; to arrange	约会	
 32422	约	yao1	P	to weigh	约一斤	
+26059	旋	xuan2	P	to revolve; to return	旋转|凯旋	
+26059	旋	xuan4	P	to whirl; to turn on a lathe	旋风|旋床	
