@@ -12,9 +12,10 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 4
+# Rows: 5
 # codepoint	glyph	reading	priority	meaning	examples	because
 21040	到	dao4	P	to arrive; to reach	到了	
 20030	举	ju3	P	to raise; to lift	举手	
 25484	掌	zhang3	P	the palm	手掌	
 25484	掌	zhang3	S	to control	掌管	
+38109	铝	lü3	P	aluminium	铝合金|铝锅	

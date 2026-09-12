@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 7
+# Rows: 10
 # codepoint	glyph	reading	priority	meaning	examples	because
 23545	对	dui4	P	correct	对了	
 23545	对	dui4	S	towards	对着	
@@ -21,3 +21,6 @@
 24555	快	kuai4	P	fast; quick	很快	
 24050	已	yi3	P	already	已经	
 20919	冷	leng3	P	cold	很冷	
+22030	嘎	ga1	P	(the sound of a quack or a creak)	嘎嘎	
+22030	嘎	ga2	P	(in 嘎调) a high note in opera	嘎调	
+22030	嘎	ga3	P	(dialect, in 嘎子) a mischievous kid	嘎子	

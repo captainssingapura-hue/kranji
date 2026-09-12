@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 6
+# Rows: 8
 # codepoint	glyph	reading	priority	meaning	examples	because
 23567	小	xiao3	P	small; little	小鸟|大小	
 37202	酒	jiu3	P	wine	酒杯	
@@ -20,3 +20,5 @@
 26395	望	wang4	P	to look at	看望	
 26395	望	wang4	S	to hope	希望	
 20840	全	quan2	P	whole; all	全部	
+21345	卡	ka3	P	a card; a truck	卡片|卡车	
+21345	卡	qia3	P	to get stuck; to block; a clip	卡住|发卡	

@@ -12,8 +12,15 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 3
+# Rows: 10
 # codepoint	glyph	reading	priority	meaning	examples	because
 33853	落	luo4	P	to fall; to drop	落下	
 22238	回	hui2	P	to return; to go back	回来	
 27490	止	zhi3	P	to stop	止住	
+21834	啊	a0	P	(a particle at the end of a sentence)	好啊|啊	
+21834	啊	a1	P	ah! (surprise or admiration)	啊#1	
+21834	啊	a2	P	what? (asking again)	啊#2	
+21834	啊	a3	P	huh? (doubt or surprise)	啊#3	
+21834	啊	a4	P	oh; right (realisation or agreement)	啊#4	
+25874	攒	zan3	P	to save up; to hoard	攒钱|积攒	
+25874	攒	cuan2	P	to gather; to crowd together	攒聚|攒动	
