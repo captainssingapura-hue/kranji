@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 11
+# Rows: 14
 # codepoint	glyph	reading	priority	meaning	examples	because
 20013	中	zhong1	P	the middle	中间	
 20013	中	zhong1	S	in; among	其中	
@@ -25,3 +25,6 @@
 25972	整	zheng3	P	whole	整个	
 25972	整	zheng3	S	to tidy	整理	
 22235	四	si4	P	four	四个	
+20316	作	zuo4	P	to do; to make; to write	作业|作者|合作	
+20316	作	zuo4	S	to act as; to pretend	装作	
+20316	作	zuo1	P	(in 作坊) a workshop	作坊	
