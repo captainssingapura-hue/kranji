@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 6
+# Rows: 8
 # codepoint	glyph	reading	priority	meaning	examples	because
 27663	氏	shi4	P	a family name	氏族	
 27663	氏	zhi1	P	an ancient people, in the name 月氏	月氏	
@@ -20,3 +20,5 @@
 30693	知	zhi1	P	to know	知道	
 25441	捡	jian3	P	to pick up	捡起	
 22815	够	gou4	P	enough	不够	
+39278	饮	yin3	P	to drink; a drink	饮料|饮水	
+39278	饮	yin4	P	to water animals	饮马|饮牛	

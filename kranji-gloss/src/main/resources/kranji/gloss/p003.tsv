@@ -12,9 +12,10 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 20
+# Rows: 21
 # codepoint	glyph	reading	priority	meaning	examples	because
 20102	了	le0	P	(marks that something has happened)	到了|丢了	
+20102	了	liao3	P	to finish; to understand; able to	了解|受不了|了结	
 30000	田	tian2	P	a field	田里	
 30707	石	shi2	P	a stone	石头	
 26970	楚	chu3	P	(the state of Chu)	楚人	

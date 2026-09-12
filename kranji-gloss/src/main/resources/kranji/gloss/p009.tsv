@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 9
+# Rows: 11
 # codepoint	glyph	reading	priority	meaning	examples	because
 21320	午	wu3	P	noon	中午	
 20108	二	er4	P	two	二月	
@@ -23,3 +23,5 @@
 33945	蒙	meng2	P	to cover; to suffer; ignorant	蒙住|启蒙	
 33945	蒙	meng1	P	to fool; to guess wildly	蒙人|蒙对了	
 33945	蒙	meng3	P	Mongolia; Mongolian	蒙古|内蒙古	
+20007	丧	sang4	P	to lose; disheartened	丧失|沮丧	
+20007	丧	sang1	P	mourning; a funeral	丧事|奔丧	

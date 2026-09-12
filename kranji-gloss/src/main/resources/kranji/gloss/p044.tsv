@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 12
+# Rows: 14
 # codepoint	glyph	reading	priority	meaning	examples	because
 39030	顶	ding3	P	the top	山顶	
 39030	顶	ding3	S	to carry on the head	顶着	
@@ -26,3 +26,5 @@
 29233	爱	ai4	P	to love	爱心	
 21557	吵	chao3	P	noisy; to quarrel	吵闹|吵架	
 21557	吵	chao1	P	(dialect, in 吵吵) to make a racket	吵吵	
+33879	著	zhu4	P	to write; famous; a written work	著名|著作	
+33879	著	zhuo2	P	(the same as 着) to wear; to adhere	附著|穿著	
