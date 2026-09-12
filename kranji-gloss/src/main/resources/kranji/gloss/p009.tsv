@@ -12,7 +12,9 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 2
+# Rows: 4
 # codepoint	glyph	reading	priority	meaning	examples	because
 21320	午	wu3	P	noon	中午	
 20108	二	er4	P	two	二月	
+22330	场	chang3	P	a place for an activity; a ground	市场|广场|操场	
+22330	场	chang2	P	(counts spells of rain, illness, dreams)	一场雨	

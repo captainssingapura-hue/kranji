@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 6
+# Rows: 8
 # codepoint	glyph	reading	priority	meaning	examples	because
 20107	事	shi4	P	a matter; a thing	故事	
 38388	间	jian1	P	between	中间	
@@ -20,3 +20,5 @@
 33136	腰	yao1	P	the waist	弯腰	
 21521	向	xiang4	P	towards	向前	
 21521	向	xiang4	S	a direction	方向	
+38590	难	nan2	P	hard; difficult	困难|难看	
+38590	难	nan4	P	a disaster; suffering	灾难|难民	

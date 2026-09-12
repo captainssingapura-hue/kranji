@@ -301,7 +301,7 @@
 道行	0	a monk's attainment	1=heng2
 圈养	0	to raise penned in	0=juan1
 荒地	0	waste ground	
-若干	0	a certain number	
+若干	0	a certain number	1=gan1
 掉色	0	to lose colour	1=shai3
 弯腰	0	to bend at the waist	
 背后	0	behind	
@@ -632,3 +632,38 @@
 正确	0	correct	
 正在	0	in the middle of doing	
 正月	0	the first month of the lunar year	0=zheng1
+一万	0	ten thousand	
+万俟	0	Moqi, a surname	0=mo4
+哪个	0	which one	
+哪里	0	where	
+天哪	0	heavens!	1=na0
+哪吒	0	Nezha, the boy god	0=ne2
+合上	0	to close (a book, a lid)	
+合作	0	to work together	
+一合米	0	a ge of rice - an old measure	1=ge3
+子弹	0	a bullet	
+炸弹	0	a bomb	
+弹琴	0	to play a stringed instrument	0=tan2
+弹跳	0	to bounce; to spring	0=tan2
+一片	0	a slice; a stretch of	
+卡片	0	a card	
+片子	0	a film; a disc	0=pian1
+广场	0	a square	
+操场	0	a playground; a sports ground	
+一场雨	0	a fall of rain	1=chang2
+干活	0	to do work	
+树干	0	a tree trunk	
+干净	0	clean	0=gan1
+干燥	0	dry	0=gan1
+拉开	0	to pull open	
+拉手	0	to hold hands; a handle	
+拉二胡	0	to play the erhu	
+拉口子	0	to cut a gash	0=la2
+通过	0	to pass through; by means of	
+交通	0	traffic	
+精通	0	to know thoroughly; to master	
+说了一通	0	gave a long talking-to	3=tong4
+困难	0	difficulty; hard	
+难看	0	ugly	
+灾难	0	a disaster	1=nan4
+难民	0	a refugee	0=nan4

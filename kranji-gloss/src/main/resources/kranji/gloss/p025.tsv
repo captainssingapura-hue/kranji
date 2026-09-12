@@ -12,7 +12,10 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 2
+# Rows: 5
 # codepoint	glyph	reading	priority	meaning	examples	because
 21033	利	li4	P	sharp	锋利	
 21033	利	li4	S	benefit	利益	
+36890	通	tong1	P	to go through; to lead to	通过|交通	
+36890	通	tong1	S	to know thoroughly	精通	
+36890	通	tong4	P	(counts a bout of talking or doing)	说了一通	
