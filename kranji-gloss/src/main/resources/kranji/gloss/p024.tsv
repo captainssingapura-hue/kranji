@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 9
+# Rows: 11
 # codepoint	glyph	reading	priority	meaning	examples	because
 35475	誓	shi4	P	to swear	发誓	
 35475	誓	shi4	S	an oath	誓言	
@@ -23,3 +23,5 @@
 33152	膀	bang3	P	the upper arm; a shoulder; a wing	翅膀|膀子	
 33152	膀	pang1	P	swollen	膀肿	
 33152	膀	pang2	P	(in 膀胱) the bladder	膀胱	
+21032	刨	pao2	P	to dig; to excavate	刨坑|刨土	
+21032	刨	bao4	P	a plane, the tool; to plane	刨子|刨花	

@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 7
+# Rows: 12
 # codepoint	glyph	reading	priority	meaning	examples	because
 20320	你	ni3	P	you	你们	
 35874	谢	xie4	P	to thank	谢谢	
@@ -21,3 +21,8 @@
 27491	正	zheng1	P	(in 正月) the first month of the lunar year	正月	
 32541	缝	feng4	P	a crack; a seam	裂缝|门缝	
 32541	缝	feng2	P	to sew; to stitch	缝衣服|缝补	
+20219	任	ren4	P	to appoint; a duty; to let	任务|责任	
+20219	任	ren4	S	no matter; whatever	任何	
+20219	任	ren2	P	(a surname; in 任丘) a county	任丘	
+21128	劈	pi1	P	to chop; to split with an axe	劈柴|劈开	
+21128	劈	pi3	P	to split apart; to strip off	劈叉|劈腿	
