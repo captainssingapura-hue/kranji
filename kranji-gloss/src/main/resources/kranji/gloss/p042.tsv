@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 9
+# Rows: 12
 # codepoint	glyph	reading	priority	meaning	examples	because
 20040	么	me0	P	(ends a question word)	什么	
 21050	刺	ci4	P	to pierce	刺穿	
@@ -23,3 +23,6 @@
 30342	皆	jie1	P	all; every	皆是	
 22868	奔	ben1	P	to run fast; to rush	奔跑|奔腾	
 22868	奔	ben4	P	to head straight for	奔向|投奔	
+34180	薄	bao2	P	thin; weak, of flavour	薄纸|薄饼	
+34180	薄	bo2	P	(the formal reading) thin; slight	薄弱|单薄	
+34180	薄	bo4	P	(in 薄荷) mint	薄荷	
