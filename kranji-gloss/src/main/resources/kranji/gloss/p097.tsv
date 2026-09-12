@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 9
+# Rows: 11
 # codepoint	glyph	reading	priority	meaning	examples	because
 27468	歌	ge1	P	a song	唱歌	
 39184	餐	can1	P	a meal	早餐	
@@ -23,3 +23,5 @@
 20196	令	ling4	S	your (honorific)	令尊	
 20196	令	ling2	P	(in the surname 令狐)	令狐	
 20196	令	ling3	P	(counts reams of paper)	一令纸	
+38477	降	jiang4	P	to fall; to lower	下降|降落|降低	
+38477	降	xiang2	P	to surrender; to tame	投降|降服	

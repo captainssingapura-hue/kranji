@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 10
+# Rows: 12
 # codepoint	glyph	reading	priority	meaning	examples	because
 23376	子	zi3	P	a child; a son	子女	
 20043	之	zhi1	P	(joins what belongs to what)	之后	
@@ -24,3 +24,5 @@
 21457	发	fa4	P	hair	头发	
 20851	关	guan1	P	to close	关门	
 20851	关	guan1	S	to concern	关心	
+38425	阙	que1	P	a gap; lacking; a fault	阙如|阙失	
+38425	阙	que4	P	a watchtower flanking a palace gate; the palace	宫阙|城阙	

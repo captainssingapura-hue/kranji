@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 19
+# Rows: 20
 # codepoint	glyph	reading	priority	meaning	examples	because
 28404	滴	di1	P	a drop	水滴	
 28404	滴	di1	S	to drip	滴水	
@@ -20,6 +20,7 @@
 33050	脚	jiao3	P	a foot	脚下	
 38706	露	lu4	P	dew	露水	
 38706	露	lu4	S	to show	露出	
+38706	露	lou4	P	to show, in plain speech	露馅|露面	
 36989	遽	ju4	P	hurriedly; at once	遽然	
 30828	硬	ying4	P	hard; firm	很硬	
 30424	盘	pan2	P	a plate	盘子	

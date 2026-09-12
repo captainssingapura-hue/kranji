@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 6
+# Rows: 8
 # codepoint	glyph	reading	priority	meaning	examples	because
 35828	说	shuo1	P	to say; to speak	说话|说明	
 35828	说	shui4	P	to talk someone round	游说|说客	
@@ -20,3 +20,5 @@
 21183	势	shi4	P	power	势力	
 21183	势	shi4	S	a tendency	走势	
 19971	七	qi1	P	seven	七个	
+38050	钢	gang1	P	steel	钢铁|钢笔	
+38050	钢	gang4	P	to whet a blade	钢刀布	

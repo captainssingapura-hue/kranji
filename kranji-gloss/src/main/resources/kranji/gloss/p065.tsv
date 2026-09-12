@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 7
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 21073	剑	jian4	P	a sword	宝剑	
 20063	也	ye3	P	also; too	也是	
@@ -21,3 +21,5 @@
 32789	耕	geng1	P	to plough; to till	耕田	
 21477	句	ju4	P	a sentence	句子	
 21477	句	gou1	P	(in the name 句践)	句践	
+36930	遂	sui4	P	then; to succeed; to fulfil	顺遂|遂愿|遂心	
+36930	遂	sui2	P	(in 半身不遂) paralysed	半身不遂	
