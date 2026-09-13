@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 7
+# Rows: 9
 # codepoint	glyph	reading	priority	meaning	examples	because
 23460	室	shi4	P	a room	教室	
 24066	市	shi4	P	a market	市场	
@@ -21,3 +21,5 @@
 35782	识	shi2	P	to know; to recognise	认识	
 20026	为	wei4	P	for; because of	因为	
 20026	为	wei2	P	to be; to act as	为人	
+25379	挣	zheng1	P	(in 挣扎) to struggle	挣扎	
+25379	挣	zheng4	P	to earn; to break free	挣钱|挣脱	

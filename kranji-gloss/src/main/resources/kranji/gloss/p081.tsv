@@ -12,7 +12,7 @@
 # Examples are phrase keys separated by |; a #n suffix names a phrase
 # sense other than its first, and is silent otherwise.
 #
-# Rows: 11
+# Rows: 13
 # codepoint	glyph	reading	priority	meaning	examples	because
 19978	上	shang4	P	up; on; above	上山|地上	
 26543	枯	ku1	P	withered; dry	枯木	
@@ -25,3 +25,5 @@
 25735	撇	pie3	P	the left-falling stroke; to curl the lip	撇嘴|一撇	
 31896	粘	zhan1	P	to stick; to glue	粘贴|粘住	
 31896	粘	nian2	P	sticky; glutinous	粘稠|粘米	
+20180	仔	zi3	P	(in 仔细) careful; attentive	仔细	
+20180	仔	zai3	P	a young animal; a youngster	牛仔|仔鸡	

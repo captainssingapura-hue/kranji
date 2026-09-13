@@ -125,11 +125,15 @@ public abstract class GlossCoverageTestBase {
     @Test
     protected void coverageHoldsTheFloor() {
         GlossCoverage.Report r = report();
+        // The figure is given in reads, not rounded to a percentage: at a floor
+        // of 1.0 every failure would otherwise read "100.0%, under 100.0%".
         assertTrue(r.readRatio() >= floor(), () -> String.format(Locale.ROOT,
-                "read-coverage fell to %.1f%%, under the floor of %.1f%%.%n  %s%n"
-              + "  The report at %s names what is missing, most-read first. Raise the "
+                "read-coverage is %d of %d reads (%.2f%%), under the floor of %.2f%%: "
+              + "%d reads across %d (character, reading) pairs have no meaning behind them.%n  %s%n"
+              + "  The report at %s names them, most-read first. Raise the "
               + "meanings, or lower the floor in a change somebody reviews.",
-                100 * r.readRatio(), 100 * floor(), r.summary(),
+                r.readsCovered(), r.reads(), 100 * r.readRatio(), 100 * floor(),
+                r.reads() - r.readsCovered(), r.missing().size(), r.summary(),
                 reportPath().toAbsolutePath()));
     }
 }
